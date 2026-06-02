@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | بوابة الأدمن</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #090d16;
+            --bg-secondary: #101626;
+            --bg-card: #172036;
+            --bg-card-hover: #1e2947;
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.25);
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.2);
+            --danger: #ef4444;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.06);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 20px 16px 80px;
+            touch-action: manipulation;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        header {
+            grid-column: span 2;
+            text-align: center;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 50%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .btn-view-portal {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .btn-view-portal:hover {
+            box-shadow: 0 0 15px var(--primary-glow);
+            transform: translateY(-1px);
+        }
+
+        .admin-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .admin-card h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            border-right: 4px solid var(--primary);
+            padding-right: 12px;
+            margin-bottom: 4px;
+        }
+
+        /* Form styling */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        input, select, textarea {
+            font-family: inherit;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            color: #fff;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        /* Upload slots UI */
+        .upload-slots {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .upload-slot {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed var(--border);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .upload-slot:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.02);
+        }
+
+        .upload-slot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .slot-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .slot-status {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .file-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            display: none;
+        }
+
+        .btn-browse {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .btn-browse:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--text-muted);
+        }
+
+        .path-display {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+            direction: ltr;
+            text-align: right;
+        }
+
+        .btn-clear-slot {
+            background: transparent;
+            border: none;
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: none;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--accent);
+            transition: width 0.1s linear;
+        }
+
+        .btn-submit {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-submit:hover {
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: translateY(-1px);
+        }
+
+        /* Subjects popup / modal */
+        .add-subject-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn-icon {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: #fff;
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-icon:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--primary);
+        }
+
+        /* Lecture list panel */
+        .lectures-table-wrapper {
+            margin-top: 10px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+            font-size: 0.85rem;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .file-indicators {
+            display: flex;
+            gap: 6px;
+        }
+
+        .indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .indicator.active {
+            background: var(--accent);
+            box-shadow: 0 0 6px var(--accent);
+        }
+
+        .indicator.inactive {
+            background: var(--danger);
+            opacity: 0.3;
+        }
+
+        .actions-cell {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-action-sm {
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-edit {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+        }
+
+        .btn-edit:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+        }
+
+        .btn-delete:hover {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        /* Modals and notifications */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(150%);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 16px 24px;
+            border-radius: var(--radius-md);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 700;
+            max-width: 90vw;
+            text-align: center;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            border-color: var(--accent);
+            color: #34d399;
+        }
+
+        .toast.error {
+            border-color: var(--danger);
+            color: #f87171;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 900px) {
+            .admin-container {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                grid-column: span 1;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            /* Card-style table on mobile */
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            thead {
+                display: none;
+            }
+            tr {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-md);
+                padding: 14px;
+                margin-bottom: 10px;
+            }
+            td {
+                border: none;
+                padding: 6px 0;
+                text-align: right;
+            }
+            td:first-child {
+                font-size: 1.1rem;
+            }
+            .actions-cell {
+                justify-content: flex-start;
+                margin-top: 8px;
+            }
+            .file-indicators {
+                justify-content: flex-start !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="admin-container">
+        <!-- Header -->
+        <header>
+            <div class="header-title">
+                <h1>🩺 لوحة تحكم الأدمن</h1>
+                <p style="color:var(--text-muted); font-size:0.85rem; margin-top:4px;">إضافة محاضرات وتحديث الملفات والكويزات للـ 6 ترمات</p>
+            </div>
+            <a href="index.html" class="btn-view-portal" target="_blank">🌐 فتح موقع الطلاب</a>
+        </header>
+
+        <!-- Right Card: Form for Add/Edit Lecture -->
+        <div class="admin-card">
+            <h2 id="formCardTitle">✏️ إضافة محاضرة جديدة</h2>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="termSelect">الترم الدراسي</label>
+                    <select id="termSelect" onchange="onTermChange()">
+                        <!-- Dynamically populated -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>المادة الدراسية</label>
+                    <div class="add-subject-row">
+                        <select id="subjectSelect" onchange="onSubjectChange()">
+                            <!-- Dynamically populated -->
+                        </select>
+                        <button type="button" class="btn-icon" onclick="addNewSubjectPrompt()" title="إضافة مادة جديدة">➕</button>
+                        <button type="button" class="btn-icon" onclick="deleteActiveSubject()" title="حذف هذه المادة" style="border-color:var(--danger); color:var(--danger);">🗑️</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group" style="grid-column: span 2;">
+                    <label for="lectureNum">رقم المحاضرة</label>
+                    <input type="number" id="lectureNum" min="1" placeholder="مثال: 1">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="titleAr">اسم المحاضرة</label>
+                <input type="text" id="titleAr" placeholder="مثال: Introduction to Histology">
+            </div>
+
+            <div class="upload-slots">
+                <label>ملفات المحاضرة (يمكنك رفع أو استبدال أي ملف)</label>
+                
+                <!-- original_ppt -->
+                <div class="upload-slot" id="slot-original_ppt">
+                    <div class="upload-slot-header">
+                        <span class="slot-title">📄 الباور الأصلي للدكتورة (PPTX, PPT, PDF)</span>
+                        <span class="slot-status" id="status-original_ppt">لم يرفع بعد</span>
+                    </div>
+                    <div class="file-input-wrapper">
+                        <button type="button" class="btn-browse" onclick="triggerFileInput('original_ppt')">اختر الملف</button>
+                        <span class="path-display" id="display-original_ppt">لا يوجد ملف</span>
+                        <button type="button" class="btn-clear-slot" onclick="clearFileSlot('original_ppt')">حذف ❌</button>
+                        <input type="file" id="file-original_ppt" onchange="handleFileUpload('original_ppt')" accept=".pptx,.ppt,.pdf">
+                    </div>
+                    <div class="progress-bar-container" id="progress-container-original_ppt">
+                        <div class="progress-bar" id="progress-original_ppt"></div>
+                    </div>
+                </div>
+
+                <!-- translated_ppt -->
+                <div class="upload-slot" id="slot-translated_ppt">
+                    <div class="upload-slot-header">
+                        <span class="slot-title">📝 الباور المترجم والملخص (PPTX, PPT, PDF, HTML)</span>
+                        <span class="slot-status" id="status-translated_ppt">لم يرفع بعد</span>
+                    </div>
+                    <div class="file-input-wrapper">
+                        <button type="button" class="btn-browse" onclick="triggerFileInput('translated_ppt')">اختر الملف</button>
+                        <span class="path-display" id="display-translated_ppt">لا يوجد ملف</span>
+                        <button type="button" class="btn-clear-slot" onclick="clearFileSlot('translated_ppt')">حذف ❌</button>
+                        <input type="file" id="file-translated_ppt" onchange="handleFileUpload('translated_ppt')" accept=".pptx,.ppt,.pdf,.html">
+                    </div>
+                    <div class="progress-bar-container" id="progress-container-translated_ppt">
+                        <div class="progress-bar" id="progress-translated_ppt"></div>
+                    </div>
+                </div>
+
+                <!-- my_quiz -->
+                <div class="upload-slot" id="slot-my_quiz">
+                    <div class="upload-slot-header">
+                        <span class="slot-title">🎯 بنك الأسئلة - شغل الأدمن (HTML)</span>
+                        <span class="slot-status" id="status-my_quiz">لم يرفع بعد</span>
+                    </div>
+                    <div class="file-input-wrapper">
+                        <button type="button" class="btn-browse" onclick="triggerFileInput('my_quiz')">اختر الملف</button>
+                        <span class="path-display" id="display-my_quiz">لا يوجد ملف</span>
+                        <button type="button" class="btn-clear-slot" onclick="clearFileSlot('my_quiz')">حذف ❌</button>
+                        <input type="file" id="file-my_quiz" onchange="handleFileUpload('my_quiz')" accept=".html">
+                    </div>
+                    <div class="progress-bar-container" id="progress-container-my_quiz">
+                        <div class="progress-bar" id="progress-my_quiz"></div>
+                    </div>
+                </div>
+
+                <!-- doctor_quiz -->
+                <div class="upload-slot" id="slot-doctor_quiz">
+                    <div class="upload-slot-header">
+                        <span class="slot-title">🩺 بنك أسئلة الدكتورة (PDF, HTML)</span>
+                        <span class="slot-status" id="status-doctor_quiz">لم يرفع بعد</span>
+                    </div>
+                    <div class="file-input-wrapper">
+                        <button type="button" class="btn-browse" onclick="triggerFileInput('doctor_quiz')">اختر الملف</button>
+                        <span class="path-display" id="display-doctor_quiz">لا يوجد ملف</span>
+                        <button type="button" class="btn-clear-slot" onclick="clearFileSlot('doctor_quiz')">حذف ❌</button>
+                        <input type="file" id="file-doctor_quiz" onchange="handleFileUpload('doctor_quiz')" accept=".pdf,.html">
+                    </div>
+                    <div class="progress-bar-container" id="progress-container-doctor_quiz">
+                        <div class="progress-bar" id="progress-doctor_quiz"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn-submit" id="btnSave" onclick="saveLecture()">
+                💾 <span>حفظ وإضافة المحاضرة</span>
+            </button>
+            
+            <button type="button" class="btn-browse" id="btnCancelEdit" onclick="cancelEditMode()" style="display:none; text-align:center; padding:12px;">
+                ❌ إلغاء وضع التعديل
+            </button>
+        </div>
+
+        <!-- Left Card: Lecture Catalog / Manager -->
+        <div class="admin-card">
+            <h2>📋 محاضرات ومحتوى المادة النشطة</h2>
+            
+            <div style="color:var(--text-muted); font-size:0.85rem;">
+                اختر الترم والمادة من اليمين لتظهر المحاضرات المسجلة هنا وإدارتها.
+            </div>
+
+            <div class="lectures-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">رقم</th>
+                            <th>المحاضرة</th>
+                            <th style="width: 100px; text-align: center;">الملفات</th>
+                            <th style="width: 130px; text-align: center;">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lecturesTableBody">
+                        <!-- Dynamically populated -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toast">
+        <span id="toastIcon"></span>
+        <span id="toastMessage"></span>
+    </div>
+
+    <!-- Loading Curriculum Javascript Data -->
+    <script src="curriculum.js"></script>
+    
+    <script>
+        let editMode = false;
+        let editLecNum = null;
+        
+        // Track relative uploaded file paths locally in form
+        let uploadedPaths = {
+            original_ppt: "",
+            translated_ppt: "",
+            my_quiz: "",
+            doctor_quiz: ""
+        };
+
+        // Initialize lists
+        window.onload = function() {
+            initTermSelect();
+            onTermChange();
+        };
+
+        // Initialize Terms
+        function initTermSelect() {
+            const termSel = document.getElementById("termSelect");
+            termSel.innerHTML = "";
+            
+            Object.keys(curriculumData.terms).forEach(termKey => {
+                const term = curriculumData.terms[termKey];
+                const option = document.createElement("option");
+                option.value = termKey;
+                option.textContent = term.name;
+                termSel.appendChild(option);
+            });
+        }
+
+        // Handle Term Selection
+        function onTermChange() {
+            const termKey = document.getElementById("termSelect").value;
+            const term = curriculumData.terms[termKey];
+            const subjectSel = document.getElementById("subjectSelect");
+            subjectSel.innerHTML = "";
+            
+            const subjects = term.subjects || {};
+            Object.keys(subjects).forEach(subKey => {
+                const sub = subjects[subKey];
+                const option = document.createElement("option");
+                option.value = subKey;
+                option.textContent = sub.name;
+                subjectSel.appendChild(option);
+            });
+            
+            onSubjectChange();
+        }
+
+        // Handle Subject Selection
+        function onSubjectChange() {
+            if (editMode) cancelEditMode();
+            renderLecturesTable();
+            suggestNextLectureNum();
+        }
+
+        // Auto-detect next lecture number
+        function suggestNextLectureNum() {
+            const termKey = document.getElementById("termSelect").value;
+            const subKey = document.getElementById("subjectSelect").value;
+            const lecNumInput = document.getElementById("lectureNum");
+            
+            if (!subKey) {
+                lecNumInput.value = 1;
+                return;
+            }
+            
+            const lectures = curriculumData.terms[termKey].subjects[subKey].lectures || [];
+            if (lectures.length === 0) {
+                lecNumInput.value = 1;
+            } else {
+                // Get maximum num and add 1
+                const maxNum = Math.max(...lectures.map(l => l.num));
+                lecNumInput.value = maxNum + 1;
+            }
+        }
+
+        // Prompt user to add a new subject
+        function addNewSubjectPrompt() {
+            const termKey = document.getElementById("termSelect").value;
+            const subNameEn = prompt("أدخل اسم المادة بالإنجليزية (مثال: Anatomy):")?.trim();
+            if (!subNameEn) return;
+            
+            // Clean key name for identifier
+            const subKey = subNameEn.toLowerCase().replace(/[^a-z0-9]/g, '_');
+            
+            if (curriculumData.terms[termKey].subjects[subKey]) {
+                showToast("المادة مضافة بالفعل!", "error");
+                return;
+            }
+            
+            // Register subject locally
+            curriculumData.terms[termKey].subjects[subKey] = {
+                name: subNameEn,
+                lectures: []
+            };
+            
+            // Re-populate select and activate the new subject
+            onTermChange();
+            document.getElementById("subjectSelect").value = subKey;
+            onSubjectChange();
+            
+            showToast("تمت إضافة المادة الدراسية بنجاح!", "success");
+        }
+
+        // Delete subject
+        function deleteActiveSubject() {
+            const termKey = document.getElementById("termSelect").value;
+            const subKey = document.getElementById("subjectSelect").value;
+            
+            if (!subKey) {
+                showToast("لا توجد مادة نشطة لحذفها!", "error");
+                return;
+            }
+            
+            const subName = curriculumData.terms[termKey].subjects[subKey].name;
+            const lecCount = (curriculumData.terms[termKey].subjects[subKey].lectures || []).length;
+            if (!confirm(`هل أنت متأكد؟ سيتم حذف المادة "${subName}" و ${lecCount} محاضرة نهائياً!`)) {
+                return;
+            }
+            
+            delete curriculumData.terms[termKey].subjects[subKey];
+            
+            syncRegistryWithServer().then(() => {
+                onTermChange();
+                showToast("تم حذف المادة بنجاح!", "success");
+            });
+        }
+
+        // Trigger Hidden File Upload
+        function triggerFileInput(fileType) {
+            document.getElementById(`file-${fileType}`).click();
+        }
+
+        // Handle async file upload to local server
+        function handleFileUpload(fileType) {
+            const fileInput = document.getElementById(`file-${fileType}`);
+            if (fileInput.files.length === 0) return;
+            
+            const file = fileInput.files[0];
+            const termKey = document.getElementById("termSelect").value;
+            const num = termKey.split("_")[1];
+            const subject = document.getElementById("subjectSelect").value;
+            
+            if (!subject) {
+                showToast("برجاء اختيار المادة أولاً قبل رفع الملفات!", "error");
+                fileInput.value = "";
+                return;
+            }
+
+            // Create form data
+            const formData = new FormData();
+            formData.append("term", num);
+            formData.append("subject", subject);
+            formData.append("file_type", fileType);
+            formData.append("file", file);
+            
+            // Show progress bar
+            const progressContainer = document.getElementById(`progress-container-${fileType}`);
+            const progressBar = document.getElementById(`progress-${fileType}`);
+            progressContainer.style.display = "block";
+            progressBar.style.width = "0%";
+            
+            document.getElementById(`status-${fileType}`).textContent = "جاري الرفع...";
+            
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "/api/upload", true);
+            
+            xhr.upload.onprogress = function(e) {
+                if (e.lengthComputable) {
+                    const percent = Math.round((e.loaded / e.total) * 100);
+                    progressBar.style.width = percent + "%";
+                }
+            };
+            
+            xhr.onload = function() {
+                progressContainer.style.display = "none";
+                if (xhr.status === 200) {
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            uploadedPaths[fileType] = response.path;
+                            document.getElementById(`display-${fileType}`).textContent = file.name;
+                            document.getElementById(`status-${fileType}`).textContent = "✅ جاهز";
+                            document.getElementById(`status-${fileType}`).style.color = "var(--accent)";
+                            // Show clear button
+                            document.querySelector(`#slot-${fileType} .btn-clear-slot`).style.display = "inline";
+                            showToast(response.message, "success");
+                        } else {
+                            throw new Error(response.message);
+                        }
+                    } catch(err) {
+                        handleUploadFail(fileType, err.message);
+                    }
+                } else {
+                    handleUploadFail(fileType, "فشل الرفع من الخادم");
+                }
+            };
+            
+            xhr.onerror = function() {
+                progressContainer.style.display = "none";
+                handleUploadFail(fileType, "خطأ شبكة");
+            };
+            
+            xhr.send(formData);
+        }
+
+        function handleUploadFail(fileType, errorMsg) {
+            document.getElementById(`status-${fileType}`).textContent = "❌ فشل";
+            document.getElementById(`status-${fileType}`).style.color = "var(--danger)";
+            document.getElementById(`display-${fileType}`).textContent = "فشل في رفع الملف";
+            showToast("خطأ في رفع الملف: " + errorMsg, "error");
+        }
+
+        // Clear file slot local reference
+        function clearFileSlot(fileType) {
+            uploadedPaths[fileType] = "";
+            document.getElementById(`file-${fileType}`).value = "";
+            document.getElementById(`display-${fileType}`).textContent = "لا يوجد ملف";
+            document.getElementById(`status-${fileType}`).textContent = "لم يرفع بعد";
+            document.getElementById(`status-${fileType}`).style.color = "var(--text-muted)";
+            document.querySelector(`#slot-${fileType} .btn-clear-slot`).style.display = "none";
+        }
+
+        // Save entire updated registry to server
+        function syncRegistryWithServer() {
+            return fetch("/api/save_curriculum", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(curriculumData)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(data.message, "success");
+                } else {
+                    throw new Error(data.message);
+                }
+            })
+            .catch(err => {
+                showToast("فشل تحديث قاعدة البيانات: " + err.message, "error");
+                console.error(err);
+            });
+        }
+
+        // Add or Update Lecture
+        function saveLecture() {
+            const termKey = document.getElementById("termSelect").value;
+            const subKey = document.getElementById("subjectSelect").value;
+            
+            if (!subKey) {
+                showToast("يجب اختيار مادة دراسية أولاً!", "error");
+                return;
+            }
+            
+            const num = parseInt(document.getElementById("lectureNum").value);
+            const titleAr = document.getElementById("titleAr").value.trim();
+            
+            if (!num || !titleAr) {
+                showToast("برجاء ملء جميع خانات البيانات للمحاضرة!", "error");
+                return;
+            }
+            
+            const lectures = curriculumData.terms[termKey].subjects[subKey].lectures || [];
+            
+            // Check conflicts
+            if (!editMode) {
+                const exists = lectures.find(l => l.num === num);
+                if (exists) {
+                    showToast("هذه المحاضرة مضافة بالفعل! يرجى استخدام زر التعديل لإجراء تغييرات.", "error");
+                    return;
+                }
+            } else if (editMode && num !== editLecNum) {
+                // If they changed the lecture number, check if the new number conflicts with someone else
+                const exists = lectures.find(l => l.num === num);
+                if (exists) {
+                    showToast("الرقم الجديد للمحاضرة مستخدم بالفعل!", "error");
+                    return;
+                }
+            }
+            
+            const newLec = {
+                num: num,
+                title_ar: titleAr,
+                files: {
+                    original_ppt: uploadedPaths.original_ppt,
+                    translated_ppt: uploadedPaths.translated_ppt,
+                    my_quiz: uploadedPaths.my_quiz,
+                    doctor_quiz: uploadedPaths.doctor_quiz
+                }
+            };
+            
+            if (editMode) {
+                // Remove the old one and insert
+                const index = lectures.findIndex(l => l.num === editLecNum);
+                if (index !== -1) lectures.splice(index, 1);
+            }
+            
+            lectures.push(newLec);
+            // Sort by lecture number
+            lectures.sort((a, b) => a.num - b.num);
+            
+            // Update local registry
+            curriculumData.terms[termKey].subjects[subKey].lectures = lectures;
+            
+            // Sync with backend
+            syncRegistryWithServer().then(() => {
+                cancelEditMode();
+                renderLecturesTable();
+                suggestNextLectureNum();
+            });
+        }
+
+        // Render catalog table
+        function renderLecturesTable() {
+            const termKey = document.getElementById("termSelect").value;
+            const subKey = document.getElementById("subjectSelect").value;
+            const tbody = document.getElementById("lecturesTableBody");
+            
+            tbody.innerHTML = "";
+            
+            if (!subKey) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted);">لا توجد مادة نشطة.</td></tr>`;
+                return;
+            }
+            
+            const lectures = curriculumData.terms[termKey].subjects[subKey].lectures || [];
+            
+            if (lectures.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted);">لا توجد محاضرات في هذه المادة بعد.</td></tr>`;
+                return;
+            }
+            
+            lectures.forEach(l => {
+                const tr = document.createElement("tr");
+                const files = l.files || {};
+                
+                // Indicators for file availability: original_ppt, translated_ppt, my_quiz, doctor_quiz
+                const hasOrig = files.original_ppt ? 'active' : 'inactive';
+                const hasTrans = files.translated_ppt ? 'active' : 'inactive';
+                const hasMyQ = files.my_quiz ? 'active' : 'inactive';
+                const hasDocQ = files.doctor_quiz ? 'active' : 'inactive';
+                
+                tr.innerHTML = `
+                    <td style="font-weight:700; color:var(--primary); font-family:'Inter'; text-align:center;">${l.num}</td>
+                    <td>
+                        <div style="font-weight:700;">${l.title_ar}</div>
+                    </td>
+                    <td style="text-align:center;">
+                        <div class="file-indicators" style="justify-content:center;">
+                            <span class="indicator ${hasOrig}" title="الباور الأصلي"></span>
+                            <span class="indicator ${hasTrans}" title="البور المترجم"></span>
+                            <span class="indicator ${hasMyQ}" title="بنك الأسئلة (شغلي)"></span>
+                            <span class="indicator ${hasDocQ}" title="بنك الدكتورة"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="actions-cell" style="justify-content:center;">
+                            <button class="btn-action-sm btn-edit" onclick="enterEditMode(${l.num})">✏️ تعديل</button>
+                            <button class="btn-action-sm btn-delete" onclick="deleteLecture(${l.num})">❌ حذف</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Enter Edit mode
+        function enterEditMode(lecNum) {
+            const termKey = document.getElementById("termSelect").value;
+            const subKey = document.getElementById("subjectSelect").value;
+            const lectures = curriculumData.terms[termKey].subjects[subKey].lectures || [];
+            
+            const lec = lectures.find(l => l.num === lecNum);
+            if (!lec) return;
+            
+            editMode = true;
+            editLecNum = lecNum;
+            
+            document.getElementById("formCardTitle").textContent = `✏️ تعديل المحاضرة رقم ${lecNum}`;
+            document.getElementById("btnSave").querySelector("span").textContent = "💾 حفظ التعديلات";
+            document.getElementById("btnCancelEdit").style.display = "block";
+            
+            // Load details
+            document.getElementById("lectureNum").value = lec.num;
+            document.getElementById("titleAr").value = lec.title_ar;
+            
+            // Load file states
+            const files = lec.files || {};
+            Object.keys(uploadedPaths).forEach(type => {
+                uploadedPaths[type] = files[type] || "";
+                if (uploadedPaths[type]) {
+                    document.getElementById(`display-${type}`).textContent = uploadedPaths[type].split('/').pop();
+                    document.getElementById(`status-${type}`).textContent = "✅ جاهز";
+                    document.getElementById(`status-${type}`).style.color = "var(--accent)";
+                    document.querySelector(`#slot-${type} .btn-clear-slot`).style.display = "inline";
+                } else {
+                    clearFileSlot(type);
+                }
+            });
+            
+            // Scroll to form on mobile
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function cancelEditMode() {
+            editMode = false;
+            editLecNum = null;
+            
+            document.getElementById("formCardTitle").textContent = "✏️ إضافة محاضرة جديدة";
+            document.getElementById("btnSave").querySelector("span").textContent = "💾 حفظ وإضافة المحاضرة";
+            document.getElementById("btnCancelEdit").style.display = "none";
+            
+            // Clear inputs
+            document.getElementById("titleAr").value = "";
+            suggestNextLectureNum();
+            
+            // Clear all slots
+            Object.keys(uploadedPaths).forEach(type => {
+                clearFileSlot(type);
+            });
+        }
+
+        // Delete Lecture
+        function deleteLecture(lecNum) {
+            if (!confirm(`هل أنت متأكد من رغبتك في حذف المحاضرة رقم ${lecNum} بالكامل؟`)) return;
+            
+            const termKey = document.getElementById("termSelect").value;
+            const subKey = document.getElementById("subjectSelect").value;
+            const lectures = curriculumData.terms[termKey].subjects[subKey].lectures || [];
+            
+            const index = lectures.findIndex(l => l.num === lecNum);
+            if (index !== -1) {
+                lectures.splice(index, 1);
+                curriculumData.terms[termKey].subjects[subKey].lectures = lectures;
+                
+                syncRegistryWithServer().then(() => {
+                    if (editMode && editLecNum === lecNum) {
+                        cancelEditMode();
+                    }
+                    renderLecturesTable();
+                    suggestNextLectureNum();
+                });
+            }
+        }
+
+        // Toast Messages
+        function showToast(message, type = "success") {
+            const toast = document.getElementById("toast");
+            const icon = document.getElementById("toastIcon");
+            const msg = document.getElementById("toastMessage");
+            
+            toast.className = `toast show ${type}`;
+            icon.textContent = type === "success" ? "✅" : "⚠️";
+            msg.textContent = message;
+            
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
