@@ -13,15 +13,48 @@ const curriculumData = {
         },
         "biology": {
           "name": "Biology",
-          "lectures": []
+          "lectures": [
+            {
+              "num": 1,
+              "title_ar": "مقدمة في علم الأحياء والخلية (Cytology)",
+              "files": {
+                "original_ppt": "terms/term_1/biology/original/اول محاضره - احياء.pptx",
+                "translated_ppt": "terms/term_1/biology/guides/Biology_Lecture_1_Study_Guide.html",
+                "my_quiz": "terms/term_1/biology/quizzes/Biology_Quiz_L1.html",
+                "doctor_quiz": ""
+              }
+            }
+          ]
         },
         "physiology": {
           "name": "Physiology",
-          "lectures": []
+          "lectures": [
+            {
+              "num": 1,
+              "title_ar": "فيزيولوجيا الرئة والدم",
+              "files": {
+                "original_ppt": "terms/term_1/physiology/original/Physiology  1.pdf",
+                "translated_ppt": "",
+                "my_quiz": "terms/term_1/physiology/quizzes/Physiology_Quiz_L1,2.html",
+                "doctor_quiz": ""
+              }
+            }
+          ]
         },
         "microbiology": {
           "name": "Microbiology",
-          "lectures": []
+          "lectures": [
+            {
+              "num": 1,
+              "title_ar": "مقدمة في علم الأحياء الدقيقة",
+              "files": {
+                "original_ppt": "terms/term_1/microbiology/original/Micro 1.pdf",
+                "translated_ppt": "",
+                "my_quiz": "terms/term_1/microbiology/quizzes/Micro_Quiz_L1.html",
+                "doctor_quiz": ""
+              }
+            }
+          ]
         }
       }
     },
