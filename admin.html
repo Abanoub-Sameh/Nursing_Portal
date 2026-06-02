@@ -650,11 +650,33 @@
             doctor_quiz: ""
         };
 
+        const LOCAL_ADMIN_MESSAGE = "لوحة الأدمن لا تحفظ من GitHub Pages. شغّل run_admin.bat وافتح http://localhost:8000/admin.html ثم ارفع التعديل على GitHub.";
+
         // Initialize lists
         window.onload = function() {
             initTermSelect();
             onTermChange();
+            showHostedAdminWarning();
         };
+
+        function isLocalAdminServer() {
+            return ["localhost", "127.0.0.1"].includes(window.location.hostname);
+        }
+
+        function requireLocalAdminServer() {
+            if (isLocalAdminServer()) return true;
+            showToast(LOCAL_ADMIN_MESSAGE, "error");
+            return false;
+        }
+
+        function showHostedAdminWarning() {
+            if (isLocalAdminServer()) return;
+            const header = document.querySelector("header");
+            const warning = document.createElement("div");
+            warning.style.cssText = "grid-column:span 2;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.45);color:#fecaca;border-radius:12px;padding:12px 16px;font-weight:700;text-align:center;";
+            warning.textContent = LOCAL_ADMIN_MESSAGE;
+            header.insertAdjacentElement("afterend", warning);
+        }
 
         // Initialize Terms
         function initTermSelect() {
@@ -719,6 +741,8 @@
 
         // Prompt user to add a new subject
         function addNewSubjectPrompt() {
+            if (!requireLocalAdminServer()) return;
+
             const termKey = document.getElementById("termSelect").value;
             const subNameEn = prompt("أدخل اسم المادة بالإنجليزية (مثال: Anatomy):")?.trim();
             if (!subNameEn) return;
@@ -747,6 +771,8 @@
 
         // Delete subject
         function deleteActiveSubject() {
+            if (!requireLocalAdminServer()) return;
+
             const termKey = document.getElementById("termSelect").value;
             const subKey = document.getElementById("subjectSelect").value;
             
@@ -776,6 +802,11 @@
 
         // Handle async file upload to local server
         function handleFileUpload(fileType) {
+            if (!requireLocalAdminServer()) {
+                document.getElementById(`file-${fileType}`).value = "";
+                return;
+            }
+
             const fileInput = document.getElementById(`file-${fileType}`);
             if (fileInput.files.length === 0) return;
             
@@ -866,6 +897,10 @@
 
         // Save entire updated registry to server
         function syncRegistryWithServer() {
+            if (!requireLocalAdminServer()) {
+                return Promise.reject(new Error(LOCAL_ADMIN_MESSAGE));
+            }
+
             return fetch("/api/save_curriculum", {
                 method: "POST",
                 headers: {
@@ -873,7 +908,16 @@
                 },
                 body: JSON.stringify(curriculumData)
             })
-            .then(res => res.json())
+            .then(res => {
+                const contentType = res.headers.get("content-type") || "";
+                if (!res.ok) {
+                    throw new Error("الخادم المحلي غير متاح أو رفض الطلب.");
+                }
+                if (!contentType.includes("application/json")) {
+                    throw new Error("افتح لوحة الأدمن من http://localhost:8000/admin.html وليس من GitHub Pages.");
+                }
+                return res.json();
+            })
             .then(data => {
                 if (data.success) {
                     showToast(data.message, "success");
@@ -884,11 +928,14 @@
             .catch(err => {
                 showToast("فشل تحديث قاعدة البيانات: " + err.message, "error");
                 console.error(err);
+                throw err;
             });
         }
 
         // Add or Update Lecture
         function saveLecture() {
+            if (!requireLocalAdminServer()) return;
+
             const termKey = document.getElementById("termSelect").value;
             const subKey = document.getElementById("subjectSelect").value;
             
@@ -1067,6 +1114,8 @@
 
         // Delete Lecture
         function deleteLecture(lecNum) {
+            if (!requireLocalAdminServer()) return;
+
             if (!confirm(`هل أنت متأكد من رغبتك في حذف المحاضرة رقم ${lecNum} بالكامل؟`)) return;
             
             const termKey = document.getElementById("termSelect").value;
