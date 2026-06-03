@@ -5,7 +5,15 @@ const curriculumData = {
       "subjects": {
         "anatomy": {
           "name": "Anatomy",
-          "lectures": []
+          "lectures": [
+            {
+              "num": 1,
+              "title_ar": "الاولي",
+              "files": {
+                "original_ppt": "terms/term_1/anatomy/original/anatomy part 1.pdf"
+              }
+            }
+          ]
         },
         "terminology": {
           "name": "Medical Terminology",
