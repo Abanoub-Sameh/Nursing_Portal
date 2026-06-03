@@ -21,18 +21,7 @@ const curriculumData = {
         },
         "microbiology": {
           "name": "Microbiology",
-          "lectures": [
-            {
-              "num": 1,
-              "title_ar": "مقدمة في علم الأحياء الدقيقة",
-              "files": {
-                "original_ppt": "terms/term_1/microbiology/original/Micro 1.pdf",
-                "translated_ppt": "",
-                "my_quiz": "terms/term_1/microbiology/quizzes/Micro_Quiz_L1.html",
-                "doctor_quiz": ""
-              }
-            }
-          ]
+          "lectures": []
         }
       }
     },
