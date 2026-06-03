@@ -17,18 +17,7 @@ const curriculumData = {
         },
         "physiology": {
           "name": "Physiology",
-          "lectures": [
-            {
-              "num": 1,
-              "title_ar": "فيزيولوجيا الرئة والدم",
-              "files": {
-                "original_ppt": "terms/term_1/physiology/original/Physiology  1.pdf",
-                "translated_ppt": "",
-                "my_quiz": "terms/term_1/physiology/quizzes/Physiology_Quiz_L1,2.html",
-                "doctor_quiz": ""
-              }
-            }
-          ]
+          "lectures": []
         },
         "microbiology": {
           "name": "Microbiology",
