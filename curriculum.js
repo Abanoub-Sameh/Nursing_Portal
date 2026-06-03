@@ -13,18 +13,7 @@ const curriculumData = {
         },
         "biology": {
           "name": "Biology",
-          "lectures": [
-            {
-              "num": 1,
-              "title_ar": "مقدمة في علم الأحياء والخلية (Cytology)",
-              "files": {
-                "original_ppt": "terms/term_1/biology/original/اول محاضره - احياء.pptx",
-                "translated_ppt": "terms/term_1/biology/guides/Biology_Lecture_1_Study_Guide.html",
-                "my_quiz": "terms/term_1/biology/quizzes/Biology_Quiz_L1.html",
-                "doctor_quiz": ""
-              }
-            }
-          ]
+          "lectures": []
         },
         "physiology": {
           "name": "Physiology",
