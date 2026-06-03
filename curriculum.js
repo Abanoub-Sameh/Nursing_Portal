@@ -8,7 +8,7 @@ const curriculumData = {
           "lectures": [
             {
               "num": 1,
-              "title_ar": "المحاضره الاولة",
+              "title_ar": "المحاضره الاولي",
               "files": {
                 "original_ppt": "terms/term_1/anatomy/original/1 Introduction to Human Anatomy.ppt",
                 "translated_ppt": "terms/term_1/anatomy/guides/ماده الاناتومي المحاضره الاولي.pdf",
