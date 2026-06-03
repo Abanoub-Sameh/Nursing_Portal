@@ -1,0 +1,3914 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Anatomy Question Bank – Introduction to Human Anatomy</title>
+    <meta name="description" content="Comprehensive question bank for Introduction to Human Anatomy - Nursing Faculty">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-card: #1a2236;
+            --bg-card-hover: #1e2a42;
+            --accent-primary: #6366f1;
+            --accent-secondary: #818cf8;
+            --accent-glow: rgba(99, 102, 241, 0.3);
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.12);
+            --success-border: rgba(16, 185, 129, 0.3);
+            --error: #ef4444;
+            --error-bg: rgba(239, 68, 68, 0.12);
+            --error-border: rgba(239, 68, 68, 0.3);
+            --warning: #f59e0b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: rgba(255,255,255,0.06);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --shadow: 0 4px 24px rgba(0,0,0,0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 0%, rgba(99,102,241,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(139,92,246,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(59,130,246,0.05) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app-container {
+            position: relative;
+            z-index: 1;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 16px;
+            padding-bottom: 100px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            padding: 32px 16px 24px;
+            margin-bottom: 24px;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(99,102,241,0.12);
+            border: 1px solid rgba(99,102,241,0.25);
+            color: var(--accent-secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 50px;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .header-badge .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f1f5f9 0%, #a5b4fc 50%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ===== STATS BAR ===== */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(99,102,241,0.2);
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-secondary);
+        }
+
+        .stat-value.correct { color: var(--success); }
+        .stat-value.wrong { color: var(--error); }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-section {
+            margin-bottom: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-header span {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), #a78bfa);
+            border-radius: 50px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 30px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
+            border-radius: 50px;
+        }
+
+        /* ===== MODE SELECTOR ===== */
+        .mode-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            flex: 1;
+            min-width: 100px;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-family: inherit;
+        }
+
+        .mode-btn:hover {
+            border-color: rgba(99,102,241,0.3);
+            color: var(--text-primary);
+        }
+
+        .mode-btn.active {
+            background: rgba(99,102,241,0.15);
+            border-color: var(--accent-primary);
+            color: var(--accent-secondary);
+            box-shadow: 0 0 20px rgba(99,102,241,0.15);
+        }
+
+        /* ===== TOPIC FILTER ===== */
+        .topic-filter {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 24px;
+            scrollbar-width: none;
+        }
+        .topic-filter::-webkit-scrollbar { display: none; }
+
+        .topic-chip {
+            white-space: nowrap;
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .topic-chip:hover {
+            border-color: rgba(99,102,241,0.3);
+        }
+
+        .topic-chip.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+        }
+
+        /* ===== QUESTION CARD ===== */
+        .question-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.4s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-card:nth-child(1) { animation-delay: 0.05s; }
+        .question-card:nth-child(2) { animation-delay: 0.1s; }
+        .question-card:nth-child(3) { animation-delay: 0.15s; }
+        .question-card:nth-child(4) { animation-delay: 0.2s; }
+        .question-card:nth-child(5) { animation-delay: 0.25s; }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .question-number .q-badge {
+            background: rgba(99,102,241,0.15);
+            color: var(--accent-secondary);
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .question-topic-badge {
+            display: inline-block;
+            background: rgba(139,92,246,0.12);
+            color: #a78bfa;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .question-text {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }
+
+        /* ===== OPTIONS ===== */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: var(--radius-sm);
+            background: rgba(255,255,255,0.02);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: left;
+            font-family: inherit;
+            line-height: 1.5;
+            width: 100%;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: rgba(99,102,241,0.3);
+            background: rgba(99,102,241,0.06);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .option-btn .option-letter {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.06);
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: all 0.25s ease;
+        }
+
+        .option-btn:hover:not(.disabled) .option-letter {
+            background: rgba(99,102,241,0.2);
+            color: var(--accent-secondary);
+        }
+
+        .option-btn.correct {
+            border-color: var(--success-border);
+            background: var(--success-bg);
+            color: var(--success);
+        }
+        .option-btn.correct .option-letter {
+            background: rgba(16,185,129,0.2);
+            color: var(--success);
+        }
+
+        .option-btn.wrong {
+            border-color: var(--error-border);
+            background: var(--error-bg);
+            color: var(--error);
+        }
+        .option-btn.wrong .option-letter {
+            background: rgba(239,68,68,0.2);
+            color: var(--error);
+        }
+
+        .option-btn.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .option-btn.correct.disabled, .option-btn.wrong.disabled {
+            opacity: 1;
+        }
+
+        /* ===== EXPLANATION ===== */
+        .explanation {
+            margin-top: 14px;
+            padding: 14px 16px;
+            background: rgba(99,102,241,0.06);
+            border: 1px solid rgba(99,102,241,0.15);
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .explanation strong {
+            color: var(--accent-secondary);
+        }
+
+        /* ===== PAGINATION / CONTROLS ===== */
+        .controls-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10,14,26,0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            padding: 12px 16px;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .ctrl-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .ctrl-btn:hover {
+            border-color: rgba(99,102,241,0.3);
+            color: var(--text-primary);
+        }
+
+        .ctrl-btn.primary {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+        }
+
+        .ctrl-btn.primary:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 24px var(--accent-glow);
+        }
+
+        .ctrl-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            display: flex;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ===== RESULT SCREEN ===== */
+        .result-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .result-screen .score-circle {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 6px solid var(--accent-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            position: relative;
+        }
+
+        .result-screen .score-circle::before {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            border: 2px solid rgba(99,102,241,0.15);
+        }
+
+        .score-percent {
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-secondary);
+        }
+
+        .score-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .result-message {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .result-sub {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 32px;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .result-stat {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+        }
+
+        .result-stat .val {
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .result-stat .lbl {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        /* ===== SEARCH ===== */
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-box .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* ===== SHUFFLE BTN ===== */
+        .action-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-btn:hover {
+            border-color: rgba(99,102,241,0.3);
+            color: var(--text-primary);
+            background: rgba(99,102,241,0.08);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .app-container { padding: 10px; padding-bottom: 90px; }
+            .header h1 { font-size: 1.4rem; }
+            .question-card { padding: 18px; }
+            .stat-value { font-size: 1.25rem; }
+            .stats-bar { gap: 6px; }
+            .stat-card { padding: 10px 6px; }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+        /* Hidden */
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="app-container" id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-badge"><span class="pulse"></span> abanoub sameh </div>
+            <h1>🩺  Anatomy Question Bank </h1>
+           
+            <div class="arabic-notice" style="margin-top: 16px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.25); color: #f59e0b; padding: 12px 14px; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600; direction: rtl; display: inline-flex; align-items: center; gap: 8px; justify-content: center; width: 100%;">
+                ⚠️ الكويز ده علي اول محاضره في مادة الاناتومي.
+            </div>
+        </header>
+
+        <!-- Stats -->
+        <div class="stats-bar" id="statsBar">
+            <div class="stat-card">
+                <div class="stat-value" id="totalQ">0</div>
+                <div class="stat-label">Questions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value correct" id="correctCount">0</div>
+                <div class="stat-label">Correct</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value wrong" id="wrongCount">0</div>
+                <div class="stat-label">Wrong</div>
+            </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-section">
+            <div class="progress-header">
+                <span>Progress</span>
+                <span id="progressText">0 / 0</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill" style="width:0%"></div>
+            </div>
+        </div>
+
+        <!-- Mode Selector -->
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="practice" id="modePractice">📝 Practice</button>
+            <button class="mode-btn" data-mode="exam" id="modeExam">🎯 Exam Mode</button>
+            <button class="mode-btn" data-mode="review" id="modeReview">📖 Review Wrong</button>
+        </div>
+
+        <!-- Topic Filter -->
+        <div class="topic-filter" id="topicFilter"></div>
+
+        <!-- Action Row -->
+        <div class="action-row">
+            <button class="action-btn" id="shuffleBtn" onclick="shuffleQuestions()">🔀 Shuffle</button>
+            <button class="action-btn" id="resetBtn" onclick="resetQuiz()">🔄 Reset All</button>
+            <button class="action-btn" id="showAllBtn" onclick="showAllQuestions()">📋 Show All</button>
+        </div>
+
+        <!-- Questions Container -->
+        <div id="questionsContainer"></div>
+
+        <!-- Result Screen -->
+        <div id="resultScreen" class="result-screen hidden"></div>
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="controls-bar" id="controlsBar">
+        <button class="ctrl-btn" id="prevBtn" onclick="changePage(-1)">◀ Prev</button>
+        <span class="page-info" id="pageInfo">1 / 1</span>
+        <button class="ctrl-btn" id="nextBtn" onclick="changePage(1)">Next ▶</button>
+        <button class="ctrl-btn primary" id="finishBtn" onclick="showResults()" class="hidden">🏁 Finish</button>
+    </div>
+
+    <script>
+    // ========================
+    // QUESTION BANK DATABASE
+    // ========================
+    const allQuestions = [
+        // ===== TOPIC: DEFINITION & BASICS =====
+        {
+            id: 1,
+            topic: "Definition & Basics",
+            question: "What is the definition of human anatomy?",
+            options: [
+                "The study of body functions and processes",
+                "The study of the structure of the body and the relationship of its constituent parts to each other",
+                "The study of diseases and their treatments",
+                "The study of cells under microscope"
+            ],
+            correct: 1,
+            explanation: "Human anatomy is the study of the structure of the body and the relationship of its constituent parts to each other."
+        },
+        {
+            id: 2,
+            topic: "Definition & Basics",
+            question: "What is the basic unit of the human body?",
+            options: [
+                "Tissue",
+                "Organ",
+                "The cell",
+                "System"
+            ],
+            correct: 2,
+            explanation: "The cell is the basic unit of the human body."
+        },
+        {
+            id: 3,
+            topic: "Definition & Basics",
+            question: "What is the correct hierarchy of structural organization in the body?",
+            options: [
+                "Tissues → Cells → Organs → Systems",
+                "Cells → Organs → Tissues → Systems",
+                "Cells → Tissues → Organs → Systems",
+                "Systems → Organs → Tissues → Cells"
+            ],
+            correct: 2,
+            explanation: "The correct hierarchy is: Cells → Tissues → Organs → Systems. Cells group into tissues, tissues form organs, and organs form systems."
+        },
+        {
+            id: 4,
+            topic: "Definition & Basics",
+            question: "What are tissues?",
+            options: [
+                "Single cells that perform a specific function",
+                "Organized groups of cells similar both in appearance and in function",
+                "Groups of organs that work together",
+                "The intercellular substance between cells"
+            ],
+            correct: 1,
+            explanation: "Tissues are organized groups of cells similar both in appearance and in function."
+        },
+        {
+            id: 5,
+            topic: "Definition & Basics",
+            question: "The human body consists of various types of specialized cells and a varying amount of:",
+            options: [
+                "Blood plasma",
+                "Hormones",
+                "Intercellular substance",
+                "Enzymes"
+            ],
+            correct: 2,
+            explanation: "The human body consists of various types of specialized cells and a varying amount of intercellular substance."
+        },
+        {
+            id: 6,
+            topic: "Definition & Basics",
+            question: "Various types of tissues form more complex anatomical functional units known as:",
+            options: [
+                "Systems",
+                "Cells",
+                "Organs",
+                "Molecules"
+            ],
+            correct: 2,
+            explanation: "Various types of tissues form more complex anatomical functional units known as organs, which in turn form systems."
+        },
+        {
+            id: 7,
+            topic: "Definition & Basics",
+            question: "Studying the structure of the cells is called:",
+            options: [
+                "Histology",
+                "Cytology",
+                "Systemic anatomy",
+                "Pathology"
+            ],
+            correct: 1,
+            explanation: "Studying the structure of the cells is called cytology."
+        },
+        {
+            id: 8,
+            topic: "Definition & Basics",
+            question: "Studying the structure at tissue level is called:",
+            options: [
+                "Cytology",
+                "Physiology",
+                "Histology",
+                "Embryology"
+            ],
+            correct: 2,
+            explanation: "Studying the structure at tissue level is called histology."
+        },
+        {
+            id: 9,
+            topic: "Definition & Basics",
+            question: "Studying the structure of the body systems is called:",
+            options: [
+                "Regional anatomy",
+                "Clinical anatomy",
+                "Histology",
+                "Systemic anatomy"
+            ],
+            correct: 3,
+            explanation: "Studying the structure of the body systems is called systemic anatomy."
+        },
+
+        // ===== TOPIC: APPROACHES TO STUDYING ANATOMY =====
+        {
+            id: 10,
+            topic: "Approaches to Anatomy",
+            question: "What are the three main approaches to studying anatomy?",
+            options: [
+                "Microscopic, macroscopic, and clinical",
+                "Regional (topographical), systemic, and clinical (applied)",
+                "Surgical, medical, and pathological",
+                "Gross, histological, and embryological"
+            ],
+            correct: 1,
+            explanation: "The three main approaches to studying anatomy are regional (topographical), systemic, and clinical (applied)."
+        },
+        {
+            id: 11,
+            topic: "Approaches to Anatomy",
+            question: "Regional or topographical anatomy is the method of studying the body's structure by:",
+            options: [
+                "Studying one organ system at a time",
+                "Focusing attention on a specific part, region, or subregion",
+                "Applying anatomical knowledge to medicine",
+                "Examining cells under a microscope"
+            ],
+            correct: 1,
+            explanation: "Regional or topographical anatomy is the method of studying the body's structure by focusing attention on a specific part (e.g., the head), region (the face), or subregion (the orbit)."
+        },
+        {
+            id: 12,
+            topic: "Approaches to Anatomy",
+            question: "In regional anatomy, what does one examine within a specific region?",
+            options: [
+                "Only the bones",
+                "Only the blood vessels",
+                "The arrangement and relationships of the various systemic structures (muscles, nerves, arteries, etc.)",
+                "Only the skin layers"
+            ],
+            correct: 2,
+            explanation: "Regional anatomy examines the arrangement and relationships of the various systemic structures (muscles, nerves, arteries, etc.) within a specific region."
+        },
+        {
+            id: 13,
+            topic: "Approaches to Anatomy",
+            question: "Systematic anatomy recognizes the organization of the body's organs into:",
+            options: [
+                "Regions that are adjacent to each other",
+                "Systems that work together to carry out complex functions",
+                "Layers from superficial to deep",
+                "Cells and tissues"
+            ],
+            correct: 1,
+            explanation: "Systematic anatomy recognizes the organization of the body's organs into systems that work together to carry out complex functions."
+        },
+        {
+            id: 14,
+            topic: "Approaches to Anatomy",
+            question: "Clinical (applied) anatomy emphasizes:",
+            options: [
+                "The study of cells and tissues",
+                "The study of body regions",
+                "Application of anatomical knowledge to the practice of medicine",
+                "The study of embryonic development"
+            ],
+            correct: 2,
+            explanation: "Clinical (applied) anatomy emphasizes application of anatomical knowledge to the practice of medicine."
+        },
+
+        // ===== TOPIC: BODY SYSTEMS =====
+        {
+            id: 15,
+            topic: "Body Systems",
+            question: "The integumentary system consists of:",
+            options: [
+                "The bones and cartilage",
+                "The skin and its appendages",
+                "The muscles and tendons",
+                "The heart and blood vessels"
+            ],
+            correct: 1,
+            explanation: "The integumentary system consists of the skin and its appendages (nails, hair follicles, sebaceous glands, and sweat glands)."
+        },
+        {
+            id: 16,
+            topic: "Body Systems",
+            question: "Osteology is the study of which system?",
+            options: [
+                "Muscular system",
+                "Nervous system",
+                "Skeletal system",
+                "Circulatory system"
+            ],
+            correct: 2,
+            explanation: "The skeletal system (osteology) consists of bones and cartilage."
+        },
+        {
+            id: 17,
+            topic: "Body Systems",
+            question: "The articular system (arthrology) consists of:",
+            options: [
+                "Arteries and veins",
+                "Joints and their associated ligaments",
+                "Muscles and tendons",
+                "Nerves and ganglia"
+            ],
+            correct: 1,
+            explanation: "The articular system (arthrology) consists of joints and their associated ligaments."
+        },
+        {
+            id: 18,
+            topic: "Body Systems",
+            question: "Myology is the study of the:",
+            options: [
+                "Heart",
+                "Muscles",
+                "Nerves",
+                "Bones"
+            ],
+            correct: 1,
+            explanation: "Muscular system (myology) consists of muscles that act (contract) to move parts of the body."
+        },
+        {
+            id: 19,
+            topic: "Body Systems",
+            question: "The nervous system (neurology) consists of:",
+            options: [
+                "Brain and heart",
+                "Central nervous system (brain and spinal cord) and peripheral nervous system (nerves and ganglia)",
+                "Only the brain",
+                "Muscles and nerves"
+            ],
+            correct: 1,
+            explanation: "The nervous system (neurology) consists of central nervous system (brain and spinal cord) and peripheral nervous system (nerves and ganglia)."
+        },
+        {
+            id: 20,
+            topic: "Body Systems",
+            question: "The circulatory system (angiology) consists of:",
+            options: [
+                "Only the heart",
+                "The cardiovascular and lymphatic systems",
+                "Only blood vessels",
+                "The respiratory system"
+            ],
+            correct: 1,
+            explanation: "The circulatory system (angiology) consists of the cardiovascular (the heart and blood vessels) and lymphatic systems, which function in parallel to transport the body's fluids."
+        },
+        {
+            id: 21,
+            topic: "Body Systems",
+            question: "The term 'angiology' refers to the study of the:",
+            options: [
+                "Digestive system",
+                "Circulatory system",
+                "Respiratory system",
+                "Reproductive system"
+            ],
+            correct: 1,
+            explanation: "Angiology is the study of the circulatory system."
+        },
+        {
+            id: 22,
+            topic: "Body Systems",
+            question: "Gastro-enterology is the study of the:",
+            options: [
+                "Urinary system",
+                "Respiratory system",
+                "Digestive or alimentary system",
+                "Endocrine system"
+            ],
+            correct: 2,
+            explanation: "The digestive or alimentary system (gastro-enterology) consists of organs and glands associated with ingestion, mastication, deglutition, digestion, absorption of food, and elimination of feces."
+        },
+        {
+            id: 23,
+            topic: "Body Systems",
+            question: "The term 'mastication' means:",
+            options: [
+                "Swallowing",
+                "Chewing",
+                "Digestion",
+                "Absorption"
+            ],
+            correct: 1,
+            explanation: "Mastication means chewing, as stated in the description of the digestive system."
+        },
+        {
+            id: 24,
+            topic: "Body Systems",
+            question: "The term 'deglutition' means:",
+            options: [
+                "Chewing",
+                "Digestion",
+                "Swallowing",
+                "Elimination"
+            ],
+            correct: 2,
+            explanation: "Deglutition means swallowing."
+        },
+        {
+            id: 25,
+            topic: "Body Systems",
+            question: "What does the digestive system eliminate?",
+            options: [
+                "Urine",
+                "Carbon dioxide",
+                "Feces (solid waste remaining after nutrients have been absorbed)",
+                "Sweat"
+            ],
+            correct: 2,
+            explanation: "The digestive system eliminates feces (solid waste) remaining after nutrients have been absorbed."
+        },
+        {
+            id: 26,
+            topic: "Body Systems",
+            question: "The respiratory system consists of:",
+            options: [
+                "The heart and blood vessels",
+                "The kidneys and bladder",
+                "The air passages and lungs",
+                "The mouth and esophagus"
+            ],
+            correct: 2,
+            explanation: "The respiratory system consists of the air passages and lungs that supply oxygen to the blood for cellular respiration and eliminate carbon dioxide from it."
+        },
+        {
+            id: 27,
+            topic: "Body Systems",
+            question: "The respiratory system functions to:",
+            options: [
+                "Filter blood and produce urine",
+                "Supply oxygen to the blood and eliminate carbon dioxide",
+                "Produce hormones",
+                "Transport nutrients"
+            ],
+            correct: 1,
+            explanation: "The respiratory system supplies oxygen to the blood for cellular respiration and eliminates carbon dioxide from it."
+        },
+        {
+            id: 28,
+            topic: "Body Systems",
+            question: "The urinary system (urology) consists of:",
+            options: [
+                "The lungs, trachea, and bronchi",
+                "The kidneys, ureters, urinary bladder, and urethra",
+                "The ovaries and testes",
+                "The liver and gallbladder"
+            ],
+            correct: 1,
+            explanation: "The urinary system (urology) consists of the kidneys, ureters, urinary bladder, and urethra."
+        },
+        {
+            id: 29,
+            topic: "Body Systems",
+            question: "The urinary system functions to:",
+            options: [
+                "Produce hormones",
+                "Digest food",
+                "Filter blood and subsequently produce, transport, store, and intermittently excrete urine",
+                "Transport oxygen"
+            ],
+            correct: 2,
+            explanation: "The urinary system filters blood and subsequently produces, transports, stores, and intermittently excretes urine."
+        },
+        {
+            id: 30,
+            topic: "Body Systems",
+            question: "The reproductive or genital system consists of:",
+            options: [
+                "The kidneys and bladder",
+                "The gonads (ovaries and testes) that produce eggs and sperms, and the ducts that transport them",
+                "The endocrine glands",
+                "The muscles and bones"
+            ],
+            correct: 1,
+            explanation: "The reproductive or genital system consists of the gonads (ovaries and testes) that produce eggs (oocytes and sperms), and the ducts that transport them."
+        },
+        {
+            id: 31,
+            topic: "Body Systems",
+            question: "The endocrine system (endocrinology) consists of:",
+            options: [
+                "Muscles and tendons",
+                "Discrete ductless glands",
+                "Ducts and tubes",
+                "Bones and cartilage"
+            ],
+            correct: 1,
+            explanation: "The endocrine system (endocrinology) consists of discrete ductless glands (such as the thyroid gland)."
+        },
+        {
+            id: 32,
+            topic: "Body Systems",
+            question: "The skeletal system consists of:",
+            options: [
+                "Muscles and tendons",
+                "Bones and cartilage",
+                "Joints only",
+                "Skin and appendages"
+            ],
+            correct: 1,
+            explanation: "The skeletal system (osteology) consists of bones and cartilage."
+        },
+        {
+            id: 33,
+            topic: "Body Systems",
+            question: "Which system's study is called 'arthrology'?",
+            options: [
+                "Muscular system",
+                "Skeletal system",
+                "Articular system",
+                "Circulatory system"
+            ],
+            correct: 2,
+            explanation: "The articular system (arthrology) consists of joints and their associated ligaments."
+        },
+        {
+            id: 34,
+            topic: "Body Systems",
+            question: "The cardiovascular system is part of which larger system?",
+            options: [
+                "Respiratory system",
+                "Digestive system",
+                "Circulatory system (angiology)",
+                "Nervous system"
+            ],
+            correct: 2,
+            explanation: "The circulatory system (angiology) consists of the cardiovascular (the heart and blood vessels) and lymphatic systems."
+        },
+        {
+            id: 35,
+            topic: "Body Systems",
+            question: "Which of the following is an example of a ductless gland in the endocrine system?",
+            options: [
+                "Sweat gland",
+                "Sebaceous gland",
+                "Thyroid gland",
+                "Salivary gland"
+            ],
+            correct: 2,
+            explanation: "The endocrine system consists of discrete ductless glands such as the thyroid gland."
+        },
+
+        // ===== TOPIC: ANATOMICAL POSITION =====
+        {
+            id: 36,
+            topic: "Anatomical Position",
+            question: "In the anatomical position, the person is:",
+            options: [
+                "Lying down with arms at the sides",
+                "Oriented in an erect standing position with eyes and head looking forwards",
+                "Sitting with legs crossed",
+                "Lying on the stomach"
+            ],
+            correct: 1,
+            explanation: "In the anatomical position, the person is oriented in an erect standing position, with eyes and head looking forwards."
+        },
+        {
+            id: 37,
+            topic: "Anatomical Position",
+            question: "In the anatomical position, the palms of the hands are:",
+            options: [
+                "Facing backward",
+                "Facing inward toward the body",
+                "Facing forward with fingers extended",
+                "Clenched into fists"
+            ],
+            correct: 2,
+            explanation: "In the anatomical position, the palms of the hands face forward with fingers extended."
+        },
+        {
+            id: 38,
+            topic: "Anatomical Position",
+            question: "In the anatomical position, the arms are:",
+            options: [
+                "Raised above the head",
+                "Close to the sides",
+                "Extended forward",
+                "Behind the back"
+            ],
+            correct: 1,
+            explanation: "In the anatomical position, the arms are close to the sides."
+        },
+        {
+            id: 39,
+            topic: "Anatomical Position",
+            question: "In the anatomical position, the feet are:",
+            options: [
+                "Pointing outward",
+                "Crossed",
+                "Forward and perpendicular to the body with heels together",
+                "Shoulder-width apart"
+            ],
+            correct: 2,
+            explanation: "In the anatomical position, the feet are forward and perpendicular to the body with the heels together."
+        },
+
+        // ===== TOPIC: ANATOMICAL PLANES =====
+        {
+            id: 40,
+            topic: "Anatomical Planes",
+            question: "The median sagittal plane divides the body into:",
+            options: [
+                "Anterior and posterior parts",
+                "Upper and lower parts",
+                "Equal right and left halves",
+                "Front and back parts"
+            ],
+            correct: 2,
+            explanation: "The median sagittal plane is an imaginary vertical plane passing through the center of the body, dividing it into equal right and left halves."
+        },
+        {
+            id: 41,
+            topic: "Anatomical Planes",
+            question: "A paramedian sagittal plane is:",
+            options: [
+                "The same as the median plane",
+                "A horizontal plane",
+                "Any plane parallel to the median plane",
+                "A plane at right angle to the median plane"
+            ],
+            correct: 2,
+            explanation: "A paramedian sagittal plane is any plane parallel to the median plane."
+        },
+        {
+            id: 42,
+            topic: "Anatomical Planes",
+            question: "The coronal plane divides the body into:",
+            options: [
+                "Right and left halves",
+                "Anterior and posterior parts",
+                "Upper and lower parts",
+                "Medial and lateral parts"
+            ],
+            correct: 1,
+            explanation: "The coronal plane is any vertical plane at right angle to the median plane. It divides the body into anterior and posterior parts."
+        },
+        {
+            id: 43,
+            topic: "Anatomical Planes",
+            question: "The coronal plane is at right angle to:",
+            options: [
+                "The horizontal plane only",
+                "The median plane or sagittal plane",
+                "The transverse plane only",
+                "No other plane"
+            ],
+            correct: 1,
+            explanation: "The coronal plane is any vertical plane at right angle to the median plane or sagittal plane."
+        },
+        {
+            id: 44,
+            topic: "Anatomical Planes",
+            question: "The horizontal or transverse plane divides the body into:",
+            options: [
+                "Right and left parts",
+                "Anterior and posterior parts",
+                "Upper and lower parts",
+                "Medial and lateral parts"
+            ],
+            correct: 2,
+            explanation: "The horizontal or transverse plane is any plane at right angle to both the median and coronal planes. It divides the body into upper and lower parts."
+        },
+        {
+            id: 45,
+            topic: "Anatomical Planes",
+            question: "The transverse plane is at right angle to:",
+            options: [
+                "Only the median plane",
+                "Only the coronal plane",
+                "Both the median and coronal planes",
+                "The sagittal plane only"
+            ],
+            correct: 2,
+            explanation: "The horizontal or transverse plane is any plane at right angle to both the median and coronal planes."
+        },
+        {
+            id: 46,
+            topic: "Anatomical Planes",
+            question: "The median sagittal plane is described as:",
+            options: [
+                "A horizontal plane",
+                "An imaginary vertical plane passing through the center of the body",
+                "A plane at right angle to the coronal plane",
+                "A plane that divides the body into upper and lower halves"
+            ],
+            correct: 1,
+            explanation: "The median sagittal plane is an imaginary vertical plane passing through the center of the body."
+        },
+
+        // ===== TOPIC: TERMS OF POSITION =====
+        {
+            id: 47,
+            topic: "Terms of Position",
+            question: "The term 'anterior' (ventral) refers to:",
+            options: [
+                "Any structure nearer to the back of the body",
+                "Any structure nearer to the front of the body",
+                "Any structure above",
+                "Any structure to the side"
+            ],
+            correct: 1,
+            explanation: "Anterior (ventral) means any structure nearer to the front of the body."
+        },
+        {
+            id: 48,
+            topic: "Terms of Position",
+            question: "The term 'posterior' (dorsal) refers to:",
+            options: [
+                "Any structure nearer to the front",
+                "Any structure nearer to the back of the body",
+                "Any structure below",
+                "Any structure in the center"
+            ],
+            correct: 1,
+            explanation: "Posterior (dorsal) means any structure nearer to the back of the body."
+        },
+        {
+            id: 49,
+            topic: "Terms of Position",
+            question: "In describing the hand, what terms are used instead of anterior and posterior?",
+            options: [
+                "Plantar and dorsal",
+                "Superior and inferior",
+                "Palmar and dorsal surfaces",
+                "Medial and lateral"
+            ],
+            correct: 2,
+            explanation: "In describing the hand, the terms palmar and dorsal surfaces are used in place of anterior and posterior."
+        },
+        {
+            id: 50,
+            topic: "Terms of Position",
+            question: "In describing the foot, what terms are used instead of upper and lower surfaces?",
+            options: [
+                "Palmar and dorsal",
+                "Anterior and posterior",
+                "Plantar and dorsal surfaces",
+                "Proximal and distal"
+            ],
+            correct: 2,
+            explanation: "In describing the foot, the terms plantar and dorsal surfaces are used instead of lower and upper surfaces."
+        },
+        {
+            id: 51,
+            topic: "Terms of Position",
+            question: "'Proximal' means:",
+            options: [
+                "Far away from the trunk",
+                "Nearer to the roots of the limbs (trunk)",
+                "Nearer to the front",
+                "Nearer to the skin surface"
+            ],
+            correct: 1,
+            explanation: "Proximal means any structure nearer to the roots of the limbs (trunk)."
+        },
+        {
+            id: 52,
+            topic: "Terms of Position",
+            question: "'Distal' means:",
+            options: [
+                "Nearer to the trunk",
+                "Far away from the roots of the limbs (trunk)",
+                "Nearer to the back",
+                "Deep within the body"
+            ],
+            correct: 1,
+            explanation: "Distal means any structure far away from the roots of the limbs (trunk)."
+        },
+        {
+            id: 53,
+            topic: "Terms of Position",
+            question: "The forearm is _____ to the hand.",
+            options: [
+                "Distal",
+                "Lateral",
+                "Proximal",
+                "Inferior"
+            ],
+            correct: 2,
+            explanation: "The forearm is proximal to the hand (closer to the trunk) and the hand is distal to the forearm."
+        },
+        {
+            id: 54,
+            topic: "Terms of Position",
+            question: "'Superficial' means:",
+            options: [
+                "Deep within the body",
+                "Nearer to the surface (skin) of the body",
+                "Farther from the trunk",
+                "Closer to the median plane"
+            ],
+            correct: 1,
+            explanation: "Superficial means nearer to the surface (skin) of the body."
+        },
+        {
+            id: 55,
+            topic: "Terms of Position",
+            question: "'Deep' means:",
+            options: [
+                "Nearer to the skin",
+                "Away from the surface (skin) of the body",
+                "Closer to the trunk",
+                "Closer to the head"
+            ],
+            correct: 1,
+            explanation: "Deep means away from the surface (skin) of the body."
+        },
+        {
+            id: 56,
+            topic: "Terms of Position",
+            question: "'Superior' means:",
+            options: [
+                "Closer to the feet",
+                "Closer to the back",
+                "Closer to the head",
+                "Closer to the midline"
+            ],
+            correct: 2,
+            explanation: "Superior means closer to the head."
+        },
+        {
+            id: 57,
+            topic: "Terms of Position",
+            question: "'Inferior' means:",
+            options: [
+                "Closer to the head",
+                "Closer to the feet",
+                "Closer to the back",
+                "Away from the midline"
+            ],
+            correct: 1,
+            explanation: "Inferior means closer to the feet."
+        },
+        {
+            id: 58,
+            topic: "Terms of Position",
+            question: "'Medial' refers to a structure that is:",
+            options: [
+                "Farther from the median plane",
+                "Situated nearer to the median plane of the body",
+                "Nearer to the front of the body",
+                "Closer to the skin surface"
+            ],
+            correct: 1,
+            explanation: "Medial means a structure situated nearer to the median plane of the body than another."
+        },
+        {
+            id: 59,
+            topic: "Terms of Position",
+            question: "'Lateral' refers to a structure that:",
+            options: [
+                "Lies nearer to the median plane",
+                "Lies farther away from the median plane",
+                "Is closer to the head",
+                "Is closer to the feet"
+            ],
+            correct: 1,
+            explanation: "Lateral means a structure that lies farther away from the median plane than another."
+        },
+        {
+            id: 60,
+            topic: "Terms of Position",
+            question: "'Median' refers to any structure lying in:",
+            options: [
+                "The coronal plane",
+                "The transverse plane",
+                "The median plane",
+                "The lateral plane"
+            ],
+            correct: 2,
+            explanation: "Median refers to any structure lying in the median plane."
+        },
+
+        // ===== TOPIC: TERMS OF MOVEMENT =====
+        {
+            id: 61,
+            topic: "Terms of Movement",
+            question: "Flexion is a movement that takes place in:",
+            options: [
+                "A coronal plane",
+                "A sagittal plane",
+                "A horizontal plane",
+                "A transverse plane"
+            ],
+            correct: 1,
+            explanation: "Flexion is a movement that takes place in a sagittal plane."
+        },
+        {
+            id: 62,
+            topic: "Terms of Movement",
+            question: "Flexion is usually a(n) _____ movement.",
+            options: [
+                "Posterior",
+                "Lateral",
+                "Anterior",
+                "Medial"
+            ],
+            correct: 2,
+            explanation: "Flexion is usually an anterior movement, but it is occasionally posterior, as in the case of the knee joint."
+        },
+        {
+            id: 63,
+            topic: "Terms of Movement",
+            question: "At which joint is flexion a posterior movement?",
+            options: [
+                "Elbow joint",
+                "Shoulder joint",
+                "Knee joint",
+                "Wrist joint"
+            ],
+            correct: 2,
+            explanation: "Flexion is usually an anterior movement, but it is occasionally posterior, as in the case of the knee joint."
+        },
+        {
+            id: 64,
+            topic: "Terms of Movement",
+            question: "Flexion of the elbow joint approximates:",
+            options: [
+                "The posterior surface of the forearm to the posterior surface of the arm",
+                "The anterior surface of the forearm to the anterior surface of the arm",
+                "The lateral surface of the forearm to the lateral surface of the arm",
+                "The medial surface of the forearm to the medial surface of the arm"
+            ],
+            correct: 1,
+            explanation: "Flexion of the elbow joint approximates the anterior surface of the forearm to the anterior surface of the arm."
+        },
+        {
+            id: 65,
+            topic: "Terms of Movement",
+            question: "In limbs, flexion means:",
+            options: [
+                "Straightening the joint",
+                "Folding the limb",
+                "Moving the limb away from the body",
+                "Rotating the limb"
+            ],
+            correct: 1,
+            explanation: "In limbs, flexion is folding the limb (bending anteriorly)."
+        },
+        {
+            id: 66,
+            topic: "Terms of Movement",
+            question: "Extension in limbs means:",
+            options: [
+                "Folding the limb",
+                "Moving the limb sideways",
+                "Straightening the joint",
+                "Rotating the limb"
+            ],
+            correct: 2,
+            explanation: "In limbs, extension is straightening the joint and usually takes place in a posterior direction."
+        },
+        {
+            id: 67,
+            topic: "Terms of Movement",
+            question: "Extension usually takes place in which direction?",
+            options: [
+                "Anterior",
+                "Lateral",
+                "Posterior",
+                "Medial"
+            ],
+            correct: 2,
+            explanation: "Extension usually takes place in a posterior direction."
+        },
+        {
+            id: 68,
+            topic: "Terms of Movement",
+            question: "Lateral flexion is a movement of the trunk in:",
+            options: [
+                "The sagittal plane",
+                "The transverse plane",
+                "The coronal plane",
+                "The median plane"
+            ],
+            correct: 2,
+            explanation: "Lateral flexion is a movement of the trunk in the coronal plane."
+        },
+        {
+            id: 69,
+            topic: "Terms of Movement",
+            question: "Abduction of a limb is:",
+            options: [
+                "Movement toward the midline in the coronal plane",
+                "Movement away from the midline of the body in the coronal plane",
+                "Rotation around the long axis",
+                "Bending the limb"
+            ],
+            correct: 1,
+            explanation: "Abduction of a limb is the movement away from the midline of the body in the coronal plane."
+        },
+        {
+            id: 70,
+            topic: "Terms of Movement",
+            question: "Adduction of a limb is:",
+            options: [
+                "Movement away from the body",
+                "Rotation of the limb",
+                "Movement toward the body in the coronal plane",
+                "Extension of the limb"
+            ],
+            correct: 2,
+            explanation: "Adduction of a limb is the movement toward the body in the coronal plane."
+        },
+        {
+            id: 71,
+            topic: "Terms of Movement",
+            question: "Circumduction is the combination in sequence of which movements?",
+            options: [
+                "Flexion and extension only",
+                "Abduction and adduction only",
+                "Flexion, extension, abduction, and adduction",
+                "Rotation and lateral flexion"
+            ],
+            correct: 2,
+            explanation: "Circumduction is the combination in sequence of the movements of flexion, extension, abduction, and adduction."
+        },
+        {
+            id: 72,
+            topic: "Terms of Movement",
+            question: "Rotation is the movement of a part of the body around:",
+            options: [
+                "A horizontal axis",
+                "The midline of the body",
+                "Its long axis",
+                "A transverse axis"
+            ],
+            correct: 2,
+            explanation: "Rotation is the term applied to the movement of a part of the body around its long axis."
+        },
+
+        // ===== TOPIC: SKIN =====
+        {
+            id: 73,
+            topic: "Skin",
+            question: "The skin is formed of how many layers?",
+            options: [
+                "One layer",
+                "Two layers",
+                "Three layers",
+                "Four layers"
+            ],
+            correct: 1,
+            explanation: "The skin is formed of two layers: the superficial layer (epidermis) and the deep layer (dermis)."
+        },
+        {
+            id: 74,
+            topic: "Skin",
+            question: "The superficial layer of the skin is called:",
+            options: [
+                "Dermis",
+                "Hypodermis",
+                "Epidermis",
+                "Subcutaneous tissue"
+            ],
+            correct: 2,
+            explanation: "The superficial layer of the skin is the epidermis, and the deep layer is the dermis."
+        },
+        {
+            id: 75,
+            topic: "Skin",
+            question: "The deep layer of the skin is called:",
+            options: [
+                "Epidermis",
+                "Dermis",
+                "Fascia",
+                "Subcutaneous layer"
+            ],
+            correct: 1,
+            explanation: "The deep layer of the skin is the dermis."
+        },
+        {
+            id: 76,
+            topic: "Skin",
+            question: "The epidermis is a:",
+            options: [
+                "Simple squamous epithelium",
+                "Dense connective tissue",
+                "Keratinized stratified epithelium",
+                "Smooth muscle layer"
+            ],
+            correct: 2,
+            explanation: "The epidermis is a keratinized stratified epithelium (several layers)."
+        },
+        {
+            id: 77,
+            topic: "Skin",
+            question: "The epidermis has:",
+            options: [
+                "Many blood vessels",
+                "No blood vessels (avascular)",
+                "Lymphatic vessels only",
+                "Nerve fibers only"
+            ],
+            correct: 1,
+            explanation: "The epidermis has no blood vessels. The avascular epidermis is nourished by the underlying vascularized dermis."
+        },
+        {
+            id: 78,
+            topic: "Skin",
+            question: "How is the avascular epidermis nourished?",
+            options: [
+                "By its own blood supply",
+                "By lymphatic vessels",
+                "By the underlying vascularized dermis",
+                "By sweat glands"
+            ],
+            correct: 2,
+            explanation: "The avascular epidermis is nourished by the underlying vascularized dermis."
+        },
+        {
+            id: 79,
+            topic: "Skin",
+            question: "The dermis is composed of:",
+            options: [
+                "Keratinized epithelium",
+                "Dense connective tissue containing many blood vessels, lymphatic vessels, and nerves",
+                "Loose areolar tissue only",
+                "Adipose tissue only"
+            ],
+            correct: 1,
+            explanation: "The dermis is composed of dense connective tissue containing many blood vessels, lymphatic vessels, and nerves."
+        },
+        {
+            id: 80,
+            topic: "Skin",
+            question: "The fibers in the dermis provide:",
+            options: [
+                "Color to the skin",
+                "Skin tone, strength, and toughness",
+                "Hair growth",
+                "Sensation only"
+            ],
+            correct: 1,
+            explanation: "These fibers provide skin tone and account for the strength and toughness of skin."
+        },
+        {
+            id: 81,
+            topic: "Skin",
+            question: "The skin appendages include all of the following EXCEPT:",
+            options: [
+                "Nails",
+                "Hair follicles",
+                "Bones",
+                "Sebaceous glands"
+            ],
+            correct: 2,
+            explanation: "The skin appendages are the nails, hair follicles, sebaceous glands, and sweat glands."
+        },
+        {
+            id: 82,
+            topic: "Skin",
+            question: "The nails are keratinized plates on:",
+            options: [
+                "The palmar surfaces of the fingers",
+                "The dorsal surfaces of the tips of the fingers and toes",
+                "The soles of the feet",
+                "The back of the hand"
+            ],
+            correct: 1,
+            explanation: "The nails are keratinized plates on the dorsal surfaces of the tips of the fingers and toes."
+        },
+        {
+            id: 83,
+            topic: "Skin",
+            question: "The proximal edge of the nail plate is called:",
+            options: [
+                "The nail bed",
+                "The nail fold",
+                "The root of the nail",
+                "The cuticle"
+            ],
+            correct: 2,
+            explanation: "The proximal edge of the plate is the root of the nail."
+        },
+        {
+            id: 84,
+            topic: "Skin",
+            question: "The surface of skin covered by the nail is called:",
+            options: [
+                "The nail fold",
+                "The nail root",
+                "The nail bed",
+                "The nail plate"
+            ],
+            correct: 2,
+            explanation: "The surface of skin covered by the nail is the nail bed."
+        },
+        {
+            id: 85,
+            topic: "Skin",
+            question: "The nail is surrounded and overlapped by folds of skin known as:",
+            options: [
+                "Nail beds",
+                "Nail roots",
+                "Nail folds",
+                "Nail plates"
+            ],
+            correct: 2,
+            explanation: "With the exception of the distal edge of the plate, the nail is surrounded and overlapped by folds of skin known as the nail folds."
+        },
+        {
+            id: 86,
+            topic: "Skin",
+            question: "Hairs are distributed over the whole surface of the body EXCEPT all of the following EXCEPT:",
+            options: [
+                "The lips",
+                "The palms of the hands",
+                "The back of the hand",
+                "The soles of the feet"
+            ],
+            correct: 2,
+            explanation: "Hairs are distributed over the whole body except the lips, palms of the hands, sides of the fingers, some areas of external genitalia, and the soles and sides of the feet and sides of the toes. The back of the hand DOES have hair."
+        },
+        {
+            id: 87,
+            topic: "Skin",
+            question: "Which of the following areas has NO hair?",
+            options: [
+                "The scalp",
+                "The forearm",
+                "The palms of the hands",
+                "The back"
+            ],
+            correct: 2,
+            explanation: "Hairs are NOT found on the lips, palms of the hands, sides of the fingers, some areas of external genitalia, soles and sides of the feet and sides of the toes."
+        },
+        {
+            id: 88,
+            topic: "Skin",
+            question: "Hair follicles are:",
+            options: [
+                "Extensions of the dermis",
+                "Invaginations of the epidermis into the dermis",
+                "Part of the subcutaneous tissue",
+                "Specializations of the hypodermis"
+            ],
+            correct: 1,
+            explanation: "Hair follicles are invaginations of the epidermis into the dermis."
+        },
+        {
+            id: 89,
+            topic: "Skin",
+            question: "Hair follicles lie _____ to the skin surface.",
+            options: [
+                "Perpendicular",
+                "Parallel",
+                "Obliquely",
+                "Horizontally"
+            ],
+            correct: 2,
+            explanation: "The follicles lie obliquely to the skin surface."
+        },
+        {
+            id: 90,
+            topic: "Skin",
+            question: "Sebaceous glands lie within:",
+            options: [
+                "The epidermis",
+                "The dermis on the sloping undersurface of the follicles",
+                "The subcutaneous tissue",
+                "The hypodermis"
+            ],
+            correct: 1,
+            explanation: "Sebaceous glands lie within the dermis on the sloping undersurface of the follicles."
+        },
+        {
+            id: 91,
+            topic: "Skin",
+            question: "Sebaceous glands pour their secretion called _____ onto the shafts of the hairs.",
+            options: [
+                "Sweat",
+                "Cerumen",
+                "Sebum",
+                "Mucus"
+            ],
+            correct: 2,
+            explanation: "They pour their secretion, the sebum, onto the shafts of the hairs as they pass up through the necks of the follicles."
+        },
+        {
+            id: 92,
+            topic: "Skin",
+            question: "Sweat glands are described as:",
+            options: [
+                "Short, straight tubular glands",
+                "Long, spiral, tubular glands",
+                "Round, sac-like glands",
+                "Flat, sheet-like glands"
+            ],
+            correct: 1,
+            explanation: "Sweat glands are long, spiral, tubular glands distributed over the surface of the body."
+        },
+        {
+            id: 93,
+            topic: "Skin",
+            question: "Sweat glands are absent from all of the following EXCEPT:",
+            options: [
+                "Red margins of the lips",
+                "Nail beds",
+                "Glans penis and clitoris",
+                "The forehead"
+            ],
+            correct: 3,
+            explanation: "Sweat glands are distributed over the surface of the body except the red margins of the lips, the nail beds, the glans penis and clitoris. The forehead has sweat glands."
+        },
+
+        // ===== TOPIC: FASCIA =====
+        {
+            id: 94,
+            topic: "Fascia",
+            question: "The fascia of the body is divided into which two types?",
+            options: [
+                "Dense and loose",
+                "Superficial and deep",
+                "Thick and thin",
+                "Areolar and adipose"
+            ],
+            correct: 1,
+            explanation: "The fascia of the body is divided into two types: the superficial and the deep."
+        },
+        {
+            id: 95,
+            topic: "Fascia",
+            question: "Fascia lies between:",
+            options: [
+                "Two layers of skin",
+                "The skin and the underlying muscles and bones",
+                "The muscles and bones only",
+                "The organs and body wall"
+            ],
+            correct: 1,
+            explanation: "Fascia lies between the skin and the underlying muscles and bones."
+        },
+        {
+            id: 96,
+            topic: "Fascia",
+            question: "The superficial fascia (subcutaneous tissue) is a mixture of:",
+            options: [
+                "Dense connective tissue and elastic tissue",
+                "Loose areolar and adipose tissue",
+                "Bone and cartilage",
+                "Muscle and tendon"
+            ],
+            correct: 1,
+            explanation: "The superficial fascia, or subcutaneous tissue, is a mixture of loose areolar and adipose tissue that unites the dermis of the skin to the underlying deep fascia."
+        },
+        {
+            id: 97,
+            topic: "Fascia",
+            question: "The superficial fascia allows:",
+            options: [
+                "Bone movement",
+                "The skin to move more or less freely over the underlying structures",
+                "Blood to flow",
+                "Nerve impulses to travel"
+            ],
+            correct: 1,
+            explanation: "The superficial fascia allows the skin to move more or less freely over the underlying structures."
+        },
+        {
+            id: 98,
+            topic: "Fascia",
+            question: "Functions of superficial fascia include all of the following EXCEPT:",
+            options: [
+                "Conducting blood vessels and nerves to the skin",
+                "Preventing loss of body heat",
+                "Giving the body its contour",
+                "Producing red blood cells"
+            ],
+            correct: 3,
+            explanation: "Superficial fascia conducts blood vessels and nerves to the skin, prevents loss of body heat, and gives the body its contour. It does NOT produce red blood cells."
+        },
+        {
+            id: 99,
+            topic: "Fascia",
+            question: "The superficial fascia is dense in all of the following areas EXCEPT:",
+            options: [
+                "The scalp",
+                "The back of the neck",
+                "The dorsal aspects of the hands",
+                "The soles of the feet"
+            ],
+            correct: 2,
+            explanation: "Superficial fascia is dense in the scalp, back of the neck, palms of the hands and soles of the feet. It is very thin over the dorsal aspects of the hands."
+        },
+        {
+            id: 100,
+            topic: "Fascia",
+            question: "The superficial fascia is very thin over:",
+            options: [
+                "The palms of the hands",
+                "The soles of the feet",
+                "The dorsal aspects of the hands, feet, sides of neck and face",
+                "The scalp"
+            ],
+            correct: 2,
+            explanation: "The superficial fascia is very thin over the dorsal aspects of the hands, feet, sides of neck and face."
+        },
+        {
+            id: 101,
+            topic: "Fascia",
+            question: "The superficial fascia is most distinct at:",
+            options: [
+                "The scalp",
+                "The face",
+                "The lower part of the anterior abdominal wall, limbs and perineum",
+                "The back of the neck"
+            ],
+            correct: 2,
+            explanation: "The superficial fascia is most distinct at the lower part of the anterior abdominal wall, limbs and perineum."
+        },
+        {
+            id: 102,
+            topic: "Fascia",
+            question: "The superficial fascia contains fat everywhere EXCEPT in:",
+            options: [
+                "The abdomen",
+                "The limbs",
+                "The eyelids, nose, external ear, penis, and scrotum",
+                "The trunk"
+            ],
+            correct: 2,
+            explanation: "Superficial fascia contains a variable quantity of fat except in the eyelids, the nose, external ear, the penis, and the scrotum."
+        },
+        {
+            id: 103,
+            topic: "Fascia",
+            question: "In the face and neck, the superficial fascia contains:",
+            options: [
+                "Bones",
+                "Numerous somatic muscles (e.g., platysma)",
+                "Cartilage",
+                "Endocrine glands"
+            ],
+            correct: 1,
+            explanation: "In the face and neck, superficial fascia contains numerous somatic muscles, for example, the platysma."
+        },
+        {
+            id: 104,
+            topic: "Fascia",
+            question: "The dartos muscle is found in the superficial fascia of:",
+            options: [
+                "The face",
+                "The abdomen",
+                "The scrotum",
+                "The neck"
+            ],
+            correct: 2,
+            explanation: "In the scrotum, superficial fascia contains the visceral dartos muscle, which corrugates the scrotal skin and helps to support the testes."
+        },
+        {
+            id: 105,
+            topic: "Fascia",
+            question: "The dartos muscle functions to:",
+            options: [
+                "Move the arm",
+                "Corrugates the scrotal skin and helps to support the testes, and controls heat loss",
+                "Flex the knee",
+                "Extend the elbow"
+            ],
+            correct: 1,
+            explanation: "The dartos muscle corrugates the scrotal skin and helps to support the testes, as well as altering the surface area of the scrotum to control heat loss from it."
+        },
+        {
+            id: 106,
+            topic: "Fascia",
+            question: "The mammary gland is found in the superficial fascia of:",
+            options: [
+                "The abdominal region",
+                "The pectoral region",
+                "The axillary region",
+                "The inguinal region"
+            ],
+            correct: 1,
+            explanation: "The mammary gland is found in the superficial fascia of the pectoral region."
+        },
+        {
+            id: 107,
+            topic: "Fascia",
+            question: "Contents of superficial fascia include all of the following EXCEPT:",
+            options: [
+                "Fat",
+                "Muscles (in face, neck, and scrotum)",
+                "Mammary gland",
+                "Deep fascia intermuscular septa"
+            ],
+            correct: 3,
+            explanation: "Contents of superficial fascia: Fat, Muscles, Mammary gland (pectoral region), Blood vessels, nerves and lymphatic vessels. Intermuscular septa belong to deep fascia."
+        },
+        {
+            id: 108,
+            topic: "Fascia",
+            question: "The deep fascia is:",
+            options: [
+                "A thick loose membrane",
+                "A thin dense membrane located deep to the superficial fascia",
+                "Part of the skin",
+                "A type of muscle"
+            ],
+            correct: 1,
+            explanation: "The deep fascia is a thin dense membrane located deep to the superficial fascia."
+        },
+        {
+            id: 109,
+            topic: "Fascia",
+            question: "The deep fascia is:",
+            options: [
+                "Elastic",
+                "Inelastic",
+                "Flexible",
+                "Stretchable"
+            ],
+            correct: 1,
+            explanation: "The deep fascia is inelastic, forming sheath for the muscles and preserving the contour of the limb."
+        },
+        {
+            id: 110,
+            topic: "Fascia",
+            question: "The deep fascia sends intermuscular septa from its deep surface to:",
+            options: [
+                "Connect it to the skin",
+                "Connect it to the bone",
+                "Connect it to the organs",
+                "Connect it to the superficial fascia"
+            ],
+            correct: 1,
+            explanation: "The deep fascia sends various intermuscular septa from its deep surface to connect it to the bone."
+        },
+        {
+            id: 111,
+            topic: "Fascia",
+            question: "The intermuscular septa of the deep fascia divide the limb into:",
+            options: [
+                "Two layers",
+                "Different groups of muscles",
+                "Anterior and posterior parts",
+                "Skin and subcutaneous layers"
+            ],
+            correct: 1,
+            explanation: "These septa divide the limb into different groups of muscles."
+        },
+        {
+            id: 112,
+            topic: "Fascia",
+            question: "The deep fascia is thickened in:",
+            options: [
+                "The abdomen",
+                "The palm of the hand and sole of the foot",
+                "The face",
+                "The eyelids"
+            ],
+            correct: 1,
+            explanation: "The deep fascia is thickened in the palm of the hand and sole of the foot."
+        },
+        {
+            id: 113,
+            topic: "Fascia",
+            question: "The deep fascia is absent in the abdomen because:",
+            options: [
+                "It would restrict breathing",
+                "It allows the abdomen to change its volume during respiration",
+                "The organs are too close to the skin",
+                "The muscles are too thick"
+            ],
+            correct: 1,
+            explanation: "Deep fascia is absent in the abdomen allowing it to change its volume during respiration."
+        },
+
+        // ===== TOPIC: MUSCLES =====
+        {
+            id: 114,
+            topic: "Muscles",
+            question: "Muscles are defined as:",
+            options: [
+                "The white connective tissue of the body",
+                "The red flesh of the body, tissues specialized to produce motion by contraction",
+                "The supporting framework of the body",
+                "The covering of the body organs"
+            ],
+            correct: 1,
+            explanation: "Muscles are the red flesh of the body. They are tissues specialized to produce motion by contraction."
+        },
+        {
+            id: 115,
+            topic: "Muscles",
+            question: "There are how many types of muscular tissue?",
+            options: [
+                "Two",
+                "Three",
+                "Four",
+                "Five"
+            ],
+            correct: 1,
+            explanation: "There are three types of muscular tissue: skeletal (voluntary), smooth (involuntary), and cardiac."
+        },
+        {
+            id: 116,
+            topic: "Muscles",
+            question: "Skeletal or voluntary muscles are:",
+            options: [
+                "Non-striated and under control of will",
+                "Striated and under the control of will",
+                "Partially striated and involuntary",
+                "Smooth and voluntary"
+            ],
+            correct: 1,
+            explanation: "Skeletal or voluntary muscles are stripped (striated) and under the control of will."
+        },
+        {
+            id: 117,
+            topic: "Muscles",
+            question: "An example of skeletal muscles is:",
+            options: [
+                "Muscles of the intestine",
+                "The cardiac muscle",
+                "Muscles of limbs",
+                "Muscles of the uterus"
+            ],
+            correct: 2,
+            explanation: "Examples of skeletal muscles are muscles of limbs."
+        },
+        {
+            id: 118,
+            topic: "Muscles",
+            question: "Smooth or involuntary muscles are:",
+            options: [
+                "Striated and under the control of will",
+                "Not under the control of will and non-striated",
+                "Partially striated",
+                "Under voluntary control"
+            ],
+            correct: 1,
+            explanation: "Smooth or involuntary muscles are not under the control of will. They are non-striated muscle."
+        },
+        {
+            id: 119,
+            topic: "Muscles",
+            question: "Which of the following is an example of smooth muscle?",
+            options: [
+                "Biceps brachii",
+                "Deltoid muscle",
+                "Muscles of the intestine, uterus and urinary bladder",
+                "Sartorius muscle"
+            ],
+            correct: 2,
+            explanation: "Examples of smooth muscle are muscles of intestine, uterus and urinary bladder."
+        },
+        {
+            id: 120,
+            topic: "Muscles",
+            question: "Cardiac muscle is:",
+            options: [
+                "Voluntary and fully striated",
+                "Involuntary and partially striated",
+                "Voluntary and non-striated",
+                "Involuntary and non-striated"
+            ],
+            correct: 1,
+            explanation: "Cardiac muscle is involuntary and partially stripped (striated)."
+        },
+        {
+            id: 121,
+            topic: "Muscles",
+            question: "The function of all three types of muscles is:",
+            options: [
+                "Only contraction",
+                "Only relaxation",
+                "Contraction and relaxation",
+                "Support and protection"
+            ],
+            correct: 2,
+            explanation: "The function of all three types of muscles is contraction and relaxation."
+        },
+        {
+            id: 122,
+            topic: "Muscles",
+            question: "Skeletal muscles mostly pass from:",
+            options: [
+                "One organ to another",
+                "One bone to another across a joint",
+                "One nerve to another",
+                "Skin to bone"
+            ],
+            correct: 1,
+            explanation: "The skeletal muscles mostly pass from one bone to another across a joint. By contraction they approximate the sites of attachment."
+        },
+        {
+            id: 123,
+            topic: "Muscles",
+            question: "Cardiac muscle and smooth muscles form the walls of cavities and tubes. By their contraction they:",
+            options: [
+                "Move limbs",
+                "Expel their contents",
+                "Produce heat",
+                "Protect organs"
+            ],
+            correct: 1,
+            explanation: "The cardiac muscle and smooth muscles form the walls of the cavities and tubes; so by their contraction they expel their contents."
+        },
+        {
+            id: 124,
+            topic: "Muscles",
+            question: "The skeletal muscle is formed of:",
+            options: [
+                "Only fleshy tissue",
+                "Only tendons",
+                "Fleshy part (belly) and non-fleshy part",
+                "Bone and cartilage"
+            ],
+            correct: 2,
+            explanation: "The skeletal muscle is formed of a fleshy part (the belly) and a non-fleshy part by which the muscle is attached to bone."
+        },
+        {
+            id: 125,
+            topic: "Muscles",
+            question: "A cord-like non-fleshy attachment of a muscle to bone is called:",
+            options: [
+                "Aponeurosis",
+                "Ligament",
+                "Tendon",
+                "Fascia"
+            ],
+            correct: 2,
+            explanation: "The non-fleshy part by which the muscle is attached to bone may be cord-like (tendon) or sheet-like (aponeurosis)."
+        },
+        {
+            id: 126,
+            topic: "Muscles",
+            question: "A sheet-like non-fleshy attachment of a muscle to bone is called:",
+            options: [
+                "Tendon",
+                "Ligament",
+                "Fascia",
+                "Aponeurosis"
+            ],
+            correct: 3,
+            explanation: "The non-fleshy part may be cord-like (tendon) or sheet-like (aponeurosis)."
+        },
+        {
+            id: 127,
+            topic: "Muscles",
+            question: "The 'origin' of a muscle is:",
+            options: [
+                "The distal, more mobile attachment",
+                "The fixed, less mobile attachment (proximal in limbs)",
+                "The belly of the muscle",
+                "The tendon"
+            ],
+            correct: 1,
+            explanation: "Origin is the fixed, less mobile attachment. It is the proximal attachment of a limb muscle."
+        },
+        {
+            id: 128,
+            topic: "Muscles",
+            question: "The 'insertion' of a muscle is:",
+            options: [
+                "The fixed proximal attachment",
+                "The less fixed, more mobile attachment (distal in limbs)",
+                "The fleshy belly",
+                "The aponeurosis"
+            ],
+            correct: 1,
+            explanation: "Insertion is the less fixed, more mobile attachment. It is the distal attachment of the limb muscle."
+        },
+
+        // ===== TOPIC: MUSCLE FORMS =====
+        {
+            id: 129,
+            topic: "Muscle Forms",
+            question: "Muscle forms are described according to:",
+            options: [
+                "The size of the muscle",
+                "The color of the muscle",
+                "The direction of their muscle fibers",
+                "The location of the muscle"
+            ],
+            correct: 2,
+            explanation: "Different forms of muscles are present and described according to the direction of their muscle fibers."
+        },
+        {
+            id: 130,
+            topic: "Muscle Forms",
+            question: "In parallel forms of muscles, the fibers are:",
+            options: [
+                "Oblique to the long axis",
+                "Perpendicular to the long axis",
+                "Parallel to the long axis of the muscle",
+                "Arranged circularly"
+            ],
+            correct: 2,
+            explanation: "In parallel forms, the fibers are parallel to the long axis of the muscle and extend along its whole length."
+        },
+        {
+            id: 131,
+            topic: "Muscle Forms",
+            question: "A strap or parallel muscle has fibers that are:",
+            options: [
+                "Converging to a tendon",
+                "Parallel from end to end",
+                "Oblique to the tendon",
+                "Arranged around a central tendon"
+            ],
+            correct: 1,
+            explanation: "A strap or parallel muscle has fibers that are parallel from end to end. Example: Sartorius muscle."
+        },
+        {
+            id: 132,
+            topic: "Muscle Forms",
+            question: "An example of a strap (parallel) muscle is:",
+            options: [
+                "Biceps brachii",
+                "Deltoid",
+                "Sartorius muscle",
+                "Rectus femoris"
+            ],
+            correct: 2,
+            explanation: "The Sartorius muscle is an example of a strap or parallel muscle where fibers are parallel from end to end."
+        },
+        {
+            id: 133,
+            topic: "Muscle Forms",
+            question: "A fusiform muscle is described as:",
+            options: [
+                "Flat and sheet-like",
+                "Spindle shaped with a fleshy belly and terminal tendon",
+                "Feather-like",
+                "Circular"
+            ],
+            correct: 1,
+            explanation: "A fusiform muscle is spindle shaped with a fleshy belly and terminal tendon, where the fibers converge to a tendon."
+        },
+        {
+            id: 134,
+            topic: "Muscle Forms",
+            question: "An example of a fusiform muscle is:",
+            options: [
+                "Sartorius",
+                "Deltoid",
+                "Biceps brachii",
+                "Palmar interossei"
+            ],
+            correct: 2,
+            explanation: "The biceps brachii is an example of a fusiform muscle."
+        },
+        {
+            id: 135,
+            topic: "Muscle Forms",
+            question: "Pennate muscle forms resemble:",
+            options: [
+                "A rope",
+                "A sheet",
+                "A feather",
+                "A circle"
+            ],
+            correct: 2,
+            explanation: "Pennate forms resemble a feather, in which the fibers are oblique to the long axis of the muscle."
+        },
+        {
+            id: 136,
+            topic: "Muscle Forms",
+            question: "In pennate muscles, the fibers are:",
+            options: [
+                "Parallel to the long axis",
+                "Oblique to the long axis",
+                "Perpendicular to the bone",
+                "Circular around the tendon"
+            ],
+            correct: 1,
+            explanation: "In pennate forms, the fibers are oblique to the long axis of the muscle."
+        },
+        {
+            id: 137,
+            topic: "Muscle Forms",
+            question: "In a unipennate muscle, the tendon appears on:",
+            options: [
+                "Both sides of the fleshy fibers",
+                "One side of the fleshy fibers",
+                "All around the fibers",
+                "In the center of the fibers"
+            ],
+            correct: 1,
+            explanation: "In a unipennate muscle, its tendon appears on one side of the fleshy fibers."
+        },
+        {
+            id: 138,
+            topic: "Muscle Forms",
+            question: "An example of a unipennate muscle is:",
+            options: [
+                "Biceps brachii",
+                "Palmar interossei muscles",
+                "Deltoid",
+                "Sartorius"
+            ],
+            correct: 1,
+            explanation: "The palmar interossei muscles are an example of unipennate muscles."
+        },
+        {
+            id: 139,
+            topic: "Muscle Forms",
+            question: "In a bipennate muscle, the muscle fibers are attached to:",
+            options: [
+                "One side of the tendon",
+                "Both sides of the tendon",
+                "All around the tendon",
+                "No tendon"
+            ],
+            correct: 1,
+            explanation: "In a bipennate muscle, the muscle fibers are attached to both sides of the tendon."
+        },
+        {
+            id: 140,
+            topic: "Muscle Forms",
+            question: "An example of a bipennate muscle is:",
+            options: [
+                "Sartorius",
+                "Deltoid",
+                "Rectus femoris",
+                "Biceps brachii"
+            ],
+            correct: 2,
+            explanation: "The rectus femoris is an example of a bipennate muscle."
+        },
+        {
+            id: 141,
+            topic: "Muscle Forms",
+            question: "A multipennate muscle has:",
+            options: [
+                "One tendon on one side",
+                "One tendon on both sides",
+                "Several tendinous elements with fleshy fibers reaching from several directions",
+                "A circular arrangement of fibers"
+            ],
+            correct: 2,
+            explanation: "A multipennate muscle has several tendinous elements to which the fleshy fibers reach from several directions."
+        },
+        {
+            id: 142,
+            topic: "Muscle Forms",
+            question: "An example of a multipennate muscle is:",
+            options: [
+                "Sartorius",
+                "Biceps brachii",
+                "Rectus femoris",
+                "Deltoid"
+            ],
+            correct: 3,
+            explanation: "The deltoid is an example of a multipennate muscle."
+        },
+        {
+            id: 143,
+            topic: "Muscle Forms",
+            question: "In a circumpennate muscle, the fibers are arranged:",
+            options: [
+                "Parallel to the tendon",
+                "On one side of the tendon",
+                "In a circumradial manner around the central tendon",
+                "In a flat sheet"
+            ],
+            correct: 2,
+            explanation: "In a circumpennate muscle, the fibers are arranged in a circumradial manner around the central tendon."
+        },
+        {
+            id: 144,
+            topic: "Muscle Forms",
+            question: "An example of a circumpennate muscle is:",
+            options: [
+                "Deltoid",
+                "Tibialis anterior muscle",
+                "Sartorius",
+                "Rectus femoris"
+            ],
+            correct: 1,
+            explanation: "The tibialis anterior muscle is an example of a circumpennate muscle."
+        },
+        {
+            id: 145,
+            topic: "Muscle Forms",
+            question: "The two main categories of muscle forms are:",
+            options: [
+                "Large and small",
+                "Parallel forms and pennate forms",
+                "Flat and round",
+                "Long and short"
+            ],
+            correct: 1,
+            explanation: "The two main categories of muscle forms are parallel forms (where fibers are parallel to the long axis) and pennate forms (where fibers are oblique to the long axis, resembling a feather)."
+        },
+
+        // ===== ADDITIONAL COMPREHENSIVE QUESTIONS =====
+        {
+            id: 146,
+            topic: "Body Systems",
+            question: "Which term is used for the study of muscles?",
+            options: [
+                "Osteology",
+                "Arthrology",
+                "Myology",
+                "Neurology"
+            ],
+            correct: 2,
+            explanation: "Myology is the study of the muscular system."
+        },
+        {
+            id: 147,
+            topic: "Body Systems",
+            question: "Which term is used for the study of the nervous system?",
+            options: [
+                "Myology",
+                "Neurology",
+                "Angiology",
+                "Urology"
+            ],
+            correct: 1,
+            explanation: "Neurology is the study of the nervous system."
+        },
+        {
+            id: 148,
+            topic: "Body Systems",
+            question: "Urology is the study of the:",
+            options: [
+                "Reproductive system",
+                "Nervous system",
+                "Urinary system",
+                "Digestive system"
+            ],
+            correct: 2,
+            explanation: "Urology is the study of the urinary system."
+        },
+        {
+            id: 149,
+            topic: "Body Systems",
+            question: "Endocrinology is the study of:",
+            options: [
+                "The digestive system",
+                "The endocrine system",
+                "The respiratory system",
+                "The circulatory system"
+            ],
+            correct: 1,
+            explanation: "Endocrinology is the study of the endocrine system, consisting of discrete ductless glands."
+        },
+        {
+            id: 150,
+            topic: "Skin",
+            question: "The epidermis has a tough, horny superficial layer that provides:",
+            options: [
+                "Nourishment to deeper layers",
+                "A protective outer surface overlying its basal layer",
+                "Blood supply to the skin",
+                "Sensory reception"
+            ],
+            correct: 1,
+            explanation: "The epidermis has a tough, horny superficial layer that provides a protective outer surface overlying its basal layer."
+        },
+        {
+            id: 151,
+            topic: "Terms of Position",
+            question: "The terms superior and inferior refer to levels relatively:",
+            options: [
+                "Front or back of the body",
+                "Left or right of the body",
+                "High or low with reference to the upper and lower ends of the body",
+                "Superficial or deep in the body"
+            ],
+            correct: 2,
+            explanation: "The terms superior and inferior refer to levels relatively high or low with reference to the upper and lower ends of the body."
+        },
+        {
+            id: 152,
+            topic: "Terms of Movement",
+            question: "Both abduction and adduction occur in which plane?",
+            options: [
+                "Sagittal plane",
+                "Transverse plane",
+                "Coronal plane",
+                "Median plane"
+            ],
+            correct: 2,
+            explanation: "Both abduction (movement away from midline) and adduction (movement toward midline) occur in the coronal plane."
+        },
+        {
+            id: 153,
+            topic: "Fascia",
+            question: "The superficial fascia unites the dermis to:",
+            options: [
+                "The epidermis",
+                "The underlying deep fascia",
+                "The bone directly",
+                "The organs"
+            ],
+            correct: 1,
+            explanation: "The superficial fascia unites the dermis of the skin to the underlying deep fascia."
+        },
+        {
+            id: 154,
+            topic: "Fascia",
+            question: "The deep fascia forms a sheath for the muscles and preserves:",
+            options: [
+                "The color of the skin",
+                "The temperature of the body",
+                "The contour of the limb",
+                "The flexibility of the joints"
+            ],
+            correct: 2,
+            explanation: "The deep fascia is inelastic, forming a sheath for the muscles and preserving the contour of the limb."
+        },
+        {
+            id: 155,
+            topic: "Muscles",
+            question: "By contraction, skeletal muscles _____ the sites of attachment.",
+            options: [
+                "Separate",
+                "Approximate (bring closer together)",
+                "Stretch",
+                "Dissolve"
+            ],
+            correct: 1,
+            explanation: "By contraction, skeletal muscles approximate (bring closer together) the sites of attachment."
+        },
+        {
+            id: 156,
+            topic: "Approaches to Anatomy",
+            question: "Which example best illustrates regional anatomy?",
+            options: [
+                "Studying all the muscles of the body",
+                "Studying the arrangement of muscles, nerves, and arteries within the face",
+                "Studying how anatomy applies to surgery",
+                "Studying only the skeletal system"
+            ],
+            correct: 1,
+            explanation: "Regional anatomy focuses on a specific part, region, or subregion and examines the arrangement and relationships of various systemic structures within it."
+        },
+        {
+            id: 157,
+            topic: "Skin",
+            question: "Areas where hair is NOT found include all of the following EXCEPT:",
+            options: [
+                "The lips",
+                "The forearm",
+                "The sides of the fingers",
+                "The soles of the feet"
+            ],
+            correct: 1,
+            explanation: "Hair IS found on the forearm. Hair is NOT found on the lips, palms, sides of fingers, some areas of genitalia, soles and sides of feet, and sides of toes."
+        },
+        {
+            id: 158,
+            topic: "Fascia",
+            question: "The platysma is an example of a somatic muscle found in the superficial fascia of:",
+            options: [
+                "The abdomen",
+                "The face and neck",
+                "The limbs",
+                "The perineum"
+            ],
+            correct: 1,
+            explanation: "In the face and neck, the superficial fascia contains numerous somatic muscles, for example, the platysma."
+        },
+        {
+            id: 159,
+            topic: "Muscle Forms",
+            question: "Match the muscle to its form: Sartorius is _____, Biceps brachii is _____, Deltoid is _____.",
+            options: [
+                "Fusiform, Strap, Multipennate",
+                "Strap (parallel), Fusiform, Multipennate",
+                "Multipennate, Fusiform, Strap",
+                "Strap, Multipennate, Fusiform"
+            ],
+            correct: 1,
+            explanation: "Sartorius is a strap/parallel muscle, Biceps brachii is fusiform, and Deltoid is multipennate."
+        },
+        {
+            id: 160,
+            topic: "Muscle Forms",
+            question: "Match the muscle to its form: Palmar interossei is _____, Rectus femoris is _____, Tibialis anterior is _____.",
+            options: [
+                "Bipennate, Unipennate, Circumpennate",
+                "Unipennate, Bipennate, Circumpennate",
+                "Circumpennate, Unipennate, Bipennate",
+                "Unipennate, Circumpennate, Bipennate"
+            ],
+            correct: 1,
+            explanation: "Palmar interossei is unipennate, Rectus femoris is bipennate, and Tibialis anterior is circumpennate."
+        }
+,
+        {
+            id: 161,
+            topic: "Definition & Basics",
+            question: "What is the correct sequence of the levels of organisation in the human body, from simplest to most complex?",
+            options: [
+                "Cellular, Chemical, Organ, Tissue, Organ system, Organism",
+                "Chemical, Cellular, Tissue, Organ, Organ system, Organism",
+                "Chemical, Tissue, Cellular, Organ system, Organ, Organism",
+                "Organism, Organ system, Organ, Tissue, Cellular, Chemical"
+            ],
+            correct: 1,
+            explanation: "The correct levels of organisation from simplest to most complex are Chemical, Cellular, Tissue, Organ, Organ system, and Organism."
+        },
+        {
+            id: 162,
+            topic: "Definition & Basics",
+            question: "Which level of organization represents the highest level of structural complexity, representing the sum total of all structural levels working together?",
+            options: [
+                "Organ system level",
+                "Tissue level",
+                "Organism level",
+                "Cellular level"
+            ],
+            correct: 2,
+            explanation: "The organism level is the highest level of organization, representing the living individual formed by all organ systems working together."
+        },
+        {
+            id: 163,
+            topic: "Definition & Basics",
+            question: "Which type of intercellular fiber in connective tissue provides high tensile strength and resists pulling forces?",
+            options: [
+                "Reticular fibers",
+                "Collagen fibers",
+                "Elastic fibers",
+                "Myosin fibers"
+            ],
+            correct: 1,
+            explanation: "Collagen fibers are tough and resistant to stretching, providing tensile strength to connective tissues."
+        },
+        {
+            id: 164,
+            topic: "Definition & Basics",
+            question: "Which type of intercellular fibers allow connective tissue to stretch and return to its original shape?",
+            options: [
+                "Collagen fibers",
+                "Elastic fibers",
+                "Reticular fibers",
+                "Keratin fibers"
+            ],
+            correct: 1,
+            explanation: "Elastic fibers contain elastin, which allows them to stretch and recoil, providing elasticity to tissues."
+        },
+        {
+            id: 165,
+            topic: "Definition & Basics",
+            question: "Which type of cell in the intercellular substance of connective tissue is specialized for storing lipids?",
+            options: [
+                "Fibroblast",
+                "Macrophage",
+                "Fat cell (adipocyte)",
+                "Mast cell"
+            ],
+            correct: 2,
+            explanation: "Fat cells (or adipocytes) are specialized connective tissue cells that store lipids for energy storage and insulation."
+        },
+        {
+            id: 166,
+            topic: "Definition & Basics",
+            question: "Which cell type in connective tissue is primarily responsible for synthesizing the extracellular matrix and fibers?",
+            options: [
+                "Macrophage",
+                "Mast cell",
+                "Fibroblast",
+                "Melanocyte"
+            ],
+            correct: 2,
+            explanation: "Fibroblasts are the most common cells in connective tissue and are responsible for producing collagen and other fibers."
+        },
+        {
+            id: 167,
+            topic: "Definition & Basics",
+            question: "What is the main function of a macrophage in connective tissue?",
+            options: [
+                "Producing fibers",
+                "Phagocytosis (engulfing and digesting cellular debris and pathogens)",
+                "Storing fat",
+                "Releasing histamine during inflammation"
+            ],
+            correct: 1,
+            explanation: "Macrophages are immune cells specialized in phagocytosis, engulfing foreign substances and cell debris."
+        },
+        {
+            id: 168,
+            topic: "Definition & Basics",
+            question: "Which connective tissue cells release histamine and heparin during inflammatory and allergic reactions?",
+            options: [
+                "Mast cells",
+                "Fibroblasts",
+                "Adipocytes",
+                "Erythrocytes"
+            ],
+            correct: 0,
+            explanation: "Mast cells contain granules rich in histamine and heparin, which are released during allergic and inflammatory responses."
+        },
+        {
+            id: 169,
+            topic: "Definition & Basics",
+            question: "Which primary type of tissue covers body surfaces, lines hollow organs and cavities, and forms glands?",
+            options: [
+                "Connective tissue",
+                "Muscle tissue",
+                "Epithelial tissue",
+                "Nervous tissue"
+            ],
+            correct: 2,
+            explanation: "Epithelial tissue covers the outer surfaces of the body and lines the internal cavities and organs."
+        },
+        {
+            id: 170,
+            topic: "Definition & Basics",
+            question: "Which primary tissue type is specialized for contraction and generation of force?",
+            options: [
+                "Nervous tissue",
+                "Muscle tissue",
+                "Epithelial tissue",
+                "Connective tissue"
+            ],
+            correct: 1,
+            explanation: "Muscle tissue is made of specialized cells that contract to generate movement and force."
+        },
+        {
+            id: 171,
+            topic: "Definition & Basics",
+            question: "Which tissue type is responsible for detecting changes in the internal and external environment and coordinating responses via electrical impulses?",
+            options: [
+                "Nervous tissue",
+                "Epithelial tissue",
+                "Connective tissue",
+                "Muscle tissue"
+            ],
+            correct: 0,
+            explanation: "Nervous tissue consists of neurons and glial cells that detect stimuli and transmit electrical signals throughout the body."
+        },
+        {
+            id: 172,
+            topic: "Body Systems",
+            question: "Which small, blind-ended tube-like structure is attached to the cecum of the large intestine and considered an organ of the digestive system?",
+            options: [
+                "Spleen",
+                "Gallbladder",
+                "Appendix",
+                "Ureter"
+            ],
+            correct: 2,
+            explanation: "The appendix is a narrow, finger-like pouch that projects from the cecum of the large intestine."
+        },
+        {
+            id: 173,
+            topic: "Body Systems",
+            question: "What is the dome-shaped musculotendinous partition that separates the thoracic cavity from the abdominal cavity?",
+            options: [
+                "Peritoneum",
+                "Pleura",
+                "Diaphragm",
+                "Mediastinum"
+            ],
+            correct: 2,
+            explanation: "The diaphragm is the primary muscle of respiration, separating the thorax from the abdomen."
+        },
+        {
+            id: 174,
+            topic: "Body Systems",
+            question: "Which organ of the digestive system is primarily responsible for water absorption and forming feces?",
+            options: [
+                "Stomach",
+                "Small intestine",
+                "Large intestine",
+                "Pancreas"
+            ],
+            correct: 2,
+            explanation: "The large intestine absorbs water and salts from material that has not been digested, forming feces."
+        },
+        {
+            id: 175,
+            topic: "Body Systems",
+            question: "Which organ serves as both an exocrine gland (producing digestive enzymes) and an endocrine gland (producing insulin)?",
+            options: [
+                "Spleen",
+                "Liver",
+                "Gallbladder",
+                "Pancreas"
+            ],
+            correct: 3,
+            explanation: "The pancreas plays an essential dual role in the digestive (exocrine) and endocrine systems."
+        },
+        {
+            id: 176,
+            topic: "Body Systems",
+            question: "What is the terminal, straight portion of the large intestine where feces are stored before elimination?",
+            options: [
+                "Cecum",
+                "Colon",
+                "Rectum",
+                "Appendix"
+            ],
+            correct: 2,
+            explanation: "The rectum is the final section of the large intestine, ending at the anal canal, where fecal matter is stored."
+        },
+        {
+            id: 177,
+            topic: "Body Systems",
+            question: "Where does the majority of chemical digestion and nutrient absorption take place in the digestive tract?",
+            options: [
+                "Stomach",
+                "Small intestine",
+                "Large intestine",
+                "Esophagus"
+            ],
+            correct: 1,
+            explanation: "The small intestine is highly adapted for absorption of nutrients due to its length and microstructures."
+        },
+        {
+            id: 178,
+            topic: "Body Systems",
+            question: "Which organ, located in the upper left quadrant of the abdomen, filters blood, removes old red blood cells, and holds a reservoir of blood?",
+            options: [
+                "Liver",
+                "Gallbladder",
+                "Spleen",
+                "Kidney"
+            ],
+            correct: 2,
+            explanation: "The spleen is a vital lymphoid organ that filters blood as part of the immune system."
+        },
+        {
+            id: 179,
+            topic: "Approaches to Anatomy",
+            question: "What is another name for clinical anatomy, which emphasizes the application of anatomical knowledge to medical practice?",
+            options: [
+                "Regional anatomy",
+                "Systemic anatomy",
+                "Applied anatomy",
+                "Surface anatomy"
+            ],
+            correct: 2,
+            explanation: "Clinical or applied anatomy focuses on structure and function as they relate to the practice of medicine and allied health sciences."
+        },
+        {
+            id: 180,
+            topic: "Approaches to Anatomy",
+            question: "What term describes viewing the anatomical structures from the front of the body?",
+            options: [
+                "Posterior view",
+                "Anterior view",
+                "Lateral view",
+                "Superior view"
+            ],
+            correct: 1,
+            explanation: "An anterior view (or ventral view) is a view from the front aspect of the body."
+        },
+        {
+            id: 181,
+            topic: "Approaches to Anatomy",
+            question: "In regional anatomy, the thigh, leg, and foot are subdivisions of which region?",
+            options: [
+                "Upper limb",
+                "Lower limb",
+                "Pelvis",
+                "Thorax"
+            ],
+            correct: 1,
+            explanation: "The lower limb includes the hip, thigh, knee, leg, ankle, and foot."
+        },
+        {
+            id: 182,
+            topic: "Approaches to Anatomy",
+            question: "Which anatomical region is situated below the abdomen and connects the trunk to the lower limbs?",
+            options: [
+                "Thorax",
+                "Pelvis",
+                "Perineum",
+                "Abdomen"
+            ],
+            correct: 1,
+            explanation: "The pelvis is the lower part of the trunk, located between the abdomen and the lower limbs."
+        },
+        {
+            id: 183,
+            topic: "Approaches to Anatomy",
+            question: "What term describes viewing the body or an organ from the back?",
+            options: [
+                "Anterior view",
+                "Medial view",
+                "Posterior view",
+                "Coronal view"
+            ],
+            correct: 2,
+            explanation: "A posterior view (or dorsal view) is a view from the back aspect of the body."
+        },
+        {
+            id: 184,
+            topic: "Approaches to Anatomy",
+            question: "Which anatomical region of the body lies between the neck and the abdomen, containing the heart and lungs?",
+            options: [
+                "Thorax",
+                "Pelvis",
+                "Abdomen",
+                "Back"
+            ],
+            correct: 0,
+            explanation: "The thorax (chest) is the region enclosed by the ribs and sternum, containing critical thoracic viscera."
+        },
+        {
+            id: 185,
+            topic: "Approaches to Anatomy",
+            question: "In regional anatomy, the shoulder, arm, forearm, and hand are parts of which region?",
+            options: [
+                "Lower limb",
+                "Thorax",
+                "Pelvis",
+                "Upper limb"
+            ],
+            correct: 3,
+            explanation: "The upper limb is the region of the upper extremity, consisting of the shoulder, arm, forearm, wrist, and hand."
+        },
+        {
+            id: 186,
+            topic: "Body Systems",
+            question: "Which system is responsible for removing metabolic wastes and excess water from the body?",
+            options: [
+                "Excretory system",
+                "Endocrine system",
+                "Lymphatic system",
+                "Cardiovascular system"
+            ],
+            correct: 0,
+            explanation: "The excretory system filters blood and removes waste products, maintaining osmotic balance."
+        },
+        {
+            id: 187,
+            topic: "Body Systems",
+            question: "Which system protects the body from foreign pathogens, viruses, and abnormal cells?",
+            options: [
+                "Immune system",
+                "Nervous system",
+                "Endocrine system",
+                "Integumentary system"
+            ],
+            correct: 0,
+            explanation: "The immune system (often associated with the lymphatic system) is the body's defense network against infection."
+        },
+        {
+            id: 188,
+            topic: "Anatomical Planes",
+            question: "What are the imaginary flat surfaces passing through the body in anatomical position used to describe sectioning?",
+            options: [
+                "Anatomical positions",
+                "Anatomical planes",
+                "Anatomical axes",
+                "Anatomical boundaries"
+            ],
+            correct: 1,
+            explanation: "Anatomical planes are imaginary 2D surfaces used to section the body for description."
+        },
+        {
+            id: 189,
+            topic: "Anatomical Planes",
+            question: "What is another name for the coronal plane, which divides the body into anterior (front) and posterior (back) parts?",
+            options: [
+                "Sagittal plane",
+                "Transverse plane",
+                "Frontal plane",
+                "Horizontal plane"
+            ],
+            correct: 2,
+            explanation: "The frontal or coronal plane divides the body vertically into anterior (ventral) and posterior (dorsal) portions."
+        },
+        {
+            id: 190,
+            topic: "Terms of Position",
+            question: "Why are terms of position (such as superior, medial, and deep) used in human anatomy?",
+            options: [
+                "To describe the chemical composition of body parts",
+                "To describe the relative location of one body structure in relation to another",
+                "To measure the physiological activity of organs",
+                "To classify different cell shapes"
+            ],
+            correct: 1,
+            explanation: "Terms of position are relational descriptors used to describe where structures lie relative to others."
+        },
+        {
+            id: 191,
+            topic: "Terms of Position",
+            question: "Which term refers to the sole of the foot?",
+            options: [
+                "Palmar surface",
+                "Plantar surface",
+                "Dorsal surface",
+                "Ventral surface"
+            ],
+            correct: 1,
+            explanation: "The plantar surface is the inferior aspect or sole of the foot."
+        },
+        {
+            id: 192,
+            topic: "Terms of Movement",
+            question: "What class of terminology includes words like flexion, extension, abduction, and adduction?",
+            options: [
+                "Terms of position",
+                "Terms related to movement",
+                "Systemic terms",
+                "Regional terms"
+            ],
+            correct: 1,
+            explanation: "Terms related to movement describe the actions of muscles and joints on the body parts."
+        },
+        {
+            id: 193,
+            topic: "Skin",
+            question: "Skin, fascia, muscles, blood vessels, nerves, bones, and joints are collectively described as the:",
+            options: [
+                "Basic anatomical structures",
+                "Microscopic cell types",
+                "Chemical substances",
+                "Visceral organs"
+            ],
+            correct: 0,
+            explanation: "These are the fundamental basic anatomical structures that make up the human body."
+        },
+        {
+            id: 194,
+            topic: "Skin",
+            question: "The outermost protective layer of the epidermis, composed of flattened dead cells filled with keratin, is called the:",
+            options: [
+                "Stratum basale",
+                "Dermis",
+                "Horny layer (stratum corneum)",
+                "Melanocyte layer"
+            ],
+            correct: 2,
+            explanation: "The horny layer (stratum corneum) is the superficial keratinized layer of the epidermis that provides a protective outer surface."
+        },
+        {
+            id: 195,
+            topic: "Skin",
+            question: "What is the anatomical term for the cuticle, the fold of skin that overlaps the proximal border of the nail?",
+            options: [
+                "Hyponychium",
+                "Eponychium",
+                "Lunula",
+                "Nail bed"
+            ],
+            correct: 1,
+            explanation: "The eponychium (cuticle) is the narrow band of epidermis that extends from the margin of the nail fold."
+        },
+        {
+            id: 196,
+            topic: "Skin",
+            question: "What is the thickened region of epidermis beneath the free distal edge of the nail plate?",
+            options: [
+                "Eponychium",
+                "Lunula",
+                "Hyponychium",
+                "Nail matrix"
+            ],
+            correct: 2,
+            explanation: "The hyponychium is the area of skin securement underneath the distal free edge of the nail."
+        },
+        {
+            id: 197,
+            topic: "Skin",
+            question: "What is the white, crescent-shaped area at the base of the nail plate?",
+            options: [
+                "Eponychium",
+                "Lunula",
+                "Hyponychium",
+                "Nail root"
+            ],
+            correct: 1,
+            explanation: "The lunula represents the visible part of the active nail matrix at the proximal end."
+        },
+        {
+            id: 198,
+            topic: "Skin",
+            question: "What is the small bundle of smooth muscle fibers attached to each hair follicle that contracts to pull the hair upright?",
+            options: [
+                "Skeletal muscle",
+                "Arrector pili muscle",
+                "Orbicularis muscle",
+                "Sebaceous muscle"
+            ],
+            correct: 1,
+            explanation: "Contraction of the arrector pili muscle causes 'goosebumps' by pulling the hair shaft vertical."
+        },
+        {
+            id: 199,
+            topic: "Skin",
+            question: "Which part of the hair is the superficial portion that projects above the surface of the skin?",
+            options: [
+                "Hair root",
+                "Hair follicle",
+                "Hair shafts",
+                "Hair bulb"
+            ],
+            correct: 2,
+            explanation: "The hair shaft is the dead, keratinized part of hair visible on the skin's surface."
+        },
+        {
+            id: 200,
+            topic: "Fascia",
+            question: "What is primarily responsible for rounding out the body contour and cushioning skin, especially in females?",
+            options: [
+                "Deep fascia",
+                "Skeletal muscle",
+                "Superficial fascia (subcutaneous tissue containing fat)",
+                "Epidermal keratin"
+            ],
+            correct: 2,
+            explanation: "The superficial fascia contains varying amounts of fat that round out the body contour."
+        },
+        {
+            id: 201,
+            topic: "Muscles",
+            question: "What is another name for smooth muscle, which forms the contractile walls of hollow internal organs and blood vessels?",
+            options: [
+                "Skeletal muscle",
+                "Cardiac muscle",
+                "Striated muscle",
+                "Visceral muscle"
+            ],
+            correct: 3,
+            explanation: "Smooth muscle is called visceral muscle because it is located inside internal organs (viscera)."
+        },
+        {
+            id: 202,
+            topic: "Fascia",
+            question: "What helps in maintaining the limb contour by wrapping tightly around the underlying muscles?",
+            options: [
+                "Superficial fascia",
+                "Deep fascia",
+                "Epidermis",
+                "Synovial sheath"
+            ],
+            correct: 1,
+            explanation: "The deep fascia forms a tough, inelastic sleeve around the limbs, maintaining their shape."
+        },
+        {
+            id: 203,
+            topic: "Fascia",
+            question: "What is the connective tissue layer formed by deep fascia that wraps individual muscles and allows them to slide past each other?",
+            options: [
+                "Superficial fascia",
+                "Muscle sheath (deep fascia investment)",
+                "Synovial membrane",
+                "Dermal papilla"
+            ],
+            correct: 1,
+            explanation: "Deep fascia forms investments or sheaths (muscle sheaths) around muscles, facilitating movement."
+        },
+        {
+            id: 204,
+            topic: "Fascia",
+            question: "In the limbs, muscles with similar functions and nerve supply are often grouped together in compartments by:",
+            options: [
+                "Superficial fascia",
+                "Intermuscular septa of deep fascia",
+                "Synovial membranes",
+                "Subcutaneous fat"
+            ],
+            correct: 1,
+            explanation: "Intermuscular septa extend from the deep fascia to the bone, separating muscles into functional muscle groups."
+        },
+        {
+            id: 205,
+            topic: "Muscles",
+            question: "What is the study of anatomical structures that can be examined with the naked eye (without magnification)?",
+            options: [
+                "Histology",
+                "Cytology",
+                "Gross anatomy",
+                "Microscopic anatomy"
+            ],
+            correct: 2,
+            explanation: "Gross anatomy (or macroscopic anatomy) refers to structures visible without a microscope."
+        },
+        {
+            id: 206,
+            topic: "Muscles",
+            question: "Skeletal muscles attach to bone or other structures at two points, which are classified as:",
+            options: [
+                "Origin and insertion",
+                "Proximal and superficial",
+                "Tendon and ligament",
+                "Belly and aponeurosis"
+            ],
+            correct: 0,
+            explanation: "The two points of attachment for a muscle are its origin and insertion (muscle attachments)."
+        },
+        {
+            id: 207,
+            topic: "Muscles",
+            question: "The origin of a skeletal muscle is defined as its:",
+            options: [
+                "More mobile, distal attachment",
+                "Fixed, less mobile (usually proximal) attachment",
+                "Fleshy middle part",
+                "Fibrous terminal sheet"
+            ],
+            correct: 1,
+            explanation: "The origin is the relatively fixed and stable point of attachment (fixed attachment)."
+        },
+        {
+            id: 208,
+            topic: "Muscle Forms",
+            question: "What is the primary characteristic used to describe and classify the different forms of skeletal muscles?",
+            options: [
+                "The type of protein they contain",
+                "The direction of their muscle fibers",
+                "The nerve that supplies them",
+                "Their chemical pH level"
+            ],
+            correct: 1,
+            explanation: "Different forms of skeletal muscles are described according to the direction of their fibers (fiber direction)."
+        },
+        {
+            id: 209,
+            topic: "Muscle Forms",
+            question: "A muscle with parallel fibers that runs straight from origin to insertion, such as the sartorius muscle, is classified as a:",
+            options: [
+                "Fusiform muscle",
+                "Strap muscle",
+                "Pennate muscle",
+                "Bipennate muscle"
+            ],
+            correct: 1,
+            explanation: "Strap muscles have parallel fibers that run longitudinally, resembling a strap."
+        },
+        {
+            id: 210,
+            topic: "Muscle Forms",
+            question: "Which of the following is a classic example of a fusiform muscle (spindle-shaped)?",
+            options: [
+                "Sartorius muscle",
+                "Biceps brachii muscle",
+                "Rectus femoris muscle",
+                "Deltoid muscle"
+            ],
+            correct: 1,
+            explanation: "The biceps brachii is a spindle-shaped (fusiform) muscle with a fleshy belly and terminal tendons."
+        },
+        {
+            id: 211,
+            topic: "Muscle Forms",
+            question: "Muscles whose fibers run obliquely to the long axis of the muscle, resembling feathers, are known as:",
+            options: [
+                "Parallel muscles",
+                "Pennate muscles (with oblique fibers)",
+                "Strap muscles",
+                "Fusiform muscles"
+            ],
+            correct: 1,
+            explanation: "Pennate muscles have oblique fibers that attach to a central tendon, resembling a feather."
+        },
+        {
+            id: 212,
+            topic: "Muscle Forms",
+            question: "What term describes muscle fibers that are arranged in a circular or radial pattern around an opening (e.g. sphincter muscles)?",
+            options: [
+                "Unipennate arrangement",
+                "Circumradial arrangement",
+                "Bipennate arrangement",
+                "Fusiform arrangement"
+            ],
+            correct: 1,
+            explanation: "Circular (circumradial) muscles form sphincters that guard body openings."
+        }
+    ];
+
+    // ========================
+    // APP STATE
+    // ========================
+    let state = {
+        mode: 'practice', // practice, exam, review
+        currentPage: 0,
+        questionsPerPage: 5,
+        activeTopic: 'All',
+        answered: {},    // { questionId: selectedIndex }
+        searchQuery: '',
+        shuffled: false,
+        showAll: false,
+    };
+
+    let filteredQuestions = [...allQuestions];
+
+    // ========================
+    // INIT
+    // ========================
+    function init() {
+        // Load saved state
+        const saved = localStorage.getItem('anatomy_quiz_state');
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved);
+                state.answered = parsed.answered || {};
+            } catch(e) {}
+        }
+
+        buildTopicFilter();
+        updateStats();
+        filterAndRender();
+
+        // Mode buttons
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                state.mode = btn.dataset.mode;
+                state.currentPage = 0;
+                state.showAll = false;
+                filterAndRender();
+            });
+        });
+    }
+
+    // ========================
+    // TOPICS
+    // ========================
+    function getTopics() {
+        const topics = new Set();
+        allQuestions.forEach(q => topics.add(q.topic));
+        return ['All', ...Array.from(topics)];
+    }
+
+    function buildTopicFilter() {
+        const container = document.getElementById('topicFilter');
+        const topics = getTopics();
+        container.innerHTML = topics.map(t => 
+            `<button class="topic-chip ${t === state.activeTopic ? 'active' : ''}" onclick="selectTopic('${t}')">${t}</button>`
+        ).join('');
+    }
+
+    function selectTopic(topic) {
+        state.activeTopic = topic;
+        state.currentPage = 0;
+        state.showAll = false;
+        buildTopicFilter();
+        filterAndRender();
+    }
+
+    // ========================
+    // FILTER & RENDER
+    // ========================
+    function filterAndRender() {
+        let qs = [...allQuestions];
+
+        // Topic filter
+        if (state.activeTopic !== 'All') {
+            qs = qs.filter(q => q.topic === state.activeTopic);
+        }
+
+        // Review mode: only wrong answers
+        if (state.mode === 'review') {
+            qs = qs.filter(q => {
+                const ans = state.answered[q.id];
+                return ans !== undefined && ans !== q.correct;
+            });
+        }
+
+        filteredQuestions = qs;
+        renderQuestions();
+        updateStats();
+        updatePagination();
+
+        // Hide result screen
+        document.getElementById('resultScreen').classList.add('hidden');
+        document.getElementById('questionsContainer').classList.remove('hidden');
+    }
+
+    function renderQuestions() {
+        const container = document.getElementById('questionsContainer');
+        const start = state.showAll ? 0 : state.currentPage * state.questionsPerPage;
+        const end = state.showAll ? filteredQuestions.length : start + state.questionsPerPage;
+        const pageQuestions = filteredQuestions.slice(start, end);
+
+        if (pageQuestions.length === 0) {
+            container.innerHTML = `
+                <div style="text-align:center;padding:60px 20px;color:var(--text-muted)">
+                    <div style="font-size:3rem;margin-bottom:16px">📭</div>
+                    <div style="font-size:1.1rem;font-weight:600;color:var(--text-secondary);margin-bottom:8px">
+                        ${state.mode === 'review' ? 'No wrong answers to review!' : 'No questions found'}
+                    </div>
+                    <div style="font-size:0.85rem">
+                        ${state.mode === 'review' ? 'Great job! Try answering more questions first.' : 'Try a different topic.'}
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = pageQuestions.map((q, idx) => {
+            const answered = state.answered[q.id] !== undefined;
+            const selectedIdx = state.answered[q.id];
+            const isExamMode = state.mode === 'exam';
+
+            const letters = ['A', 'B', 'C', 'D'];
+
+            return `
+                <div class="question-card" id="q${q.id}">
+                    <div class="question-number">
+                        <span class="q-badge">Q${q.id}</span>
+                        <span class="question-topic-badge">${q.topic}</span>
+                    </div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options-list">
+                        ${q.options.map((opt, oi) => {
+                            let cls = 'option-btn';
+                            if (answered && !isExamMode) {
+                                cls += ' disabled';
+                                if (oi === q.correct) cls += ' correct';
+                                else if (oi === selectedIdx) cls += ' wrong';
+                            } else if (answered && isExamMode) {
+                                cls += ' disabled';
+                                if (oi === selectedIdx) cls += ' selected-exam';
+                            }
+                            return `
+                                <button class="${cls}" onclick="selectAnswer(${q.id}, ${oi})" ${answered ? 'disabled' : ''}>
+                                    <span class="option-letter">${letters[oi]}</span>
+                                    <span>${opt}</span>
+                                </button>
+                            `;
+                        }).join('')}
+                    </div>
+                    ${answered && !isExamMode ? `
+                        <div class="explanation">
+                            <strong>${selectedIdx === q.correct ? '✅ Correct!' : '❌ Incorrect.'}</strong> ${q.explanation}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ========================
+    // ANSWER HANDLER
+    // ========================
+    function selectAnswer(qId, optIdx) {
+        if (state.answered[qId] !== undefined) return;
+
+        state.answered[qId] = optIdx;
+        saveState();
+        
+        // Re-render to show feedback
+        if (state.mode !== 'exam') {
+            renderQuestions();
+        } else {
+            // In exam mode, just disable the buttons and mark selected
+            const card = document.getElementById(`q${qId}`);
+            const buttons = card.querySelectorAll('.option-btn');
+            buttons.forEach((btn, idx) => {
+                btn.classList.add('disabled');
+                btn.disabled = true;
+                if (idx === optIdx) {
+                    btn.style.borderColor = 'rgba(99,102,241,0.5)';
+                    btn.style.background = 'rgba(99,102,241,0.1)';
+                    btn.style.color = 'var(--accent-secondary)';
+                }
+            });
+        }
+
+        updateStats();
+        updatePagination();
+    }
+
+    // ========================
+    // STATS
+    // ========================
+    function updateStats() {
+        const totalAnswered = Object.keys(state.answered).length;
+        let correct = 0;
+        let wrong = 0;
+
+        Object.entries(state.answered).forEach(([qId, ans]) => {
+            const q = allQuestions.find(q => q.id == qId);
+            if (q) {
+                if (ans === q.correct) correct++;
+                else wrong++;
+            }
+        });
+
+        document.getElementById('totalQ').textContent = allQuestions.length;
+        document.getElementById('correctCount').textContent = correct;
+        document.getElementById('wrongCount').textContent = wrong;
+
+        const pct = allQuestions.length > 0 ? Math.round((totalAnswered / allQuestions.length) * 100) : 0;
+        document.getElementById('progressText').textContent = `${totalAnswered} / ${allQuestions.length}`;
+        document.getElementById('progressFill').style.width = pct + '%';
+
+        // Show finish button when enough answered
+        const finishBtn = document.getElementById('finishBtn');
+        if (totalAnswered >= allQuestions.length * 0.5) {
+            finishBtn.classList.remove('hidden');
+        }
+    }
+
+    // ========================
+    // PAGINATION
+    // ========================
+    function updatePagination() {
+        const totalPages = state.showAll ? 1 : Math.max(1, Math.ceil(filteredQuestions.length / state.questionsPerPage));
+        const current = state.showAll ? 1 : state.currentPage + 1;
+
+        document.getElementById('pageInfo').textContent = `${current} / ${totalPages}`;
+        document.getElementById('prevBtn').disabled = state.showAll || state.currentPage === 0;
+        document.getElementById('nextBtn').disabled = state.showAll || state.currentPage >= totalPages - 1;
+    }
+
+    function changePage(dir) {
+        const totalPages = Math.ceil(filteredQuestions.length / state.questionsPerPage);
+        state.currentPage = Math.max(0, Math.min(totalPages - 1, state.currentPage + dir));
+        renderQuestions();
+        updatePagination();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ========================
+    // ACTIONS
+    // ========================
+    function shuffleQuestions() {
+        for (let i = allQuestions.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [allQuestions[i], allQuestions[j]] = [allQuestions[j], allQuestions[i]];
+        }
+        // Also shuffle options for each question
+        allQuestions.forEach(q => {
+            const correctOption = q.options[q.correct];
+            const shuffledOptions = [...q.options];
+            for (let i = shuffledOptions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+            }
+            q.options = shuffledOptions;
+            q.correct = shuffledOptions.indexOf(correctOption);
+        });
+        state.currentPage = 0;
+        state.showAll = false;
+        filterAndRender();
+    }
+
+    function resetQuiz() {
+        if (!confirm('Are you sure you want to reset all answers?')) return;
+        state.answered = {};
+        state.currentPage = 0;
+        state.showAll = false;
+        localStorage.removeItem('anatomy_quiz_state');
+        filterAndRender();
+    }
+
+    function showAllQuestions() {
+        state.showAll = !state.showAll;
+        const btn = document.getElementById('showAllBtn');
+        btn.textContent = state.showAll ? '📄 Paginate' : '📋 Show All';
+        filterAndRender();
+    }
+
+    // ========================
+    // RESULTS
+    // ========================
+    function showResults() {
+        const totalAnswered = Object.keys(state.answered).length;
+        let correct = 0;
+        let wrong = 0;
+
+        Object.entries(state.answered).forEach(([qId, ans]) => {
+            const q = allQuestions.find(q => q.id == qId);
+            if (q) {
+                if (ans === q.correct) correct++;
+                else wrong++;
+            }
+        });
+
+        const pct = totalAnswered > 0 ? Math.round((correct / totalAnswered) * 100) : 0;
+        let message = '', sub = '';
+        if (pct >= 90) { message = '🌟 Outstanding!'; sub = 'You truly mastered this material!'; }
+        else if (pct >= 75) { message = '👏 Great Job!'; sub = 'You have a strong understanding!'; }
+        else if (pct >= 60) { message = '👍 Good Work!'; sub = 'A bit more review and you\'ll be excellent!'; }
+        else if (pct >= 40) { message = '📚 Keep Studying!'; sub = 'Review the wrong answers and try again.'; }
+        else { message = '💪 Don\'t Give Up!'; sub = 'Use the Review Wrong mode to focus on weak areas.'; }
+
+        const circleColor = pct >= 75 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--error)';
+
+        document.getElementById('questionsContainer').classList.add('hidden');
+        const resultScreen = document.getElementById('resultScreen');
+        resultScreen.classList.remove('hidden');
+        resultScreen.innerHTML = `
+            <div class="score-circle" style="border-color: ${circleColor}">
+                <div class="score-percent" style="color: ${circleColor}">${pct}%</div>
+                <div class="score-label">Score</div>
+            </div>
+            <div class="result-message">${message}</div>
+            <div class="result-sub">${sub}</div>
+            <div class="result-stats">
+                <div class="result-stat">
+                    <div class="val" style="color:var(--text-primary)">${totalAnswered}</div>
+                    <div class="lbl">Answered</div>
+                </div>
+                <div class="result-stat">
+                    <div class="val" style="color:var(--success)">${correct}</div>
+                    <div class="lbl">Correct</div>
+                </div>
+                <div class="result-stat">
+                    <div class="val" style="color:var(--error)">${wrong}</div>
+                    <div class="lbl">Wrong</div>
+                </div>
+            </div>
+            <button class="ctrl-btn primary" onclick="reviewWrong()" style="margin:8px;padding:12px 28px">📖 Review Wrong Answers</button>
+            <button class="ctrl-btn" onclick="backToQuiz()" style="margin:8px;padding:12px 28px">◀ Back to Quiz</button>
+            <button class="ctrl-btn" onclick="resetQuiz()" style="margin:8px;padding:12px 28px">🔄 Reset & Retry</button>
+        `;
+    }
+
+    function reviewWrong() {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('modeReview').classList.add('active');
+        state.mode = 'review';
+        state.currentPage = 0;
+        state.showAll = false;
+        filterAndRender();
+    }
+
+    function backToQuiz() {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('modePractice').classList.add('active');
+        state.mode = 'practice';
+        state.currentPage = 0;
+        state.showAll = false;
+        filterAndRender();
+    }
+
+    // ========================
+    // PERSISTENCE
+    // ========================
+    function saveState() {
+        localStorage.setItem('anatomy_quiz_state', JSON.stringify({
+            answered: state.answered
+        }));
+    }
+
+    // ========================
+    // START
+    // ========================
+    document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

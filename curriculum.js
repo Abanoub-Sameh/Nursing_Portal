@@ -8,28 +8,105 @@ const curriculumData = {
           "lectures": [
             {
               "num": 1,
-              "title_ar": "الاولي",
+              "title_ar": "المحاضره الاولي",
               "files": {
-                "original_ppt": "terms/term_1/anatomy/original/anatomy part 1.pdf"
+                "original_ppt": "terms/term_1/anatomy/original/1 Introduction to Human Anatomy.ppt",
+                "translated_ppt": "terms/term_1/anatomy/guides/ماده الاناتومي المحاضره الاولي.pdf",
+                "my_quiz": "terms/term_1/anatomy/quizzes/Anatomy_Quiz_L1.html",
+                "doctor_quiz": ""
               }
             }
           ]
         },
         "terminology": {
           "name": "Medical Terminology",
-          "lectures": []
+          "lectures": [
+            {
+              "num": 1,
+              "title_ar": "المحاضره الاولي",
+              "files": {
+                "original_ppt": "terms/term_1/terminology/original/introduction.pdf",
+                "translated_ppt": "terms/term_1/terminology/guides/المحاضرة الأولى مترجمه _ المصطلحات الطبية.pdf",
+                "my_quiz": "terms/term_1/terminology/quizzes/Terminology_Quiz_L1,2,3.html",
+                "doctor_quiz": ""
+              }
+            },
+            {
+              "num": 2,
+              "title_ar": "المحاضره الثانية",
+              "files": {
+                "original_ppt": "terms/term_1/terminology/original/introduction 2.pdf",
+                "translated_ppt": "terms/term_1/terminology/guides/المحاضرة الثانية مترجمه _ المصطلحات الطبية.pdf",
+                "my_quiz": "terms/term_1/terminology/quizzes/Terminology_Quiz_L1,2,3.html",
+                "doctor_quiz": ""
+              }
+            },
+            {
+              "num": 3,
+              "title_ar": "المحاضره الثالثه",
+              "files": {
+                "original_ppt": "terms/term_1/terminology/original/reproductive system.pdf",
+                "translated_ppt": "terms/term_1/terminology/guides/المحاضرة الثالثه مترجمه _ المصطلحات الطبية.pdf",
+                "my_quiz": "terms/term_1/terminology/quizzes/Terminology_Quiz_L1,2,3.html",
+                "doctor_quiz": ""
+              }
+            }
+          ]
         },
         "biology": {
           "name": "Biology",
-          "lectures": []
+          "lectures": [
+            {
+              "num": 1,
+              "title_ar": "المحاضره الاولي",
+              "files": {
+                "original_ppt": "terms/term_1/biology/original/اول محاضره - احياء.pptx",
+                "translated_ppt": "terms/term_1/biology/guides/احياء - المحاضره الاولي مترجمه.pdf",
+                "my_quiz": "terms/term_1/biology/quizzes/Biology_Quiz_L1.html",
+                "doctor_quiz": ""
+              }
+            }
+          ]
         },
         "physiology": {
           "name": "Physiology",
-          "lectures": []
+          "lectures": [
+            {
+              "num": 1,
+              "title_ar": "المحاضره الاولي",
+              "files": {
+                "original_ppt": "terms/term_1/physiology/original/Physiology  1.pdf",
+                "translated_ppt": "terms/term_1/physiology/guides/Blood_Physiology_Slides_Per_Page.pdf",
+                "my_quiz": "terms/term_1/physiology/quizzes/Physiology_Quiz_L1,2.html",
+                "doctor_quiz": "terms/term_1/physiology/quizzes/Questions_L1_Blood_Spring_2026.pdf"
+              }
+            },
+            {
+              "num": 2,
+              "title_ar": "المحاضره الثانية",
+              "files": {
+                "original_ppt": "terms/term_1/physiology/original/Nursing_Pulmonary Physiology_L1_2025.pdf",
+                "translated_ppt": "terms/term_1/physiology/guides/المحاضره الثانيه مترجمه - فسيولوجي الجهاز التنفسي.pdf",
+                "my_quiz": "terms/term_1/physiology/quizzes/Physiology_Quiz_L1,2.html",
+                "doctor_quiz": "terms/term_1/physiology/quizzes/MCQs_L1_Pulmonary_Nursing Accelerated_Spring_2026.pdf"
+              }
+            }
+          ]
         },
         "microbiology": {
           "name": "Microbiology",
-          "lectures": []
+          "lectures": [
+            {
+              "num": 1,
+              "title_ar": "المحاضره الاولي",
+              "files": {
+                "original_ppt": "terms/term_1/microbiology/original/Micro 1.pdf",
+                "translated_ppt": "terms/term_1/microbiology/guides/الميكروبيولوجي_محاضره الاولي مترجمه.pdf",
+                "my_quiz": "terms/term_1/microbiology/quizzes/Micro_Quiz_L1.html",
+                "doctor_quiz": ""
+              }
+            }
+          ]
         }
       }
     },

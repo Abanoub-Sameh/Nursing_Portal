@@ -1,0 +1,2636 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Microbiology Question Bank – Basic Principles & Specimen Collection</title>
+    <meta name="description" content="Comprehensive microbiology question bank for Nursing Faculty">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #090d16;
+            --bg-secondary: #0f1424;
+            --bg-card: #151e36;
+            --bg-card-hover: #1b2644;
+            --accent-primary: #22c55e; /* Neon Green for Micro/Bacteria */
+            --accent-secondary: #eab308; /* Yellow/Gold */
+            --accent-glow: rgba(34, 197, 94, 0.3);
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.12);
+            --success-border: rgba(16, 185, 129, 0.3);
+            --error: #ef4444;
+            --error-bg: rgba(239, 68, 68, 0.12);
+            --error-border: rgba(239, 68, 68, 0.3);
+            --warning: #f59e0b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border: rgba(255,255,255,0.06);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --shadow: 0 4px 24px rgba(0,0,0,0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 0%, rgba(34,197,94,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(234,179,8,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(99,102,241,0.05) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app-container {
+            position: relative;
+            z-index: 1;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 16px;
+            padding-bottom: 100px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            padding: 32px 16px 20px;
+            margin-bottom: 16px;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(34,197,94,0.12);
+            border: 1px solid rgba(34,197,94,0.25);
+            color: #86efac;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 50px;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .header-badge .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f8fafc 0%, #86efac 50%, #22c55e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ===== STATS BAR ===== */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(34,197,94,0.2);
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-primary);
+        }
+
+        .stat-value.correct { color: var(--success); }
+        .stat-value.wrong { color: var(--error); }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-section {
+            margin-bottom: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-header span {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 50px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        /* ===== MODE SELECTOR ===== */
+        .mode-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            flex: 1;
+            min-width: 100px;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-family: inherit;
+        }
+
+        .mode-btn:hover {
+            border-color: rgba(34,197,94,0.3);
+            color: var(--text-primary);
+        }
+
+        .mode-btn.active {
+            background: rgba(34,197,94,0.15);
+            border-color: var(--accent-primary);
+            color: #86efac;
+            box-shadow: 0 0 20px rgba(34,197,94,0.15);
+        }
+
+        /* ===== TOPIC FILTER ===== */
+        .topic-filter {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            scrollbar-width: none;
+        }
+        .topic-filter::-webkit-scrollbar { display: none; }
+
+        .topic-chip {
+            white-space: nowrap;
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .topic-chip:hover {
+            border-color: rgba(34,197,94,0.3);
+        }
+
+        .topic-chip.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: black;
+        }
+
+        /* ===== QUESTION CARD ===== */
+        .question-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.4s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-card:nth-child(1) { animation-delay: 0.05s; }
+        .question-card:nth-child(2) { animation-delay: 0.1s; }
+        .question-card:nth-child(3) { animation-delay: 0.15s; }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .question-number .q-badge {
+            background: rgba(34,197,94,0.15);
+            color: #86efac;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .question-topic-badge {
+            display: inline-block;
+            background: rgba(234,179,8,0.12);
+            color: #fef08a;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .question-text {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }
+
+        /* ===== OPTIONS ===== */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: var(--radius-sm);
+            background: rgba(255,255,255,0.02);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: left;
+            font-family: inherit;
+            line-height: 1.5;
+            width: 100%;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: rgba(34,197,94,0.3);
+            background: rgba(34,197,94,0.06);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .option-btn .option-letter {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.06);
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: all 0.25s ease;
+        }
+
+        .option-btn:hover:not(.disabled) .option-letter {
+            background: rgba(34,197,94,0.2);
+            color: #86efac;
+        }
+
+        .option-btn.correct {
+            border-color: var(--success-border);
+            background: var(--success-bg);
+            color: var(--success);
+        }
+        .option-btn.correct .option-letter {
+            background: rgba(16,185,129,0.2);
+            color: var(--success);
+        }
+
+        .option-btn.wrong {
+            border-color: var(--error-border);
+            background: var(--error-bg);
+            color: var(--error);
+        }
+        .option-btn.wrong .option-letter {
+            background: rgba(239,68,68,0.2);
+            color: var(--error);
+        }
+
+        .option-btn.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .option-btn.correct.disabled, .option-btn.wrong.disabled {
+            opacity: 1;
+        }
+
+        .option-btn.selected-exam {
+            border-color: rgba(34,197,94,0.5);
+            background: rgba(34,197,94,0.1);
+            color: #86efac;
+        }
+        .option-btn.selected-exam .option-letter {
+            background: rgba(34,197,94,0.2);
+            color: #86efac;
+        }
+
+        /* ===== EXPLANATION ===== */
+        .explanation {
+            margin-top: 14px;
+            padding: 14px 16px;
+            background: rgba(34,197,94,0.06);
+            border: 1px solid rgba(34,197,94,0.15);
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .explanation strong {
+            color: #86efac;
+        }
+
+        /* ===== PAGINATION / CONTROLS ===== */
+        .controls-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(9,13,22,0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            padding: 12px 16px;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .ctrl-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .ctrl-btn:hover {
+            border-color: rgba(34,197,94,0.3);
+            color: var(--text-primary);
+        }
+
+        .ctrl-btn.primary {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: black;
+            font-weight: 700;
+        }
+
+        .ctrl-btn.primary:hover {
+            background: #4ade80;
+            box-shadow: 0 0 24px var(--accent-glow);
+        }
+
+        .ctrl-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            display: flex;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ===== RESULT SCREEN ===== */
+        .result-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .result-screen .score-circle {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 6px solid var(--accent-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            position: relative;
+        }
+
+        .result-screen .score-circle::before {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            border: 2px solid rgba(34,197,94,0.15);
+        }
+
+        .score-percent {
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-family: 'JetBrains Mono', monospace;
+            color: #86efac;
+        }
+
+        .score-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .result-message {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .result-sub {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 32px;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .result-stat {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+        }
+
+        .result-stat .val {
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .result-stat .lbl {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        /* ===== ACTION ROW ===== */
+        .action-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-btn:hover {
+            border-color: rgba(34,197,94,0.3);
+            color: var(--text-primary);
+            background: rgba(34,197,94,0.08);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .app-container { padding: 10px; padding-bottom: 90px; }
+            .header h1 { font-size: 1.4rem; }
+            .question-card { padding: 18px; }
+            .stat-value { font-size: 1.25rem; }
+            .stats-bar { gap: 6px; }
+            .stat-card { padding: 10px 6px; }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+        /* Hidden */
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="app-container" id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-badge">
+                <span class="pulse"></span> abanoub sameh
+            </div>
+            <h1>🩺 Microbiology Question Bank</h1>
+            
+            <div class="arabic-notice" style="margin-top: 16px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.25); color: #f59e0b; padding: 12px 14px; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600; direction: rtl; display: inline-flex; align-items: center; gap: 8px; justify-content: center; width: 100%;">
+                ⚠️ الكويز ده علي اول محاضره في مادة ميكروبيولوجي.
+            </div>
+        </header>
+
+        <!-- Stats -->
+        <div class="stats-bar" id="statsBar">
+            <div class="stat-card">
+                <div class="stat-value" id="totalQ">0</div>
+                <div class="stat-label">Questions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value correct" id="correctCount">0</div>
+                <div class="stat-label">Correct</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value wrong" id="wrongCount">0</div>
+                <div class="stat-label">Wrong</div>
+            </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-section">
+            <div class="progress-header">
+                <span>Progress</span>
+                <span id="progressText">0 / 0</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill" style="width:0%"></div>
+            </div>
+        </div>
+
+        <!-- Mode Selector -->
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="practice" id="modePractice">📝 Practice</button>
+            <button class="mode-btn" data-mode="exam" id="modeExam">🎯 Exam Mode</button>
+            <button class="mode-btn" data-mode="review" id="modeReview">📖 Review Wrong</button>
+        </div>
+
+        <!-- Topic Filter -->
+        <div class="topic-filter" id="topicFilter"></div>
+
+        <!-- Action Row -->
+        <div class="action-row">
+            <button class="action-btn" id="shuffleBtn" onclick="shuffleQuestions()">🔀 Shuffle</button>
+            <button class="action-btn" id="resetBtn" onclick="resetQuiz()">🔄 Reset All</button>
+            <button class="action-btn" id="showAllBtn" onclick="showAllQuestions()">📋 Show All</button>
+        </div>
+
+        <!-- Questions Container -->
+        <div id="questionsContainer"></div>
+
+        <!-- Result Screen -->
+        <div id="resultScreen" class="result-screen hidden"></div>
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="controls-bar" id="controlsBar">
+        <button class="ctrl-btn" id="prevBtn" onclick="changePage(-1)">◀ Prev</button>
+        <span class="page-info" id="pageInfo">1 / 1</span>
+        <button class="ctrl-btn" id="nextBtn" onclick="changePage(1)">Next ▶</button>
+        <button class="ctrl-btn primary hidden" id="finishBtn" onclick="showResults()">🏁 Finish</button>
+    </div>
+
+    <script>
+    // ========================
+    // QUESTION BANK DATABASE
+    // ========================
+    const allQuestions = [
+    {
+        "topic": "Microbiology & The Nurse",
+        "question": "Why is a basic knowledge of microbiology essential for nursing students in everyday professional practice?",
+        "options": [
+            "It is only required for administrative duties.",
+            "It ensures correct procedures in handling babies, operating rooms, changing dressings, and communicable disease care.",
+            "It is used exclusively to prescribe antibiotic dosages.",
+            "It is needed only for cleaning laboratory instruments."
+        ],
+        "correct": 1,
+        "explanation": "A knowledge of microbiology is essential to ensure correct procedures in handling babies, assisting in operating rooms, changing surgical dressings, and caring for patients with communicable diseases.",
+        "id": 1
+    },
+    {
+        "topic": "Microbiology & The Nurse",
+        "question": "What is the nurse's role in the diagnosis of infectious diseases?",
+        "options": [
+            "Prescribing appropriate broad-spectrum chemotherapy.",
+            "Accurate reporting of symptoms and assuring well-timed, careful collection of specimens.",
+            "Performing the laboratory cultures themselves.",
+            "Isolating the patient without a physician's order."
+        ],
+        "correct": 1,
+        "explanation": "The nurse participates in diagnosis through accurate reporting of patient's symptoms and assuring well-timed, careful collection of specimens ordered for lab studies.",
+        "id": 2
+    },
+    {
+        "topic": "Microbiology & The Nurse",
+        "question": "How should a nurse apply knowledge of microbial agents to bedside patient care?",
+        "options": [
+            "By administering preventative antibiotics to all bedside patients.",
+            "By applying appropriate precautionary measures for every patient to prevent communicable diseases from spreading.",
+            "By sanitizing the room with ultraviolet light during patient care.",
+            "By requesting that patients bring their own sterile dressings."
+        ],
+        "correct": 1,
+        "explanation": "Using her knowledge of microbial agents, the nurse must apply appropriate precautionary measures in her bedside care of every patient so that communicable diseases are prevented from spreading.",
+        "id": 3
+    },
+    {
+        "topic": "General Characters",
+        "question": "What is the definition of Microbiology?",
+        "options": [
+            "The study of organisms visible only under high-resolution magnifying glasses.",
+            "The study of organisms which are too small to be seen with the naked eye.",
+            "The study of all unicellular plants and animals.",
+            "The chemical analysis of organic cellular debris."
+        ],
+        "correct": 1,
+        "explanation": "Microbiology is the subject that deals with the study of organisms which are too small to be seen with the naked eye.",
+        "id": 4
+    },
+    {
+        "topic": "General Characters",
+        "question": "Which of the following microorganisms are the primary focus of this nursing microbiology course?",
+        "options": [
+            "Parasitic worms and amoebae",
+            "Bacteria and viruses",
+            "Fungi and algae",
+            "Prions and viroids"
+        ],
+        "correct": 1,
+        "explanation": "The micro-organisms that will be studied in this course are bacteria and viruses.",
+        "id": 5
+    },
+    {
+        "topic": "General Characters",
+        "question": "What are the characteristics of bacteria as unicellular organisms?",
+        "options": [
+            "They are multi-cellular structures measured in millimeters.",
+            "Each bacterium is a functioning living unit, deriving food from its surroundings to manufacture materials for life and reproduction.",
+            "They are completely dependent on host cells for basic protein synthesis.",
+            "They are non-living chemical units until they enter a host cell."
+        ],
+        "correct": 1,
+        "explanation": "Bacteria are unicellular. Each bacterium is a functioning living unit that derives food from its surroundings and uses it to manufacture complex materials necessary for life and reproduction.",
+        "id": 6
+    },
+    {
+        "topic": "General Characters",
+        "question": "What unit is used to measure the size of bacteria, and what is its equivalent?",
+        "options": [
+            "Microns (1\u00b5 = 1/1000 mm)",
+            "Nanometers (1nm = 1/1000 mm)",
+            "Millimeters (1mm = 1/1000 m)",
+            "Angstroms (1\u00c5 = 1/100 microns)"
+        ],
+        "correct": 0,
+        "explanation": "Bacteria size is measured in microns (micrometers), where 1\u00b5 = 1/1000 mm.",
+        "id": 7
+    },
+    {
+        "topic": "General Characters",
+        "question": "How are bacteria classified according to their habitat and way of living?",
+        "options": [
+            "Aerobic and Anaerobic",
+            "Saprophytic and Parasitic",
+            "Gram-positive and Gram-negative",
+            "Unicellular and Multicellular"
+        ],
+        "correct": 1,
+        "explanation": "According to their habitat and way of living, bacteria are described as saprophytic or parasitic.",
+        "id": 8
+    },
+    {
+        "topic": "General Characters",
+        "question": "Which of the following describes 'Saprophytic bacteria'?",
+        "options": [
+            "They must live inside a host cell to reproduce.",
+            "They live on inanimate material, in soil, water, dust, air, clothes, dead bodies, or decaying organic matter.",
+            "They live strictly on or in the body of living creatures.",
+            "They always cause pathogenic infections in humans."
+        ],
+        "correct": 1,
+        "explanation": "Saprophytic bacteria live on inanimate material: in the soil, water, dust, air, clothes, or on dead bodies and decaying organic matter.",
+        "id": 9
+    },
+    {
+        "topic": "General Characters",
+        "question": "Where do 'Parasitic bacteria' live?",
+        "options": [
+            "Exclusively in decaying organic matter and compost.",
+            "On or in the body of living creatures.",
+            "In deep sea hydrothermal vents.",
+            "Only in sterile laboratory broths."
+        ],
+        "correct": 1,
+        "explanation": "Parasitic bacteria live on or in the body of living creatures.",
+        "id": 10
+    },
+    {
+        "topic": "General Characters",
+        "question": "How are parasitic bacteria subdivided?",
+        "options": [
+            "Saprophytes and Parasites",
+            "Pathogenic and Commensals",
+            "Bacilli and Cocci",
+            "Autotrophs and Heterotrophs"
+        ],
+        "correct": 1,
+        "explanation": "Parasitic bacteria are classified into pathogenic bacteria and commensals.",
+        "id": 11
+    },
+    {
+        "topic": "General Characters",
+        "question": "Which of the following defines 'Pathogenic bacteria'?",
+        "options": [
+            "They are saprophytes that live in water.",
+            "They cause disease in man, animals, or plants.",
+            "They live on the body without exerting any harmful effect.",
+            "They help in the synthesis of vitamins in the human intestine."
+        ],
+        "correct": 1,
+        "explanation": "Pathogenic bacteria cause disease in man or animals or plants.",
+        "id": 12
+    },
+    {
+        "topic": "General Characters",
+        "question": "Which of the following defines 'Commensals bacteria'?",
+        "options": [
+            "They are bacteria that live on dead bodies.",
+            "They live on or in the body without exerting a harmful effect.",
+            "They are highly infectious pathogens that bypass all immunity.",
+            "They are viruses that infect bacterial cells."
+        ],
+        "correct": 1,
+        "explanation": "Commensal bacteria live on or in the body without exerting a harmful effect.",
+        "id": 13
+    },
+    {
+        "topic": "General Characters",
+        "question": "Under what condition can commensal bacteria become potentially pathogenic?",
+        "options": [
+            "If they are exposed to direct sunlight.",
+            "If the body resistance (immunity) is lowered by any means.",
+            "If they decompose fat into glycerol.",
+            "If they form highly resistant keratin spores."
+        ],
+        "correct": 1,
+        "explanation": "Some commensals are potentially pathogenic and may cause disease if the host's body resistance is lowered.",
+        "id": 14
+    },
+    {
+        "topic": "General Characters",
+        "question": "What is the general size range for the majority of medically important bacteria?",
+        "options": [
+            "0.1 to 0.5 \u00b5m",
+            "0.75 to 4 \u00b5m",
+            "5 to 20 \u00b5m",
+            "50 to 100 \u00b5m"
+        ],
+        "correct": 1,
+        "explanation": "The majority of bacteria fall within the general dimensions of 0.75 to 4 \u00b5m.",
+        "id": 15
+    },
+    {
+        "topic": "General Characters",
+        "question": "What are the four primary morphological shapes of bacterial cells?",
+        "options": [
+            "Circular, Square, Flat, and Spindly",
+            "Bacilli (rod), Cocci (spherical), Vibrios (comma), and Spiral",
+            "Capsulated, Flagellated, Spored, and Piliated",
+            "Gram-positive, Gram-negative, Acid-fast, and Neutral"
+        ],
+        "correct": 1,
+        "explanation": "Bacteria occur as Bacilli (rod-shaped), Cocci (spherical), Vibrios (comma-shaped), or Spiral-shaped.",
+        "id": 16
+    },
+    {
+        "topic": "General Characters",
+        "question": "Which of the following is a classic example of a Bacilli (rod-shaped) bacterium?",
+        "options": [
+            "Staphylococci",
+            "The typhoid bacillus",
+            "Vibrio cholera",
+            "Spirochaetes"
+        ],
+        "correct": 1,
+        "explanation": "The typhoid bacillus is a rod-shaped bacterium (bacillus).",
+        "id": 17
+    },
+    {
+        "topic": "General Characters",
+        "question": "Which of the following represents a Vibrio (comma-shaped) bacterium?",
+        "options": [
+            "Staph aureus",
+            "Streptococcus pyogenes",
+            "Vibrio cholera",
+            "Pneumococci"
+        ],
+        "correct": 2,
+        "explanation": "Vibrio cholera is a comma-shaped bacterium.",
+        "id": 18
+    },
+    {
+        "topic": "General Characters",
+        "question": "What determines the cellular arrangement (e.g. clusters, chains, pairs) of bacteria?",
+        "options": [
+            "The type of tissue they infect.",
+            "Whether the daughter cells separate or remain attached by the cell membrane after division.",
+            "The direction of flagellar rotation.",
+            "The thickness of the lipopolysaccharide (LPS) layer."
+        ],
+        "correct": 1,
+        "explanation": "When the bacterial cell divides, the daughter cells may separate or remain attached to one another, forming clusters, chains, or pairs.",
+        "id": 19
+    },
+    {
+        "topic": "General Characters",
+        "question": "Match the bacterial arrangements to their typical examples:",
+        "options": [
+            "Clusters: Streptococci; Chains: Staphylococci; Pairs: Pneumococci",
+            "Clusters: Staphylococci; Chains: Streptococci; Pairs (diplococci): Pneumococci",
+            "Clusters: Pneumococci; Chains: Staphylococci; Pairs: Vibrios",
+            "All bacteria occur only in chains."
+        ],
+        "correct": 1,
+        "explanation": "Staphylococci occur in clusters, Streptococci in chains, and Pneumococci in pairs (diplococci).",
+        "id": 20
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "Which of the following is considered an ESSENTIAL structure of a bacterial cell?",
+        "options": [
+            "The capsule",
+            "The flagella",
+            "The cell wall",
+            "The spores"
+        ],
+        "correct": 2,
+        "explanation": "Essential structures include the cell wall, cytoplasmic membrane, cytoplasm, and nucleoid. Non-essential structures include the capsule, flagella, pili, and spores.",
+        "id": 21
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "Which layer is unique to bacterial cell walls and provides rigid support?",
+        "options": [
+            "Lipopolysaccharide layer",
+            "Peptidoglycan layer",
+            "Teichoic acid layer",
+            "Phospholipid bilayer"
+        ],
+        "correct": 1,
+        "explanation": "The peptidoglycan layer is a unique structure in bacteria that provides rigid support.",
+        "id": 22
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "What percentage of the cell wall material in Gram-Positive bacteria is made of peptidoglycan?",
+        "options": [
+            "5-10%",
+            "25%",
+            "50%",
+            "90%"
+        ],
+        "correct": 2,
+        "explanation": "In Gram-Positive bacteria, the peptidoglycan layer forms about 50% of the cell wall material.",
+        "id": 23
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "Which class of antibiotics directly inhibits the synthesis of the peptidoglycan layer?",
+        "options": [
+            "Tetracyclines and Macrolides",
+            "Penicillins and Cephalosporins",
+            "Sulfonamides and Trimethoprim",
+            "Aminoglycosides"
+        ],
+        "correct": 1,
+        "explanation": "Peptidoglycan synthesis is inhibited by Penicillins and Cephalosporins.",
+        "id": 24
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "What is the function of Teichoic Acid in Gram-Positive cell walls?",
+        "options": [
+            "It acts as a motility organelle.",
+            "It is the major surface antigen and is important for attachment to mucosal cells.",
+            "It acts as an endotoxin causing septic shock.",
+            "It prevents osmotic bursting in hypertonic solutions."
+        ],
+        "correct": 1,
+        "explanation": "Teichoic acid is the major surface antigen in Gram-Positive bacteria and is important for attachment to mucosal cells.",
+        "id": 25
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "What is the outer membrane of Gram-Negative cell walls composed of?",
+        "options": [
+            "Thick teichoic acid",
+            "Lipopolysaccharides (LPS)",
+            "Keratin-like coat",
+            "Pure flagellin protein"
+        ],
+        "correct": 1,
+        "explanation": "Lipopolysaccharides (LPS) form the outer membrane of the Gram-Negative cell wall.",
+        "id": 26
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "Why is the Lipopolysaccharide (LPS) layer clinically dangerous in Gram-Negative infections?",
+        "options": [
+            "It is highly motile and spreads rapidly.",
+            "It acts as an endotoxin responsible for septic shock (fever, hypotension, and shock).",
+            "It prevents penicillin from entering the cytoplasm.",
+            "It causes immediate spore formation."
+        ],
+        "correct": 1,
+        "explanation": "LPS is an endotoxin. It is responsible for septic shock, characterized by fever, hypotension (low blood pressure), and circulatory shock.",
+        "id": 27
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "How does the peptidoglycan layer of Gram-Negative bacteria compare to Gram-Positive bacteria?",
+        "options": [
+            "It is thicker, representing 90% of the wall.",
+            "It is much thinner, representing only 5-10% of the cell wall material as an inner layer.",
+            "It contains teichoic acid.",
+            "It is completely absent."
+        ],
+        "correct": 1,
+        "explanation": "In Gram-Negative cell walls, the peptidoglycan is the inner layer and forms only 5-10% of the cell wall material.",
+        "id": 28
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "Which of the following is NOT a function of the bacterial Cell Wall?",
+        "options": [
+            "Maintaining the shape of the bacteria.",
+            "Protecting the cytoplasmic membrane from bursting in hypotonic solutions.",
+            "Selective permeability and active transport of nutrients.",
+            "Determining the response to Gram stain and playing a role in cell division."
+        ],
+        "correct": 2,
+        "explanation": "Active transport and selective permeability are functions of the cytoplasmic membrane, not the cell wall.",
+        "id": 29
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "Where is the Cytoplasmic Membrane located in a bacterial cell?",
+        "options": [
+            "Outside the capsule",
+            "Inside the peptidoglycan layer of the cell wall",
+            "Within the nucleoid",
+            "Surrounding the flagella"
+        ],
+        "correct": 1,
+        "explanation": "The cytoplasmic membrane lies inside the peptidoglycan layer of the cell wall.",
+        "id": 30
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "What is the structural composition of the Cytoplasmic Membrane?",
+        "options": [
+            "A thick layer of peptidoglycan and keratin",
+            "A semipermeable double-layered phospholipid bilayer",
+            "A rigid lipopolysaccharide coat",
+            "An antigenic protein sheet called flagellin"
+        ],
+        "correct": 1,
+        "explanation": "The cytoplasmic membrane is a semipermeable double-layered structure composed of a phospholipid bilayer.",
+        "id": 31
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "Which of the following is a key function of the Cytoplasmic Membrane?",
+        "options": [
+            "Determining response to Gram stain.",
+            "Active transport of nutrients in and wastes out (selective permeability).",
+            "Protecting the cell against phagocytosis.",
+            "Synthesizing teichoic acid."
+        ],
+        "correct": 1,
+        "explanation": "Important functions of the cytoplasmic membrane include selective permeability (active transport of nutrients into the cell and waste out), respiration, cell division, and secretion of enzymes/toxins.",
+        "id": 32
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "Which bacterial structure is concerned with respiration (energy generation) and cell division?",
+        "options": [
+            "Capsule",
+            "Flagella",
+            "Cytoplasmic membrane",
+            "Teichoic acid"
+        ],
+        "correct": 2,
+        "explanation": "The cytoplasmic membrane plays a direct role in respiration and cell division.",
+        "id": 33
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "Bacterial cytoplasm is a soft gel. Which organelles inside it are concerned with protein synthesis?",
+        "options": [
+            "Mitochondria",
+            "Ribosomes",
+            "Fat granules",
+            "Nucleoid"
+        ],
+        "correct": 1,
+        "explanation": "Ribosomes are granular structures in the cytoplasm concerned with protein synthesis.",
+        "id": 34
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "What types of storage granules are found inside the bacterial cytoplasm?",
+        "options": [
+            "Keratin and peptidoglycan granules",
+            "Fat granules, polysaccharide granules, and glycogen granules",
+            "Teichoic acid and endotoxin granules",
+            "No granules exist in bacteria."
+        ],
+        "correct": 1,
+        "explanation": "Bacterial cytoplasm contains fat granules, polysaccharide granules, and glycogen granules.",
+        "id": 35
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "Which of the following is true regarding the Bacterial Nucleoid?",
+        "options": [
+            "It is surrounded by a thick nuclear membrane.",
+            "It contains a distinct nucleolus.",
+            "It is composed of DNA, has no nuclear membrane, and no nucleolus.",
+            "It consists of RNA only."
+        ],
+        "correct": 2,
+        "explanation": "The nuclear material (DNA) is a nucleoid that carries hereditary functions, has no nuclear membrane, and lacks a nucleolus.",
+        "id": 36
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "What is the Capsule of a bacterial cell?",
+        "options": [
+            "A protein tail concerned with motility.",
+            "A protective gelatinous layer outside the cell wall.",
+            "A layer inside the cell wall composed of LPS.",
+            "A highly resistant structure containing dipicolinic acid."
+        ],
+        "correct": 1,
+        "explanation": "The capsule is a protective gelatinous layer located outside the cell wall.",
+        "id": 37
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "Why is the capsule considered a major 'virulence factor' for many bacteria?",
+        "options": [
+            "It allows bacteria to swim rapidly.",
+            "It acts like a jacket that protects bacteria against phagocytosis.",
+            "It releases endotoxins causing septic shock.",
+            "It allows bacteria to survive boiling temperatures."
+        ],
+        "correct": 1,
+        "explanation": "The capsule acts like a jacket that protects bacteria against phagocytosis, making it a critical virulence factor.",
+        "id": 38
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "What is the function of bacterial Flagella?",
+        "options": [
+            "Adhesion to mucosa",
+            "Motility",
+            "Protein synthesis",
+            "Spore formation"
+        ],
+        "correct": 1,
+        "explanation": "Flagella are long, delicate appendages concerned with motility.",
+        "id": 39
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "What protein composes flagella, and what is its immunologic property?",
+        "options": [
+            "Keratin; it is highly resistant",
+            "Flagellin; it is antigenic",
+            "Peptidoglycan; it is toxic",
+            "Pilin; it is adhesive"
+        ],
+        "correct": 1,
+        "explanation": "Flagella are composed of the protein flagellin, which is antigenic.",
+        "id": 40
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "What are Pili (Fimbriae)?",
+        "options": [
+            "Thick coats around bacterial spores.",
+            "Very thin and short thread-like structures found on the surface of certain bacterial cells.",
+            "Semipermeable membranes.",
+            "Granules that store glycogen."
+        ],
+        "correct": 1,
+        "explanation": "Pili (or fimbriae) are very thin and short thread-like structures on the surface of certain bacterial cells.",
+        "id": 41
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "Pili are typically found in Gram-Negative bacilli. What is their primary function?",
+        "options": [
+            "Motility",
+            "Adhesion & attachment to mucosa",
+            "Phagocytosis prevention",
+            "Protein synthesis"
+        ],
+        "correct": 1,
+        "explanation": "Pili are responsible for the adhesion and attachment of bacteria to mucosal surfaces.",
+        "id": 42
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "Which two medically important genera of Gram-Positive bacilli form Spores?",
+        "options": [
+            "Staphylococcus and Streptococcus",
+            "Bacillus and Clostridium",
+            "Mycobacterium and Pseudomonas",
+            "Neisseria and Brucella"
+        ],
+        "correct": 1,
+        "explanation": "Spores are formed by two medically important genera of gram-positive bacilli: the genus Bacillus and the genus Clostridium.",
+        "id": 43
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "Under what conditions do bacteria form spores?",
+        "options": [
+            "When nutrients like carbon and nitrogen are depleted.",
+            "In hypertonic liquid solutions.",
+            "When they are exposed to direct daylight.",
+            "During active logarithmic cell division."
+        ],
+        "correct": 0,
+        "explanation": "Spore formation (sporulation) occurs under unsuitable environmental conditions, specifically when essential nutrients such as carbon and nitrogen are depleted.",
+        "id": 44
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "What does a bacterial spore contain?",
+        "options": [
+            "Only lipopolysaccharide (LPS) and teichoic acid.",
+            "Bacterial DNA, a small amount of cytoplasm, cell membrane, peptidoglycan, and a thick keratin-like coat.",
+            "Ribosomes and flagella only.",
+            "Water and lipids without any nuclear material."
+        ],
+        "correct": 1,
+        "explanation": "A spore contains bacterial DNA, a small amount of cytoplasm, cell membrane, peptidoglycan, and a thick keratin-like coat.",
+        "id": 45
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "Which part of the spore structure is responsible for its extreme resistance to heat, dehydration, radiation, and chemicals?",
+        "options": [
+            "The inner flagellin core",
+            "The thick keratin-like coat",
+            "The lipopolysaccharide membrane",
+            "The cytoplasm granules"
+        ],
+        "correct": 1,
+        "explanation": "The thick keratin-like coat of the spore is responsible for its extreme resistance to environmental stressors.",
+        "id": 46
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "How are spores compared to plant seeds in the lecture notes?",
+        "options": [
+            "They multiply rapidly like weeds.",
+            "They survive without food or water for months or years, germinating into vegetative cells when nutrients and water become available.",
+            "They require constant sunlight to stay alive.",
+            "They are completely harmless and non-pathogenic."
+        ],
+        "correct": 1,
+        "explanation": "Spores are like seeds; they can survive without food or water for long periods, but will grow and mature (germinate) when suitable temperature, food, and water become available.",
+        "id": 47
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "What is the difference between a vegetative bacterial cell and a spore?",
+        "options": [
+            "A vegetative cell is highly resistant; a spore is actively reproducing.",
+            "A vegetative cell is the active, growing, and metabolizing cell, while the spore is a dormant, highly resistant survival structure.",
+            "Vegetative cells are only Gram-negative; spores are only Gram-positive.",
+            "There is no functional difference."
+        ],
+        "correct": 1,
+        "explanation": "The vegetative cell is the active living form of the bacterium, whereas the spore is a dormant, highly resistant survival form.",
+        "id": 48
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "Are bacterial spores considered a method of reproduction?",
+        "options": [
+            "Yes, one bacterium can produce thousands of spores.",
+            "No, one bacterium forms only one spore, which germinates back into one bacterium; it is a mechanism of survival, not reproduction.",
+            "Yes, spores divide by binary fission.",
+            "Only in the genus Clostridium."
+        ],
+        "correct": 1,
+        "explanation": "Spore formation is a survival mechanism. Since one cell forms one spore which germinates into one cell, there is no increase in cell number (no reproduction).",
+        "id": 49
+    },
+    {
+        "topic": "Bacterial Structure",
+        "question": "Which of the following is killed by standard autoclaving but survives simple boiling?",
+        "options": [
+            "Commensal Staphylococci",
+            "Bacterial Spores",
+            "Active vegetative bacilli",
+            "Viruses"
+        ],
+        "correct": 1,
+        "explanation": "Bacterial spores are highly resistant to boiling, requiring pressurized steam sterilization (autoclaving) to be destroyed.",
+        "id": 50
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "Which of the following is a basic biological need for bacteria to grow and multiply?",
+        "options": [
+            "Nutrition, moisture, and suitable temperature",
+            "Proper pH, oxygen requirements, and complete/partial absence of light",
+            "Avoidance of toxic bi-product accumulation",
+            "All of the above"
+        ],
+        "correct": 3,
+        "explanation": "To grow and multiply, bacteria require sufficient nutrition, moisture, suitable temperature, proper pH, appropriate oxygen levels, absence of direct light, and prevention of metabolic bi-product accumulation.",
+        "id": 51
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "What are Autotrophic bacteria (Autotrophs)?",
+        "options": [
+            "Bacteria that must live on complex animal proteins.",
+            "Bacteria that utilize simple inorganic substances (e.g. CO2, ammonium salts) to synthesize organic compounds.",
+            "Medically important pathogens that cause typhoid.",
+            "Anaerobic bacteria that lack catalase."
+        ],
+        "correct": 1,
+        "explanation": "Autotrophs are bacteria that can utilize simple inorganic substances (like CO2 as carbon source and ammonium salts as nitrogen source) to synthesize organic materials.",
+        "id": 52
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "Are autotrophic bacteria medically important in causing human disease?",
+        "options": [
+            "Yes, they cause severe respiratory infections.",
+            "No, they are free-living, non-parasitic, and have no direct medical importance.",
+            "They only infect immunocompromised hospital patients.",
+            "They are the main cause of septic shock."
+        ],
+        "correct": 1,
+        "explanation": "Autotrophs are free-living, non-parasitic organisms of no direct medical importance.",
+        "id": 53
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "What are Heterotrophic bacteria (Heterotrophs)?",
+        "options": [
+            "Bacteria that derive energy strictly from direct sunlight.",
+            "Bacteria that require complex preformed organic substances (sugars, proteins) derived from plant or animal sources.",
+            "Bacteria that do not require water to grow.",
+            "Commensal bacteria that live only on clothes."
+        ],
+        "correct": 1,
+        "explanation": "Heterotrophs require complex preformed organic substances (like sugars and proteins) derived from plant or animal sources.",
+        "id": 54
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "Which statement is true regarding medically important bacteria and heterotrophy?",
+        "options": [
+            "Some are autotrophs, others are heterotrophs.",
+            "All bacteria of medical importance are heterotrophs (parasitic bacteria).",
+            "No medical bacteria are heterotrophs.",
+            "Heterotrophic bacteria are strictly non-pathogenic."
+        ],
+        "correct": 1,
+        "explanation": "All bacteria of medical importance are heterotrophs. They live in or on the animal body and are called parasitic bacteria.",
+        "id": 55
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "What type of media is enriched with complex organic materials like blood or serum to grow fastidious heterotrophs?",
+        "options": [
+            "Simple peptone broth",
+            "Enriched media",
+            "Autotrophic agar",
+            "Dehydrated medium"
+        ],
+        "correct": 1,
+        "explanation": "Media containing complex organic materials like blood or serum are called enriched media.",
+        "id": 56
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "Why is water/moisture essential for bacterial growth?",
+        "options": [
+            "It acts as a vehicle for food transmission.",
+            "It keeps the flagella dry.",
+            "It is required to synthezise teichoic acid.",
+            "It is the source of nitrogen."
+        ],
+        "correct": 0,
+        "explanation": "Water is essential for bacterial growth because it acts as a vehicle for food transmission.",
+        "id": 57
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "Which delicate pathogen is highly sensitive to dryness, surviving only a few hours outside the host?",
+        "options": [
+            "Clostridium spores",
+            "Gonococcus",
+            "Tubercle bacillus",
+            "Pseudomonas"
+        ],
+        "correct": 1,
+        "explanation": "Delicate bacteria like gonococcus can resist dryness only for a few hours.",
+        "id": 58
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "Each species of bacteria has a temperature range for growth. How are bacteria classified by temperature preference?",
+        "options": [
+            "Psychrophiles, Mesophiles, and Thermophiles",
+            "Obligate, Facultative, and Micro-aerophilic",
+            "Acidophiles, Neutrophiles, and Alkaliphiles",
+            "Autotrophs, Heterotrophs, and Chemotrophs"
+        ],
+        "correct": 0,
+        "explanation": "Bacteria are classified by temperature ranges into Psychrophiles, Mesophiles, and Thermophiles.",
+        "id": 59
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "Which bacteria grow best at cold temperatures, with optimum growth between 20-30\u00b0C and capability to grow at 0\u00b0C?",
+        "options": [
+            "Psychrophiles",
+            "Mesophiles",
+            "Thermophiles",
+            "Sterothermophilus"
+        ],
+        "correct": 0,
+        "explanation": "Psychrophiles can grow at 0\u00b0C or lower, with optimal growth taking place between 20-30\u00b0C.",
+        "id": 60
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "Which temperature group contains all medically important bacteria, growing best between 25-40\u00b0C?",
+        "options": [
+            "Psychrophiles",
+            "Mesophiles",
+            "Thermophiles",
+            "Obligate thermophiles"
+        ],
+        "correct": 1,
+        "explanation": "Mesophiles grow best within a temperature range from 25-40\u00b0C. All bacteria of medical importance belong to this group.",
+        "id": 61
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "Thermophiles grow best at 45-60\u00b0C. What are obligate thermophiles (sterothermophilus)?",
+        "options": [
+            "Thermophiles that can also grow at room temperature.",
+            "Thermophiles that grow above 60\u00b0C and cannot grow below 45\u00b0C.",
+            "Thermophiles that grow best in human blood.",
+            "Psychrophiles that have adapted to heat."
+        ],
+        "correct": 1,
+        "explanation": "Obligate thermophiles (like sterothermophilus) grow at high temperatures and cannot grow below this range.",
+        "id": 62
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "What is the 'optimum temperature' of incubation for bacterial culture?",
+        "options": [
+            "The temperature at which bacteria form spores.",
+            "The temperature that allows for most rapid growth during a short period of time (12-24 h).",
+            "The boiling point of water.",
+            "0\u00b0C, which preserves bacterial enzymes."
+        ],
+        "correct": 1,
+        "explanation": "The optimum temperature is the temperature of incubation which allows for most rapid growth during a short period (12-24 h).",
+        "id": 63
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "What is the optimum pH range for the growth of most medically important bacteria?",
+        "options": [
+            "1.0 to 3.0",
+            "4.0 to 6.0",
+            "6.5 to 7.5",
+            "8.5 to 10.0"
+        ],
+        "correct": 2,
+        "explanation": "For most bacteria, the optimum pH for growth is slightly alkaline/neutral, between 6.5 and 7.5.",
+        "id": 64
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "How does bacterial growth itself eventually inhibit further growth in a closed medium?",
+        "options": [
+            "By consuming all nitrogen and releasing oxygen.",
+            "By excreting acidic or basic bi-products that shift the pH away from the optimum range.",
+            "By increasing the temperature of the culture.",
+            "By dissolving the agar medium."
+        ],
+        "correct": 1,
+        "explanation": "Bacterial growth leads to the excretion of acidic or basic products that change the pH, which may eventually inhibit the growth of the organisms.",
+        "id": 65
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "Why is oxygen required by aerobic bacteria?",
+        "options": [
+            "It acts as the final hydrogen (electron) acceptor in the energy production system.",
+            "It is needed to synthesize Peptidoglycan.",
+            "It directly dissolves carbon dioxide.",
+            "It prevents acidic bi-product accumulation."
+        ],
+        "correct": 0,
+        "explanation": "Oxygen acts as the hydrogen acceptor in the final steps of energy production, catalyzed by flavoproteins and cytochromes.",
+        "id": 66
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "The use of oxygen by bacteria generates two highly toxic molecules. What are they?",
+        "options": [
+            "Carbon monoxide and Nitric oxide",
+            "Hydrogen peroxide (H2O2) and the free radical superoxide (O2\u00af)",
+            "Lactic acid and Sodium proteinate",
+            "Sulfuric acid and Ammonia"
+        ],
+        "correct": 1,
+        "explanation": "The use of oxygen generates toxic molecules: hydrogen peroxide (H2O2) and the free radical superoxide (O2\u00af).",
+        "id": 67
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "Which two enzymes are required by bacteria to neutralize the toxic products of oxygen utilization?",
+        "options": [
+            "Amylase and Lipase",
+            "Superoxide dismutase and Catalase",
+            "Protease and Polymerase",
+            "Carbonic anhydrase and Antithrombin"
+        ],
+        "correct": 1,
+        "explanation": "Bacteria require superoxide dismutase (to break down superoxide) and catalase (to break down hydrogen peroxide) to utilize oxygen safely.",
+        "id": 68
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "Match the oxygen-neutralizing enzymatic reactions:",
+        "options": [
+            "SOD: converts H2O2 to water; Catalase: converts superoxide to H2O2",
+            "Superoxide dismutase: O2\u00af + 2H+ -> H2O2; Catalase: H2O2 -> H2O + 1/2 O2",
+            "SOD: converts O2\u00af to CO2; Catalase: converts H2O2 to lactic acid",
+            "Both enzymes perform the same chemical reaction."
+        ],
+        "correct": 1,
+        "explanation": "Superoxide dismutase converts superoxide to hydrogen peroxide (H2O2). Catalase then breaks down H2O2 into water and oxygen.",
+        "id": 69
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "How are bacteria classified based on their gaseous (oxygen) requirements?",
+        "options": [
+            "Obligate aerobes, Facultative anaerobes, Obligate anaerobes, and Micro-aerophilic",
+            "Autotrophs, Heterotrophs, Commensals, and Saprophytes",
+            "Psychrophiles, Mesophiles, and Thermophiles",
+            "Gram-positive, Gram-negative, and Spored"
+        ],
+        "correct": 0,
+        "explanation": "Based on oxygen needs, bacteria are categorized as obligate aerobes, facultative anaerobes, obligate anaerobes, or micro-aerophilic.",
+        "id": 70
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "Which of the following is an example of an 'Obligate aerobe'?",
+        "options": [
+            "Clostridium tetani",
+            "Mycobacterium tuberculosis",
+            "Campylobacter jejuni",
+            "Staphylococcus aureus"
+        ],
+        "correct": 1,
+        "explanation": "Obligate aerobes, like Mycobacterium tuberculosis and Pseudomonas aeruginosa, grow only in the presence of oxygen.",
+        "id": 71
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "What is a 'Facultative anaerobe'?",
+        "options": [
+            "Bacteria that grow only in the complete absence of oxygen.",
+            "Bacteria that can grow in the presence or absence of O2, utilizing aerobic or anaerobic respiration accordingly.",
+            "Bacteria that require high concentrations of CO2.",
+            "Bacteria that are killed immediately by oxygen."
+        ],
+        "correct": 1,
+        "explanation": "Facultative anaerobes can grow in the presence or absence of O2. They use O2 for energy if present, but switch to anaerobic pathways if O2 is absent.",
+        "id": 72
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "Why do 'Obligate anaerobes' die in the presence of oxygen?",
+        "options": [
+            "Oxygen dissolves their cell wall peptidoglycan.",
+            "They lack the protective enzymes catalase and superoxide dismutase, allowing toxic oxygen radicals to kill them.",
+            "They can only utilize CO2.",
+            "Oxygen stimulates their flagella to rotate backward."
+        ],
+        "correct": 1,
+        "explanation": "Obligate anaerobes grow only in the complete absence of O2. They die in its presence because they lack the enzymes catalase and superoxide dismutase needed to break down toxic oxygen products.",
+        "id": 73
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "Give an example of an 'Obligate anaerobe' of high medical importance:",
+        "options": [
+            "Pseudomonas aeruginosa",
+            "Clostridium tetani",
+            "Campylobacter jejuni",
+            "Mycobacterium tuberculosis"
+        ],
+        "correct": 1,
+        "explanation": "Clostridium tetani is a classic obligate anaerobe.",
+        "id": 74
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "What are 'Micro-aerophilic bacteria'?",
+        "options": [
+            "Bacteria that grow only in pure oxygen.",
+            "Bacteria that require a low oxygen tension (lower than atmospheric O2) for growth.",
+            "Bacteria that require 100% CO2.",
+            "Bacteria that do not possess DNA."
+        ],
+        "correct": 1,
+        "explanation": "Micro-aerophilic bacteria, e.g. Campylobacter jejuni, require low oxygen tension (lower than atmospheric levels) to grow.",
+        "id": 75
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "Which of the following require higher concentrations of CO2 (5-20%) in their culture atmosphere?",
+        "options": [
+            "Mycobacterium tuberculosis and Clostridium tetani",
+            "Brucella abortus and pathogenic Neisseria",
+            "Staphylococcus aureus and Pseudomonas",
+            "All bacteria require 20% CO2."
+        ],
+        "correct": 1,
+        "explanation": "Certain species like Brucella abortus and pathogenic Neisseria require higher concentrations of CO2 (5-20%) to grow.",
+        "id": 76
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "Why are most bacteria injured by diffuse daylight and killed by direct sunlight?",
+        "options": [
+            "Due to heat that melts their cell wall.",
+            "Due to the presence of ultraviolet (UV) rays which have a bactericidal action.",
+            "Daylight prevents them from absorbing moisture.",
+            "Daylight stimulates extreme acid production."
+        ],
+        "correct": 1,
+        "explanation": "The bactericidal action of daylight and sunlight is due to ultraviolet (UV) rays which damage bacterial components.",
+        "id": 77
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "What are 'Photosynthetic autotrophic' organisms?",
+        "options": [
+            "Medically important pathogenic bacteria.",
+            "Saprophytic bacteria containing chlorophylls that must be exposed to light as their source of energy.",
+            "Viruses that infect plant cells.",
+            "Obligate anaerobes that grow in the dark."
+        ],
+        "correct": 1,
+        "explanation": "Photosynthetic autotrophic bacteria contain chlorophylls and require light exposure as their energy source.",
+        "id": 78
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "What is 'Biotyping' (Biochemical reactions) of bacteria based on?",
+        "options": [
+            "Measuring flagellar length.",
+            "The degree to which an organism decomposes proteins/fats and ferments carbohydrates.",
+            "Testing bacterial response to penicillin.",
+            "Counting the number of nucleoids in the gel."
+        ],
+        "correct": 1,
+        "explanation": "Biotyping (biochemical reactions) uses the bacterial ability to decompose proteins/fats and ferment carbohydrates as a basis for identification.",
+        "id": 79
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "What is a 'Toxoid'?",
+        "options": [
+            "An active bacterial endotoxin that causes shock.",
+            "A modified, non-toxic bacterial bi-product used to produce vaccines against dangerous microbial toxins.",
+            "A staining reagent used in Gram stains.",
+            "A virus that destroys bacterial flagella."
+        ],
+        "correct": 1,
+        "explanation": "Toxoids are modified bacterial products that are no longer toxic but remain antigenic, used to produce vaccines against the dangerous effects of toxins.",
+        "id": 80
+    },
+    {
+        "topic": "Biological Needs",
+        "question": "What is the clinical or microbiological utility of bacterial bi-products such as pigments?",
+        "options": [
+            "They are used strictly to increase the temperature of growth.",
+            "They can be used for the identification and typing of different microorganisms.",
+            "They serve as the main source of carbon.",
+            "They actively paralyze ciliate cells."
+        ],
+        "correct": 1,
+        "explanation": "In addition to acids, other bacterial bi-products like pigments are highly useful for the identification and classification of microorganisms.",
+        "id": 81
+    },
+    {
+        "topic": "Viruses",
+        "question": "What is the size range of viruses, and what unit is used?",
+        "options": [
+            "They are measured in microns (\u00b5m).",
+            "They are very small, ultramicroscopic particles measured in nanometers (nm).",
+            "They are larger than bacteria, measured in millimeters.",
+            "They are measured in angstroms only."
+        ],
+        "correct": 1,
+        "explanation": "Viruses are extremely small, ultramicroscopic particles measured in nanometers (nm). Note that 1 nm = 10^-9 m.",
+        "id": 82
+    },
+    {
+        "topic": "Viruses",
+        "question": "Which microscope is required to visualize viral particles?",
+        "options": [
+            "Ordinary light microscope",
+            "Electron microscope",
+            "Fluorescence microscope",
+            "Viruses cannot be seen by any microscope."
+        ],
+        "correct": 1,
+        "explanation": "Because they are so minute, viruses can only be seen using the electron microscope.",
+        "id": 83
+    },
+    {
+        "topic": "Viruses",
+        "question": "What does 'extreme degree of parasitism' (obligate intracellular parasitism) mean for viruses?",
+        "options": [
+            "They live only on dead decaying matter.",
+            "They are completely dependent for life and reproduction on living cells which they invade.",
+            "They can synthesize proteins outside cells.",
+            "They feed on saprophytic bacteria."
+        ],
+        "correct": 1,
+        "explanation": "All viruses show an extreme degree of parasitism. They are obligate intracellular parasites, meaning they depend entirely on living host cells to live and reproduce.",
+        "id": 84
+    },
+    {
+        "topic": "Viruses",
+        "question": "Which of the following hosts can be infected by viruses?",
+        "options": [
+            "Animal cells only",
+            "Plant cells only",
+            "Bacterial cells only",
+            "Animal, plant, and bacterial cells"
+        ],
+        "correct": 3,
+        "explanation": "Viruses show extreme parasitism and can infect animal cells, plant cells, and even bacterial cells (bacteriophages).",
+        "id": 85
+    },
+    {
+        "topic": "Viruses",
+        "question": "What nucleic acid composition is unique to viruses compared to bacteria and animal cells?",
+        "options": [
+            "They contain both DNA and RNA.",
+            "They possess only one type of nucleic acid; either DNA or RNA.",
+            "They lack nucleic acids completely.",
+            "They contain only double-stranded RNA."
+        ],
+        "correct": 1,
+        "explanation": "A key difference is that viruses possess only one type of nucleic acid: either DNA or RNA, never both.",
+        "id": 86
+    },
+    {
+        "topic": "Viruses",
+        "question": "How are viruses cultivated in a laboratory setting?",
+        "options": [
+            "On simple nutrient peptone agar.",
+            "Only on living tissue culture cells.",
+            "In enriched blood or serum broth.",
+            "In dark, hypotonically balanced water."
+        ],
+        "correct": 1,
+        "explanation": "Because they are obligate intracellular parasites, viruses cannot grow on inanimate media. They can only be cultivated on living tissue culture cells.",
+        "id": 87
+    },
+    {
+        "topic": "Viruses",
+        "question": "Which of the following is a structural component of a virus?",
+        "options": [
+            "Rigid peptidoglycan cell wall",
+            "Phospholipid cytoplasmic membrane",
+            "A nucleic acid core (DNA or RNA) surrounded by a protein coat",
+            "Active mitochondria and ribosomes"
+        ],
+        "correct": 2,
+        "explanation": "Viruses consist simply of a nucleic acid genome (DNA or RNA) enclosed in a protective protein coat (capsid), lacking cell walls, membranes, or metabolic organelles.",
+        "id": 88
+    },
+    {
+        "topic": "Viruses",
+        "question": "Do viruses multiply by binary fission?",
+        "options": [
+            "Yes, like bacteria.",
+            "No, they replicate by utilizing the host cell's machinery to synthesize and assemble viral components.",
+            "Only bacteriophages do.",
+            "Yes, but only inside the nucleus."
+        ],
+        "correct": 1,
+        "explanation": "Viruses do not undergo binary fission. They replicate inside a host cell by forcing the host's machinery to synthesize and assemble new viral parts.",
+        "id": 89
+    },
+    {
+        "topic": "Viruses",
+        "question": "Which of the following is NOT a difference between bacteria and viruses?",
+        "options": [
+            "Bacteria possess both DNA and RNA; viruses have only one.",
+            "Bacteria grow on inanimate media; viruses require living cells.",
+            "Bacteria are visible under light microscopes; viruses require electron microscopes.",
+            "Bacteria contain proteins; viruses do not contain any protein."
+        ],
+        "correct": 3,
+        "explanation": "Both bacteria and viruses contain proteins (bacteria have structural and metabolic proteins; viruses have a protein capsid coat). This is not a difference.",
+        "id": 90
+    },
+    {
+        "topic": "Viruses",
+        "question": "Why are antibiotics like penicillin completely ineffective against viruses?",
+        "options": [
+            "Viruses lack a peptidoglycan cell wall, which is the target of penicillin.",
+            "Viruses actively destroy antibiotics.",
+            "Viral envelopes are too thick for antibiotics to penetrate.",
+            "Antibiotics only work in hypotonic solutions."
+        ],
+        "correct": 0,
+        "explanation": "Antibiotics target specific bacterial structures or metabolic pathways (like cell wall peptidoglycan). Because viruses lack these structures, antibiotics are useless against them.",
+        "id": 91
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "To isolate the causative organism, from where should a clinical specimen be collected?",
+        "options": [
+            "From the surrounding healthy skin.",
+            "From the actual diseased tissue.",
+            "From any easily accessible body fluid.",
+            "From the patient's clothing."
+        ],
+        "correct": 1,
+        "explanation": "The specimen should be collected from the actual diseased tissue to maximize the chance of capturing the causative pathogen.",
+        "id": 92
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "How does the volume of the collected sample affect laboratory investigation?",
+        "options": [
+            "Less material is always preferred to avoid contaminating the lab.",
+            "The more material sent for investigation, the greater the chance of isolating the causative organism.",
+            "Volume has no effect on culturing.",
+            "Large volumes kill the bacteria."
+        ],
+        "correct": 1,
+        "explanation": "Sending more material increases the probability of successfully isolating and identifying the pathogen.",
+        "id": 93
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "Why is it CRITICAL to collect specimens before initiating antibiotic treatment?",
+        "options": [
+            "Antibiotics change the blood group of the patient.",
+            "Antibiotics can kill or inhibit the pathogen in the sample, leading to false-negative culture results.",
+            "Antibiotics make the specimen container non-sterile.",
+            "It is done only to save medication costs."
+        ],
+        "correct": 1,
+        "explanation": "Specimens must be collected before starting antibiotics to prevent the drugs from killing or suppressing the organisms, which would block lab isolation.",
+        "id": 94
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "What basic container precautions must be taken during specimen collection?",
+        "options": [
+            "Put in any clean container, open to allow ventilation.",
+            "Put in a sterile container, securely closed, adequately labeled and dated.",
+            "Wrap the specimen in dry paper towels.",
+            "Store in a hypotonically balanced open cup."
+        ],
+        "correct": 1,
+        "explanation": "Samples should be placed in sterile containers that are securely closed, adequately labeled with patient info, and dated.",
+        "id": 95
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "What information must be included on the accompanying request sheet sent to the laboratory?",
+        "options": [
+            "The patient's name, age, sex, location, diagnosis, and relevant antibiotic treatment data.",
+            "Only the patient's name and room number.",
+            "The nurse's professional schedule.",
+            "No paperwork is needed if the bottle is labeled."
+        ],
+        "correct": 0,
+        "explanation": "The sheet must include patient demographics (name, age, sex), location, clinical diagnosis, and crucial data like current antibiotic/chemotherapeutic treatment.",
+        "id": 96
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "Why must nurses always use Personal Protective Equipment (PPE) like gloves and masks when collecting specimens?",
+        "options": [
+            "To prevent the specimen from drying out.",
+            "Because all specimens for culture are potentially dangerous to the nurses and lab staff who handle them.",
+            "It is required only during surgical dressing changes.",
+            "To speed up the collection process."
+        ],
+        "correct": 1,
+        "explanation": "All specimens for culture are dangerous. Nurses and lab staff must wear PPE (gloves, masks, protective clothing) to avoid accidental infection.",
+        "id": 97
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "What is the correct procedure for taking a Nasal Swab?",
+        "options": [
+            "Insert the swab 10 cm deep to the throat.",
+            "Insert a dry swab 2 cm into the nostril, rotate slowly, and use the same swab for both nostrils.",
+            "Cleanse the nostrils with 70% alcohol before inserting the swab.",
+            "Use separate wet swabs for each nostril and mix them in a cup."
+        ],
+        "correct": 1,
+        "explanation": "A dry swab is inserted 2 cm into the nostril, left for a few seconds to absorb, and slowly withdrawn with rotation. Both nostrils are sampled using the same swab.",
+        "id": 98
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "How does a Nasopharyngeal Swab collection differ from a nasal swab?",
+        "options": [
+            "It uses a thick wooden tongue depressor.",
+            "It uses a flexible, fine-shafted swab inserted through the nostril back to the nasopharynx, and separate swabs are used for each nostril.",
+            "It is collected from the ears.",
+            "It requires direct sunlight."
+        ],
+        "correct": 1,
+        "explanation": "Nasopharyngeal swabbing uses a flexible, fine-shafted swab passed through the nose to the nasopharynx. A second, separate swab is required for the second nostril.",
+        "id": 99
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "What is the correct technique for obtaining a Throat Swab?",
+        "options": [
+            "Ask the patient to swallow water first.",
+            "Use a tongue depressor to hold the tongue down, rub the swab over the posterior pharynx and tonsillar area, avoiding cheeks, teeth, or gums.",
+            "Vigorously scrub the gums and teeth.",
+            "Insert the swab blindly through the nose."
+        ],
+        "correct": 1,
+        "explanation": "Hold the tongue down with a tongue depressor, rub the swab over the posterior pharynx and tonsillar area. Avoid touching cheeks, teeth, or gums to prevent contamination with oral flora.",
+        "id": 100
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "What precaution must be taken before taking an Ear Swab?",
+        "options": [
+            "Use antibiotic drops at least 3 hours before.",
+            "Do NOT use antibiotic drops for at least 3 hours prior to collection.",
+            "Wash the ear canal with warm soapy water.",
+            "Only take the swab while the patient is sleeping."
+        ],
+        "correct": 1,
+        "explanation": "To prevent suppression of bacteria, antibiotic ear drops must not be used for at least 3 hours before taking the swab.",
+        "id": 101
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "Why should deeper ear swabbing only be performed by experienced medical staff?",
+        "options": [
+            "Because deep bacteria are highly toxic.",
+            "Because accidental damage to the eardrum may occur.",
+            "Because a speculum is highly toxic.",
+            "To prevent the loss of teichoic acid."
+        ],
+        "correct": 1,
+        "explanation": "Experienced staff should perform deep ear swabbing (using a speculum) because of the risk of rupturing or damaging the delicate eardrum (tympanic membrane).",
+        "id": 102
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "How is an Eye Swab correctly collected?",
+        "options": [
+            "Rub the swab directly over the cornea.",
+            "Ask the patient to look upwards, gently pull the lower lid down, and roll a sterile swab over the conjunctival sac inside the lower lid.",
+            "Collect secretions strictly from the eyelashes.",
+            "Flush the eye with saline and collect the runoff."
+        ],
+        "correct": 1,
+        "explanation": "Ask the patient to look up, pull the lower lid down, and gently roll the sterile swab over the conjunctival sac inside the lower lid.",
+        "id": 103
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "When is the best time to collect a Sputum Specimen, and what instructions are given to the patient?",
+        "options": [
+            "Late at night; ask them to drink hot tea.",
+            "First thing in the morning; instruct them to sit up, take several deep breaths to loosen secretions, and give a deep cough.",
+            "Right after lunch; ask them to scrape their tongue.",
+            "During exercise; collect saliva from the mouth."
+        ],
+        "correct": 1,
+        "explanation": "Sputum is best collected first thing in the morning. Patients sit up, take deep breaths to loosen secretions, and cough deeply to produce true sputum.",
+        "id": 104
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "Why must sputum samples contaminated with saliva be rejected or carefully interpreted?",
+        "options": [
+            "Saliva dissolves the sterile container.",
+            "Saliva contamination makes interpretation difficult and misleading, as it contains normal oral flora instead of lower respiratory secretions.",
+            "Saliva contains highly toxic enzymes.",
+            "Saliva turns into a gel immediately."
+        ],
+        "correct": 1,
+        "explanation": "Saliva does not represent lower airway status. Contaminated saliva samples lead to misleading culture results from oral cavity bacteria.",
+        "id": 105
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "What is the recommended protocol when collecting sputum from a patient suspected of having Tuberculosis (TB)?",
+        "options": [
+            "Collect a single massive sample of 100 ml.",
+            "Take 3 separate sputum specimens on 3 consecutive days.",
+            "Take a throat swab instead of sputum.",
+            "Cleanse the lungs with an autoclave first."
+        ],
+        "correct": 1,
+        "explanation": "Because tubercle bacilli may be present in small numbers and shed intermittently, three specimens should be collected on three consecutive days.",
+        "id": 106
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "Why must health professionals wear full PPE when collecting sputum specimens?",
+        "options": [
+            "Sputum contains high amounts of acid.",
+            "Droplets and infectious aerosols are generated during deep coughing, presenting a high inhalation transmission risk.",
+            "Sputum is highly corrosive to skin.",
+            "To prevent the sputum from drying."
+        ],
+        "correct": 1,
+        "explanation": "Deep coughing generates aerosols and droplets, which can transmit respiratory pathogens like M. tuberculosis via inhalation, requiring strict PPE.",
+        "id": 107
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "What is the ideal urine specimen, and how is it collected to avoid contamination?",
+        "options": [
+            "Random afternoon urine, collected directly.",
+            "Early morning, mid-stream urine (MSU) collected in a sterile container after cleansing the skin surrounding the urethral meatus.",
+            "First-catch urine without skin cleansing.",
+            "Urine squeezed from bed linen."
+        ],
+        "correct": 1,
+        "explanation": "An early morning mid-stream urine (MSU) is ideal. Cleansing the urethral meatus minimizes contamination with normal skin flora.",
+        "id": 108
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "What instructions should be given to a patient before collecting a Stool Sample?",
+        "options": [
+            "Ask them to drink large amounts of water to dilute the stool.",
+            "Ask the patient to urinate first to prevent contamination of the stool with urine.",
+            "Ask them to mix the stool with toilet water.",
+            "Instruct them to keep the stool uncovered."
+        ],
+        "correct": 1,
+        "explanation": "The patient must urinate before defecating to prevent urine from contaminating the stool specimen.",
+        "id": 109
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "What is the correct procedure for transferring stool into the laboratory container?",
+        "options": [
+            "Use the toilet brush to transfer.",
+            "Use the sterile spoon that comes attached to the container cap, then screw the container shut.",
+            "Pour the liquid toilet water into the container.",
+            "Pick up the stool directly with gloves."
+        ],
+        "correct": 1,
+        "explanation": "Stool is caught on a clean container/wrap (without touching toilet water) and transferred into the sterile specimen tube using the built-in spoon.",
+        "id": 110
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "Prior to venipuncture for a Blood Culture, how must the patient's skin be prepped?",
+        "options": [
+            "Wiped quickly with dry cotton.",
+            "Decontaminated with 70% alcohol and allowed to dry completely, without re-palpating the vein.",
+            "Cleaned with sterile water only.",
+            "Scrubbed with soap for 5 minutes."
+        ],
+        "correct": 1,
+        "explanation": "Decontaminate with 70% alcohol and let dry. Re-palpating the vein (even with gloves) after prep is forbidden, as it introduces skin contaminants.",
+        "id": 111
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "How are the blood culture bottle bungs prepared before needle inoculation?",
+        "options": [
+            "Washed with sterile saline.",
+            "Scrubbed with a 70% alcohol wipe for 15 seconds and allowed to dry after removing the plastic cap.",
+            "They do not need prep if the plastic cap was on.",
+            "Heated with a flame."
+        ],
+        "correct": 1,
+        "explanation": "Remove the cap, scrub the rubber bung with a 70% alcohol wipe for 15 seconds, and let dry before piercing to prevent entry of external microbes.",
+        "id": 112
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "When inoculating blood into culture bottles, in what order should they be filled and why?",
+        "options": [
+            "Aerobic first, then anaerobic.",
+            "Anaerobic bottle first, then the aerobic bottle, so that any oxygen trapped in the syringe is not transferred to the anaerobic bottle.",
+            "Both must be inoculated simultaneously using two needles.",
+            "Only the aerobic bottle is inoculated."
+        ],
+        "correct": 1,
+        "explanation": "Inoculate the anaerobic bottle first. This ensures that any air/oxygen trapped in the syringe tip or needle is not pushed into the anaerobic medium, where it would kill obligate anaerobes.",
+        "id": 113
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "When is the most preferable time to collect blood culture specimens from a patient?",
+        "options": [
+            "Strictly in the morning.",
+            "During fever episodes (spikes), as more bacteria are likely to be circulating in the blood.",
+            "After administering the first dose of antibiotics.",
+            "When the patient is asleep."
+        ],
+        "correct": 1,
+        "explanation": "Blood cultures should preferably be drawn during fever spikes, when bacteremia is at its peak.",
+        "id": 114
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "How is a Wound Swab correctly collected?",
+        "options": [
+            "Obtain the swab after cleaning the wound with antiseptics.",
+            "Obtain the specimen prior to any dressing or cleaning procedure, gently rotating a sterile swab to collect exudate and placing it in transport medium.",
+            "Vigorously scrub the dry edges of the wound.",
+            "Soak the swab in alcohol before rubbing."
+        ],
+        "correct": 1,
+        "explanation": "Collect the wound swab *before* cleaning or dressing changes to avoid killing the pathogens with antiseptics or removing active exudate.",
+        "id": 115
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "If a wound contains a large amount of active Pus, what is the best collection method?",
+        "options": [
+            "Soak multiple swabs in the pus.",
+            "Collect as much pus as possible in a sterile syringe, place it in a plain sterile container (do NOT use a swab), and send to the lab.",
+            "Squeeze the wound into a stool container.",
+            "Pus should not be collected."
+        ],
+        "correct": 1,
+        "explanation": "If pus is present, collect it directly using a sterile syringe and send it in a sterile tube. Swabs are inefficient and dry out quickly compared to direct liquid pus.",
+        "id": 116
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "What is Serum?",
+        "options": [
+            "Liquid blood treated with EDTA.",
+            "The liquid fraction of whole blood that is collected after the blood is allowed to clot.",
+            "Blood that contains all clotting factors.",
+            "The gel cytoplasm of bacteria."
+        ],
+        "correct": 1,
+        "explanation": "Serum is the fluid component of blood harvested after coagulation occurs, meaning it lacks fibrinogen and other clotting factors.",
+        "id": 117
+    },
+    {
+        "topic": "Specimen Collection",
+        "question": "Why is it standard procedure to collect two serum samples (paired sera)\u2014one at the start of a disease and another after 10 days?",
+        "options": [
+            "To measure the decrease in blood volume.",
+            "To demonstrate a rise in antibody titers over 10 days, confirming an active immune response to the pathogen.",
+            "To check if the blood group changed.",
+            "To replenish lost plasma proteins."
+        ],
+        "correct": 1,
+        "explanation": "Paired sera showing a significant rise in specific antibody levels over a 10-day period confirm that the immune system is actively fighting the suspected pathogen.",
+        "id": 118
+    }
+];
+
+    // ========================
+    // APP STATE
+    // ========================
+    let state = {
+        mode: 'practice', // practice, exam, review
+        currentPage: 0,
+        questionsPerPage: 5,
+        activeTopic: 'All',
+        answered: {},    // { questionId: selectedIndex }
+        shuffled: false,
+        showAll: false,
+    };
+
+    let filteredQuestions = [...allQuestions];
+
+    // ========================
+    // INIT
+    // ========================
+    function init() {
+        // Load saved state
+        const saved = localStorage.getItem('microbiology_quiz_state');
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved);
+                state.answered = parsed.answered || {};
+            } catch(e) {}
+        }
+
+        buildTopicFilter();
+        updateStats();
+        filterAndRender();
+
+        // Mode buttons
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                state.mode = btn.dataset.mode;
+                state.currentPage = 0;
+                state.showAll = false;
+                filterAndRender();
+            });
+        });
+    }
+
+    // ========================
+    // TOPICS
+    // ========================
+    function getTopics() {
+        const topics = new Set();
+        allQuestions.forEach(q => topics.add(q.topic));
+        return ['All', ...Array.from(topics)];
+    }
+
+    function buildTopicFilter() {
+        const container = document.getElementById('topicFilter');
+        const topics = getTopics();
+        container.innerHTML = topics.map(t => 
+            `<button class="topic-chip ${t === state.activeTopic ? 'active' : ''}" onclick="selectTopic('${t}')">${t}</button>`
+        ).join('');
+    }
+
+    function selectTopic(topic) {
+        state.activeTopic = topic;
+        state.currentPage = 0;
+        state.showAll = false;
+        buildTopicFilter();
+        filterAndRender();
+    }
+
+    // ========================
+    // FILTER & RENDER
+    // ========================
+    function filterAndRender() {
+        let qs = [...allQuestions];
+
+        // Topic filter
+        if (state.activeTopic !== 'All') {
+            qs = qs.filter(q => q.topic === state.activeTopic);
+        }
+
+        // Review mode: only wrong answers
+        if (state.mode === 'review') {
+            qs = qs.filter(q => {
+                const ans = state.answered[q.id];
+                return ans !== undefined && ans !== q.correct;
+            });
+        }
+
+        filteredQuestions = qs;
+        renderQuestions();
+        updateStats();
+        updatePagination();
+
+        // Hide result screen
+        document.getElementById('resultScreen').classList.add('hidden');
+        document.getElementById('questionsContainer').classList.remove('hidden');
+    }
+
+    function renderQuestions() {
+        const container = document.getElementById('questionsContainer');
+        const start = state.showAll ? 0 : state.currentPage * state.questionsPerPage;
+        const end = state.showAll ? filteredQuestions.length : start + state.questionsPerPage;
+        const pageQuestions = filteredQuestions.slice(start, end);
+
+        if (pageQuestions.length === 0) {
+            container.innerHTML = `
+                <div style="text-align:center;padding:60px 20px;color:var(--text-muted)">
+                    <div style="font-size:3rem;margin-bottom:16px">📭</div>
+                    <div style="font-size:1.1rem;font-weight:600;color:var(--text-secondary);margin-bottom:8px">
+                        ${state.mode === 'review' ? 'No wrong answers to review!' : 'No questions found'}
+                    </div>
+                    <div style="font-size:0.85rem">
+                        ${state.mode === 'review' ? 'Great job! Try answering more questions first.' : 'Try a different topic.'}
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = pageQuestions.map((q, idx) => {
+            const answered = state.answered[q.id] !== undefined;
+            const selectedIdx = state.answered[q.id];
+            const isExamMode = state.mode === 'exam';
+
+            const letters = ['A', 'B', 'C', 'D'];
+
+            return `
+                <div class="question-card" id="q${q.id}">
+                    <div class="question-number">
+                        <span class="q-badge">Q${q.id}</span>
+                        <span class="question-topic-badge">${q.topic}</span>
+                    </div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options-list">
+                        ${q.options.map((opt, oi) => {
+                            let cls = 'option-btn';
+                            if (answered && !isExamMode) {
+                                cls += ' disabled';
+                                if (oi === q.correct) cls += ' correct';
+                                else if (oi === selectedIdx) cls += ' wrong';
+                            } else if (answered && isExamMode) {
+                                cls += ' disabled';
+                                if (oi === selectedIdx) cls += ' selected-exam';
+                            }
+                            return `
+                                <button class="${cls}" onclick="selectAnswer(${q.id}, ${oi})" ${answered ? 'disabled' : ''}>
+                                    <span class="option-letter">${letters[oi]}</span>
+                                    <span>${opt}</span>
+                                </button>
+                            `;
+                        }).join('')}
+                    </div>
+                    ${answered && !isExamMode ? `
+                        <div class="explanation">
+                            <strong>${selectedIdx === q.correct ? '✅ Correct!' : '❌ Incorrect.'}</strong> ${q.explanation}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ========================
+    // ANSWER HANDLER
+    // ========================
+    function selectAnswer(qId, optIdx) {
+        if (state.answered[qId] !== undefined) return;
+
+        state.answered[qId] = optIdx;
+        saveState();
+        
+        // Re-render to show feedback
+        if (state.mode !== 'exam') {
+            renderQuestions();
+        } else {
+            // In exam mode, mark selected
+            const card = document.getElementById(`q${qId}`);
+            const buttons = card.querySelectorAll('.option-btn');
+            buttons.forEach((btn, idx) => {
+                btn.classList.add('disabled');
+                btn.disabled = true;
+                if (idx === optIdx) {
+                    btn.classList.add('selected-exam');
+                }
+            });
+        }
+
+        updateStats();
+        updatePagination();
+    }
+
+    // ========================
+    // STATS
+    // ========================
+    function updateStats() {
+        let answeredCount = 0;
+        let correct = 0;
+        let wrong = 0;
+
+        filteredQuestions.forEach(q => {
+            const ans = state.answered[q.id];
+            if (ans !== undefined) {
+                answeredCount++;
+                if (ans === q.correct) correct++;
+                else wrong++;
+            }
+        });
+
+        document.getElementById('totalQ').textContent = filteredQuestions.length;
+        document.getElementById('correctCount').textContent = correct;
+        document.getElementById('wrongCount').textContent = wrong;
+
+        const pct = filteredQuestions.length > 0 ? Math.round((answeredCount / filteredQuestions.length) * 100) : 0;
+        document.getElementById('progressText').textContent = `${answeredCount} / ${filteredQuestions.length}`;
+        document.getElementById('progressFill').style.width = pct + '%';
+
+        // Show finish button when enough answered
+        const finishBtn = document.getElementById('finishBtn');
+        if (answeredCount >= filteredQuestions.length * 0.5 && filteredQuestions.length > 0) {
+            finishBtn.classList.remove('hidden');
+        } else {
+            finishBtn.classList.add('hidden');
+        }
+    }
+
+    // ========================
+    // PAGINATION
+    // ========================
+    function updatePagination() {
+        const totalPages = state.showAll ? 1 : Math.max(1, Math.ceil(filteredQuestions.length / state.questionsPerPage));
+        const current = state.showAll ? 1 : state.currentPage + 1;
+
+        document.getElementById('pageInfo').textContent = `${current} / ${totalPages}`;
+        document.getElementById('prevBtn').disabled = state.showAll || state.currentPage === 0;
+        document.getElementById('nextBtn').disabled = state.showAll || state.currentPage >= totalPages - 1;
+    }
+
+    function changePage(dir) {
+        const totalPages = Math.ceil(filteredQuestions.length / state.questionsPerPage);
+        state.currentPage = Math.max(0, Math.min(totalPages - 1, state.currentPage + dir));
+        renderQuestions();
+        updatePagination();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ========================
+    // ACTIONS
+    // ========================
+    function shuffleQuestions() {
+        for (let i = filteredQuestions.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [filteredQuestions[i], filteredQuestions[j]] = [filteredQuestions[j], filteredQuestions[i]];
+        }
+        filteredQuestions.forEach(q => {
+            const correctOption = q.options[q.correct];
+            const shuffledOptions = [...q.options];
+            for (let i = shuffledOptions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+            }
+            q.options = shuffledOptions;
+            q.correct = shuffledOptions.indexOf(correctOption);
+        });
+        state.currentPage = 0;
+        state.showAll = false;
+        renderQuestions();
+        updatePagination();
+    }
+
+    function resetQuiz() {
+        if (!confirm('Are you sure you want to reset all answers?')) return;
+        state.answered = {};
+        state.currentPage = 0;
+        state.showAll = false;
+        localStorage.removeItem('microbiology_quiz_state');
+        filterAndRender();
+    }
+
+    function showAllQuestions() {
+        state.showAll = !state.showAll;
+        const btn = document.getElementById('showAllBtn');
+        btn.textContent = state.showAll ? '📄 Paginate' : '📋 Show All';
+        filterAndRender();
+    }
+
+    // ========================
+    // RESULTS
+    // ========================
+    function showResults() {
+        let answeredCount = 0;
+        let correct = 0;
+        let wrong = 0;
+
+        filteredQuestions.forEach(q => {
+            const ans = state.answered[q.id];
+            if (ans !== undefined) {
+                answeredCount++;
+                if (ans === q.correct) correct++;
+                else wrong++;
+            }
+        });
+
+        const pct = answeredCount > 0 ? Math.round((correct / answeredCount) * 100) : 0;
+        let message = '', sub = '';
+        if (pct >= 90) { message = '🌟 Outstanding!'; sub = 'You truly mastered this material!'; }
+        else if (pct >= 75) { message = '👏 Great Job!'; sub = 'You have a strong understanding!'; }
+        else if (pct >= 60) { message = '👍 Good Work!'; sub = 'A bit more review and you\'ll be excellent!'; }
+        else if (pct >= 40) { message = '📚 Keep Studying!'; sub = 'Review the wrong answers and try again.'; }
+        else { message = '💪 Don\'t Give Up!'; sub = 'Use the Review Wrong mode to focus on weak areas.'; }
+
+        const circleColor = pct >= 75 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--error)';
+
+        document.getElementById('questionsContainer').classList.add('hidden');
+        const resultScreen = document.getElementById('resultScreen');
+        resultScreen.classList.remove('hidden');
+        resultScreen.innerHTML = `
+            <div class="score-circle" style="border-color: ${circleColor}">
+                <div class="score-percent" style="color: ${circleColor}">${pct}%</div>
+                <div class="score-label">Score</div>
+            </div>
+            <div class="result-message">${message}</div>
+            <div class="result-sub">${sub}</div>
+            <div class="result-stats">
+                <div class="result-stat">
+                    <div class="val" style="color:var(--text-primary)">${answeredCount}</div>
+                    <div class="lbl">Answered</div>
+                </div>
+                <div class="result-stat">
+                    <div class="val" style="color:var(--success)">${correct}</div>
+                    <div class="lbl">Correct</div>
+                </div>
+                <div class="result-stat">
+                    <div class="val" style="color:var(--error)">${wrong}</div>
+                    <div class="lbl">Wrong</div>
+                </div>
+            </div>
+            <button class="ctrl-btn primary" onclick="reviewWrong()" style="margin:8px;padding:12px 28px">📖 Review Wrong Answers</button>
+            <button class="ctrl-btn" onclick="backToQuiz()" style="margin:8px;padding:12px 28px">◀ Back to Quiz</button>
+            <button class="ctrl-btn" onclick="resetQuiz()" style="margin:8px;padding:12px 28px">🔄 Reset & Retry</button>
+        `;
+    }
+
+    function reviewWrong() {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('modeReview').classList.add('active');
+        state.mode = 'review';
+        state.currentPage = 0;
+        state.showAll = false;
+        filterAndRender();
+    }
+
+    function backToQuiz() {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('modePractice').classList.add('active');
+        state.mode = 'practice';
+        state.currentPage = 0;
+        state.showAll = false;
+        filterAndRender();
+    }
+
+    // ========================
+    // PERSISTENCE
+    // ========================
+    function saveState() {
+        localStorage.setItem('microbiology_quiz_state', JSON.stringify({
+            answered: state.answered
+        }));
+    }
+
+    // ========================
+    // START
+    // ========================
+    document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

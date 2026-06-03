@@ -1,408 +1,539 @@
-/* ═══════════════════════════════════════
-   مكتبة تمريض — Portal JS
-   Lightweight, no frameworks, no bloat
-   ═══════════════════════════════════════ */
 (function () {
   'use strict';
 
   var DONE_KEY = 'nurLib_done';
   var TERM_KEY = 'nurLib_term';
-  var SUB_KEY  = 'nurLib_sub';
+  var SUB_KEY = 'nurLib_sub';
+  var SEARCH_KEY = 'nurLib_search';
 
   var terms = curriculumData.terms;
   var allTermKeys = Object.keys(terms);
-
-  // Separate terms with content vs empty
   var filledTermKeys = [];
   var emptyTermKeys = [];
-  allTermKeys.forEach(function (k) {
-    if (Object.keys(terms[k].subjects).length > 0) {
-      filledTermKeys.push(k);
+
+  allTermKeys.forEach(function (key) {
+    var subjects = terms[key].subjects || {};
+    var hasLectures = Object.keys(subjects).some(function (subKey) {
+      return (subjects[subKey].lectures || []).length > 0;
+    });
+    if (hasLectures || Object.keys(subjects).length > 0) {
+      filledTermKeys.push(key);
     } else {
-      emptyTermKeys.push(k);
+      emptyTermKeys.push(key);
     }
   });
 
   var activeTerm = localStorage.getItem(TERM_KEY) || filledTermKeys[0] || allTermKeys[0];
-  var activeSub  = localStorage.getItem(SUB_KEY) || null;
+  var activeSub = localStorage.getItem(SUB_KEY) || null;
+  var searchText = localStorage.getItem(SEARCH_KEY) || '';
   var allOpen = false;
   var doneMap = loadDone();
 
-  // DOM
-  var termBar    = document.getElementById('termBar');
+  var termBar = document.getElementById('termBar');
   var subjectBar = document.getElementById('subjectBar');
-  var ctrlBar    = document.getElementById('ctrlBar');
-  var btnToggle  = document.getElementById('btnToggle');
-  var ctrlProg   = document.getElementById('ctrlProgress');
-  var lecBox     = document.getElementById('lectures');
-  var emptyBox   = document.getElementById('emptyBox');
+  var ctrlBar = document.getElementById('ctrlBar');
+  var btnToggle = document.getElementById('btnToggle');
+  var ctrlProg = document.getElementById('ctrlProgress');
+  var lecBox = document.getElementById('lectures');
+  var emptyBox = document.getElementById('emptyBox');
+  var searchInput = document.getElementById('searchInput');
+  var subjectTitle = document.getElementById('subjectTitle');
+  var activeLabel = document.getElementById('activeLabel');
+  var activeTitle = document.getElementById('activeTitle');
+  var progressRing = document.getElementById('progressRing');
+  var progressPercent = document.getElementById('progressPercent');
+  var statLectures = document.getElementById('statLectures');
+  var statFiles = document.getElementById('statFiles');
+  var statDone = document.getElementById('statDone');
+  var resultCount = document.getElementById('resultCount');
 
   var FILE_SLOTS = [
-    { key: 'original_ppt',   icon: '📄', label: 'الباوربوينت الأصلي' },
-    { key: 'translated_ppt', icon: '📝', label: 'الملخص / المترجم' },
-    { key: 'my_quiz',        icon: '🎯', label: 'بنك الأسئلة — الأدمن' },
-    { key: 'doctor_quiz',    icon: '🩺', label: 'بنك أسئلة الدكتورة' }
+    {
+      key: 'original_ppt',
+      label: 'الباور الأصلي',
+      icon: iconDocument()
+    },
+    {
+      key: 'translated_ppt',
+      label: 'الملخص / المترجم',
+      icon: iconNotes()
+    },
+    {
+      key: 'my_quiz',
+      label: 'بنك الأسئلة',
+      icon: iconTarget()
+    },
+    {
+      key: 'doctor_quiz',
+      label: 'أسئلة الدكتورة',
+      icon: iconStethoscope()
+    }
   ];
 
-  // ─── Init ───
   function init() {
+    searchInput.value = searchText;
     renderTermBar();
     loadTerm(activeTerm);
     btnToggle.addEventListener('click', toggleAll);
+    searchInput.addEventListener('input', function () {
+      searchText = searchInput.value.trim();
+      localStorage.setItem(SEARCH_KEY, searchText);
+      renderLectures(activeTerm, activeSub);
+    });
   }
 
-  // ─── Term Bar ───
-  // Show filled terms as pills. If there are empty terms, show a native select dropdown.
   function renderTermBar() {
     termBar.innerHTML = '';
 
-    // Render filled terms as pills
-    filledTermKeys.forEach(function (k) {
+    filledTermKeys.forEach(function (key) {
       var pill = document.createElement('button');
-      pill.className = 'term-pill' + (k === activeTerm ? ' active' : '');
-      pill.textContent = terms[k].name;
-      pill.setAttribute('data-t', k);
+      pill.className = 'term-pill' + (key === activeTerm ? ' active' : '');
+      pill.textContent = shortTermName(terms[key].name);
+      pill.setAttribute('data-t', key);
       pill.type = 'button';
       pill.addEventListener('click', function () {
-        setTerm(k);
+        setTerm(key);
       });
       termBar.appendChild(pill);
     });
 
-    // If empty terms exist, show a native select dropdown
     if (emptyTermKeys.length > 0) {
-      var selectWrap = document.createElement('div');
-      selectWrap.className = 'term-select-wrap';
+      var wrap = document.createElement('div');
+      wrap.className = 'term-select-wrap';
 
       var select = document.createElement('select');
       select.className = 'term-select-native';
       select.id = 'termSelectNative';
 
-      // Default placeholder option
       var placeholder = document.createElement('option');
       placeholder.value = '';
-      placeholder.textContent = 'المزيد ▾';
+      placeholder.textContent = 'باقي الترمات';
       placeholder.disabled = true;
       select.appendChild(placeholder);
 
-      emptyTermKeys.forEach(function (k) {
-        var opt = document.createElement('option');
-        opt.value = k;
-        opt.textContent = terms[k].name;
-        select.appendChild(opt);
+      emptyTermKeys.forEach(function (key) {
+        select.add(new Option(shortTermName(terms[key].name), key));
       });
 
-      // Style and select active term if it is in empty ones
       if (emptyTermKeys.indexOf(activeTerm) > -1) {
         select.value = activeTerm;
         select.classList.add('active');
       } else {
         select.value = '';
-        select.classList.remove('active');
       }
 
       select.addEventListener('change', function () {
-        var val = select.value;
-        if (val) {
-          setTerm(val);
-        }
+        if (select.value) setTerm(select.value);
       });
 
-      selectWrap.appendChild(select);
-      termBar.appendChild(selectWrap);
+      wrap.appendChild(select);
+      termBar.appendChild(wrap);
     }
   }
 
-  function setTerm(k) {
-    activeTerm = k;
-    localStorage.setItem(TERM_KEY, k);
-    
-    // Update pill highlights
-    var pills = termBar.querySelectorAll('.term-pill');
-    for (var i = 0; i < pills.length; i++) {
-      pills[i].classList.toggle('active', pills[i].getAttribute('data-t') === k);
-    }
-
-    // Update select element state
-    var select = document.getElementById('termSelectNative');
-    if (select) {
-      if (emptyTermKeys.indexOf(k) > -1) {
-        select.value = k;
-        select.classList.add('active');
-      } else {
-        select.value = '';
-        select.classList.remove('active');
-      }
-    }
-
-    loadTerm(k);
+  function setTerm(key) {
+    activeTerm = key;
+    localStorage.setItem(TERM_KEY, key);
+    renderTermBar();
+    loadTerm(key);
   }
 
-  // ─── Load Term ───
-  function loadTerm(tk) {
-    var term = terms[tk];
-    var subs = Object.keys(term.subjects);
+  function loadTerm(termKey) {
+    var term = terms[termKey];
+    var subjects = Object.keys(term.subjects || {});
 
-    if (subs.length === 0) {
+    if (subjects.length === 0) {
+      activeSub = null;
       subjectBar.style.display = 'none';
       ctrlBar.style.display = 'none';
-      lecBox.innerHTML = '';
       lecBox.style.display = 'none';
       emptyBox.style.display = '';
+      subjectTitle.textContent = 'لا توجد مواد';
+      updateHero(term.name, 'لا يوجد محتوى بعد', 0, 0, 0, 0);
       return;
     }
 
-    emptyBox.style.display = 'none';
-    subjectBar.style.display = '';
-    ctrlBar.style.display = '';
-    lecBox.style.display = '';
-
     if (!activeSub || !term.subjects[activeSub]) {
-      activeSub = subs[0];
+      activeSub = firstSubjectWithLectures(term) || subjects[0];
+    } else if ((term.subjects[activeSub].lectures || []).length === 0) {
+      activeSub = firstSubjectWithLectures(term) || activeSub;
     }
+
     localStorage.setItem(SUB_KEY, activeSub);
-    renderSubjects(tk, subs);
-    renderLectures(tk, activeSub);
+    subjectBar.style.display = '';
+    lecBox.style.display = '';
+    emptyBox.style.display = 'none';
+    renderSubjects(termKey, subjects);
+    renderLectures(termKey, activeSub);
   }
 
-  // ─── Subjects ───
-  function renderSubjects(tk, subs) {
+  function renderSubjects(termKey, subjects) {
     subjectBar.innerHTML = '';
-    subs.forEach(function (sk) {
+
+    subjects.forEach(function (subjectKey) {
+      var subject = terms[termKey].subjects[subjectKey];
+      var count = (subject.lectures || []).length;
       var chip = document.createElement('button');
-      chip.className = 'sub-chip' + (sk === activeSub ? ' active' : '');
-      chip.textContent = terms[tk].subjects[sk].name;
+      chip.className = 'sub-chip' + (subjectKey === activeSub ? ' active' : '');
       chip.type = 'button';
-      chip.setAttribute('data-s', sk);
+      chip.setAttribute('data-s', subjectKey);
+      chip.textContent = subject.name + ' · ' + count;
       chip.addEventListener('click', function () {
-        activeSub = sk;
-        localStorage.setItem(SUB_KEY, sk);
-        var chips = subjectBar.querySelectorAll('.sub-chip');
-        for (var i = 0; i < chips.length; i++) {
-          chips[i].classList.toggle('active', chips[i].getAttribute('data-s') === sk);
-        }
-        renderLectures(tk, sk);
+        activeSub = subjectKey;
+        localStorage.setItem(SUB_KEY, subjectKey);
+        renderSubjects(termKey, subjects);
+        renderLectures(termKey, subjectKey);
       });
       subjectBar.appendChild(chip);
     });
   }
 
-  // ─── Lectures ───
-  function renderLectures(tk, sk) {
-    var sub = terms[tk].subjects[sk];
-    var lecs = sub.lectures || [];
+  function renderLectures(termKey, subjectKey) {
+    var term = terms[termKey];
+    var subject = term.subjects[subjectKey];
+    var lectures = subject.lectures || [];
+    var query = normalize(searchText);
+    var visibleLectures = lectures.filter(function (lecture) {
+      if (!query) return true;
+      return normalize(lecture.title_ar).indexOf(query) > -1 || fileLabelsText(lecture).indexOf(query) > -1;
+    });
+
     lecBox.innerHTML = '';
     allOpen = false;
     updateToggleBtn();
+    subjectTitle.textContent = subject.name;
 
-    if (lecs.length === 0) {
-      lecBox.innerHTML = '<div class="empty-box"><div class="empty-icon">📚</div><p class="empty-title">المحاضرات جاية في السكة!</p><p class="empty-sub">سيتم رفع المحتوى أول بأول</p></div>';
+    if (lectures.length === 0) {
       ctrlBar.style.display = 'none';
+      lecBox.innerHTML = emptyMarkup('📚', 'لسه مفيش محاضرات هنا', 'هيتضاف المحتوى أول بأول');
+      updateHero(term.name, subject.name, 0, 0, 0, 0);
       return;
     }
 
     ctrlBar.style.display = '';
 
-    lecs.forEach(function (lec) {
-      var ck = tk + '_' + sk + '_' + lec.num;
-      var isDone = !!doneMap[ck];
-
-      // Card
-      var card = document.createElement('div');
-      card.className = 'lec-card' + (isDone ? ' done' : '');
-
-      // Header
-      var head = document.createElement('div');
-      head.className = 'lec-head';
-
-      var num = document.createElement('span');
-      num.className = 'lec-num';
-      num.textContent = lec.num;
-
-      var title = document.createElement('span');
-      title.className = 'lec-title';
-      title.textContent = lec.title_ar;
-
-      var acts = document.createElement('div');
-      acts.className = 'lec-actions';
-
-      // Checkbox
-      var cbLabel = document.createElement('label');
-      cbLabel.className = 'lec-cb';
-      cbLabel.title = 'تمت المذاكرة';
-      cbLabel.addEventListener('click', function (e) { e.stopPropagation(); });
-
-      var cbIn = document.createElement('input');
-      cbIn.type = 'checkbox';
-      cbIn.checked = isDone;
-      (function (key, cardRef, inp) {
-        inp.addEventListener('change', function () {
-          if (inp.checked) { doneMap[key] = true; } else { delete doneMap[key]; }
-          saveDone();
-          cardRef.classList.toggle('done', inp.checked);
-          updateProgress(tk, sk);
-        });
-      })(ck, card, cbIn);
-
-      var cbVis = document.createElement('span');
-      cbVis.className = 'lec-cb-v';
-
-      cbLabel.appendChild(cbIn);
-      cbLabel.appendChild(cbVis);
-
-      var chev = document.createElement('span');
-      chev.className = 'lec-chev';
-      chev.textContent = '▼';
-
-      acts.appendChild(cbLabel);
-      acts.appendChild(chev);
-
-      head.appendChild(num);
-      head.appendChild(title);
-      head.appendChild(acts);
-
-      // Body
-      var body = document.createElement('div');
-      body.className = 'lec-body';
-
-      var inner = document.createElement('div');
-      inner.className = 'lec-body-inner';
-
-      FILE_SLOTS.forEach(function (slot) {
-        var fp = (lec.files && lec.files[slot.key]) || '';
-        inner.appendChild(makeFileRow(slot, fp));
+    if (visibleLectures.length === 0) {
+      lecBox.innerHTML = emptyMarkup('⌕', 'مفيش نتيجة مطابقة', 'جرّب كلمة أبسط أو امسح البحث');
+    } else {
+      visibleLectures.forEach(function (lecture) {
+        lecBox.appendChild(makeLectureCard(termKey, subjectKey, lecture));
       });
+    }
 
-      body.appendChild(inner);
-
-      // Click to toggle
-      (function (c, b) {
-        head.addEventListener('click', function () {
-          toggleCard(c, b);
-        });
-      })(card, body);
-
-      card.appendChild(head);
-      card.appendChild(body);
-      lecBox.appendChild(card);
-    });
-
-    updateProgress(tk, sk);
+    updateStats(termKey, subjectKey, lectures, visibleLectures.length);
   }
 
-  // ─── File Row ───
+  function makeLectureCard(termKey, subjectKey, lecture) {
+    var doneKey = termKey + '_' + subjectKey + '_' + lecture.num;
+    var isDone = !!doneMap[doneKey];
+    var files = lecture.files || {};
+    var available = FILE_SLOTS.filter(function (slot) { return files[slot.key]; }).length;
+
+    var card = document.createElement('article');
+    card.className = 'lec-card' + (isDone ? ' done' : '');
+
+    var head = document.createElement('div');
+    head.className = 'lec-head';
+
+    var num = document.createElement('span');
+    num.className = 'lec-num';
+    num.textContent = lecture.num;
+
+    var main = document.createElement('div');
+    main.className = 'lec-main';
+
+    var title = document.createElement('h3');
+    title.className = 'lec-title';
+    title.textContent = lecture.title_ar;
+
+    var meta = document.createElement('div');
+    meta.className = 'lec-meta';
+    meta.appendChild(document.createTextNode(available + ' من 4 ملفات'));
+    meta.appendChild(makeFileDots(files));
+
+    main.appendChild(title);
+    main.appendChild(meta);
+
+    var actions = document.createElement('div');
+    actions.className = 'lec-actions';
+    actions.appendChild(makeCheckbox(doneKey, card, termKey, subjectKey));
+
+    var chev = document.createElement('span');
+    chev.className = 'lec-chev';
+    chev.innerHTML = iconChevron();
+    actions.appendChild(chev);
+
+    head.appendChild(num);
+    head.appendChild(main);
+    head.appendChild(actions);
+
+    var body = document.createElement('div');
+    body.className = 'lec-body';
+    var inner = document.createElement('div');
+    inner.className = 'lec-body-inner';
+    FILE_SLOTS.forEach(function (slot) {
+      inner.appendChild(makeFileRow(slot, files[slot.key] || ''));
+    });
+    body.appendChild(inner);
+
+    head.addEventListener('click', function () {
+      toggleCard(card, body);
+    });
+
+    card.appendChild(head);
+    card.appendChild(body);
+    return card;
+  }
+
+  function makeCheckbox(doneKey, card, termKey, subjectKey) {
+    var label = document.createElement('label');
+    label.className = 'lec-cb';
+    label.title = 'تمت المذاكرة';
+    label.addEventListener('click', function (event) {
+      event.stopPropagation();
+    });
+
+    var input = document.createElement('input');
+    input.type = 'checkbox';
+    input.checked = !!doneMap[doneKey];
+    input.addEventListener('change', function () {
+      if (input.checked) {
+        doneMap[doneKey] = true;
+      } else {
+        delete doneMap[doneKey];
+      }
+      saveDone();
+      card.classList.toggle('done', input.checked);
+      updateStats(termKey, subjectKey);
+    });
+
+    var visual = document.createElement('span');
+    visual.className = 'lec-cb-v';
+    label.appendChild(input);
+    label.appendChild(visual);
+    return label;
+  }
+
   function makeFileRow(slot, path) {
     var row = document.createElement('div');
     row.className = 'f-row';
 
     var label = document.createElement('div');
     label.className = 'f-label';
-    label.innerHTML = '<span class="f-label-icon">' + slot.icon + '</span><span>' + slot.label + '</span>';
 
-    var btns = document.createElement('div');
-    btns.className = 'f-btns';
+    var icon = document.createElement('span');
+    icon.className = 'f-label-icon ' + slot.key;
+    icon.innerHTML = slot.icon;
+
+    var text = document.createElement('span');
+    text.textContent = slot.label;
+
+    label.appendChild(icon);
+    label.appendChild(text);
+
+    var buttons = document.createElement('div');
+    buttons.className = 'f-btns';
 
     if (path) {
       var url = encodeURI(path);
-
       var openBtn = document.createElement('a');
       openBtn.className = 'f-btn f-btn--open';
       openBtn.href = url;
       openBtn.target = '_blank';
       openBtn.rel = 'noopener';
-      openBtn.innerHTML = '👁️ فتح';
-      openBtn.addEventListener('click', function (e) { e.stopPropagation(); });
+      openBtn.innerHTML = iconOpen() + '<span>فتح</span>';
+      openBtn.addEventListener('click', stop);
 
-      var dlBtn = document.createElement('a');
-      dlBtn.className = 'f-btn f-btn--dl';
-      dlBtn.href = url;
-      dlBtn.download = '';
-      dlBtn.innerHTML = '📥 تحميل';
-      dlBtn.addEventListener('click', function (e) { e.stopPropagation(); });
+      var downloadBtn = document.createElement('a');
+      downloadBtn.className = 'f-btn f-btn--dl';
+      downloadBtn.href = url;
+      downloadBtn.download = '';
+      downloadBtn.innerHTML = iconDownload() + '<span>تحميل</span>';
+      downloadBtn.addEventListener('click', stop);
 
-      btns.appendChild(openBtn);
-      btns.appendChild(dlBtn);
+      buttons.appendChild(openBtn);
+      buttons.appendChild(downloadBtn);
     } else {
       var na = document.createElement('div');
       na.className = 'f-na';
-      na.textContent = '⏳ غير متوفر';
-      btns.appendChild(na);
+      na.textContent = 'غير متوفر';
+      buttons.appendChild(na);
     }
 
     row.appendChild(label);
-    row.appendChild(btns);
+    row.appendChild(buttons);
     return row;
   }
 
-  // ─── Accordion ───
+  function makeFileDots(files) {
+    var dots = document.createElement('span');
+    dots.className = 'file-dots';
+    FILE_SLOTS.forEach(function (slot) {
+      var dot = document.createElement('span');
+      dot.className = 'file-dot' + (files[slot.key] ? ' on' : '');
+      dots.appendChild(dot);
+    });
+    return dots;
+  }
+
   function toggleCard(card, body) {
     if (card.classList.contains('open')) {
       body.style.maxHeight = body.scrollHeight + 'px';
-      body.offsetHeight; // reflow
+      body.offsetHeight;
       body.style.maxHeight = '0';
       card.classList.remove('open');
-    } else {
-      card.classList.add('open');
-      body.style.maxHeight = body.scrollHeight + 'px';
-      var onEnd = function () {
-        body.style.maxHeight = 'none';
-        body.removeEventListener('transitionend', onEnd);
-      };
-      body.addEventListener('transitionend', onEnd);
+      return;
     }
+
+    card.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    var onEnd = function () {
+      body.style.maxHeight = 'none';
+      body.removeEventListener('transitionend', onEnd);
+    };
+    body.addEventListener('transitionend', onEnd);
   }
 
   function toggleAll() {
     var cards = lecBox.querySelectorAll('.lec-card');
     allOpen = !allOpen;
-    for (var i = 0; i < cards.length; i++) {
-      var b = cards[i].querySelector('.lec-body');
+
+    Array.prototype.forEach.call(cards, function (card) {
+      var body = card.querySelector('.lec-body');
       if (allOpen) {
-        cards[i].classList.add('open');
-        b.style.maxHeight = b.scrollHeight + 'px';
-        (function (bRef) {
-          var fn = function () { bRef.style.maxHeight = 'none'; bRef.removeEventListener('transitionend', fn); };
-          bRef.addEventListener('transitionend', fn);
-        })(b);
+        card.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        setTimeout(function () { body.style.maxHeight = 'none'; }, 260);
       } else {
-        b.style.maxHeight = b.scrollHeight + 'px';
-        b.offsetHeight;
-        b.style.maxHeight = '0';
-        cards[i].classList.remove('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        body.offsetHeight;
+        body.style.maxHeight = '0';
+        card.classList.remove('open');
       }
-    }
+    });
+
     updateToggleBtn();
   }
 
   function updateToggleBtn() {
-    btnToggle.textContent = allOpen ? '📁 إغلاق الكل' : '📂 عرض الكل';
+    btnToggle.textContent = allOpen ? 'إغلاق الكل' : 'عرض الكل';
   }
 
-  // ─── Done state ───
-  function loadDone() {
-    try { return JSON.parse(localStorage.getItem(DONE_KEY)) || {}; }
-    catch (e) { return {}; }
+  function updateStats(termKey, subjectKey, lectures, visibleCount) {
+    var subject = terms[termKey].subjects[subjectKey];
+    lectures = lectures || subject.lectures || [];
+    visibleCount = typeof visibleCount === 'number' ? visibleCount : lectures.length;
+
+    var done = 0;
+    var files = 0;
+    lectures.forEach(function (lecture) {
+      if (doneMap[termKey + '_' + subjectKey + '_' + lecture.num]) done++;
+      files += countFiles(lecture.files || {});
+    });
+
+    var percent = lectures.length ? Math.round((done / lectures.length) * 100) : 0;
+    statLectures.textContent = lectures.length;
+    statFiles.textContent = files;
+    statDone.textContent = done;
+    ctrlProg.innerHTML = '<b>' + done + '</b> / ' + lectures.length + ' مكتملة';
+    resultCount.textContent = visibleCount === lectures.length ? '' : visibleCount + ' نتيجة';
+    updateHero(terms[termKey].name, subject.name, done, lectures.length, files, percent);
   }
+
+  function updateHero(termName, subjectName, done, total, files, percent) {
+    activeLabel.textContent = shortTermName(termName);
+    activeTitle.textContent = subjectName || 'اختار المادة وابدأ';
+    progressPercent.textContent = percent + '%';
+    var circumference = 188.5;
+    progressRing.style.strokeDashoffset = circumference - (circumference * percent / 100);
+    progressRing.style.stroke = percent === 100 && total > 0 ? 'var(--green-2)' : 'var(--blue)';
+  }
+
+  function countFiles(files) {
+    return FILE_SLOTS.reduce(function (count, slot) {
+      return count + (files[slot.key] ? 1 : 0);
+    }, 0);
+  }
+
+  function fileLabelsText(lecture) {
+    var files = lecture.files || {};
+    return normalize(FILE_SLOTS.filter(function (slot) {
+      return files[slot.key];
+    }).map(function (slot) {
+      return slot.label;
+    }).join(' '));
+  }
+
+  function normalize(value) {
+    return String(value || '').toLowerCase().replace(/\s+/g, ' ').trim();
+  }
+
+  function shortTermName(name) {
+    return String(name || '').replace(/\s*\(.*?\)\s*/g, '').trim();
+  }
+
+  function firstSubjectWithLectures(term) {
+    var subjects = Object.keys(term.subjects || {});
+    for (var i = 0; i < subjects.length; i++) {
+      if ((term.subjects[subjects[i]].lectures || []).length > 0) {
+        return subjects[i];
+      }
+    }
+    return null;
+  }
+
+  function emptyMarkup(icon, title, sub) {
+    return '<div class="empty-box"><div class="empty-icon">' + icon + '</div><p class="empty-title">' + title + '</p><p class="empty-sub">' + sub + '</p></div>';
+  }
+
+  function loadDone() {
+    try {
+      return JSON.parse(localStorage.getItem(DONE_KEY)) || {};
+    } catch (e) {
+      return {};
+    }
+  }
+
   function saveDone() {
     localStorage.setItem(DONE_KEY, JSON.stringify(doneMap));
   }
 
-  function updateProgress(tk, sk) {
-    var sub = terms[tk].subjects[sk];
-    if (!sub) return;
-    var total = sub.lectures.length;
-    var done = 0;
-    sub.lectures.forEach(function (lec) {
-      if (doneMap[tk + '_' + sk + '_' + lec.num]) done++;
-    });
-    if (total > 0) {
-      ctrlProg.innerHTML = '<b>' + done + '</b> / ' + total + ' مكتملة';
-    } else {
-      ctrlProg.innerHTML = '';
-    }
+  function stop(event) {
+    event.stopPropagation();
   }
 
-  // ─── Boot ───
+  function svg(path, extra) {
+    return '<svg viewBox="0 0 24 24" aria-hidden="true" ' + (extra || '') + '><path d="' + path + '"></path></svg>';
+  }
+
+  function iconChevron() {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>';
+  }
+
+  function iconOpen() {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+  }
+
+  function iconDownload() {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v11"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>';
+  }
+
+  function iconDocument() {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"></path><path d="M14 3v5h5"></path><path d="M9 13h6"></path><path d="M9 17h5"></path></svg>';
+  }
+
+  function iconNotes() {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v16H6z"></path><path d="M9 8h6"></path><path d="M9 12h6"></path><path d="M9 16h4"></path></svg>';
+  }
+
+  function iconTarget() {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3"></path><path d="M12 19v3"></path><path d="M2 12h3"></path><path d="M19 12h3"></path></svg>';
+  }
+
+  function iconStethoscope() {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4v5a4 4 0 0 0 8 0V4"></path><path d="M10 13v2a5 5 0 0 0 10 0v-1"></path><circle cx="20" cy="12" r="2"></circle></svg>';
+  }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

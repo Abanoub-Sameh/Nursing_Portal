@@ -1,0 +1,2415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🩺 Biology (Lecture 1) Quiz Bank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #080c14;
+            --bg-card: #0e1626;
+            --border: rgba(16, 185, 129, 0.08);
+            --accent-primary: #10b981; /* Emerald Green */
+            --accent-glow: rgba(16, 185, 129, 0.3);
+            --accent-secondary: #eab308; /* Biological Gold */
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.12);
+            --success-border: rgba(16, 185, 129, 0.3);
+            --error: #ef4444;
+            --error-bg: rgba(239, 68, 68, 0.12);
+            --error-border: rgba(239, 68, 68, 0.3);
+            --warning: #f59e0b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --shadow: 0 4px 24px rgba(0,0,0,0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated biological energy background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 0%, rgba(16,185,129,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(234,179,8,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(99,102,241,0.04) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app-container {
+            position: relative;
+            z-index: 1;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 16px;
+            padding-bottom: 100px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            padding: 32px 16px 20px;
+            margin-bottom: 16px;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16,185,129,0.12);
+            border: 1px solid rgba(16,185,129,0.25);
+            color: #a7f3d0;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 50px;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .header-badge .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f8fafc 0%, #a7f3d0 50%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .arabic-notice {
+            margin-top: 16px;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            color: #f59e0b;
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 600;
+            direction: rtl;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+
+        /* ===== STATS BAR ===== */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(16,185,129,0.25);
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-primary);
+        }
+
+        .stat-value.correct { color: var(--success); }
+        .stat-value.wrong { color: var(--error); }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-section {
+            margin-bottom: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-header span {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 50px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== MODE SELECTOR ===== */
+        .mode-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            flex: 1;
+            min-width: 100px;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-family: inherit;
+        }
+
+        .mode-btn:hover {
+            border-color: rgba(16,185,129,0.3);
+            color: var(--text-primary);
+        }
+
+        .mode-btn.active {
+            background: rgba(16,185,129,0.15);
+            border-color: var(--accent-primary);
+            color: #a7f3d0;
+            box-shadow: 0 0 20px rgba(16,185,129,0.15);
+        }
+
+        /* ===== TOPIC FILTER ===== */
+        .topic-filter {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            scrollbar-width: none;
+        }
+        .topic-filter::-webkit-scrollbar { display: none; }
+
+        .topic-chip {
+            white-space: nowrap;
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .topic-chip:hover {
+            border-color: rgba(16,185,129,0.3);
+        }
+
+        .topic-chip.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: #080c14;
+        }
+
+        /* ===== ACTION ROW ===== */
+        .action-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-btn:hover {
+            border-color: rgba(16,185,129,0.3);
+            color: var(--text-primary);
+            background: rgba(16,185,129,0.08);
+        }
+
+        /* ===== QUESTION CARD ===== */
+        .question-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.4s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-card:nth-child(1) { animation-delay: 0.05s; }
+        .question-card:nth-child(2) { animation-delay: 0.1s; }
+        .question-card:nth-child(3) { animation-delay: 0.15s; }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .question-number .q-badge {
+            background: rgba(16,185,129,0.15);
+            color: #a7f3d0;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .question-topic-badge {
+            display: inline-block;
+            background: rgba(234,179,8,0.12);
+            color: #fef08a;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .question-text {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }
+
+        /* ===== OPTIONS ===== */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: var(--radius-sm);
+            background: rgba(255,255,255,0.01);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: left;
+            font-family: inherit;
+            line-height: 1.5;
+            width: 100%;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: rgba(16,185,129,0.3);
+            background: rgba(16,185,129,0.06);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .option-btn .option-letter {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.06);
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: all 0.25s ease;
+        }
+
+        .option-btn:hover:not(.disabled) .option-letter {
+            background: rgba(16,185,129,0.2);
+            color: #a7f3d0;
+        }
+
+        .option-btn.correct {
+            border-color: var(--success-border);
+            background: var(--success-bg);
+            color: var(--success);
+        }
+        .option-btn.correct .option-letter {
+            background: rgba(16,185,129,0.2);
+            color: var(--success);
+        }
+
+        .option-btn.wrong {
+            border-color: var(--error-border);
+            background: var(--error-bg);
+            color: var(--error);
+        }
+        .option-btn.wrong .option-letter {
+            background: rgba(239,68,68,0.2);
+            color: var(--error);
+        }
+
+        .option-btn.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .option-btn.correct.disabled, .option-btn.wrong.disabled {
+            opacity: 1;
+        }
+
+        .option-btn.selected-exam {
+            border-color: rgba(16,185,129,0.5);
+            background: rgba(16,185,129,0.1);
+            color: #a7f3d0;
+        }
+        .option-btn.selected-exam .option-letter {
+            background: rgba(16,185,129,0.2);
+            color: #a7f3d0;
+        }
+
+        /* ===== EXPLANATION ===== */
+        .explanation {
+            margin-top: 14px;
+            padding: 14px 16px;
+            background: rgba(16,185,129,0.06);
+            border: 1px solid rgba(16,185,129,0.15);
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .explanation strong {
+            color: #a7f3d0;
+        }
+
+        /* ===== RESULT SCREEN ===== */
+        .result-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .result-screen .score-circle {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 6px solid var(--accent-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            position: relative;
+        }
+
+        .result-screen .score-circle::before {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            border: 2px solid rgba(16,185,129,0.15);
+        }
+
+        .score-percent {
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-family: 'JetBrains Mono', monospace;
+            color: #a7f3d0;
+        }
+
+        .score-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .result-message {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .result-sub {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 32px;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .result-stat {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+        }
+
+        .result-stat .val {
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .result-stat .lbl {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        /* ===== PAGINATION / CONTROLS ===== */
+        .controls-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(8,12,20,0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            padding: 12px 16px;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .ctrl-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .ctrl-btn:hover {
+            border-color: rgba(16,185,129,0.3);
+            color: var(--text-primary);
+        }
+
+        .ctrl-btn.primary {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: #080c14;
+            font-weight: 700;
+        }
+
+        .ctrl-btn.primary:hover {
+            background: #34d399;
+            box-shadow: 0 0 24px var(--accent-glow);
+        }
+
+        .ctrl-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            display: flex;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .app-container { padding: 10px; padding-bottom: 90px; }
+            .header h1 { font-size: 1.4rem; }
+            .question-card { padding: 18px; }
+            .stat-value { font-size: 1.25rem; }
+            .stats-bar { gap: 6px; }
+            .stat-card { padding: 10px 6px; }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="app-container" id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-badge">
+                <span class="pulse"></span> abanoub sameh
+            </div>
+            <h1>🧬 Biology Question Bank</h1>
+            <div class="arabic-notice">
+                ⚠️ الكويز ده علي اول محاضره في مادة الاحياء.
+            </div>
+        </header>
+
+        <!-- Stats -->
+        <div class="stats-bar" id="statsBar">
+            <div class="stat-card">
+                <div class="stat-value" id="totalQ">0</div>
+                <div class="stat-label">Questions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value correct" id="correctCount">0</div>
+                <div class="stat-label">Correct</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value wrong" id="wrongCount">0</div>
+                <div class="stat-label">Wrong</div>
+            </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-section">
+            <div class="progress-header">
+                <span>Progress</span>
+                <span id="progressText">0 / 0</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill" style="width:0%"></div>
+            </div>
+        </div>
+
+        <!-- Mode Selector -->
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="practice" id="modePractice">📝 Practice</button>
+            <button class="mode-btn" data-mode="exam" id="modeExam">🎯 Exam Mode</button>
+            <button class="mode-btn" data-mode="review" id="modeReview">📖 Review Wrong</button>
+        </div>
+
+        <!-- Topic Filter -->
+        <div class="topic-filter" id="topicFilter"></div>
+
+        <!-- Action Row -->
+        <div class="action-row">
+            <button class="action-btn" id="shuffleBtn" onclick="shuffleQuestions()">🔀 Shuffle</button>
+            <button class="action-btn" id="resetBtn" onclick="resetQuiz()">🔄 Reset All</button>
+            <button class="action-btn" id="showAllBtn" onclick="showAllQuestions()">📋 Show All</button>
+        </div>
+
+        <!-- Questions Container -->
+        <div id="questionsContainer"></div>
+
+        <!-- Result Screen -->
+        <div id="resultScreen" class="result-screen hidden"></div>
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="controls-bar" id="controlsBar">
+        <button class="ctrl-btn" id="prevBtn" onclick="changePage(-1)">◀ Prev</button>
+        <span class="page-info" id="pageInfo">1 / 1</span>
+        <button class="ctrl-btn" id="nextBtn" onclick="changePage(1)">Next ▶</button>
+        <button class="ctrl-btn primary hidden" id="finishBtn" onclick="showResults()">🏁 Finish</button>
+    </div>
+
+    <script>
+    // ========================
+    // QUESTION BANK DATABASE
+    // ========================
+    const allQuestions = [
+    {
+        "topic": "Zoological Branches",
+        "question": "Which branch of zoological science is specifically concerned with the study of cells?",
+        "options": [
+            "Histology",
+            "Cytology",
+            "Embryology",
+            "Taxonomy"
+        ],
+        "correct": 1,
+        "explanation": "Cytology is the branch of science in which we study the structure and function of cells.",
+        "id": 1
+    },
+    {
+        "topic": "Zoological Branches",
+        "question": "What is the primary definition of Histology according to the course outline?",
+        "options": [
+            "The study of animal classification",
+            "The study of organ functions",
+            "The study of tissues",
+            "The study of cell organelles"
+        ],
+        "correct": 2,
+        "explanation": "Histology is defined in the course outline as the study of tissues.",
+        "id": 2
+    },
+    {
+        "topic": "Zoological Branches",
+        "question": "Which of the following describes Embryology?",
+        "options": [
+            "The study of organ functions",
+            "The study of cells",
+            "The study of animal development",
+            "The study of animal classification"
+        ],
+        "correct": 2,
+        "explanation": "Embryology is defined as the study of animal development.",
+        "id": 3
+    },
+    {
+        "topic": "Zoological Branches",
+        "question": "Physiology is the study of which of the following?",
+        "options": [
+            "Animal tissues",
+            "Organ functions",
+            "Animal classification",
+            "Cell membranes"
+        ],
+        "correct": 1,
+        "explanation": "Physiology is defined as the study of organ functions.",
+        "id": 4
+    },
+    {
+        "topic": "Zoological Branches",
+        "question": "Taxonomy is the branch of zoological science that deals with which study?",
+        "options": [
+            "The study of cell divisions",
+            "The study of animal development",
+            "The study of animal tissues",
+            "The study of animal classification"
+        ],
+        "correct": 3,
+        "explanation": "Taxonomy is defined as the study of animal classification.",
+        "id": 5
+    },
+    {
+        "topic": "Zoological Branches",
+        "question": "According to the course outline, how many branches of zoological science are included?",
+        "options": [
+            "3 branches",
+            "5 branches",
+            "8 branches",
+            "10 branches"
+        ],
+        "correct": 1,
+        "explanation": "The course outline includes 5 branches of zoological science: Cytology, Histology, Embryology, Physiology, and Taxonomy.",
+        "id": 6
+    },
+    {
+        "topic": "Zoological Branches",
+        "question": "If a scientist is analyzing how the heart, lungs, and kidneys work together to maintain homeostasis, which branch of zoological science is this?",
+        "options": [
+            "Cytology",
+            "Taxonomy",
+            "Physiology",
+            "Embryology"
+        ],
+        "correct": 2,
+        "explanation": "Physiology is the study of organ functions, which includes how organs function and cooperate.",
+        "id": 7
+    },
+    {
+        "topic": "Zoological Branches",
+        "question": "A researcher is studying the stages of development of a frog from a fertilized egg to a tadpole. This study falls under:",
+        "options": [
+            "Embryology",
+            "Histology",
+            "Cytology",
+            "Taxonomy"
+        ],
+        "correct": 0,
+        "explanation": "Embryology is the study of animal development, which covers the developmental stages from fertilization onwards.",
+        "id": 8
+    },
+    {
+        "topic": "Cytology & Cells",
+        "question": "What is the cell defined as in the lecture notes?",
+        "options": [
+            "A collection of organs working together",
+            "The basic structural and functional unit of all living organisms",
+            "The fluid substance inside the nucleus",
+            "An inorganic molecule necessary for cellular breathing"
+        ],
+        "correct": 1,
+        "explanation": "Cells are the basic structural and functional units of all living organisms (the smallest unit of a living organism).",
+        "id": 9
+    },
+    {
+        "topic": "Cytology & Cells",
+        "question": "What are the two main types of cells categorized in Cytology?",
+        "options": [
+            "Membranous and Non-membranous cells",
+            "Prokaryotic and Eukaryotic cells",
+            "Unicellular and Multicellular organs",
+            "Plant and Animal tissue cells"
+        ],
+        "correct": 1,
+        "explanation": "There are two main types of cells: Prokaryotic and Eukaryotic.",
+        "id": 10
+    },
+    {
+        "topic": "Cytology & Cells",
+        "question": "Which of the following is a primary characteristic of a Prokaryotic cell?",
+        "options": [
+            "They possess a distinct nuclear membrane.",
+            "They have linear DNA with chromosomes.",
+            "They lack a nuclear membrane as well as any other membrane covered organelles in their cytoplasm.",
+            "They are only found in plant and animal tissues."
+        ],
+        "correct": 2,
+        "explanation": "Prokaryotic cells lack a nuclear membrane as well as any other membrane covered organelles in their cytoplasm.",
+        "id": 11
+    },
+    {
+        "topic": "Cytology & Cells",
+        "question": "What type of DNA and genetic material is found in Prokaryotic cells?",
+        "options": [
+            "Linear DNA with chromosomes",
+            "Circular DNA, and no chromosomes in their genetic material",
+            "RNA only, without any DNA",
+            "No genetic material is present"
+        ],
+        "correct": 1,
+        "explanation": "Prokaryotic cells have circular DNA and no chromosomes in their genetic material.",
+        "id": 12
+    },
+    {
+        "topic": "Cytology & Cells",
+        "question": "In which organisms can Prokaryotic cells be found?",
+        "options": [
+            "Plant & Animal Cells",
+            "Fungi & Protozoa",
+            "Bacteria & Blue-Green Algae",
+            "Viruses & Prions"
+        ],
+        "correct": 2,
+        "explanation": "Prokaryotic cells can be found in Bacteria & Blue-Green Algae.",
+        "id": 13
+    },
+    {
+        "topic": "Cytology & Cells",
+        "question": "Which of the following is a primary characteristic of a Eukaryotic cell?",
+        "options": [
+            "They lack a nuclear membrane.",
+            "They possess a nuclear membrane as well as membrane-bound organelles in their cytoplasm.",
+            "They contain circular DNA without chromosomes.",
+            "They are exclusively found in bacteria."
+        ],
+        "correct": 1,
+        "explanation": "Eukaryotic cells possess a nuclear membrane as well as membrane-bound organelles in their cytoplasm.",
+        "id": 14
+    },
+    {
+        "topic": "Cytology & Cells",
+        "question": "What type of DNA and genetic material configuration is found in Eukaryotic cells?",
+        "options": [
+            "Circular DNA with no chromosomes",
+            "Linear DNA, and their genetic material has chromosomes",
+            "Single-stranded RNA only",
+            "Plasmids only"
+        ],
+        "correct": 1,
+        "explanation": "Eukaryotic cells have linear DNA, and their genetic material has chromosomes.",
+        "id": 15
+    },
+    {
+        "topic": "Cytology & Cells",
+        "question": "In which of the following can Eukaryotic cells be found?",
+        "options": [
+            "Bacteria only",
+            "Blue-Green Algae",
+            "Plant & Animal Cells",
+            "Inanimate decaying matter"
+        ],
+        "correct": 2,
+        "explanation": "Eukaryotic cells can be found in Plant & Animal Cells.",
+        "id": 16
+    },
+    {
+        "topic": "Cytology & Cells",
+        "question": "Which of the following is the smallest unit of a living organism?",
+        "options": [
+            "Tissue",
+            "Organelle",
+            "Cell",
+            "Protein"
+        ],
+        "correct": 2,
+        "explanation": "The cell is defined as the smallest unit of a living organism.",
+        "id": 17
+    },
+    {
+        "topic": "Cytology & Cells",
+        "question": "Which of the following is a key difference in the genetic material of Eukaryotes compared to Prokaryotes?",
+        "options": [
+            "Eukaryotes have circular DNA, Prokaryotes have linear DNA.",
+            "Eukaryotes have chromosomes in their genetic material, Prokaryotes have no chromosomes.",
+            "Eukaryotes lack DNA completely.",
+            "Prokaryotes contain chromosomes, Eukaryotes do not."
+        ],
+        "correct": 1,
+        "explanation": "Eukaryotic genetic material has chromosomes, whereas Prokaryotes have circular DNA with no chromosomes.",
+        "id": 18
+    },
+    {
+        "topic": "Cytology & Cells",
+        "question": "A cell that lacks mitochondria, endoplasmic reticulum, and Golgi complex is most likely a:",
+        "options": [
+            "Plant cell",
+            "Animal cell",
+            "Prokaryotic cell",
+            "Eukaryotic cell"
+        ],
+        "correct": 2,
+        "explanation": "Prokaryotic cells lack any membrane-covered organelles (such as mitochondria, ER, and Golgi) in their cytoplasm.",
+        "id": 19
+    },
+    {
+        "topic": "Cytology & Cells",
+        "question": "Blue-Green Algae are classified under which cellular group?",
+        "options": [
+            "Eukaryotic",
+            "Prokaryotic",
+            "Non-cellular",
+            "Multicellular"
+        ],
+        "correct": 1,
+        "explanation": "Prokaryotic cells are found in Bacteria & Blue-Green Algae.",
+        "id": 20
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "What are the three main components of the Animal Cell Structure?",
+        "options": [
+            "Cell membrane, Mitochondria, Cytoplasm",
+            "Cell membrane, Nucleus, Cytoplasm",
+            "Nucleus, Cytoplasm, Ribosomes",
+            "Cell wall, Nucleus, Chloroplast"
+        ],
+        "correct": 1,
+        "explanation": "The three main components of animal cell structure are: 1. Cell membrane or plasma membrane, 2. Nucleus, 3. Cytoplasm.",
+        "id": 21
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "What model describes the structure of the cell membrane?",
+        "options": [
+            "The double-helix model",
+            "The lock-and-key model",
+            "The fluid-mosaic model",
+            "The membrane-envelope model"
+        ],
+        "correct": 2,
+        "explanation": "The cell membrane structure is described by 'The fluid \u2013mosaic model of membrane structure'.",
+        "id": 22
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "The cell membrane bilayer is composed of which molecules?",
+        "options": [
+            "Glycoprotein bilayer",
+            "Cholesterol bilayer",
+            "Phospholipid bilayer",
+            "Carbohydrate bilayer"
+        ],
+        "correct": 2,
+        "explanation": "The membrane consists of a phospholipid bilayer (two layers of phospholipids).",
+        "id": 23
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "What are the chemical components of a phospholipid?",
+        "options": [
+            "Protein + carbohydrate",
+            "Lipid + phosphate",
+            "Lipid + cholesterol",
+            "Carbohydrate + lipid"
+        ],
+        "correct": 1,
+        "explanation": "A phospholipid is composed of Lipid + phosphate.",
+        "id": 24
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "In the phospholipid bilayer, how are the phosphate heads oriented?",
+        "options": [
+            "Hydrophobic parts oriented toward the inside",
+            "Water-soluble (hydrophilic) parts oriented toward the outside",
+            "Oriented randomly in all directions",
+            "Bound strictly to the hydrophobic interior"
+        ],
+        "correct": 1,
+        "explanation": "The water-soluble parts (phosphate heads; hydrophilic) are oriented toward the outside.",
+        "id": 25
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "In the phospholipid bilayer, how are the lipid tails oriented?",
+        "options": [
+            "Hydrophobic parts oriented toward the inside",
+            "Water-soluble parts oriented toward the outside",
+            "Bonded directly to short carbohydrate chains",
+            "Protruding outside the cell membrane"
+        ],
+        "correct": 0,
+        "explanation": "The lipid tails (hydrophobic) are oriented toward the inside.",
+        "id": 26
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "What is the function of cholesterol molecules interspersed within the phospholipid bilayer?",
+        "options": [
+            "They synthesize ATP energy.",
+            "They make the membrane less permeable and decrease its flexibility.",
+            "They act as receptors for cell signaling.",
+            "They form nuclear pores."
+        ],
+        "correct": 1,
+        "explanation": "Molecules of cholesterol interspersed within the bilayer make the membrane less permeable and decrease its flexibility.",
+        "id": 27
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "What are Glycoproteins composed of?",
+        "options": [
+            "Lipid + phosphate",
+            "Proteins + carbohydrate",
+            "Lipid + carbohydrate",
+            "Cholesterol + protein"
+        ],
+        "correct": 1,
+        "explanation": "Glycoproteins are composed of Proteins + carbohydrate.",
+        "id": 28
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "Where are glycoproteins located and what are their functions in the cell membrane?",
+        "options": [
+            "Within the nucleus; they replicate DNA.",
+            "Embedded in or lying on the bilayer; they function in transport of substances or as receptors.",
+            "Exclusively in the hydrophobic core; they synthesize lipids.",
+            "Outside the cell; they act as flagella tails."
+        ],
+        "correct": 1,
+        "explanation": "Glycoproteins are embedded in or lie on the bilayer. They function in transport of substances or as receptors on the membrane.",
+        "id": 29
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "What is the typical structure of carbohydrates found in the cell membrane?",
+        "options": [
+            "Long, straight chains of more than 100 sugar units",
+            "Usually branched molecules of 15 or less sugar units",
+            "Circular glucose rings bonded only to cholesterol",
+            "Unbranched single monosaccharide rings"
+        ],
+        "correct": 1,
+        "explanation": "Carbohydrates of the cell membrane are usually branched molecules of 15 or less sugar units.",
+        "id": 30
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "Carbohydrates bonded to lipids in the cell membrane form:",
+        "options": [
+            "Glycoproteins",
+            "Glycolipids",
+            "Cholesterol",
+            "Glycocalyx only"
+        ],
+        "correct": 1,
+        "explanation": "Carbohydrates bonded to lipids form Glycolipids.",
+        "id": 31
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "Carbohydrates bonded to proteins in the cell membrane form:",
+        "options": [
+            "Glycoproteins",
+            "Glycolipids",
+            "Phospholipids",
+            "Integral proteins"
+        ],
+        "correct": 0,
+        "explanation": "Carbohydrates bonded to proteins form Glycoproteins.",
+        "id": 32
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "Both glycolipids and glycoproteins together form which layer on the cell membrane?",
+        "options": [
+            "Phospholipid bilayer",
+            "Glycocalyx or cell coat",
+            "Nuclear envelope",
+            "Hydrophobic interior"
+        ],
+        "correct": 1,
+        "explanation": "Both glycolipids and glycoproteins are called glycocalyx or cell coat.",
+        "id": 33
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "What are the two types of proteins found in the cell membrane?",
+        "options": [
+            "Hydrophilic and Hydrophobic proteins",
+            "Integral and Peripheral proteins",
+            "Simple and Complex proteins",
+            "Glycolipids and Glycoproteins"
+        ],
+        "correct": 1,
+        "explanation": "The proteins of the cell membrane are categorized as integral or peripheral.",
+        "id": 34
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "Which statement correctly describes Integral proteins?",
+        "options": [
+            "They lie on either side of the membrane but are not bound to its hydrophobic interior.",
+            "They are bound to the hydrophobic interior of the phospholipid bilayer.",
+            "They are branched molecules of 15 sugar units.",
+            "They are water-soluble phosphate heads."
+        ],
+        "correct": 1,
+        "explanation": "Integral proteins are bound to the hydrophobic interior of the phospholipid bilayer.",
+        "id": 35
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "Which statement correctly describes Peripheral proteins?",
+        "options": [
+            "They are bound to the hydrophobic interior of the phospholipid bilayer.",
+            "They lie on either side of the membrane but are not bound to its hydrophobic interior.",
+            "They are composed of lipid + phosphate.",
+            "They decrease the membrane's permeability."
+        ],
+        "correct": 1,
+        "explanation": "Peripheral proteins lie on either side of the membrane but are not bound to its hydrophobic interior.",
+        "id": 36
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "Which of the following represents 'hydrophilic' in the phospholipid bilayer?",
+        "options": [
+            "Lipid tails",
+            "Phosphate heads",
+            "Cholesterol molecules",
+            "Integral proteins"
+        ],
+        "correct": 1,
+        "explanation": "The phosphate heads are water-soluble (hydrophilic).",
+        "id": 37
+    },
+    {
+        "topic": "Plasma Membrane Structure",
+        "question": "Which of the following represents 'hydrophobic' in the phospholipid bilayer?",
+        "options": [
+            "Phosphate heads",
+            "Glycoproteins",
+            "Lipid tails",
+            "Glycocalyx"
+        ],
+        "correct": 2,
+        "explanation": "The lipid tails are hydrophobic (oriented toward the inside).",
+        "id": 38
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "Which of the following is NOT listed as a function of the cell membrane?",
+        "options": [
+            "Protect the cell against the invading materials.",
+            "Regulates what enters and exits the cell (selective permeability).",
+            "Synthesize ribosomes within the nucleolus.",
+            "Transports waste material out of the cell (Excretion) and cell-to-cell communication."
+        ],
+        "correct": 2,
+        "explanation": "Ribosome synthesis is a function of the nucleolus inside the nucleus, not the cell membrane. Cell membrane functions include protection, regulation of entry/exit, excretion, and communication.",
+        "id": 39
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "What is the main function of the cell membrane?",
+        "options": [
+            "To synthesise protein products",
+            "To control what enters or exits the cells",
+            "To store hereditary materials",
+            "To break down harmful substances with enzymes"
+        ],
+        "correct": 1,
+        "explanation": "The main function of the cell membrane is to control what enters or exits the cells.",
+        "id": 40
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "The cell membrane controls entry and exit by which two main methods?",
+        "options": [
+            "Phagocytosis and Pinocytosis",
+            "Passive and Active transport",
+            "Endocytosis and Exocytosis",
+            "Simple and Facilitated diffusion"
+        ],
+        "correct": 1,
+        "explanation": "This function (controlling what enters or exits) is performed by two methods: passive and active transport.",
+        "id": 41
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "Which of the following describes 'Active transport'?",
+        "options": [
+            "Molecules move from high to low concentration spontaneously.",
+            "Transport of molecules from low to high concentration (against their concentration gradient) requiring ATP energy.",
+            "Small molecules passing easily through the lipid bilayer without energy.",
+            "Water molecules shifting through a semipermeable membrane."
+        ],
+        "correct": 1,
+        "explanation": "Active transport is the transport of molecules from low to high concentration (against concentration gradient), requiring energy from ATP.",
+        "id": 42
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "Does active transport require energy, and if so, in what form?",
+        "options": [
+            "No energy is required.",
+            "Yes, it requires energy in the form of ATP.",
+            "Yes, it requires heat energy from the mitochondria.",
+            "It requires light energy."
+        ],
+        "correct": 1,
+        "explanation": "Active transport requires energy from ATP.",
+        "id": 43
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "Which of the following is the lecture's example of active transport?",
+        "options": [
+            "O2 moving easily through the lipid bilayer.",
+            "Fish gills removing salts from the body by pumping them into saltwater.",
+            "Ribosome formation in the nucleolus.",
+            "Hydrolytic enzymes digesting bacteria inside lysosomes."
+        ],
+        "correct": 1,
+        "explanation": "An example of active transport is: fish gills can remove salts from the body by pumping them into saltwater (against concentration gradient).",
+        "id": 44
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "What is the general direction of molecular movement in 'Passive transport'?",
+        "options": [
+            "Against concentration gradient (low to high)",
+            "From high to low concentration",
+            "Random movement without any pattern",
+            "Strictly out of the cell only"
+        ],
+        "correct": 1,
+        "explanation": "Passive transport is the transport of molecules from high to low concentration.",
+        "id": 45
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "Does passive transport consume cellular energy?",
+        "options": [
+            "Yes, it consumes ATP.",
+            "No, it occurs spontaneously so cells don't consume energy.",
+            "It consumes energy only during facilitated diffusion.",
+            "It consumes GTP instead of ATP."
+        ],
+        "correct": 1,
+        "explanation": "Passive transport occurs spontaneously. So, cells don't consume energy.",
+        "id": 46
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "What are the two types of passive transport (diffusion) mentioned in the lecture?",
+        "options": [
+            "Active transport and Massive transport",
+            "Simple diffusion and Facilitated diffusion",
+            "Phagocytosis and Pinocytosis",
+            "Endocytosis and Exocytosis"
+        ],
+        "correct": 1,
+        "explanation": "Passive transport includes simple diffusion and facilitated diffusion.",
+        "id": 47
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "Which of the following describes 'Simple diffusion'?",
+        "options": [
+            "Molecules move from low to high concentration through proteins.",
+            "Molecules move from high to low concentration through the lipid bilayer.",
+            "Molecules move through the nuclear envelope pits.",
+            "Molecules are engulfed by vesicle budding."
+        ],
+        "correct": 1,
+        "explanation": "In simple diffusion, molecules move from high to low concentration through the lipid bilayer.",
+        "id": 48
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "Which molecules are given as examples that can easily move by simple diffusion?",
+        "options": [
+            "Large proteins and carbohydrates",
+            "Small, uncharged molecules like oxygen (O2), carbon dioxide (CO2), and water (H2O)",
+            "Sodium and Potassium ions",
+            "Hydrolytic enzymes"
+        ],
+        "correct": 1,
+        "explanation": "Small, uncharged molecules like oxygen (O2), carbon dioxide (CO2), and water (H2O) can move easily by simple diffusion through the lipid bilayer.",
+        "id": 49
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "Which of the following describes 'Facilitated diffusion'?",
+        "options": [
+            "Molecules move from low to high concentration using ATP.",
+            "Molecules move from high to low concentration through the protein layer of the cell membrane.",
+            "Molecules are excreted through exocytosis macro vesicles.",
+            "Water molecules moving through the lipid tails."
+        ],
+        "correct": 1,
+        "explanation": "In facilitated diffusion, molecules move from high to low concentration through the protein layer of the cell membrane.",
+        "id": 50
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "What is the key structural difference in how molecules cross the cell membrane in simple vs. facilitated diffusion?",
+        "options": [
+            "Simple uses ATP, facilitated does not.",
+            "Simple crosses through the lipid bilayer, while facilitated crosses through the protein layer.",
+            "Simple moves against gradient, facilitated moves with gradient.",
+            "Simple is active transport, facilitated is passive."
+        ],
+        "correct": 1,
+        "explanation": "Simple diffusion occurs through the lipid bilayer, whereas facilitated diffusion occurs through the protein layer of the cell membrane.",
+        "id": 51
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "The process of 'excretion' performed by the cell membrane refers to:",
+        "options": [
+            "Engulfing solid bacteria into the cell",
+            "Transporting waste material out of the cell",
+            "Synthesising lipids in the smooth ER",
+            "Releasing chemical messages through nuclear pores"
+        ],
+        "correct": 1,
+        "explanation": "Excretion is defined as: transports waste material out of the cell.",
+        "id": 52
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "Passive transport (diffusion) is driven by:",
+        "options": [
+            "ATP hydrolysis",
+            "Concentration gradient (high to low)",
+            "Cholesterol flexibility",
+            "Golgi vesicle fusion"
+        ],
+        "correct": 1,
+        "explanation": "Passive transport is the movement of molecules from high to low concentration, which is driven naturally by the concentration gradient without energy consumption.",
+        "id": 53
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "Selective permeability is a property of the cell membrane that means:",
+        "options": [
+            "Any substance can freely enter the cell.",
+            "It regulates what enters and exits the cell.",
+            "No substance can enter or exit the cell.",
+            "It is completely impermeable."
+        ],
+        "correct": 1,
+        "explanation": "Selective permeability is the function that regulates what enters and exits the cell.",
+        "id": 54
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "Which mechanism must a cell use to absorb a nutrient if its concentration is already higher inside the cell than outside?",
+        "options": [
+            "Simple diffusion",
+            "Facilitated diffusion",
+            "Active transport",
+            "Osmosis"
+        ],
+        "correct": 2,
+        "explanation": "Absorbing a nutrient from low to high concentration (against the gradient) requires active transport and ATP.",
+        "id": 55
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "Which transport mechanism occurs spontaneously and does not consume cell energy?",
+        "options": [
+            "Active transport",
+            "Simple diffusion",
+            "Endocytosis",
+            "Phagocytosis"
+        ],
+        "correct": 1,
+        "explanation": "Simple diffusion is a type of passive transport that occurs spontaneously without energy consumption.",
+        "id": 56
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "Molecules that cross the cell membrane via facilitated diffusion move through which membrane components?",
+        "options": [
+            "Cholesterol molecules",
+            "The hydrophobic lipid tails",
+            "The protein layer (integral/peripheral channels)",
+            "Glycocalyx carbohydrates"
+        ],
+        "correct": 2,
+        "explanation": "Facilitated diffusion is the movement of molecules through the protein layer of the cell membrane.",
+        "id": 57
+    },
+    {
+        "topic": "Membrane Functions & Transport",
+        "question": "Which of the following is true regarding carbon dioxide (CO2) transport across the cell membrane?",
+        "options": [
+            "It requires active transport and ATP.",
+            "It moves easily by simple diffusion through the lipid bilayer.",
+            "It must pass through trans-face vesicles.",
+            "It is engulfed by pinocytosis."
+        ],
+        "correct": 1,
+        "explanation": "Carbon dioxide (CO2) is a small uncharged molecule that moves easily through the lipid bilayer via simple diffusion.",
+        "id": 58
+    },
+    {
+        "topic": "Massive Transport",
+        "question": "What is 'Massive transport' defined as?",
+        "options": [
+            "Passive diffusion of thousands of water molecules.",
+            "A special type of active transport in which larger materials are brought into the cell through endocytosis and moved out through exocytosis.",
+            "Pumping salt across fish gills.",
+            "The movement of ribosomal subunits through nuclear pores."
+        ],
+        "correct": 1,
+        "explanation": "Massive transport is a special type of active transport in which larger materials are brought into the cell through endocytosis and moved out through exocytosis.",
+        "id": 59
+    },
+    {
+        "topic": "Massive Transport",
+        "question": "What are the two sub-types of Endocytosis?",
+        "options": [
+            "Simple and Facilitated endocytosis",
+            "Phagocytosis and Pinocytosis",
+            "Cis and Trans endocytosis",
+            "Active and Passive endocytosis"
+        ],
+        "correct": 1,
+        "explanation": "Endocytosis is the entrance of materials into the cell across the cell membrane and includes Phagocytosis and Pinocytosis.",
+        "id": 60
+    },
+    {
+        "topic": "Massive Transport",
+        "question": "What is 'Endocytosis'?",
+        "options": [
+            "The movement of materials from the cell to outside.",
+            "The entrance of materials into the cell across the cell membrane.",
+            "The synthesis of proteins in the RER.",
+            "The fusion of transfer vesicles with the Golgi."
+        ],
+        "correct": 1,
+        "explanation": "Endocytosis is defined as the entrance of materials into the cell across the cell membrane.",
+        "id": 61
+    },
+    {
+        "topic": "Massive Transport",
+        "question": "What is 'Exocytosis'?",
+        "options": [
+            "The entrance of solid materials into the cell.",
+            "The movement of materials from the cell across the cell membrane to outside the cell.",
+            "The digestion of foreign materials inside lysosomes.",
+            "The transport of water through the lipid bilayer."
+        ],
+        "correct": 1,
+        "explanation": "Exocytosis is defined as the movement of materials from the cell across the cell membrane to outside the cell.",
+        "id": 62
+    },
+    {
+        "topic": "Massive Transport",
+        "question": "What is 'Phagocytosis'?",
+        "options": [
+            "The entrance of liquid material into the cell.",
+            "The entrance of solid material into the cell across the cell membrane.",
+            "The excretion of metabolic waste outside the cell.",
+            "The formation of ribosomes."
+        ],
+        "correct": 1,
+        "explanation": "Phagocytosis is defined as the entrance of solid material into the cell across the cell membrane.",
+        "id": 63
+    },
+    {
+        "topic": "Massive Transport",
+        "question": "What is 'Pinocytosis'?",
+        "options": [
+            "The entrance of solid material into the cell.",
+            "The entrance of liquid material into the cell across the cell membrane.",
+            "The movement of waste materials outside the cell.",
+            "Active transport of sodium ions."
+        ],
+        "correct": 1,
+        "explanation": "Pinocytosis is defined as the entrance of liquid material into the cell across the cell membrane.",
+        "id": 64
+    },
+    {
+        "topic": "Massive Transport",
+        "question": "Which of the following is a classic example of solid material engulfed by Phagocytosis?",
+        "options": [
+            "Water molecules",
+            "Bacteria",
+            "Dissolved proteins",
+            "Cholesterol"
+        ],
+        "correct": 1,
+        "explanation": "Phagocytosis is the entrance of solid material into the cell across the cell membrane (as bacteria).",
+        "id": 65
+    },
+    {
+        "topic": "Massive Transport",
+        "question": "What is the primary difference between Phagocytosis and Pinocytosis?",
+        "options": [
+            "Phagocytosis is passive, Pinocytosis is active.",
+            "Phagocytosis is the entrance of solid material, while Pinocytosis is the entrance of liquid material.",
+            "Phagocytosis moves substances out, Pinocytosis moves them in.",
+            "Phagocytosis uses RER, Pinocytosis uses SER."
+        ],
+        "correct": 1,
+        "explanation": "Phagocytosis is the entrance of solid material (e.g. bacteria) and Pinocytosis is the entrance of liquid material across the cell membrane.",
+        "id": 66
+    },
+    {
+        "topic": "Massive Transport",
+        "question": "When secretory vesicles migrate towards the cell membrane to discharge their contents outside, which process is occurring?",
+        "options": [
+            "Phagocytosis",
+            "Pinocytosis",
+            "Exocytosis",
+            "Simple diffusion"
+        ],
+        "correct": 2,
+        "explanation": "Discharging vesicle contents outside the cell is exocytosis.",
+        "id": 67
+    },
+    {
+        "topic": "Massive Transport",
+        "question": "Why is Massive transport categorized under Active transport?",
+        "options": [
+            "It moves molecules from high to low concentration.",
+            "It requires energy to form vesicles and move macromolecules across the membrane.",
+            "It is completely spontaneous.",
+            "It only occurs in plant cells."
+        ],
+        "correct": 1,
+        "explanation": "Massive transport is a special type of active transport, meaning it requires cellular energy (ATP) to engulf or excrete large materials via membrane folding and vesicle formation.",
+        "id": 68
+    },
+    {
+        "topic": "Nucleus & Cytoplasm",
+        "question": "How many membranes surround the cell nucleus, and what are they collectively called?",
+        "options": [
+            "A single membrane called the plasma membrane",
+            "Two pliable (\u0645\u0631\u0646) membranes known as the nuclear envelope",
+            "Three rigid layers called the cell wall",
+            "Surrounded by a single layer of glycolipids"
+        ],
+        "correct": 1,
+        "explanation": "The nucleus is surrounded by two pliable membranes, together known as the nuclear envelope.",
+        "id": 69
+    },
+    {
+        "topic": "Nucleus & Cytoplasm",
+        "question": "What are the pits on the nuclear envelope called and what is their function?",
+        "options": [
+            "Nuclear pores; they allow chemical messages to exit and enter the nucleus.",
+            "Cristae; they generate energy.",
+            "Saccules; they store protein.",
+            "Glycocalyx; they protect the cell."
+        ],
+        "correct": 0,
+        "explanation": "Normally, the nuclear envelope is pockmarked with pits called nuclear pores that allow chemical messages to exit and enter the nucleus.",
+        "id": 70
+    },
+    {
+        "topic": "Nucleus & Cytoplasm",
+        "question": "What is the nucleolus (plural: nucleoli) and where is it located?",
+        "options": [
+            "A membrane-bound organelle in the cytoplasm.",
+            "A dark spherical structure inside the nucleus that is the site of ribosome formation.",
+            "A flattened vesicle on the RER.",
+            "An enzyme that breaks down lipids."
+        ],
+        "correct": 1,
+        "explanation": "Inside the nucleus there is the nucleolus / Nucleoli (plural) which is a dark spherical structure that is the site of ribosome formation.",
+        "id": 71
+    },
+    {
+        "topic": "Nucleus & Cytoplasm",
+        "question": "Which of the following is the site of Ribosome formation?",
+        "options": [
+            "Rough Endoplasmic Reticulum",
+            "Golgi trans face",
+            "Nucleolus",
+            "Mitochondria cristae"
+        ],
+        "correct": 2,
+        "explanation": "The nucleolus is the site of ribosome formation.",
+        "id": 72
+    },
+    {
+        "topic": "Nucleus & Cytoplasm",
+        "question": "Which of the following is NOT a function of the cell nucleus?",
+        "options": [
+            "It stores the cell\u2019s hereditary material.",
+            "It coordinates the cell\u2019s activities including growth and metabolism.",
+            "It coordinates protein synthesis and cell division.",
+            "It synthesizes lipids and phospholipids."
+        ],
+        "correct": 3,
+        "explanation": "Synthesis of lipids and phospholipids is a function of the Smooth Endoplasmic Reticulum (SER) in the cytoplasm, not the nucleus.",
+        "id": 73
+    },
+    {
+        "topic": "Nucleus & Cytoplasm",
+        "question": "What does the Cell Cytoplasm comprise?",
+        "options": [
+            "Phospholipid bilayer and proteins",
+            "Cytosol (gel-like substance) and the organelles (internal sub-structures)",
+            "Nucleus and the nucleolus",
+            "Hereditary material and nuclear envelope"
+        ],
+        "correct": 1,
+        "explanation": "The cell cytoplasm comprises cytosol (the gel-like substance enclosed within the cell membrane) and the organelles (the cell's internal sub-structures).",
+        "id": 74
+    },
+    {
+        "topic": "Nucleus & Cytoplasm",
+        "question": "What is the Cytosol?",
+        "options": [
+            "The rigid cell coat of glycoproteins.",
+            "The gel-like substance enclosed within the cell membrane.",
+            "The dark spherical structure in the nucleus.",
+            "The enzymes inside lysosomes."
+        ],
+        "correct": 1,
+        "explanation": "Cytosol is defined as the gel-like substance enclosed within the cell membrane.",
+        "id": 75
+    },
+    {
+        "topic": "Nucleus & Cytoplasm",
+        "question": "What are Cell Organelles?",
+        "options": [
+            "Chemical messages that enter the nucleus.",
+            "The cell's internal sub-structures.",
+            "The branched carbohydrates of 15 sugar units.",
+            "The outer pliable membranes."
+        ],
+        "correct": 1,
+        "explanation": "Organelles are the cell's internal sub-structures.",
+        "id": 76
+    },
+    {
+        "topic": "Nucleus & Cytoplasm",
+        "question": "The nucleus controls protein synthesis and cell metabolism. It coordinates these activities by:",
+        "options": [
+            "Pumping salt across its envelope.",
+            "Sending chemical messages out through the nuclear pores.",
+            "Synthesising lysosomes.",
+            "Using cristae to generate ATP."
+        ],
+        "correct": 1,
+        "explanation": "The nuclear pores allow chemical messages to exit and enter the nucleus, allowing it to coordinate cellular activities.",
+        "id": 77
+    },
+    {
+        "topic": "Nucleus & Cytoplasm",
+        "question": "Which nuclear structure stores the cell's genetic blueprints?",
+        "options": [
+            "Nuclear envelope",
+            "Nuclear pores",
+            "Hereditary material (DNA)",
+            "Nucleolus"
+        ],
+        "correct": 2,
+        "explanation": "The nucleus stores the cell\u2019s hereditary material (DNA).",
+        "id": 78
+    },
+    {
+        "topic": "Nucleus & Cytoplasm",
+        "question": "The word 'pliable' in reference to the nuclear membranes means:",
+        "options": [
+            "Rigid and impermeable",
+            "Flexible or \u0645\u0631\u0646",
+            "Dissolved",
+            "Non-membranous"
+        ],
+        "correct": 1,
+        "explanation": "Pliable means flexible or '\u0645\u0631\u0646' as indicated in the slides.",
+        "id": 79
+    },
+    {
+        "topic": "Nucleus & Cytoplasm",
+        "question": "Which of the following cellular components is located OUTSIDE the nucleus but inside the plasma membrane?",
+        "options": [
+            "Nucleolus",
+            "Chromosomes",
+            "Cytoplasm",
+            "Nuclear envelope"
+        ],
+        "correct": 2,
+        "explanation": "The cytoplasm (including cytosol and organelles) is located outside the nucleus but enclosed within the cell membrane.",
+        "id": 80
+    },
+    {
+        "topic": "ER & Golgi Apparatus",
+        "question": "What are the two categories of Cell Organelles based on membrane presence?",
+        "options": [
+            "Cytosol and Organelle categories",
+            "Membranous and Non-membranous organelles",
+            "Prokaryotic and Eukaryotic organelles",
+            "Active and Passive organelles"
+        ],
+        "correct": 1,
+        "explanation": "The cell organelles can be categorized under two types: the membranous organelles and non-membranous organelles.",
+        "id": 81
+    },
+    {
+        "topic": "ER & Golgi Apparatus",
+        "question": "Which of the following describes 'Membranous organelles'?",
+        "options": [
+            "They are not surrounded by a membrane and do not participate in metabolism.",
+            "They are characterized by the presence of a membrane surrounding them, are permanent components, and participate directly in cellular metabolism.",
+            "They are temporary cell structures that disintegrate after division.",
+            "Examples include ribosomes and cilia."
+        ],
+        "correct": 1,
+        "explanation": "Membranous organelles are characterized by the presence of a membrane surrounding them, are permanent components, and participate directly in cellular metabolism.",
+        "id": 82
+    },
+    {
+        "topic": "ER & Golgi Apparatus",
+        "question": "Which list contains only MEMBRANOUS organelles?",
+        "options": [
+            "Ribosomes, cytoskeleton, cilia, flagella",
+            "Mitochondria, Endoplasmic reticulum, Golgi complex, Lysosomes",
+            "Nucleolus, chromosomes, cytosol, nuclear pores",
+            "Glycoproteins, glycolipids, glycocalyx, cholesterol"
+        ],
+        "correct": 1,
+        "explanation": "Examples of membranous organelles are the mitochondria, endoplasmic reticulum, Golgi complex, and lysosomes.",
+        "id": 83
+    },
+    {
+        "topic": "ER & Golgi Apparatus",
+        "question": "Which of the following describes 'Non-membranous organelles'?",
+        "options": [
+            "They are surrounded by a double membrane and participate directly in metabolism.",
+            "They are not surrounded by a membrane and do not participate directly in cellular metabolism (per lecture text).",
+            "They include lysosomes and Golgi apparatus.",
+            "They represent more than 10 percent of cell volume."
+        ],
+        "correct": 1,
+        "explanation": "Non-membranous organelles are not surrounded by a membrane and do not participate directly in cellular metabolism (e.g. ribosomes, cytoskeleton, cilia, flagella).",
+        "id": 84
+    },
+    {
+        "topic": "ER & Golgi Apparatus",
+        "question": "Which list contains only NON-MEMBRANOUS organelles?",
+        "options": [
+            "Mitochondria, ER, Golgi, lysosomes",
+            "Ribosomes, cytoskeleton, cilia, flagella",
+            "Nucleolus, cytosol, nuclear pores, vesicles",
+            "Chloroplasts, cell walls, vacuoles, capsules"
+        ],
+        "correct": 1,
+        "explanation": "Examples of non-membranous organelles are ribosomes, cytoskeleton, cilia, and flagella.",
+        "id": 85
+    },
+    {
+        "topic": "ER & Golgi Apparatus",
+        "question": "Which organelle consists of groups of enormous, interconnected sacs and often makes up more than 10 percent of a cell\u2019s total volume?",
+        "options": [
+            "Golgi complex",
+            "Endoplasmic Reticulum (ER)",
+            "Mitochondrion",
+            "Lysosomes"
+        ],
+        "correct": 1,
+        "explanation": "The endoplasmic reticulum (ER) consists of groups of enormous, interconnected sacs and often makes up more than 10 percent of a cell\u2019s total volume.",
+        "id": 86
+    },
+    {
+        "topic": "ER & Golgi Apparatus",
+        "question": "What is Rough Endoplasmic Reticulum (RER) and what is its function?",
+        "options": [
+            "It lacks ribosomes and synthesizes lipids.",
+            "It looks rough due to presence of ribosomes on its surface, and functions in the synthesis of proteins.",
+            "It is a stack of flat vesicles filled with hydrolytic enzymes.",
+            "It supplies energy to all cellular activities."
+        ],
+        "correct": 1,
+        "explanation": "Rough Endoplasmic Reticulum (RER) looks rough due to presence of ribosomes on their surfaces. Ribosomes are responsible for protein synthesis, so RER functions in the synthesis of proteins.",
+        "id": 87
+    },
+    {
+        "topic": "ER & Golgi Apparatus",
+        "question": "What is Smooth Endoplasmic Reticulum (SER) and what are its functions?",
+        "options": [
+            "It has ribosomes and synthesizes proteins.",
+            "It is characterized by absence of ribosomes, functions in synthesis of lipids/phospholipids, and contains enzymes to break down harmful substances.",
+            "It forms secretory vesicles to transport proteins.",
+            "It is the site of ribosome formation."
+        ],
+        "correct": 1,
+        "explanation": "Smooth Endoplasmic Reticulum (SER) lacks ribosomes on its surface. It functions in the synthesis of lipids and phospholipids, and contains enzymes that break down harmful substances.",
+        "id": 88
+    },
+    {
+        "topic": "ER & Golgi Apparatus",
+        "question": "Describe the structure of the Golgi Apparatus (Golgi complex) flat saccules:",
+        "options": [
+            "Spherical vesicles filled with hydrolytic enzymes.",
+            "Flattened vesicles or flat sacs filled with protein, arranged one above the other forming stacks.",
+            "Enormous interconnected sacs making up 10% of cell volume.",
+            "Two pliable membranes with nuclear pores."
+        ],
+        "correct": 1,
+        "explanation": "Golgi apparatus structure includes flattened vesicles or Golgi saccules: flat sacs filled with protein, arranged one above the other forming stacks.",
+        "id": 89
+    },
+    {
+        "topic": "ER & Golgi Apparatus",
+        "question": "In the Golgi stacks, what are the names of the two distinct surfaces (faces)?",
+        "options": [
+            "Hydrophilic and Hydrophobic faces",
+            "Concave mature surface (Trans face) and convex immature surface (Cis face)",
+            "Rough and Smooth surfaces",
+            "Outer and Inner membrane shelves"
+        ],
+        "correct": 1,
+        "explanation": "Each Golgi stack has a concave mature surface (Trans face) and a convex immature surface (Cis face).",
+        "id": 90
+    },
+    {
+        "topic": "ER & Golgi Apparatus",
+        "question": "What are 'Transfer or Micro Vesicles' in the Golgi apparatus pathway?",
+        "options": [
+            "Vesicles that contain hydrolytic enzymes and stay in cytoplasm.",
+            "Rounded vesicles filled with protein originating from RER, which fuse with flat vesicles of Golgi.",
+            "Vesicles that discharge their content outside the cell.",
+            "Lipids synthesized in the SER."
+        ],
+        "correct": 1,
+        "explanation": "Transfer or Micro Vesicles are rounded vesicles filled with protein. They originate from the RER and fuse with flat vesicles of Golgi apparatus.",
+        "id": 91
+    },
+    {
+        "topic": "ER & Golgi Apparatus",
+        "question": "What are 'Secretory or Macro vesicles' and how are they formed in the Golgi?",
+        "options": [
+            "They are ribosomes formed in the nucleolus.",
+            "Formed when transfer vesicles are collected, concentrated, and enveloped by a membrane.",
+            "Enzymes that break down harmful substances in SER.",
+            "Vesicles originating from lysosomes."
+        ],
+        "correct": 1,
+        "explanation": "Secretory or Macro vesicles are formed when entered transfer vesicles are collected, concentrated, and enveloped by a membrane.",
+        "id": 92
+    },
+    {
+        "topic": "Lysosomes & Mitochondria",
+        "question": "How does the Golgi complex perform its primary functions, and what are those functions?",
+        "options": [
+            "It synthesizes DNA and RNA in the trans face.",
+            "It functions in storage, modification, and packaging of protein products especially secretory products by receiving proteins from ER.",
+            "It generates ATP energy using cristae shelves.",
+            "It destroys cells through autolysis."
+        ],
+        "correct": 1,
+        "explanation": "Small vesicles of ER containing proteins pinch off and fuse with the Golgi complex where it is modified and packed. The function of Golgi is storage, modification, and packaging of protein products especially secretory products.",
+        "id": 93
+    },
+    {
+        "topic": "Lysosomes & Mitochondria",
+        "question": "What is the eventual fate of Secretory Vesicles after they leave the Golgi apparatus?",
+        "options": [
+            "They are all immediately excreted out of the cell.",
+            "Some migrate towards cell membrane to discharge contents by exocytosis; others remain in cytoplasm as primary lysosomes.",
+            "They fuse with mitochondria to provide proteins.",
+            "They enter the nucleus through nuclear pores."
+        ],
+        "correct": 1,
+        "explanation": "The fate of secretory vesicles: Some migrate towards the cell membrane to discharge contents by exocytosis. Others carry hydrolytic enzymes and remain in the cytoplasm as primary lysosomes.",
+        "id": 94
+    },
+    {
+        "topic": "Lysosomes & Mitochondria",
+        "question": "What are Lysosomes and what is their primary function?",
+        "options": [
+            "Non-membranous organelles that synthesize protein.",
+            "Membranous organelles containing hydrolytic enzymes for the intracytoplasmic digestion of nutritive and foreign substances.",
+            "Rods and filaments that supply energy to cellular activities.",
+            "Flat vesicles that store and package proteins."
+        ],
+        "correct": 1,
+        "explanation": "Lysosomes are membranous organelles that contain hydrolytic enzymes for the intracytoplasmic digestion of nutritive and foreign substances.",
+        "id": 95
+    },
+    {
+        "topic": "Lysosomes & Mitochondria",
+        "question": "How are Lysosomes originated (formed) in the cell?",
+        "options": [
+            "Formed inside the nucleolus.",
+            "Formed through the interaction between the rER and Golgi apparatus.",
+            "Synthesized from lipid bilayer folding.",
+            "Formed by division of mitochondria."
+        ],
+        "correct": 1,
+        "explanation": "Lysosomes are formed through the interaction between the rER and Golgi apparatus.",
+        "id": 96
+    },
+    {
+        "topic": "Lysosomes & Mitochondria",
+        "question": "What are the two types of Lysosomes mentioned in the lecture, and how do they differ?",
+        "options": [
+            "Cis and Trans Lysosomes; differ by location.",
+            "Primary Lysosomes (homogeneous, single membrane) and Secondary Lysosomes (heterogeneous, contain digested elements).",
+            "Membranous and Non-membranous Lysosomes.",
+            "Active and Passive Lysosomes."
+        ],
+        "correct": 1,
+        "explanation": "Types of Lysosomes: 1ry Lysosomes are homogeneous rounded vesicles surrounded by a single membrane. 2ry Lysosomes are heterogeneous rounded bodies because they contain digested elements.",
+        "id": 97
+    },
+    {
+        "topic": "Lysosomes & Mitochondria",
+        "question": "What is the general structure and appearance of the Mitochondrion?",
+        "options": [
+            "Stacks of flat saccules with cis and trans faces.",
+            "Appears as rods, granules, or filaments, surrounded by two membranes (outer smooth, inner projecting as shelves called cristae).",
+            "Interconnected enormous sacs containing ribosomes.",
+            "Homogeneous rounded vesicles with single membranes."
+        ],
+        "correct": 1,
+        "explanation": "Mitochondria appear as rods, granules, or filaments. Each mitochondrion is surrounded by two membranes: outer smooth, and inner projecting into the cavity forming shelves called cristae.",
+        "id": 98
+    },
+    {
+        "topic": "Lysosomes & Mitochondria",
+        "question": "What is the function of the Mitochondria in the cell?",
+        "options": [
+            "Site of ribosome formation and protein packing.",
+            "Considered as the power house of the cell, supplying energy to all cellular activities.",
+            "Responsible for lipid and phospholipid synthesis.",
+            "Performs digestion of foreign bacteria."
+        ],
+        "correct": 1,
+        "explanation": "Mitochondria are considered the power house of the cell. They supply energy to all cellular activities.",
+        "id": 99
+    },
+    {
+        "topic": "Lysosomes & Mitochondria",
+        "question": "Which chemical processes' enzymes are located inside the Mitochondria?",
+        "options": [
+            "Hydrolysis and digestion enzymes",
+            "Oxidation and phosphorylation enzymes",
+            "Lipid synthesis and detoxification enzymes",
+            "Secretory and packaging enzymes"
+        ],
+        "correct": 1,
+        "explanation": "Mitochondria contain the enzymes of the oxidation and phosphorylation processes.",
+        "id": 100
+    }
+];
+
+    // ========================
+    // APP STATE
+    // ========================
+    let state = {
+        mode: 'practice', // practice, exam, review
+        currentPage: 0,
+        questionsPerPage: 5,
+        activeTopic: 'All',
+        answered: {},    // { questionId: selectedIndex }
+        shuffled: false,
+        showAll: false,
+    };
+
+    let filteredQuestions = [...allQuestions];
+
+    // ========================
+    // INIT
+    // ========================
+    function init() {
+        // Load saved state
+        const saved = localStorage.getItem('biology_quiz_state');
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved);
+                state.answered = parsed.answered || {};
+            } catch(e) {}
+        }
+
+        buildTopicFilter();
+        updateStats();
+        filterAndRender();
+
+        // Mode buttons
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                state.mode = btn.dataset.mode;
+                state.currentPage = 0;
+                state.showAll = false;
+                filterAndRender();
+            });
+        });
+    }
+
+    // ========================
+    // TOPICS
+    // ========================
+    function getTopics() {
+        const topics = new Set();
+        allQuestions.forEach(q => topics.add(q.topic));
+        return ['All', ...Array.from(topics)];
+    }
+
+    function buildTopicFilter() {
+        const container = document.getElementById('topicFilter');
+        const topics = getTopics();
+        container.innerHTML = topics.map(t => 
+            `<button class="topic-chip ${t === state.activeTopic ? 'active' : ''}" onclick="selectTopic('${t}')">${t}</button>`
+        ).join('');
+    }
+
+    function selectTopic(topic) {
+        state.activeTopic = topic;
+        state.currentPage = 0;
+        state.showAll = false;
+        buildTopicFilter();
+        filterAndRender();
+    }
+
+    // ========================
+    // FILTER & RENDER
+    // ========================
+    function filterAndRender() {
+        let qs = [...allQuestions];
+
+        // Topic filter
+        if (state.activeTopic !== 'All') {
+            qs = qs.filter(q => q.topic === state.activeTopic);
+        }
+
+        // Review mode: only wrong answers
+        if (state.mode === 'review') {
+            qs = qs.filter(q => {
+                const ans = state.answered[q.id];
+                return ans !== undefined && ans !== q.correct;
+            });
+        }
+
+        filteredQuestions = qs;
+        renderQuestions();
+        updateStats();
+        updatePagination();
+
+        // Hide result screen
+        document.getElementById('resultScreen').classList.add('hidden');
+        document.getElementById('questionsContainer').classList.remove('hidden');
+    }
+
+    function renderQuestions() {
+        const container = document.getElementById('questionsContainer');
+        const start = state.showAll ? 0 : state.currentPage * state.questionsPerPage;
+        const end = state.showAll ? filteredQuestions.length : start + state.questionsPerPage;
+        const pageQuestions = filteredQuestions.slice(start, end);
+
+        if (pageQuestions.length === 0) {
+            container.innerHTML = `
+                <div style="text-align:center;padding:60px 20px;color:var(--text-muted)">
+                    <div style="font-size:3rem;margin-bottom:16px">📭</div>
+                    <div style="font-size:1.1rem;font-weight:600;color:var(--text-secondary);margin-bottom:8px">
+                        ${state.mode === 'review' ? 'No wrong answers to review!' : 'No questions found'}
+                    </div>
+                    <div style="font-size:0.85rem">
+                        ${state.mode === 'review' ? 'Great job! Try answering more questions first.' : 'Try a different topic.'}
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = pageQuestions.map((q, idx) => {
+            const answered = state.answered[q.id] !== undefined;
+            const selectedIdx = state.answered[q.id];
+            const isExamMode = state.mode === 'exam';
+
+            const letters = ['A', 'B', 'C', 'D'];
+
+            return `
+                <div class="question-card" id="q${q.id}">
+                    <div class="question-number">
+                        <span class="q-badge">Q${q.id}</span>
+                        <span class="question-topic-badge">${q.topic}</span>
+                    </div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options-list">
+                        ${q.options.map((opt, oi) => {
+                            let cls = 'option-btn';
+                            if (answered && !isExamMode) {
+                                cls += ' disabled';
+                                if (oi === q.correct) cls += ' correct';
+                                else if (oi === selectedIdx) cls += ' wrong';
+                            } else if (answered && isExamMode) {
+                                cls += ' disabled';
+                                if (oi === selectedIdx) cls += ' selected-exam';
+                            }
+                            return `
+                                <button class="${cls}" onclick="selectAnswer(${q.id}, ${oi})" ${answered ? 'disabled' : ''}>
+                                    <span class="option-letter">${letters[oi]}</span>
+                                    <span>${opt}</span>
+                                </button>
+                            `;
+                        }).join('')}
+                    </div>
+                    ${answered && !isExamMode ? `
+                        <div class="explanation">
+                            <strong>${selectedIdx === q.correct ? '✅ Correct!' : '❌ Incorrect.'}</strong> ${q.explanation}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ========================
+    // ANSWER HANDLER
+    // ========================
+    function selectAnswer(qId, optIdx) {
+        if (state.answered[qId] !== undefined) return;
+
+        state.answered[qId] = optIdx;
+        saveState();
+        
+        // Re-render to show feedback
+        if (state.mode !== 'exam') {
+            renderQuestions();
+        } else {
+            // In exam mode, mark selected
+            const card = document.getElementById(`q${qId}`);
+            const buttons = card.querySelectorAll('.option-btn');
+            buttons.forEach((btn, idx) => {
+                btn.classList.add('disabled');
+                btn.disabled = true;
+                if (idx === optIdx) {
+                    btn.classList.add('selected-exam');
+                }
+            });
+        }
+
+        updateStats();
+        updatePagination();
+    }
+
+    // ========================
+    // STATS
+    // ========================
+    function updateStats() {
+        let answeredCount = 0;
+        let correct = 0;
+        let wrong = 0;
+
+        filteredQuestions.forEach(q => {
+            const ans = state.answered[q.id];
+            if (ans !== undefined) {
+                answeredCount++;
+                if (ans === q.correct) correct++;
+                else wrong++;
+            }
+        });
+
+        document.getElementById('totalQ').textContent = filteredQuestions.length;
+        document.getElementById('correctCount').textContent = correct;
+        document.getElementById('wrongCount').textContent = wrong;
+
+        const pct = filteredQuestions.length > 0 ? Math.round((answeredCount / filteredQuestions.length) * 100) : 0;
+        document.getElementById('progressText').textContent = `${answeredCount} / ${filteredQuestions.length}`;
+        document.getElementById('progressFill').style.width = pct + '%';
+
+        // Show finish button when enough answered
+        const finishBtn = document.getElementById('finishBtn');
+        if (answeredCount >= filteredQuestions.length * 0.5 && filteredQuestions.length > 0) {
+            finishBtn.classList.remove('hidden');
+        } else {
+            finishBtn.classList.add('hidden');
+        }
+    }
+
+    // ========================
+    // PAGINATION
+    // ========================
+    function updatePagination() {
+        const totalPages = state.showAll ? 1 : Math.max(1, Math.ceil(filteredQuestions.length / state.questionsPerPage));
+        const current = state.showAll ? 1 : state.currentPage + 1;
+
+        document.getElementById('pageInfo').textContent = `${current} / ${totalPages}`;
+        document.getElementById('prevBtn').disabled = state.showAll || state.currentPage === 0;
+        document.getElementById('nextBtn').disabled = state.showAll || state.currentPage >= totalPages - 1;
+    }
+
+    function changePage(dir) {
+        const totalPages = Math.ceil(filteredQuestions.length / state.questionsPerPage);
+        state.currentPage = Math.max(0, Math.min(totalPages - 1, state.currentPage + dir));
+        renderQuestions();
+        updatePagination();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ========================
+    // ACTIONS
+    // ========================
+    function shuffleQuestions() {
+        for (let i = filteredQuestions.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [filteredQuestions[i], filteredQuestions[j]] = [filteredQuestions[j], filteredQuestions[i]];
+        }
+        filteredQuestions.forEach(q => {
+            const correctOption = q.options[q.correct];
+            const shuffledOptions = [...q.options];
+            for (let i = shuffledOptions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+            }
+            q.options = shuffledOptions;
+            q.correct = shuffledOptions.indexOf(correctOption);
+        });
+        state.currentPage = 0;
+        state.showAll = false;
+        renderQuestions();
+        updatePagination();
+    }
+
+    function resetQuiz() {
+        if (!confirm('Are you sure you want to reset all answers?')) return;
+        state.answered = {};
+        state.currentPage = 0;
+        state.showAll = false;
+        localStorage.removeItem('biology_quiz_state');
+        filterAndRender();
+    }
+
+    function showAllQuestions() {
+        state.showAll = !state.showAll;
+        const btn = document.getElementById('showAllBtn');
+        btn.textContent = state.showAll ? '📄 Paginate' : '📋 Show All';
+        filterAndRender();
+    }
+
+    // ========================
+    // RESULTS
+    // ========================
+    function showResults() {
+        let answeredCount = 0;
+        let correct = 0;
+        let wrong = 0;
+
+        filteredQuestions.forEach(q => {
+            const ans = state.answered[q.id];
+            if (ans !== undefined) {
+                answeredCount++;
+                if (ans === q.correct) correct++;
+                else wrong++;
+            }
+        });
+
+        const pct = answeredCount > 0 ? Math.round((correct / answeredCount) * 100) : 0;
+        let message = '', sub = '';
+        if (pct >= 90) { message = '🌟 Outstanding!'; sub = 'You truly mastered this biology lecture!'; }
+        else if (pct >= 75) { message = '👏 Great Job!'; sub = 'You have a strong understanding of cytology!'; }
+        else if (pct >= 60) { message = '👍 Good Work!'; sub = 'A bit more review and you\'ll be excellent!'; }
+        else if (pct >= 40) { message = '📚 Keep Studying!'; sub = 'Review the wrong answers and try again.'; }
+        else { message = '💪 Don\'t Give Up!'; sub = 'Use the Review Wrong mode to focus on weak areas.'; }
+
+        const circleColor = pct >= 75 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--error)';
+
+        document.getElementById('questionsContainer').classList.add('hidden');
+        const resultScreen = document.getElementById('resultScreen');
+        resultScreen.classList.remove('hidden');
+        resultScreen.innerHTML = `
+            <div class="score-circle" style="border-color: ${circleColor}">
+                <div class="score-percent" style="color: ${circleColor}">${pct}%</div>
+                <div class="score-label">Score</div>
+            </div>
+            <div class="result-message">${message}</div>
+            <div class="result-sub">${sub}</div>
+            <div class="result-stats">
+                <div class="result-stat">
+                    <div class="val" style="color:var(--text-primary)">${answeredCount}</div>
+                    <div class="lbl">Answered</div>
+                </div>
+                <div class="result-stat">
+                    <div class="val" style="color:var(--success)">${correct}</div>
+                    <div class="lbl">Correct</div>
+                </div>
+                <div class="result-stat">
+                    <div class="val" style="color:var(--error)">${wrong}</div>
+                    <div class="lbl">Wrong</div>
+                </div>
+            </div>
+            <button class="ctrl-btn primary" onclick="reviewWrong()" style="margin:8px;padding:12px 28px">📖 Review Wrong Answers</button>
+            <button class="ctrl-btn" onclick="backToQuiz()" style="margin:8px;padding:12px 28px">◀ Back to Quiz</button>
+            <button class="ctrl-btn" onclick="resetQuiz()" style="margin:8px;padding:12px 28px">🔄 Reset & Retry</button>
+        `;
+    }
+
+    // Reuse review/back functions
+    function reviewWrong() {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('modeReview').classList.add('active');
+        state.mode = 'review';
+        state.currentPage = 0;
+        state.showAll = false;
+        filterAndRender();
+    }
+
+    function backToQuiz() {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('modePractice').classList.add('active');
+        state.mode = 'practice';
+        state.currentPage = 0;
+        state.showAll = false;
+        filterAndRender();
+    }
+
+    // ========================
+    // PERSISTENCE
+    // ========================
+    function saveState() {
+        localStorage.setItem('biology_quiz_state', JSON.stringify({
+            answered: state.answered
+        }));
+    }
+
+    // ========================
+    // START
+    // ========================
+    document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
