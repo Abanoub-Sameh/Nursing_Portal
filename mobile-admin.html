@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
+  <title>أدمن الموبايل | مكتبة تمريض</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #111a2e;
+      --panel-2: #17223a;
+      --line: rgba(255,255,255,.09);
+      --text: #eef4ff;
+      --muted: #9fb0cc;
+      --blue: #5b7cfa;
+      --green: #15bf86;
+      --red: #ef476f;
+      --amber: #f59e0b;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Tajawal", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 14px;
+    }
+
+    .shell {
+      max-width: 760px;
+      margin: 0 auto;
+      display: grid;
+      gap: 14px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    h1, h2, p { margin: 0; }
+
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 900;
+    }
+
+    h2 {
+      font-size: 1rem;
+      border-right: 4px solid var(--blue);
+      padding-right: 10px;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: .86rem;
+      margin-top: 3px;
+    }
+
+    .student-link {
+      color: #fff;
+      background: var(--blue);
+      text-decoration: none;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: .86rem;
+    }
+
+    input, select, button {
+      width: 100%;
+      font: inherit;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      min-height: 44px;
+    }
+
+    input, select {
+      background: var(--panel-2);
+      color: var(--text);
+      padding: 10px 12px;
+    }
+
+    input[type="file"] {
+      padding: 9px;
+      min-height: auto;
+    }
+
+    button {
+      color: #fff;
+      background: var(--blue);
+      font-weight: 900;
+      cursor: pointer;
+      border: none;
+      padding: 10px 12px;
+    }
+
+    button.secondary { background: var(--panel-2); border: 1px solid var(--line); }
+    button.success { background: var(--green); }
+    button.danger { background: var(--red); }
+    button.warn { background: var(--amber); color: #111827; }
+    button:disabled { opacity: .55; cursor: wait; }
+
+    .token-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: end;
+    }
+
+    .token-row button {
+      width: auto;
+      min-width: 116px;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: .82rem;
+      line-height: 1.7;
+    }
+
+    .notice {
+      border: 1px solid rgba(245,158,11,.35);
+      background: rgba(245,158,11,.12);
+      color: #fed7aa;
+      padding: 10px 12px;
+      border-radius: 10px;
+      line-height: 1.65;
+      font-size: .88rem;
+    }
+
+    .files {
+      display: grid;
+      gap: 10px;
+    }
+
+    .file-box {
+      background: rgba(255,255,255,.025);
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .lectures {
+      display: grid;
+      gap: 8px;
+    }
+
+    .lecture {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .lecture strong { display: block; }
+    .lecture span { color: var(--muted); font-size: .82rem; }
+
+    .lecture-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .lecture-actions button {
+      width: 42px;
+      min-height: 38px;
+      padding: 0;
+    }
+
+    .status {
+      position: sticky;
+      bottom: 10px;
+      z-index: 5;
+      min-height: 46px;
+      border: 1px solid var(--line);
+      background: #0f172a;
+      border-radius: var(--radius);
+      padding: 12px;
+      color: var(--muted);
+      font-weight: 800;
+      line-height: 1.55;
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+    }
+
+    .status.ok { color: #86efac; border-color: rgba(21,191,134,.45); }
+    .status.err { color: #fda4af; border-color: rgba(239,71,111,.45); }
+
+    @media (max-width: 620px) {
+      body { padding: 10px; }
+      header { align-items: flex-start; flex-direction: column; }
+      .student-link { width: 100%; text-align: center; }
+      .grid, .actions, .token-row { grid-template-columns: 1fr; }
+      .token-row button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div>
+        <h1>أدمن الموبايل</h1>
+        <p class="sub">رفع محاضرة أو تعديل بيانات الموقع من أي مكان</p>
+      </div>
+      <a class="student-link" href="index.html" target="_blank">فتح موقع الطلاب</a>
+    </header>
+
+    <section class="card">
+      <h2>تسجيل GitHub</h2>
+      <div class="notice">
+        استخدم Token خاص بحسابك وصلاحيته على مستودع Nursing_Portal فقط. الصفحة لا تحفظ التوكن داخل الكود.
+      </div>
+      <div class="token-row">
+        <label>
+          GitHub Token
+          <input id="tokenInput" type="password" autocomplete="off" placeholder="الصق التوكن هنا">
+        </label>
+        <button id="loadBtn" type="button">تحميل البيانات</button>
+      </div>
+      <p class="hint">
+        المطلوب في التوكن: Repository access للمستودع ده فقط، و Contents = Read and write.
+      </p>
+    </section>
+
+    <section class="card" id="editorCard" style="display:none;">
+      <h2 id="editorTitle">إضافة محاضرة</h2>
+
+      <div class="grid">
+        <label>
+          الترم
+          <select id="termSelect"></select>
+        </label>
+        <label>
+          المادة
+          <select id="subjectSelect"></select>
+        </label>
+      </div>
+
+      <div class="grid">
+        <label>
+          إضافة مادة جديدة
+          <input id="newSubjectInput" type="text" placeholder="مثال: Histology">
+        </label>
+        <label>
+          مفتاح المادة
+          <input id="newSubjectKeyInput" type="text" placeholder="اختياري: histology">
+        </label>
+      </div>
+      <button class="secondary" id="addSubjectBtn" type="button">إضافة المادة للقائمة</button>
+
+      <div class="grid">
+        <label>
+          رقم المحاضرة
+          <input id="lectureNum" type="number" min="1" inputmode="numeric">
+        </label>
+        <label>
+          اسم المحاضرة
+          <input id="lectureTitle" type="text" placeholder="مثال: Introduction to Histology">
+        </label>
+      </div>
+
+      <div class="files">
+        <label class="file-box">
+          الباور الأصلي للدكتورة
+          <input id="fileOriginal" type="file" accept=".ppt,.pptx,.pdf">
+        </label>
+        <label class="file-box">
+          الباور المترجم أو الملخص
+          <input id="fileTranslated" type="file" accept=".ppt,.pptx,.pdf,.html">
+        </label>
+        <label class="file-box">
+          بنك الأسئلة - شغل الأدمن
+          <input id="fileMyQuiz" type="file" accept=".html,.pdf">
+        </label>
+        <label class="file-box">
+          بنك أسئلة الدكتورة
+          <input id="fileDoctorQuiz" type="file" accept=".html,.pdf">
+        </label>
+      </div>
+
+      <div class="actions">
+        <button class="success" id="saveBtn" type="button">رفع وحفظ المحاضرة</button>
+        <button class="secondary" id="resetBtn" type="button">تفريغ النموذج</button>
+      </div>
+    </section>
+
+    <section class="card" id="lecturesCard" style="display:none;">
+      <h2>محاضرات المادة</h2>
+      <div id="lecturesList" class="lectures"></div>
+    </section>
+
+    <div class="status" id="statusBox">جاهز</div>
+  </main>
+
+  <script>
+    const REPO_OWNER = "Abanoub-Sameh";
+    const REPO_NAME = "Nursing_Portal";
+    const BRANCH = "main";
+    const API_ROOT = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents`;
+    const FILE_TYPES = {
+      original_ppt: { input: "fileOriginal", folder: "original" },
+      translated_ppt: { input: "fileTranslated", folder: "guides" },
+      my_quiz: { input: "fileMyQuiz", folder: "quizzes" },
+      doctor_quiz: { input: "fileDoctorQuiz", folder: "quizzes" }
+    };
+
+    let token = "";
+    let curriculumData = null;
+    let curriculumSha = "";
+    let editLectureNum = null;
+    let busy = false;
+
+    const $ = (id) => document.getElementById(id);
+
+    $("loadBtn").addEventListener("click", loadCurriculum);
+    $("termSelect").addEventListener("change", () => {
+      fillSubjects();
+      resetForm(false);
+      renderLectures();
+    });
+    $("subjectSelect").addEventListener("change", () => {
+      resetForm(false);
+      renderLectures();
+    });
+    $("addSubjectBtn").addEventListener("click", addSubject);
+    $("saveBtn").addEventListener("click", saveLecture);
+    $("resetBtn").addEventListener("click", () => resetForm(true));
+
+    function setStatus(message, type = "") {
+      const box = $("statusBox");
+      box.className = `status ${type}`;
+      box.textContent = message;
+    }
+
+    function setBusy(value) {
+      busy = value;
+      document.querySelectorAll("button, input, select").forEach(el => {
+        if (el.id !== "tokenInput") el.disabled = value;
+      });
+    }
+
+    function headers() {
+      return {
+        "Accept": "application/vnd.github+json",
+        "Authorization": `Bearer ${token}`,
+        "X-GitHub-Api-Version": "2022-11-28"
+      };
+    }
+
+    async function githubJson(path, options = {}) {
+      const res = await fetch(`${API_ROOT}/${encodePathWithQuery(path)}`, {
+        ...options,
+        headers: { ...headers(), ...(options.headers || {}) }
+      });
+
+      let data = null;
+      try { data = await res.json(); } catch (_) {}
+
+      const method = (options.method || "GET").toUpperCase();
+      if (res.status === 404 && method === "GET") return null;
+
+      if (!res.ok) {
+        const msg = data?.message || "GitHub رفض الطلب.";
+        throw new Error(msg);
+      }
+
+      return data;
+    }
+
+    function encodePathWithQuery(value) {
+      const [path, query] = value.split("?");
+      const encodedPath = encodePath(path);
+      return query ? `${encodedPath}?${query}` : encodedPath;
+    }
+
+    function encodePath(path) {
+      return path.split("/").map(encodeURIComponent).join("/");
+    }
+
+    function decodeBase64Unicode(base64) {
+      const binary = atob(base64.replace(/\n/g, ""));
+      const bytes = Uint8Array.from(binary, ch => ch.charCodeAt(0));
+      return new TextDecoder().decode(bytes);
+    }
+
+    function encodeBase64Unicode(text) {
+      const bytes = new TextEncoder().encode(text);
+      let binary = "";
+      bytes.forEach(byte => binary += String.fromCharCode(byte));
+      return btoa(binary);
+    }
+
+    function extractCurriculum(jsText) {
+      return JSON.parse(jsText.replace(/^const\s+curriculumData\s*=\s*/, "").replace(/;\s*$/, ""));
+    }
+
+    function makeCurriculumJs(data) {
+      return "const curriculumData = " + JSON.stringify(data, null, 2) + ";\n";
+    }
+
+    async function loadCurriculum() {
+      token = $("tokenInput").value.trim();
+      if (!token) {
+        setStatus("اكتب GitHub Token الأول.", "err");
+        return;
+      }
+
+      try {
+        setBusy(true);
+        setStatus("جاري تحميل بيانات المحاضرات من GitHub...");
+        const file = await githubJson("curriculum.js?ref=" + BRANCH);
+        if (!file?.content) throw new Error("لم أستطع قراءة curriculum.js");
+        curriculumSha = file.sha;
+        curriculumData = extractCurriculum(decodeBase64Unicode(file.content));
+        fillTerms();
+        $("editorCard").style.display = "grid";
+        $("lecturesCard").style.display = "grid";
+        renderLectures();
+        setStatus("تم تحميل البيانات. تقدر تضيف أو تعدل الآن.", "ok");
+      } catch (err) {
+        setStatus("فشل التحميل: " + explainGithubError(err.message), "err");
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    function fillTerms() {
+      const termSelect = $("termSelect");
+      termSelect.innerHTML = "";
+      Object.entries(curriculumData.terms).forEach(([key, term]) => {
+        termSelect.add(new Option(term.name, key));
+      });
+      fillSubjects();
+    }
+
+    function fillSubjects() {
+      const term = curriculumData.terms[$("termSelect").value];
+      const subjectSelect = $("subjectSelect");
+      subjectSelect.innerHTML = "";
+      Object.entries(term.subjects || {}).forEach(([key, subject]) => {
+        subjectSelect.add(new Option(subject.name, key));
+      });
+
+      if (!subjectSelect.value) {
+        $("lectureNum").value = 1;
+        return;
+      }
+      suggestNextLectureNum();
+    }
+
+    function addSubject() {
+      if (!curriculumData) return;
+
+      const name = $("newSubjectInput").value.trim();
+      const customKey = $("newSubjectKeyInput").value.trim();
+      if (!name) {
+        setStatus("اكتب اسم المادة الجديدة.", "err");
+        return;
+      }
+
+      const key = sanitizeKey(customKey || name);
+      const termKey = $("termSelect").value;
+      const subjects = curriculumData.terms[termKey].subjects;
+
+      if (subjects[key]) {
+        setStatus("المادة دي موجودة بالفعل.", "err");
+        return;
+      }
+
+      subjects[key] = { name, lectures: [] };
+      fillSubjects();
+      $("subjectSelect").value = key;
+      $("newSubjectInput").value = "";
+      $("newSubjectKeyInput").value = "";
+      suggestNextLectureNum();
+      renderLectures();
+      setStatus("اتضافت المادة للقائمة. اضغط رفع وحفظ المحاضرة بعد إضافة أول محاضرة.", "ok");
+    }
+
+    function sanitizeKey(value) {
+      const key = value.toLowerCase().trim().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
+      return key || "subject_" + Date.now();
+    }
+
+    function sanitizeFileName(name) {
+      return name.replace(/[\\/:*?"<>|]+/g, "_").replace(/\s+/g, " ").trim();
+    }
+
+    function getSelectedSubject() {
+      const termKey = $("termSelect").value;
+      const subjectKey = $("subjectSelect").value;
+      if (!termKey || !subjectKey) return null;
+      return {
+        termKey,
+        subjectKey,
+        termNumber: termKey.split("_")[1],
+        subject: curriculumData.terms[termKey].subjects[subjectKey]
+      };
+    }
+
+    function suggestNextLectureNum() {
+      const selected = getSelectedSubject();
+      if (!selected) return;
+      const lectures = selected.subject.lectures || [];
+      const max = lectures.reduce((best, lecture) => Math.max(best, Number(lecture.num) || 0), 0);
+      $("lectureNum").value = editLectureNum || max + 1;
+    }
+
+    function resetForm(clearTitle) {
+      editLectureNum = null;
+      $("editorTitle").textContent = "إضافة محاضرة";
+      $("saveBtn").textContent = "رفع وحفظ المحاضرة";
+      if (clearTitle) $("lectureTitle").value = "";
+      Object.values(FILE_TYPES).forEach(type => $(type.input).value = "");
+      suggestNextLectureNum();
+    }
+
+    function renderLectures() {
+      const selected = getSelectedSubject();
+      const list = $("lecturesList");
+      list.innerHTML = "";
+      if (!selected) {
+        list.innerHTML = "<p class='hint'>أضف مادة أولاً.</p>";
+        return;
+      }
+
+      const lectures = selected.subject.lectures || [];
+      if (!lectures.length) {
+        list.innerHTML = "<p class='hint'>لا توجد محاضرات في هذه المادة بعد.</p>";
+        return;
+      }
+
+      lectures.forEach(lecture => {
+        const row = document.createElement("div");
+        row.className = "lecture";
+        row.innerHTML = `
+          <div>
+            <strong>محاضرة ${lecture.num}: ${escapeHtml(lecture.title_ar || "")}</strong>
+            <span>${countFiles(lecture.files)} ملفات مرتبطة</span>
+          </div>
+          <div class="lecture-actions">
+            <button type="button" class="secondary" title="تعديل">✎</button>
+            <button type="button" class="danger" title="حذف">×</button>
+          </div>
+        `;
+        row.querySelector(".secondary").addEventListener("click", () => editLecture(lecture.num));
+        row.querySelector(".danger").addEventListener("click", () => deleteLecture(lecture.num));
+        list.appendChild(row);
+      });
+    }
+
+    function countFiles(files = {}) {
+      return Object.values(files).filter(Boolean).length;
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/[&<>"']/g, ch => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+      }[ch]));
+    }
+
+    function editLecture(num) {
+      const selected = getSelectedSubject();
+      const lecture = selected.subject.lectures.find(item => Number(item.num) === Number(num));
+      if (!lecture) return;
+
+      editLectureNum = Number(num);
+      $("editorTitle").textContent = "تعديل محاضرة";
+      $("saveBtn").textContent = "حفظ التعديل";
+      $("lectureNum").value = lecture.num;
+      $("lectureTitle").value = lecture.title_ar || "";
+      Object.values(FILE_TYPES).forEach(type => $(type.input).value = "");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setStatus("اختر ملفات جديدة فقط لو عايز تستبدل القديم. غير كده هيفضل القديم كما هو.", "ok");
+    }
+
+    async function deleteLecture(num) {
+      const selected = getSelectedSubject();
+      if (!selected) return;
+      if (!confirm(`حذف المحاضرة رقم ${num} من البيانات؟ الملفات القديمة ستظل محفوظة على GitHub.`)) return;
+
+      selected.subject.lectures = (selected.subject.lectures || []).filter(item => Number(item.num) !== Number(num));
+      try {
+        setBusy(true);
+        setStatus("جاري حفظ الحذف على GitHub...");
+        await saveCurriculumOnly("Delete lecture " + num);
+        resetForm(true);
+        renderLectures();
+        setStatus("تم حذف المحاضرة من الموقع.", "ok");
+      } catch (err) {
+        setStatus("فشل الحذف: " + explainGithubError(err.message), "err");
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    async function saveLecture() {
+      const selected = getSelectedSubject();
+      if (!selected) {
+        setStatus("اختار أو أضف مادة الأول.", "err");
+        return;
+      }
+
+      const num = Number($("lectureNum").value);
+      const title = $("lectureTitle").value.trim();
+      if (!num || !title) {
+        setStatus("اكتب رقم المحاضرة واسمها.", "err");
+        return;
+      }
+
+      const lectures = selected.subject.lectures || [];
+      const conflict = lectures.find(item => Number(item.num) === num && Number(item.num) !== Number(editLectureNum));
+      if (conflict) {
+        setStatus("رقم المحاضرة مستخدم بالفعل في نفس المادة.", "err");
+        return;
+      }
+
+      try {
+        setBusy(true);
+        setStatus("جاري رفع الملفات المختارة...");
+
+        const oldLecture = lectures.find(item => Number(item.num) === Number(editLectureNum)) || { files: {} };
+        const files = { ...oldLecture.files };
+
+        for (const [fileType, meta] of Object.entries(FILE_TYPES)) {
+          const fileInput = $(meta.input);
+          if (!fileInput.files.length) continue;
+          const file = fileInput.files[0];
+          const cleanName = sanitizeFileName(file.name);
+          const path = `terms/term_${selected.termNumber}/${selected.subjectKey}/${meta.folder}/${cleanName}`;
+          setStatus(`جاري رفع: ${cleanName}`);
+          await putFile(path, await fileToBase64(file), `Upload ${cleanName}`);
+          files[fileType] = path;
+        }
+
+        const lecture = { num, title_ar: title, files };
+        const existingIndex = lectures.findIndex(item => Number(item.num) === Number(editLectureNum));
+        if (existingIndex >= 0) {
+          lectures.splice(existingIndex, 1, lecture);
+        } else {
+          lectures.push(lecture);
+        }
+        lectures.sort((a, b) => Number(a.num) - Number(b.num));
+        selected.subject.lectures = lectures;
+
+        setStatus("جاري تحديث قاعدة البيانات...");
+        await saveCurriculumOnly(editLectureNum ? "Update lecture " + num : "Add lecture " + num);
+
+        resetForm(true);
+        renderLectures();
+        setStatus("تم الرفع والحفظ. موقع الطلاب هيتحدث خلال دقيقة تقريبًا.", "ok");
+      } catch (err) {
+        setStatus("فشل الحفظ: " + explainGithubError(err.message), "err");
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    async function saveCurriculumOnly(message) {
+      const content = encodeBase64Unicode(makeCurriculumJs(curriculumData));
+      const result = await putFile("curriculum.js", content, message, curriculumSha);
+      curriculumSha = result.content.sha;
+    }
+
+    async function putFile(path, base64Content, message, knownSha = null) {
+      let sha = knownSha;
+      if (!sha) {
+        const existing = await githubJson(path + "?ref=" + BRANCH);
+        sha = existing?.sha || undefined;
+      }
+
+      const body = {
+        message,
+        content: base64Content,
+        branch: BRANCH
+      };
+      if (sha) body.sha = sha;
+
+      return githubJson(path, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result).split(",")[1]);
+        reader.onerror = () => reject(new Error("لم أستطع قراءة الملف."));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function explainGithubError(message) {
+      if (/Bad credentials/i.test(message)) return "التوكن غير صحيح أو انتهت صلاحيته.";
+      if (/Not Found/i.test(message)) return "التوكن لا يملك صلاحية على المستودع أو المسار غير موجود.";
+      if (/sha/i.test(message) || /conflict/i.test(message)) return "فيه تحديث أحدث على GitHub. اضغط تحميل البيانات وجرب تاني.";
+      return message;
+    }
+  </script>
+</body>
+</html>
