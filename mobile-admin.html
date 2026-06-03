@@ -156,6 +156,37 @@
       line-height: 1.7;
     }
 
+    .remember-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: .86rem;
+      font-weight: 800;
+    }
+
+    .remember-row label {
+      display: flex;
+      grid-template-columns: none;
+      align-items: center;
+      gap: 8px;
+      color: inherit;
+    }
+
+    .remember-row input {
+      width: 18px;
+      min-height: 18px;
+      accent-color: var(--blue);
+    }
+
+    .remember-row button {
+      width: auto;
+      min-height: 36px;
+      padding: 7px 10px;
+    }
+
     .notice {
       border: 1px solid rgba(245,158,11,.35);
       background: rgba(245,158,11,.12);
@@ -263,6 +294,13 @@
         </label>
         <button id="loadBtn" type="button">تحميل البيانات</button>
       </div>
+      <div class="remember-row">
+        <label>
+          <input id="rememberToken" type="checkbox">
+          احفظه على الجهاز ده وافتح تلقائيًا
+        </label>
+        <button class="secondary" id="clearTokenBtn" type="button">مسح المحفوظ</button>
+      </div>
       <p class="hint">
         المطلوب في التوكن: Repository access للمستودع ده فقط، و Contents = Read and write.
       </p>
@@ -343,6 +381,7 @@
     const REPO_NAME = "Nursing_Portal";
     const BRANCH = "main";
     const API_ROOT = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents`;
+    const TOKEN_STORAGE_KEY = "nursingPortalGithubToken";
     const FILE_TYPES = {
       original_ppt: { input: "fileOriginal", folder: "original" },
       translated_ppt: { input: "fileTranslated", folder: "guides" },
@@ -359,6 +398,7 @@
     const $ = (id) => document.getElementById(id);
 
     $("loadBtn").addEventListener("click", loadCurriculum);
+    $("clearTokenBtn").addEventListener("click", clearSavedToken);
     $("termSelect").addEventListener("change", () => {
       fillSubjects();
       resetForm(false);
@@ -371,6 +411,8 @@
     $("addSubjectBtn").addEventListener("click", addSubject);
     $("saveBtn").addEventListener("click", saveLecture);
     $("resetBtn").addEventListener("click", () => resetForm(true));
+
+    initSavedToken();
 
     function setStatus(message, type = "") {
       const box = $("statusBox");
@@ -453,6 +495,11 @@
 
       try {
         setBusy(true);
+        if ($("rememberToken").checked) {
+          localStorage.setItem(TOKEN_STORAGE_KEY, token);
+        } else {
+          localStorage.removeItem(TOKEN_STORAGE_KEY);
+        }
         setStatus("جاري تحميل بيانات المحاضرات من GitHub...");
         const file = await githubJson("curriculum.js?ref=" + BRANCH);
         if (!file?.content) throw new Error("لم أستطع قراءة curriculum.js");
@@ -468,6 +515,28 @@
       } finally {
         setBusy(false);
       }
+    }
+
+    function initSavedToken() {
+      const savedToken = localStorage.getItem(TOKEN_STORAGE_KEY);
+      if (!savedToken) return;
+
+      $("tokenInput").value = savedToken;
+      $("rememberToken").checked = true;
+      setStatus("لقيت تسجيل محفوظ على الجهاز. جاري الدخول...");
+      loadCurriculum();
+    }
+
+    function clearSavedToken() {
+      localStorage.removeItem(TOKEN_STORAGE_KEY);
+      $("tokenInput").value = "";
+      $("rememberToken").checked = false;
+      $("editorCard").style.display = "none";
+      $("lecturesCard").style.display = "none";
+      token = "";
+      curriculumData = null;
+      curriculumSha = "";
+      setStatus("تم مسح التوكن المحفوظ من المتصفح.", "ok");
     }
 
     function fillTerms() {
