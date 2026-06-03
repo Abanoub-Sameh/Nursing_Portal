@@ -4,7 +4,6 @@
   var DONE_KEY = 'nurLib_done';
   var TERM_KEY = 'nurLib_term';
   var SUB_KEY = 'nurLib_sub';
-  var SEARCH_KEY = 'nurLib_search';
 
   var terms = curriculumData.terms;
   var allTermKeys = Object.keys(terms);
@@ -25,7 +24,6 @@
 
   var activeTerm = localStorage.getItem(TERM_KEY) || filledTermKeys[0] || allTermKeys[0];
   var activeSub = localStorage.getItem(SUB_KEY) || null;
-  var searchText = localStorage.getItem(SEARCH_KEY) || '';
   var allOpen = false;
   var doneMap = loadDone();
 
@@ -36,16 +34,9 @@
   var ctrlProg = document.getElementById('ctrlProgress');
   var lecBox = document.getElementById('lectures');
   var emptyBox = document.getElementById('emptyBox');
-  var searchInput = document.getElementById('searchInput');
   var subjectTitle = document.getElementById('subjectTitle');
   var activeLabel = document.getElementById('activeLabel');
   var activeTitle = document.getElementById('activeTitle');
-  var progressRing = document.getElementById('progressRing');
-  var progressPercent = document.getElementById('progressPercent');
-  var statLectures = document.getElementById('statLectures');
-  var statFiles = document.getElementById('statFiles');
-  var statDone = document.getElementById('statDone');
-  var resultCount = document.getElementById('resultCount');
 
   var FILE_SLOTS = [
     {
@@ -55,31 +46,25 @@
     },
     {
       key: 'translated_ppt',
-      label: 'الملخص / المترجم',
+      label: 'الباور المترجم',
       icon: iconNotes()
     },
     {
       key: 'my_quiz',
-      label: 'بنك الأسئلة',
+      label: 'بنك أسئلة (اجتهاد شخصي)',
       icon: iconTarget()
     },
     {
       key: 'doctor_quiz',
-      label: 'أسئلة الدكتورة',
+      label: 'بنك أسئلة الدكتورة',
       icon: iconStethoscope()
     }
   ];
 
   function init() {
-    searchInput.value = searchText;
     renderTermBar();
     loadTerm(activeTerm);
     btnToggle.addEventListener('click', toggleAll);
-    searchInput.addEventListener('input', function () {
-      searchText = searchInput.value.trim();
-      localStorage.setItem(SEARCH_KEY, searchText);
-      renderLectures(activeTerm, activeSub);
-    });
   }
 
   function renderTermBar() {
@@ -149,7 +134,7 @@
       lecBox.style.display = 'none';
       emptyBox.style.display = '';
       subjectTitle.textContent = 'لا توجد مواد';
-      updateHero(term.name, 'لا يوجد محتوى بعد', 0, 0, 0, 0);
+      updateHero(term.name, 'انت مستعجل علي ايه 🙂');
       return;
     }
 
@@ -192,11 +177,6 @@
     var term = terms[termKey];
     var subject = term.subjects[subjectKey];
     var lectures = subject.lectures || [];
-    var query = normalize(searchText);
-    var visibleLectures = lectures.filter(function (lecture) {
-      if (!query) return true;
-      return normalize(lecture.title_ar).indexOf(query) > -1 || fileLabelsText(lecture).indexOf(query) > -1;
-    });
 
     lecBox.innerHTML = '';
     allOpen = false;
@@ -205,29 +185,25 @@
 
     if (lectures.length === 0) {
       ctrlBar.style.display = 'none';
-      lecBox.innerHTML = emptyMarkup('📚', 'لسه مفيش محاضرات هنا', 'هيتضاف المحتوى أول بأول');
-      updateHero(term.name, subject.name, 0, 0, 0, 0);
+      lecBox.innerHTML = emptyMarkup('🙂', 'انت مستعجل علي ايه 🙂', '');
+      updateHero(term.name, subject.name);
       return;
     }
 
     ctrlBar.style.display = '';
 
-    if (visibleLectures.length === 0) {
-      lecBox.innerHTML = emptyMarkup('⌕', 'مفيش نتيجة مطابقة', 'جرّب كلمة أبسط أو امسح البحث');
-    } else {
-      visibleLectures.forEach(function (lecture) {
-        lecBox.appendChild(makeLectureCard(termKey, subjectKey, lecture));
-      });
-    }
+    lectures.forEach(function (lecture) {
+      lecBox.appendChild(makeLectureCard(termKey, subjectKey, lecture));
+    });
 
-    updateStats(termKey, subjectKey, lectures, visibleLectures.length);
+    updateStats(termKey, subjectKey, lectures);
   }
 
   function makeLectureCard(termKey, subjectKey, lecture) {
     var doneKey = termKey + '_' + subjectKey + '_' + lecture.num;
     var isDone = !!doneMap[doneKey];
     var files = lecture.files || {};
-    var available = FILE_SLOTS.filter(function (slot) { return files[slot.key]; }).length;
+    var available = countFiles(files);
 
     var card = document.createElement('article');
     card.className = 'lec-card' + (isDone ? ' done' : '');
@@ -248,7 +224,7 @@
 
     var meta = document.createElement('div');
     meta.className = 'lec-meta';
-    meta.appendChild(document.createTextNode(available + ' من 4 ملفات'));
+    meta.appendChild(document.createTextNode(available + ' ملفات'));
     meta.appendChild(makeFileDots(files));
 
     main.appendChild(title);
@@ -272,7 +248,7 @@
     var inner = document.createElement('div');
     inner.className = 'lec-body-inner';
     FILE_SLOTS.forEach(function (slot) {
-      inner.appendChild(makeFileRow(slot, files[slot.key] || ''));
+      inner.appendChild(makeFileRow(slot, normalizeFiles(files[slot.key])));
     });
     body.appendChild(inner);
 
@@ -314,7 +290,7 @@
     return label;
   }
 
-  function makeFileRow(slot, path) {
+  function makeFileRow(slot, paths) {
     var row = document.createElement('div');
     row.className = 'f-row';
 
@@ -334,25 +310,40 @@
     var buttons = document.createElement('div');
     buttons.className = 'f-btns';
 
-    if (path) {
-      var url = encodeURI(path);
-      var openBtn = document.createElement('a');
-      openBtn.className = 'f-btn f-btn--open';
-      openBtn.href = url;
-      openBtn.target = '_blank';
-      openBtn.rel = 'noopener';
-      openBtn.innerHTML = iconOpen() + '<span>فتح</span>';
-      openBtn.addEventListener('click', stop);
+    if (paths.length) {
+      paths.forEach(function (path, index) {
+        var item = document.createElement('div');
+        item.className = 'f-file';
 
-      var downloadBtn = document.createElement('a');
-      downloadBtn.className = 'f-btn f-btn--dl';
-      downloadBtn.href = url;
-      downloadBtn.download = '';
-      downloadBtn.innerHTML = iconDownload() + '<span>تحميل</span>';
-      downloadBtn.addEventListener('click', stop);
+        var name = document.createElement('span');
+        name.className = 'f-file-name';
+        name.textContent = paths.length > 1 ? ('ملف ' + (index + 1)) : 'الملف';
 
-      buttons.appendChild(openBtn);
-      buttons.appendChild(downloadBtn);
+        var actions = document.createElement('div');
+        actions.className = 'f-btns';
+
+        var url = encodeURI(path);
+        var openBtn = document.createElement('a');
+        openBtn.className = 'f-btn f-btn--open';
+        openBtn.href = url;
+        openBtn.target = '_blank';
+        openBtn.rel = 'noopener';
+        openBtn.innerHTML = iconOpen() + '<span>فتح</span>';
+        openBtn.addEventListener('click', stop);
+
+        var downloadBtn = document.createElement('a');
+        downloadBtn.className = 'f-btn f-btn--dl';
+        downloadBtn.href = url;
+        downloadBtn.download = '';
+        downloadBtn.innerHTML = iconDownload() + '<span>تحميل</span>';
+        downloadBtn.addEventListener('click', stop);
+
+        actions.appendChild(openBtn);
+        actions.appendChild(downloadBtn);
+        item.appendChild(name);
+        item.appendChild(actions);
+        buttons.appendChild(item);
+      });
     } else {
       var na = document.createElement('div');
       na.className = 'f-na';
@@ -370,7 +361,7 @@
     dots.className = 'file-dots';
     FILE_SLOTS.forEach(function (slot) {
       var dot = document.createElement('span');
-      dot.className = 'file-dot' + (files[slot.key] ? ' on' : '');
+      dot.className = 'file-dot' + (normalizeFiles(files[slot.key]).length ? ' on' : '');
       dots.appendChild(dot);
     });
     return dots;
@@ -419,10 +410,9 @@
     btnToggle.textContent = allOpen ? 'إغلاق الكل' : 'عرض الكل';
   }
 
-  function updateStats(termKey, subjectKey, lectures, visibleCount) {
+  function updateStats(termKey, subjectKey, lectures) {
     var subject = terms[termKey].subjects[subjectKey];
     lectures = lectures || subject.lectures || [];
-    visibleCount = typeof visibleCount === 'number' ? visibleCount : lectures.length;
 
     var done = 0;
     var files = 0;
@@ -431,45 +421,30 @@
       files += countFiles(lecture.files || {});
     });
 
-    var percent = lectures.length ? Math.round((done / lectures.length) * 100) : 0;
-    statLectures.textContent = lectures.length;
-    statFiles.textContent = files;
-    statDone.textContent = done;
     ctrlProg.innerHTML = '<b>' + done + '</b> / ' + lectures.length + ' مكتملة';
-    resultCount.textContent = visibleCount === lectures.length ? '' : visibleCount + ' نتيجة';
-    updateHero(terms[termKey].name, subject.name, done, lectures.length, files, percent);
+    updateHero(terms[termKey].name, subject.name);
   }
 
-  function updateHero(termName, subjectName, done, total, files, percent) {
+  function updateHero(termName, subjectName) {
     activeLabel.textContent = shortTermName(termName);
     activeTitle.textContent = subjectName || 'اختار المادة وابدأ';
-    progressPercent.textContent = percent + '%';
-    var circumference = 188.5;
-    progressRing.style.strokeDashoffset = circumference - (circumference * percent / 100);
-    progressRing.style.stroke = percent === 100 && total > 0 ? 'var(--green-2)' : 'var(--blue)';
   }
 
   function countFiles(files) {
     return FILE_SLOTS.reduce(function (count, slot) {
-      return count + (files[slot.key] ? 1 : 0);
+      return count + normalizeFiles(files[slot.key]).length;
     }, 0);
-  }
-
-  function fileLabelsText(lecture) {
-    var files = lecture.files || {};
-    return normalize(FILE_SLOTS.filter(function (slot) {
-      return files[slot.key];
-    }).map(function (slot) {
-      return slot.label;
-    }).join(' '));
-  }
-
-  function normalize(value) {
-    return String(value || '').toLowerCase().replace(/\s+/g, ' ').trim();
   }
 
   function shortTermName(name) {
     return String(name || '').replace(/\s*\(.*?\)\s*/g, '').trim();
+  }
+
+  function normalizeFiles(value) {
+    if (Array.isArray(value)) {
+      return value.filter(Boolean);
+    }
+    return value ? [value] : [];
   }
 
   function firstSubjectWithLectures(term) {
@@ -483,7 +458,7 @@
   }
 
   function emptyMarkup(icon, title, sub) {
-    return '<div class="empty-box"><div class="empty-icon">' + icon + '</div><p class="empty-title">' + title + '</p><p class="empty-sub">' + sub + '</p></div>';
+    return '<div class="empty-box"><div class="empty-icon">' + icon + '</div><p class="empty-title">' + title + '</p>' + (sub ? '<p class="empty-sub">' + sub + '</p>' : '') + '</div>';
   }
 
   function loadDone() {

@@ -346,19 +346,19 @@
       <div class="files">
         <label class="file-box">
           الباور الأصلي للدكتورة
-          <input id="fileOriginal" type="file" accept=".ppt,.pptx,.pdf">
+          <input id="fileOriginal" type="file" accept=".ppt,.pptx,.pdf" multiple>
         </label>
         <label class="file-box">
-          الباور المترجم أو الملخص
-          <input id="fileTranslated" type="file" accept=".ppt,.pptx,.pdf,.html">
+          الباور المترجم
+          <input id="fileTranslated" type="file" accept=".ppt,.pptx,.pdf,.html" multiple>
         </label>
         <label class="file-box">
-          بنك الأسئلة - شغل الأدمن
-          <input id="fileMyQuiz" type="file" accept=".html,.pdf">
+          بنك أسئلة (اجتهاد شخصي)
+          <input id="fileMyQuiz" type="file" accept=".html,.pdf" multiple>
         </label>
         <label class="file-box">
           بنك أسئلة الدكتورة
-          <input id="fileDoctorQuiz" type="file" accept=".html,.pdf">
+          <input id="fileDoctorQuiz" type="file" accept=".html,.pdf" multiple>
         </label>
       </div>
 
@@ -665,7 +665,12 @@
     }
 
     function countFiles(files = {}) {
-      return Object.values(files).filter(Boolean).length;
+      return Object.values(files).reduce((total, value) => total + normalizeFiles(value).length, 0);
+    }
+
+    function normalizeFiles(value) {
+      if (Array.isArray(value)) return value.filter(Boolean);
+      return value ? [value] : [];
     }
 
     function escapeHtml(text) {
@@ -686,7 +691,7 @@
       $("lectureTitle").value = lecture.title_ar || "";
       Object.values(FILE_TYPES).forEach(type => $(type.input).value = "");
       window.scrollTo({ top: 0, behavior: "smooth" });
-      setStatus("اختر ملفات جديدة فقط لو عايز تستبدل القديم. غير كده هيفضل القديم كما هو.", "ok");
+      setStatus("اختر ملفات جديدة لإضافتها بجانب القديم. لو مش اخترت حاجة، القديم هيفضل كما هو.", "ok");
     }
 
     async function deleteLecture(num) {
@@ -740,12 +745,15 @@
         for (const [fileType, meta] of Object.entries(FILE_TYPES)) {
           const fileInput = $(meta.input);
           if (!fileInput.files.length) continue;
-          const file = fileInput.files[0];
-          const cleanName = sanitizeFileName(file.name);
-          const path = `terms/term_${selected.termNumber}/${selected.subjectKey}/${meta.folder}/${cleanName}`;
-          setStatus(`جاري رفع: ${cleanName}`);
-          await putFile(path, await fileToBase64(file), `Upload ${cleanName}`);
-          files[fileType] = path;
+          const paths = normalizeFiles(files[fileType]);
+          for (const file of Array.from(fileInput.files)) {
+            const cleanName = sanitizeFileName(file.name);
+            const path = `terms/term_${selected.termNumber}/${selected.subjectKey}/${meta.folder}/${cleanName}`;
+            setStatus(`جاري رفع: ${cleanName}`);
+            await putFile(path, await fileToBase64(file), `Upload ${cleanName}`);
+            if (!paths.includes(path)) paths.push(path);
+          }
+          files[fileType] = paths;
         }
 
         const lecture = { num, title_ar: title, files };

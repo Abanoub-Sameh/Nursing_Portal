@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="theme-color" content="#0a0f1c">
   <title>مكتبة تمريض</title>
-  <meta name="description" content="مكتبة تمريض — كل المحاضرات والملخصات وبنوك الأسئلة في مكان واحد">
+  <meta name="description" content="مكتبة تمريض — محاضرات وترجمة وبنوك أسئلة في مكان واحد">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/portal.css?v=20260603-ui2">
+  <link rel="stylesheet" href="assets/css/portal.css?v=20260603-ui3">
 </head>
 <body>
 
@@ -19,8 +19,8 @@
         <span>+</span>
       </div>
       <div>
-        <h1 class="app-name">مكتبة تمريض</h1>
-        <p class="app-desc">محاضرات، ملخصات، وبنوك أسئلة في مكان واحد</p>
+        <h1 class="app-name">🩺 مكتبة تمريض</h1>
+        <p class="app-desc">📚 محاضرات، ترجمه، وبنوك أسئلة في مكان واحد</p>
       </div>
     </div>
 
@@ -29,34 +29,10 @@
         <p class="hero-label" id="activeLabel">جاهز للمذاكرة</p>
         <h2 id="activeTitle">اختار المادة وابدأ</h2>
       </div>
-      <div class="hero-progress" aria-label="نسبة الإنجاز">
-        <svg viewBox="0 0 72 72" role="img">
-          <circle class="ring-bg" cx="36" cy="36" r="30"></circle>
-          <circle class="ring-fg" id="progressRing" cx="36" cy="36" r="30"></circle>
-        </svg>
-        <strong id="progressPercent">0%</strong>
+      <div class="hero-emoji" aria-hidden="true">
+        <span>✨</span>
       </div>
     </div>
-
-    <div class="quick-stats" aria-label="ملخص المكتبة">
-      <div>
-        <strong id="statLectures">0</strong>
-        <span>محاضرات</span>
-      </div>
-      <div>
-        <strong id="statFiles">0</strong>
-        <span>ملفات</span>
-      </div>
-      <div>
-        <strong id="statDone">0</strong>
-        <span>مكتملة</span>
-      </div>
-    </div>
-
-    <label class="search-box">
-      <span aria-hidden="true">⌕</span>
-      <input id="searchInput" type="search" placeholder="ابحث باسم المحاضرة أو نوع الملف">
-    </label>
   </header>
 
   <section class="library-shell">
@@ -74,7 +50,6 @@
 
     <div class="ctrl-bar" id="ctrlBar" style="display:none;">
       <span class="ctrl-progress" id="ctrlProgress"></span>
-      <span class="result-count" id="resultCount"></span>
     </div>
   </section>
 
@@ -83,15 +58,14 @@
 
   <!-- Empty state -->
   <div class="empty-box" id="emptyBox" style="display:none;">
-    <div class="empty-icon">📭</div>
-    <p class="empty-title">لسه مفيش محتوى هنا</p>
-    <p class="empty-sub">هيتضاف قريب إن شاء الله</p>
+    <div class="empty-icon">🙂</div>
+    <p class="empty-title">انت مستعجل علي ايه 🙂</p>
   </div>
 
   <!-- Footer -->
-  <footer class="app-footer">مكتبة تمريض &copy; 2026</footer>
+  <footer class="app-footer">by abanoub sameh ♥</footer>
 
-  <script src="curriculum.js?v=20260603-ui2"></script>
-  <script src="assets/js/portal.js?v=20260603-ui2"></script>
+  <script src="curriculum.js?v=20260603-ui3"></script>
+  <script src="assets/js/portal.js?v=20260603-ui3"></script>
 </body>
 </html>
