@@ -107,6 +107,29 @@ const curriculumData = {
               }
             }
           ]
+        },
+        "biochemistry_and_nutrition": {
+          "name": "biochemistry and nutrition",
+          "lectures": []
+        },
+        "english": {
+          "name": "English",
+          "lectures": []
+        },
+        "biostatistics": {
+          "name": "Biostatistics",
+          "lectures": [
+            {
+              "num": 1,
+              "title_ar": "المحاضره الثانية",
+              "files": {
+                "original_ppt": "terms/term_1/biostatistics/original/Data collection1.pdf",
+                "translated_ppt": "",
+                "my_quiz": "",
+                "doctor_quiz": ""
+              }
+            }
+          ]
         }
       }
     },
