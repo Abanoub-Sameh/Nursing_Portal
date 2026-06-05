@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة الأولى: أساسيات المصطلحات الطبية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Inter:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #312e81;
+            --accent: #d97706;
+            --ink: #0f172a;
+            --muted: #475569;
+            --bg: #f8fafc;
+            --soft: #f5f3ff;
+            --accent-soft: #fef3c7;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Tajawal', 'Segoe UI', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--muted);
+            line-height: 1.65;
+        }
+        button {
+            font-family: inherit;
+        }
+        .app-header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: #fff;
+            padding: 14px 26px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, .16);
+        }
+        .app-title h1 {
+            font: 800 21px/1.2 Inter, sans-serif;
+        }
+        .app-title h2 {
+            margin-top: 3px;
+            font-size: 13px;
+            color: #e0e7ff;
+            font-weight: 700;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        .btn {
+            border: 1px solid rgba(255, 255, 255, .25);
+            background: rgba(255, 255, 255, .12);
+            color: #fff;
+            padding: 8px 13px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: .18s ease;
+        }
+        .btn:hover {
+            background: rgba(255, 255, 255, .22);
+            transform: translateY(-1px);
+        }
+        .btn-accent {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        .btn:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .layout {
+            max-width: 1380px;
+            margin: 20px auto;
+            padding: 0 18px;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+        }
+        .sidebar {
+            width: 300px;
+            flex: 0 0 300px;
+            position: sticky;
+            top: 88px;
+            max-height: calc(100vh - 105px);
+            overflow: auto;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 14px;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, .06);
+        }
+        .sidebar-title {
+            color: var(--ink);
+            font-weight: 800;
+            font-size: 15px;
+            margin-bottom: 12px;
+            padding-bottom: 7px;
+            border-bottom: 3px solid var(--primary);
+        }
+        .chapter {
+            margin-bottom: 12px;
+        }
+        .chapter-name {
+            font-weight: 800;
+            color: var(--primary-dark);
+            background: var(--soft);
+            border: 1px solid #e0e7ff;
+            padding: 7px 9px;
+            border-radius: 6px;
+            font-size: 12.5px;
+        }
+        .slide-links {
+            list-style: none;
+            padding: 7px 5px 0 0;
+            display: grid;
+            gap: 3px;
+        }
+        .slide-link {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            align-items: center;
+            color: #334155;
+            text-decoration: none;
+            border-radius: 5px;
+            padding: 6px 7px;
+            font-size: 11.5px;
+            cursor: pointer;
+        }
+        .slide-link:hover, .slide-link.active {
+            background: var(--primary);
+            color: #fff;
+        }
+        .slide-no {
+            font-family: Inter, sans-serif;
+            font-weight: 800;
+            font-size: 10px;
+            background: rgba(15, 23, 42, .08);
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+        .content {
+            flex: 1;
+            min-width: 0;
+            display: grid;
+            gap: 18px;
+        }
+        .slide-card, .slide-block {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            box-shadow: 0 5px 18px rgba(15, 23, 42, .07);
+            overflow: hidden;
+        }
+        .slide-inner {
+            padding: 18px;
+            display: grid;
+            gap: 15px;
+        }
+        .s-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 12px;
+        }
+        .s-title-ar {
+            color: var(--ink);
+            font-size: 22px;
+            line-height: 1.35;
+            font-weight: 800;
+        }
+        .s-title-en {
+            direction: ltr;
+            text-align: left;
+            color: var(--primary);
+            font-family: Inter, sans-serif;
+            font-weight: 800;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        .s-badge {
+            direction: ltr;
+            font: 800 12px/1 Inter, sans-serif;
+            color: #fff;
+            background: var(--primary);
+            padding: 8px 10px;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+        .s-image-wrap {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 6px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .s-image-wrap img {
+            width: 100%;
+            max-height: 560px;
+            object-fit: contain;
+            display: block;
+        }
+        .section-title {
+            color: var(--primary-dark);
+            font-weight: 800;
+            font-size: 14px;
+            border-right: 4px solid var(--primary);
+            padding-right: 8px;
+            margin-bottom: 8px;
+        }
+        .sentences {
+            display: grid;
+            gap: 8px;
+        }
+        .pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .pair .ar {
+            padding: 9px 10px;
+            color: #0f172a;
+            font-weight: 700;
+            background: #f8fafc;
+        }
+        .pair .en {
+            direction: ltr;
+            text-align: left;
+            padding: 9px 10px;
+            color: #1e293b;
+            font-family: Inter, Arial, sans-serif;
+            font-size: 13px;
+            border-right: 1px solid #e2e8f0;
+        }
+        .explain {
+            background: linear-gradient(180deg, #fff7ed, #fff);
+            border: 1px solid #fed7aa;
+            border-radius: 8px;
+            padding: 16px 18px;
+        }
+        .explain .section-title {
+            color: #9a3412;
+            border-color: var(--accent);
+        }
+        .explain-text {
+            color: #334155;
+            font-size: 17px;
+            line-height: 1.75;
+            font-weight: 500;
+        }
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 7px;
+        }
+        .term {
+            border: 1px solid #dbeafe;
+            background: #f8fafc;
+            border-radius: 6px;
+            padding: 8px 9px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .term-en {
+            direction: ltr;
+            text-align: left;
+            font-family: Inter, Arial, sans-serif;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 12.5px;
+        }
+        .term-ar {
+            color: #0f172a;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .nav-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 18px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+        }
+        .nav-row .btn {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        .counter {
+            color: #0f172a;
+            font-weight: 800;
+        }
+        #continuousView {
+            display: none;
+            gap: 18px;
+        }
+        #printOnlyContainer {
+            display: none;
+        }
+        @media(max-width: 980px) {
+            .app-header {
+                position: static;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+            .layout {
+                display: block;
+            }
+            .sidebar {
+                position: static;
+                width: auto;
+                max-height: none;
+                margin-bottom: 16px;
+            }
+            .pair {
+                grid-template-columns: 1fr;
+            }
+            .pair .en {
+                border-right: 0;
+                border-top: 1px solid #e2e8f0;
+            }
+            .glossary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @page {
+            size: A4;
+            margin: 10mm;
+        }
+        @media print {
+            body {
+                background: #fff;
+                color: #000;
+                font-size: 11.5px;
+            }
+            .app-header, .layout {
+                display: none!important;
+            }
+            #printOnlyContainer {
+                display: block!important;
+            }
+            .cover-page {
+                height: 277mm;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                color: #fff!important;
+                background: linear-gradient(135deg, var(--primary-dark), var(--primary), #4c1d95)!important;
+                padding: 28mm 18mm;
+                page-break-after: always;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .cover-page h1 {
+                font: 800 34px/1.25 Inter, sans-serif;
+                color: #fff!important;
+                margin-bottom: 8px;
+            }
+            .cover-page h2 {
+                font-size: 25px;
+                color: #fef3c7!important;
+                margin-bottom: 24px;
+            }
+            .cover-page p {
+                max-width: 165mm;
+                font-size: 14px;
+                line-height: 1.8;
+                color: #e0e7ff!important;
+            }
+            .print-slide {
+                page-break-inside: auto;
+                break-inside: auto;
+                margin-bottom: 4mm;
+                padding-bottom: 3mm;
+                border-bottom: 1px dashed #cbd5e1;
+            }
+            .slide-inner {
+                padding: 0;
+                gap: 2.5mm;
+            }
+            .slide-card, .slide-block {
+                box-shadow: none;
+                border: 0;
+                border-radius: 0;
+            }
+            .s-header {
+                padding-bottom: 1.5mm;
+            }
+            .s-title-ar {
+                font-size: 15px;
+            }
+            .s-title-en {
+                font-size: 10.5px;
+            }
+            .s-badge {
+                background: var(--primary)!important;
+                color: #fff!important;
+                font-size: 9px;
+                padding: 5px 7px;
+            }
+            .s-image-wrap {
+                padding: 2mm;
+                border-color: #d6d3d1;
+                background: #fff!important;
+            }
+            .s-image-wrap img {
+                max-height: 58mm;
+                object-fit: contain;
+            }
+            .section-title {
+                font-size: 10.5px;
+                margin-bottom: 1.5mm;
+            }
+            .pair {
+                gap: 0;
+                grid-template-columns: 1fr 1fr;
+                border-color: #cbd5e1;
+                break-inside: avoid;
+            }
+            .pair .ar, .pair .en {
+                padding: 1.2mm 1.5mm;
+                font-size: 9.5px;
+            }
+            .explain {
+                padding: 1.8mm;
+                background: #fff7ed!important;
+                border-color: #fdba74;
+            }
+            .explain-text {
+                font-size: 11.8px;
+                line-height: 1.6;
+            }
+            .glossary-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.2mm;
+            }
+            .term {
+                padding: 1mm 1.2mm;
+                gap: 1mm;
+                border-color: #cbd5e1;
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            .term-en, .term-ar {
+                font-size: 8.8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="app-title">
+            <h1>Medical Terminology - Lecture 1</h1>
+            <h2>المحاضرة الأولى: أساسيات المصطلحات الطبية (البادئات والجذور واللاحقات)</h2>
+        </div>
+        <div class="controls">
+            <button class="btn btn-accent" onclick="window.print()">طباعة A4</button>
+            <button class="btn" id="toggleBtn" onclick="toggleView()">عرض مستمر</button>
+        </div>
+    </header>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-title">فصول المحاضرة</div>
+            <div id="chaptersList"></div>
+        </aside>
+        <main class="content">
+            <section id="singleView" class="slide-card"></section>
+            <section id="continuousView"></section>
+        </main>
+    </div>
+    <div id="printOnlyContainer">
+        <section class="cover-page">
+            <h1>Medical Terminology - Lecture 1</h1>
+            <h2>المحاضرة الأولى: أساسيات المصطلحات الطبية (البادئات والجذور واللاحقات)</h2>
+            <p>نسخة دراسة وطباعة A4 تحتوي على صورة كل شريحة، ترجمة عربية دقيقة لكل جملة، شرح مبسط يربط الأفكار، وجدول مصطلحات إنجليزي/عربي مناسب للطلاب.</p>
+        </section>
+        <div id="printSlides"></div>
+    </div>
+    <script>
+        const slidesData = [
+    {
+        "slide_num": 1,
+        "title_en": "Medical Terminology Fundamentals",
+        "title_ar": "أساسيات المصطلحات الطبية",
+        "image": "imges/introduction_L1/introduction_Page1.jpg",
+        "sentences": [
+            {
+                "en": "THE FUNDAMENTALS OF MEDICAL TERMINOLOGY",
+                "ar": "أساسيات المصطلحات الطبية."
+            },
+            {
+                "en": "By Dr/Aisha Abdelnaser",
+                "ar": "بواسطة الدكتورة/ عائشة عبد الناصر."
+            },
+            {
+                "en": "Lecture of Obstetrics & Gynecology",
+                "ar": "مدرس التوليد وأمراض النساء."
+            }
+        ],
+        "explanation": "الشريحة الافتتاحية للمحاضرة الأولى في مادة المصطلحات الطبية. توضح اسم المادة واسم الدكتورة المحاضرة وتخصصها في طب النساء والتوليد. تُمهد لدراسة المكونات الأساسية للكلمات الطبية.",
+        "glossary": [
+            {
+                "en": "Medical Terminology",
+                "ar": "المصطلحات الطبية"
+            },
+            {
+                "en": "Fundamentals",
+                "ar": "أساسيات"
+            },
+            {
+                "en": "Lecture",
+                "ar": "محاضرة / مدرس"
+            },
+            {
+                "en": "Obstetrics",
+                "ar": "علم التوليد"
+            },
+            {
+                "en": "Gynecology",
+                "ar": "طب أمراض النساء"
+            }
+        ]
+    },
+    {
+        "slide_num": 2,
+        "title_en": "Word Parts: Prefixes",
+        "title_ar": "أجزاء الكلمة: البادئات",
+        "image": "imges/introduction_L1/introduction_Page2.jpg",
+        "sentences": [
+            {
+                "en": "Each term contains one, some or all of the following parts.",
+                "ar": "يحتوي كل مصطلح على جزء واحد، أو بعض، أو كل الأجزاء التالية."
+            },
+            {
+                "en": "Word parts: is the word beginning of the term, usually precedes the root and modify the meaning of the root.",
+                "ar": "أجزاء الكلمة (البادئة/Prefix): هي بداية الكلمة للمصطلح، وعادةً تسبق الجذر وتُعدل معنى الجذر."
+            },
+            {
+                "en": "Prefix: Ante, Pre. Term: Antepartum (before labor), prepartum.",
+                "ar": "البادئة: أنتي (Ante)، بري (Pre). المصطلح: أنتيبارتوم (قبل الولادة)، بريبارتوم."
+            }
+        ],
+        "explanation": "تشرح الشريحة أن المصطلح الطبي يتكون من عدة أجزاء، وتبدأ بشرح البادئة (Prefix) وهي التي تأتي في أول الكلمة لتعديل المعنى. تعطي مثالاً للبادئة Ante و Pre واللتان تعنيان (قبل) وعند دمجهما مع partum (الولادة) تعني الفترة قبل الولادة.",
+        "glossary": [
+            {
+                "en": "Word Parts",
+                "ar": "أجزاء الكلمة"
+            },
+            {
+                "en": "Prefix",
+                "ar": "بادئة (تأتي أول الكلمة)"
+            },
+            {
+                "en": "Precedes",
+                "ar": "يسبق"
+            },
+            {
+                "en": "Modify",
+                "ar": "يُعدل / يغير"
+            },
+            {
+                "en": "Antepartum",
+                "ar": "قبل الولادة"
+            },
+            {
+                "en": "Prepartum",
+                "ar": "قبل الولادة"
+            },
+            {
+                "en": "Labor",
+                "ar": "مخاض / ولادة"
+            }
+        ]
+    },
+    {
+        "slide_num": 3,
+        "title_en": "Word Parts: Roots and Suffixes",
+        "title_ar": "أجزاء الكلمة: الجذور واللاحقات",
+        "image": "imges/introduction_L1/introduction_Page3.jpg",
+        "sentences": [
+            {
+                "en": "Root or stem: is a basic medical word, usually body part or organ & derived from Latin or Greek words.",
+                "ar": "الجذر أو الأصل (Root): هو الكلمة الطبية الأساسية، وعادةً ما تكون جزءاً من الجسم أو عضواً، وتُشتق من كلمات لاتينية أو يونانية."
+            },
+            {
+                "en": "Suffix: is the word ending of the term, usually follow the word root & modify the meaning of the root.",
+                "ar": "اللاحقة (Suffix): هي نهاية الكلمة للمصطلح، وتأتي عادة بعد جذر الكلمة وتُعدل معنى الجذر."
+            }
+        ],
+        "explanation": "تستكمل الشريحة شرح مكونات المصطلح الطبي: الجذر (Root) وهو أصل الكلمة ومعظمها لاتيني أو يوناني يدل على عضو في الجسم؛ واللاحقة (Suffix) وتأتي في نهاية الكلمة لتحدد الحالة أو الإجراء الطبي.",
+        "glossary": [
+            {
+                "en": "Root",
+                "ar": "جذر الكلمة"
+            },
+            {
+                "en": "Stem",
+                "ar": "جذع / أصل الكلمة"
+            },
+            {
+                "en": "Organ",
+                "ar": "عضو"
+            },
+            {
+                "en": "Derived",
+                "ar": "مُشتق"
+            },
+            {
+                "en": "Suffix",
+                "ar": "لاحقة (تأتي في نهاية الكلمة)"
+            },
+            {
+                "en": "Follow",
+                "ar": "يتبع / يأتي بعد"
+            }
+        ]
+    },
+    {
+        "slide_num": 4,
+        "title_en": "Examples of Word Components",
+        "title_ar": "أمثلة على مكونات الكلمات",
+        "image": "imges/introduction_L1/introduction_Page4.jpg",
+        "sentences": [
+            {
+                "en": "erythr + cyte = Erythrocyte (red cell).",
+                "ar": "إريثر (أحمر) + سايت (خلية) = إريثروسايت (خلية حمراء)."
+            },
+            {
+                "en": "gaster + itis = Gastritis (inflammation of stomach).",
+                "ar": "جاستر (معدة) + آيتس (التهاب) = جاسترايتس (التهاب المعدة)."
+            }
+        ],
+        "explanation": "أمثلة حية على كيفية تركيب المصطلح الطبي بدمج الجذر واللاحقة. في المثال الأول: erythr (جذر يعني أحمر) مع cyte (لاحقة تعني خلية). في المثال الثاني: gaster (جذر يعني معدة) مع itis (لاحقة تعني التهاب).",
+        "glossary": [
+            {
+                "en": "Erythrocyte",
+                "ar": "خلية دم حمراء"
+            },
+            {
+                "en": "Red cell",
+                "ar": "خلية حمراء"
+            },
+            {
+                "en": "Gastritis",
+                "ar": "التهاب المعدة"
+            },
+            {
+                "en": "Inflammation",
+                "ar": "التهاب"
+            },
+            {
+                "en": "Stomach",
+                "ar": "معدة"
+            }
+        ]
+    },
+    {
+        "slide_num": 5,
+        "title_en": "Combining Vowels",
+        "title_ar": "الحروف الصوتية الرابطة",
+        "image": "imges/introduction_L1/introduction_Page5.jpg",
+        "sentences": [
+            {
+                "en": "Combining vowel is used to: Facilitate the pronunciation of words.",
+                "ar": "الحرف الصوتي الرابط يُستخدم لـ: تسهيل نطق الكلمات."
+            },
+            {
+                "en": "Connect the root with suffix.",
+                "ar": "ربط الجذر باللاحقة."
+            }
+        ],
+        "explanation": "الحرف الصوتي الرابط (Combining Vowel) هو حرف علة يُستخدم لربط الأجزاء المختلفة للمصطلح الطبي وتسهيل اللفظ والنطق، خصوصاً عند تتابع حروف ساكنة يصعب نطقها.",
+        "glossary": [
+            {
+                "en": "Combining vowel",
+                "ar": "حرف صوتي رابط"
+            },
+            {
+                "en": "Facilitate",
+                "ar": "تسهيل / تيسير"
+            },
+            {
+                "en": "Pronunciation",
+                "ar": "نطق الكلمات"
+            },
+            {
+                "en": "Connect",
+                "ar": "يربط"
+            }
+        ]
+    },
+    {
+        "slide_num": 6,
+        "title_en": "Combining Vowels: Examples",
+        "title_ar": "أمثلة على الحروف الصوتية الرابطة",
+        "image": "imges/introduction_L1/introduction_Page6.jpg",
+        "sentences": [
+            {
+                "en": "A significant number of medical terms use the vowel “o”.",
+                "ar": "يستخدم عدد كبير جداً من المصطلحات الطبية الحرف الصوتي الرابط “o”."
+            },
+            {
+                "en": "Vowel letters are: a, e, i, o, u, & y.",
+                "ar": "الحروف الصوتية (حروف العلة) هي: a, e, i, o, u, و y."
+            },
+            {
+                "en": "The following table demonstrates examples of roots and combining form.",
+                "ar": "يوضح الجدول التالي أمثلة على الجذور والأشكال الرابطة (Combining Forms)."
+            },
+            {
+                "en": "acr/o: Acrocyanosis (extremity).",
+                "ar": "أكر/أو (acr/o): أكروزيانوسيس (ازرقاق الأطراف)."
+            },
+            {
+                "en": "psych/o: Psychology (mind).",
+                "ar": "سايك/أو (psych/o): سايكولوجي (علم النفس)."
+            },
+            {
+                "en": "chol/e: Cholesterase (bile).",
+                "ar": "كول/إي (chol/e): كوليستيريز (إنزيم له علاقة بالعصارة الصفراوية - لاحظ استخدام حرف e كحرف رابط هنا)."
+            }
+        ],
+        "explanation": "تعرض الشريحة الحروف الصوتية وأشهرها الحرف o الرابط، وتعطي أمثلة مثل acrocyanosis (تلوّن الأطراف باللون الأزرق) وpsychology (علم دراسة النفس) وcholesterase وهو حالة استخدام حرف e للربط.",
+        "glossary": [
+            {
+                "en": "Vowel letters",
+                "ar": "الحروف الصوتية / حروف علة"
+            },
+            {
+                "en": "Demonstrates",
+                "ar": "يوضح / يُظهر"
+            },
+            {
+                "en": "Extremity",
+                "ar": "طرف (أطراف الجسم)"
+            },
+            {
+                "en": "Acrocyanosis",
+                "ar": "ازرقاق الأطراف"
+            },
+            {
+                "en": "Psychology",
+                "ar": "علم النفس"
+            },
+            {
+                "en": "Bile",
+                "ar": "الصفراء / العصارة المرارية"
+            }
+        ]
+    },
+    {
+        "slide_num": 7,
+        "title_en": "Eponyms",
+        "title_ar": "المصطلحات المنسوبة لأسماء مكتشفيها",
+        "image": "imges/introduction_L1/introduction_Page7.jpg",
+        "sentences": [
+            {
+                "en": "Eponyms are names derived from a proper noun.",
+                "ar": "المصطلحات المنسوبة (Eponyms) هي أسماء مشتقة من اسم علم."
+            },
+            {
+                "en": "They may originate from the name of a person, place, or thing.",
+                "ar": "قد تنشأ من اسم شخص، أو مكان، أو شيء."
+            },
+            {
+                "en": "In the medical field, diseases, organs, procedures, or body functions.",
+                "ar": "في المجال الطبي، تُستخدم لتسمية الأمراض، أو الأعضاء، أو الإجراءات، أو وظائف الجسم."
+            },
+            {
+                "en": "Examples: Babinski sign, Alzheimer’s disease.",
+                "ar": "أمثلة: علامة بابينسكي، مرض ألزهايمر."
+            }
+        ],
+        "explanation": "تشرح الشريحة مصطلح الـ Eponyms وهي أسماء الحالات الطبية أو الأمراض المنسوبة لاسم الطبيب أو الشخص الذي اكتشفها لأول مرة، مثل منعكس وعلامة بابينسكي للأعصاب، ومرض ألزهايمر الشهير.",
+        "glossary": [
+            {
+                "en": "Eponyms",
+                "ar": "مصطلحات منسوبة لأشخاص"
+            },
+            {
+                "en": "Proper noun",
+                "ar": "اسم علم / اسم شخص"
+            },
+            {
+                "en": "Originate",
+                "ar": "تنشأ / تنحدر من"
+            },
+            {
+                "en": "Medical field",
+                "ar": "المجال الطبي"
+            },
+            {
+                "en": "Babinski sign",
+                "ar": "علامة بابينسكي العصبية"
+            },
+            {
+                "en": "Alzheimer's disease",
+                "ar": "مرض ألزهايمر"
+            }
+        ]
+    },
+    {
+        "slide_num": 8,
+        "title_en": "Medical Abbreviations",
+        "title_ar": "الاختصارات الطبية",
+        "image": "imges/introduction_L1/introduction_Page8.jpg",
+        "sentences": [
+            {
+                "en": "An abbreviation is a shortened form of a word or phrase.",
+                "ar": "الاختصار (Abbreviation) هو شكل مختصر من كلمة أو عبارة."
+            },
+            {
+                "en": "Abbreviations can be in the form of: chest x-ray (CXR).",
+                "ar": "يمكن أن تكون الاختصارات على شكل: أشعة سينية على الصدر (CXR)."
+            },
+            {
+                "en": "tablet (tab).",
+                "ar": "قرص دواء (tab)."
+            },
+            {
+                "en": "cardiopulmonary resuscitation (CPR).",
+                "ar": "إنعاش قلبي رئوي (CPR)."
+            }
+        ],
+        "explanation": "الاختصارات الطبية مهمة جداً لسرعة التواصل والكتابة في المشافي والعيادات. تُعرض هنا ثلاثة اختصارات شائعة: CXR للأشعة السينية للصدر، tab لقرص الدواء، و CPR للإنعاش الرئوي القلبي الطارئ.",
+        "glossary": [
+            {
+                "en": "Abbreviation",
+                "ar": "اختصار"
+            },
+            {
+                "en": "Shortened form",
+                "ar": "شكل مختصر"
+            },
+            {
+                "en": "Chest x-ray",
+                "ar": "أشعة الصدر السينية"
+            },
+            {
+                "en": "Tablet",
+                "ar": "قرص دواء"
+            },
+            {
+                "en": "Cardiopulmonary",
+                "ar": "قلبي رئوي"
+            },
+            {
+                "en": "Resuscitation",
+                "ar": "إنعاش"
+            }
+        ]
+    },
+    {
+        "slide_num": 9,
+        "title_en": "Suffixes: -logy and -logist",
+        "title_ar": "اللاحقات: -لوجي و -لوجيست",
+        "image": "imges/introduction_L1/introduction_Page9.jpg",
+        "sentences": [
+            {
+                "en": "logy: study or science or specialty.",
+                "ar": "لوجي (-logy): تعني دراسة، أو علم، أو تخصص طبّي."
+            },
+            {
+                "en": "Anesthesiology is the branch of medical science that specifically deals with the study of anesthesia or anesthetics.",
+                "ar": "علم التخدير (Anesthesiology) هو فرع العلوم الطبية الذي يتعامل تحديداً مع دراسة التخدير أو المواد المخدرة."
+            },
+            {
+                "en": "logist: one who studies or specialist.",
+                "ar": "لوجيست (-logist): تعني الشخص الذي يدرس، أو الطبيب المتخصص."
+            },
+            {
+                "en": "Anesthesiologist is a physician who specializes in anesthesia.",
+                "ar": "طبيب التخدير (Anesthesiologist) هو طبيب بشري يتخصص في علم التخدير."
+            }
+        ],
+        "explanation": "هذه الشريحة تفرق بين اللاحقتين الشائعتين: اللاحقة -logy وتعني العلم أو المجال نفسه، واللاحقة -logist وتعني الطبيب المتخصص في هذا المجال البشري. والمثال المضروب هو علم التخدير وطبيب التخدير.",
+        "glossary": [
+            {
+                "en": "Anesthesiology",
+                "ar": "علم التخدير"
+            },
+            {
+                "en": "Anesthesiologist",
+                "ar": "طبيب تخدير"
+            },
+            {
+                "en": "Specialty",
+                "ar": "تخصص"
+            },
+            {
+                "en": "Physician",
+                "ar": "طبيب بشري"
+            },
+            {
+                "en": "Anesthetics",
+                "ar": "المواد المخدرة"
+            },
+            {
+                "en": "Deals with",
+                "ar": "يتعامل مع"
+            }
+        ]
+    },
+    {
+        "slide_num": 10,
+        "title_en": "Medical Specialties Table",
+        "title_ar": "جدول التخصصات الطبية",
+        "image": "imges/introduction_L1/introduction_Page10.jpg",
+        "sentences": [
+            {
+                "en": "Cardiologist / cardiology / heart / cardi/o.",
+                "ar": "طبيب قلب / علم القلب / قلب / كارديو (cardi/o)."
+            },
+            {
+                "en": "Dermatologist / dermatology / skin / dermat/o.",
+                "ar": "طبيب جلدية / علم الجلد / جلد / ديرماتو (dermat/o)."
+            },
+            {
+                "en": "anesthesiologist / anesthesiology / feeling or sensation / esthesi/o.",
+                "ar": "طبيب تخدير / علم التخدير / إحساس أو شعور / إستيزيو (esthesi/o)."
+            },
+            {
+                "en": "Gynecologist / gynecology / female / gynec/o.",
+                "ar": "طبيب نساء / علم أمراض النساء / أنثى (امرأة) / جاينيكو (gynec/o)."
+            },
+            {
+                "en": "Immunologist / immunology / immune / immune/o.",
+                "ar": "طبيب مناعة / علم المناعة / مناعة / إيميونو (immune/o)."
+            },
+            {
+                "en": "Neonatologist / neonatology / new, birth / ne/o, nat/o.",
+                "ar": "طبيب حديثي الولادة / علم حديثي الولادة / جديد، ولادة / نيو، ناتو (ne/o, nat/o)."
+            },
+            {
+                "en": "ophthalmologist / ophthalmology / eye / ophthalm/o.",
+                "ar": "طبيب عيون / علم الرمد (العيون) / عين / أوفثالمو (ophthalm/o)."
+            },
+            {
+                "en": "Pathologist / pathology / disease / path/o.",
+                "ar": "طبيب علم الأمراض / علم الأمراض / مرض / باثو (path/o)."
+            },
+            {
+                "en": "Radiologist / radiology / radiation or radius / radi/o.",
+                "ar": "طبيب أشعة / علم الأشعة / إشعاع أو نصف القطر / راديو (radi/o)."
+            },
+            {
+                "en": "Urologist / urology / urinary tract or urine / ur/o.",
+                "ar": "طبيب مسالك بولية / علم المسالك البولية / المسالك البولية أو البول / يورو (ur/o)."
+            }
+        ],
+        "explanation": "جدول تجميعي هام جداً يحتوي على أهم الجذور الطبية للأعضاء والتخصصات الطبية، ويبين المسمى العلمي للمجال (ينتهي بـ logy) ومسمى الطبيب المتخصص (ينتهي بـ logist). يسهل الحفظ السريع للطلاب.",
+        "glossary": [
+            {
+                "en": "Cardiology",
+                "ar": "علم أمراض القلب"
+            },
+            {
+                "en": "Dermatology",
+                "ar": "علم الأمراض الجلدية"
+            },
+            {
+                "en": "Gynecology",
+                "ar": "علم أمراض النساء"
+            },
+            {
+                "en": "Neonatology",
+                "ar": "علم طب حديثي الولادة"
+            },
+            {
+                "en": "Ophthalmology",
+                "ar": "علم طب وجراحة العيون"
+            },
+            {
+                "en": "Pathology",
+                "ar": "علم الأمراض"
+            },
+            {
+                "en": "Radiology",
+                "ar": "علم الأشعة"
+            },
+            {
+                "en": "Urology",
+                "ar": "علم جراحة المسالك البولية"
+            }
+        ]
+    },
+    {
+        "slide_num": 11,
+        "title_en": "Surgical Procedures Suffixes (1)",
+        "title_ar": "لاحقات الإجراءات الجراحية (1)",
+        "image": "imges/introduction_L1/introduction_Page11.jpg",
+        "sentences": [
+            {
+                "en": "centesis: surgical puncture to aspirate or remove fluid (Paracentesis).",
+                "ar": "سنتيسيس (-centesis): بزل جراحي لسحب أو إزالة السائل (مثل: باراسنتيسيس / بزل البطن)."
+            },
+            {
+                "en": "ectomy: excision (surgical removal or cutting out) (Appendectomy).",
+                "ar": "إكتومي (-ectomy): استئصال (إزالة جراحية أو قطع للعضو للخارج) (مثل: أبندكتومي / استئصال الزائدة)."
+            },
+            {
+                "en": "-lysis: process of loosening, freeing, or destroying (hydrolysis).",
+                "ar": "لايسيس (-lysis): عملية تفكيك، أو تحرير، أو تدمير (مثل: هايدرولايسيس / تحلل مائي)."
+            }
+        ],
+        "explanation": "تبدأ هذه الشريحة في سرد اللاحقات الجراحية الأكثر شيوعاً. تشرح ثلاث لاحقات: -centesis وتعني البزل بالإبرة لسحب السوائل المتجمعة، -ectomy وتعني الاستئصال التام للعضو، و -lysis وتعني التحليل أو التدمير أو الفصل.",
+        "glossary": [
+            {
+                "en": "Surgical puncture",
+                "ar": "بزل / ثقب جراحي"
+            },
+            {
+                "en": "Aspirate",
+                "ar": "سحب / شفط السوائل"
+            },
+            {
+                "en": "Excision",
+                "ar": "استئصال / قطع"
+            },
+            {
+                "en": "Loosening",
+                "ar": "تفكيك / تحرير"
+            },
+            {
+                "en": "Paracentesis",
+                "ar": "بزل البطن"
+            },
+            {
+                "en": "Appendectomy",
+                "ar": "استئصال الزائدة الدودية"
+            },
+            {
+                "en": "Hydrolysis",
+                "ar": "تحلل مائي"
+            }
+        ]
+    },
+    {
+        "slide_num": 12,
+        "title_en": "Surgical Procedures Suffixes (2)",
+        "title_ar": "لاحقات الإجراءات الجراحية (2)",
+        "image": "imges/introduction_L1/introduction_Page12.jpg",
+        "sentences": [
+            {
+                "en": "plasty: surgical repair (Rhinoplasty).",
+                "ar": "بلاستي (-plasty): إصلاح جراحي / تعديل وتجميل (مثل: راينوبلاستي / تجميل الأنف)."
+            },
+            {
+                "en": "rrhaphy: suture (fusing a wound by stitches) (Herniorraphy).",
+                "ar": "رافي (-rrhaphy): خياطة جراحية (دمج حواف الجرح بالغرز) (مثل: هيرنيورافي / إصلاح وخياطة الفتق)."
+            }
+        ],
+        "explanation": "تستكمل اللاحقات الجراحية؛ اللاحقة -plasty تعني تعديل وإصلاح جراحي وتجميلي (مثل تجميل الأنف Rhinoplasty)، واللاحقة -rrhaphy تعني خياطة جرح أو تقريب أجزاء باستخدام الغرز الجراحية (مثل خياطة الفتق Herniorrhaphy).",
+        "glossary": [
+            {
+                "en": "Surgical repair",
+                "ar": "إصلاح جراحي"
+            },
+            {
+                "en": "Suture",
+                "ar": "خياطة جراحية"
+            },
+            {
+                "en": "Fusing",
+                "ar": "دمج / ضم"
+            },
+            {
+                "en": "Stitches",
+                "ar": "غرز جراحية"
+            },
+            {
+                "en": "Rhinoplasty",
+                "ar": "عملية تجميل الأنف"
+            },
+            {
+                "en": "Herniorrhaphy",
+                "ar": "عملية إصلاح الفتق جراحياً"
+            }
+        ]
+    },
+    {
+        "slide_num": 13,
+        "title_en": "Surgical Procedures Suffixes (3)",
+        "title_ar": "لاحقات الإجراءات الجراحية (3)",
+        "image": "imges/introduction_L1/introduction_Page13.jpg",
+        "sentences": [
+            {
+                "en": "scopy: visual examination with the use of a lighted instrument (Colonoscopy).",
+                "ar": "سكوبي (-scopy): فحص بصري باستخدام أداة مضيئة / منظار (مثل: كولونوسكوبي / منظار القولون)."
+            },
+            {
+                "en": "stomy: creation of an opening (Colostomy).",
+                "ar": "ستومي (-stomy): إنشاء فتحة جراحية (مثل: كولوستومي / فتحة القولون الاصطناعية على البطن)."
+            }
+        ],
+        "explanation": "تشرح الشريحة لاحقتين جراحيتين أخريين: -scopy وهي الفحص الداخلي باستخدام المناظير الطبية المزودة بضوء، و -stomy وهي إنشاء فتحة اصطناعية جراحية في عضو مجوف لتوصيله بالخارج.",
+        "glossary": [
+            {
+                "en": "Visual examination",
+                "ar": "فحص بصري"
+            },
+            {
+                "en": "Lighted instrument",
+                "ar": "أداة مضيئة (منظار)"
+            },
+            {
+                "en": "Creation of opening",
+                "ar": "إنشاء فتحة"
+            },
+            {
+                "en": "Colonoscopy",
+                "ar": "تنظير القولون"
+            },
+            {
+                "en": "Colostomy",
+                "ar": "تفويه القولون (عمل فتحة بالقولون)"
+            }
+        ]
+    },
+    {
+        "slide_num": 14,
+        "title_en": "Body Structures Combining Forms (1)",
+        "title_ar": "الأشكال الرابطة لتراكيب الجسم (1)",
+        "image": "imges/introduction_L1/introduction_Page14.jpg",
+        "sentences": [
+            {
+                "en": "gland: aden/o. Adenopathy refers to the enlargement of the glands.",
+                "ar": "غدة: أدينو (aden/o). يشير مصطلح أدينوباثي (Adenopathy) إلى تضخم الغدد."
+            },
+            {
+                "en": "life or living: bi/o. Biopsy is a procedure used to extract cells or tissues for examination.",
+                "ar": "حياة أو كائن حي: بايو (bi/o). الخزعة (Biopsy) هي إجراء طبي يُستخدم لاستخراج خلايا أو أنسجة لفحصها."
+            },
+            {
+                "en": "brain: cerebr/o, encephal/o. Cerebro spinal fluid, Encephalopathy.",
+                "ar": "دماغ (مخ): سيريبرو (cerebr/o)، إنسيفالو (encephal/o). السائل الدماغي الشوكي (CSF)، اعتلال الدماغ (إنسيفالوباثي)."
+            }
+        ],
+        "explanation": "نبدأ دراسة الأشكال الرابطة للأعضاء وتراكيب الجسم. aden/o تعني غدة وتضخمها يسمى adenopathy. bi/o تعني خلية حية أو حياة وفحصها يسمى biopsy. cerebr/o و encephal/o كلاهما جذور تشير للدماغ والمخ.",
+        "glossary": [
+            {
+                "en": "Gland",
+                "ar": "غدة"
+            },
+            {
+                "en": "Adenopathy",
+                "ar": "تضخم / اعتلال الغدد"
+            },
+            {
+                "en": "Enlargement",
+                "ar": "تضخم"
+            },
+            {
+                "en": "Biopsy",
+                "ar": "خزعة (عينة حية)"
+            },
+            {
+                "en": "Extract",
+                "ar": "استخراج / سحب"
+            },
+            {
+                "en": "Cerebrospinal fluid",
+                "ar": "السائل الدماغي الشوكي"
+            },
+            {
+                "en": "Encephalopathy",
+                "ar": "اعتلال الدماغ"
+            }
+        ]
+    },
+    {
+        "slide_num": 15,
+        "title_en": "Body Structures Combining Forms (2)",
+        "title_ar": "الأشكال الرابطة لتراكيب الجسم (2)",
+        "image": "imges/introduction_L1/introduction_Page15.jpg",
+        "sentences": [
+            {
+                "en": "liver: hepat/o. Hepatomegaly is enlargement of the liver.",
+                "ar": "كبد: هيباتو (hepat/o). تضخم الكبد (Hepatomegaly) هو زيادة حجم الكبد الكلية."
+            },
+            {
+                "en": "breast: mamm/o, mast/o. Mammogram is an x-ray of the breast.",
+                "ar": "ثدي: مامو (mamm/o)، ماستو (mast/o). الماموجرام (Mammogram) هو تصوير الثدي بالأشعة السينية."
+            },
+            {
+                "en": "Mastitis is an infection of the breast tissue.",
+                "ar": "التهاب الثدي (Mastitis) هو عدوى/التهاب يصيب أنسجة الثدي."
+            },
+            {
+                "en": "muscle: muscul/o, my/o. The musculoskeletal system is an organ system responsible for movement and activity.",
+                "ar": "عضلة: مسكولو (muscul/o)، مايو (my/o). الجهاز العضلي الهيكلي هو جهاز عضوي مسؤول عن الحركة والنشاط البدني."
+            },
+            {
+                "en": "Myosin is one of the muscle proteins.",
+                "ar": "الميوسين هو أحد بروتينات العضلات الهامة للحركة."
+            }
+        ],
+        "explanation": "تستعرض الشريحة ثلاثة جذور هامة: hepat/o للكبد وتضخمه hepatomegaly، و mamm/o و mast/o للثدي وفحص الأشعة الماموجرام والتهاب الثدي mastitis، و muscul/o و my/o للعضلات وجهاز الحركة والبروتين العضلي الميوسين.",
+        "glossary": [
+            {
+                "en": "Liver",
+                "ar": "كبد"
+            },
+            {
+                "en": "Hepatomegaly",
+                "ar": "تضخم الكبد"
+            },
+            {
+                "en": "Mammogram",
+                "ar": "أشعة الثدي"
+            },
+            {
+                "en": "Mastitis",
+                "ar": "التهاب الثدي"
+            },
+            {
+                "en": "Musculoskeletal",
+                "ar": "عضلي هيكلي"
+            },
+            {
+                "en": "Myosin",
+                "ar": "ميوسين (بروتين عضلي)"
+            }
+        ]
+    },
+    {
+        "slide_num": 16,
+        "title_en": "Body Structures Combining Forms (3)",
+        "title_ar": "الأشكال الرابطة لتراكيب الجسم (3)",
+        "image": "imges/introduction_L1/introduction_Page16.jpg",
+        "sentences": [
+            {
+                "en": "vessel: vas/o. Widening of the blood vessels is known as vasodilation.",
+                "ar": "وعاء (دموي): فازو (vas/o). اتساع الأوعية الدموية يُعرف بتوسيع أو تمدد الأوعية (vasodilation)."
+            }
+        ],
+        "explanation": "تشرح الشريحة الجذر vas/o الذي يشير للأوعية الدموية بالأساس، وتعطي مثالاً لعملية اتساع وتوسيع الوعاء الدموي المسماة vasodilation (توسيع الأوعية) المقابلة لـ vasoconstriction (تضييق الأوعية).",
+        "glossary": [
+            {
+                "en": "Vessel",
+                "ar": "وعاء"
+            },
+            {
+                "en": "Blood vessels",
+                "ar": "الأوعية الدموية"
+            },
+            {
+                "en": "Widening",
+                "ar": "اتساع / توسيع"
+            },
+            {
+                "en": "Vasodilation",
+                "ar": "تمدد / اتساع الأوعية الدموية"
+            }
+        ]
+    },
+    {
+        "slide_num": 17,
+        "title_en": "Diagnosis vs Symptoms",
+        "title_ar": "التشخيص مقابل الأعراض",
+        "image": "imges/introduction_L1/introduction_Page17.jpg",
+        "sentences": [
+            {
+                "en": "SYMPTOMS OR DIAGNOSIS",
+                "ar": "الأعراض أو التشخيص."
+            },
+            {
+                "en": "Diagnosis is the scientific determination of a disease process or condition after evaluation.",
+                "ar": "التشخيص (Diagnosis): هو التحديد العلمي لعملية المرض أو الحالة المرضية بعد التقييم والفحص الكلي."
+            },
+            {
+                "en": "Symptom indicates a disorder or disease in which changes in health status are perceived by the client.",
+                "ar": "العَرَض (Symptom): يشير إلى اضطراب أو مرض تُلاحظ فيه التغيرات في الحالة الصحية من قِبل المريض نفسه."
+            }
+        ],
+        "explanation": "تفرق الشريحة بين التشخيص العلمي والسريري الذي يقوم به الطبيب لتحديد المرض (Diagnosis)، وبين الأعراض الشكوانية الذاتية التي يشعر بها ويلاحظها المريض بنفسه (Symptom) مثل الألم، الغثيان، الدوخة، وغيرها.",
+        "glossary": [
+            {
+                "en": "Diagnosis",
+                "ar": "تشخيص"
+            },
+            {
+                "en": "Determination",
+                "ar": "تحديد / تقرير"
+            },
+            {
+                "en": "Evaluation",
+                "ar": "تقييم / فحص"
+            },
+            {
+                "en": "Symptom",
+                "ar": "عَرَض (أعراض)"
+            },
+            {
+                "en": "Disorder",
+                "ar": "اضطراب / خلل"
+            },
+            {
+                "en": "Perceived",
+                "ar": "يُلاحظ / يُشعر به"
+            },
+            {
+                "en": "Client",
+                "ar": "العميل (المريض)"
+            }
+        ]
+    },
+    {
+        "slide_num": 18,
+        "title_en": "Symptoms/Diagnosis Suffixes (1)",
+        "title_ar": "لاحقات الأعراض والتشخيص (1)",
+        "image": "imges/introduction_L1/introduction_Page18.jpg",
+        "sentences": [
+            {
+                "en": "algia: pain (Arthralgia is joint pain).",
+                "ar": "ألجيا (-algia): تعني ألم (مثل: آرثرالجيا / ألم المفاصل)."
+            },
+            {
+                "en": "cele: hernia (Rectocele).",
+                "ar": "سيلي (-cele): تعني فتق أو قيلة (بروز) (مثل: ريكتوسيلي / قيلة مستقيمية جدارية)."
+            },
+            {
+                "en": "edema: swelling / “presence of excess Fluid in the tissues”.",
+                "ar": "إيديما (-edema): تعني تورم (وذمة) / “وجود سائل زائد في أنسجة خلايا الجسم”."
+            }
+        ],
+        "explanation": "تشرح الشريحة لاحقات طبية تدل على أمراض أو أعراض. اللاحقة -algia تعني الألم مثل ألم المفاصل، اللاحقة -cele تعني بروز فتق أو كيس مثل فتق المستقيم المهبلي، والوذمة (Edema) هي تجمع سوائل زائدة في الأنسجة تؤدي لتورمها.",
+        "glossary": [
+            {
+                "en": "Pain",
+                "ar": "ألم"
+            },
+            {
+                "en": "Joint pain",
+                "ar": "ألم المفاصل"
+            },
+            {
+                "en": "Hernia",
+                "ar": "فتق / قيلة"
+            },
+            {
+                "en": "Rectocele",
+                "ar": "القيلة المستقيمية"
+            },
+            {
+                "en": "Edema",
+                "ar": "وذمة / تجمع سوائل"
+            },
+            {
+                "en": "Swelling",
+                "ar": "تورم"
+            },
+            {
+                "en": "Excess fluid",
+                "ar": "سائل زائد"
+            }
+        ]
+    },
+    {
+        "slide_num": 19,
+        "title_en": "Symptoms/Diagnosis Suffixes (2)",
+        "title_ar": "لاحقات الأعراض والتشخيص (2)",
+        "image": "imges/introduction_L1/introduction_Page19.jpg",
+        "sentences": [
+            {
+                "en": "emesis: vomiting (Hyperemesis means excessive vomiting).",
+                "ar": "إيميسيس (-emesis): تعني قيء (مثل: هايبرإيميسيس / قيء شديد مفرط)."
+            },
+            {
+                "en": "emia: condition of the blood (Anemia: “decrease in red blood cells” or hemoglobin).",
+                "ar": "إيميا (-emia): تعني حالة الدم (مثل: أنيميا / فقر الدم ونقص خلايا الدم الحمراء أو الهيموجلوبين)."
+            },
+            {
+                "en": "itis: inflammation (Gastritis: “inflammation of the stomach”).",
+                "ar": "آيتس (-itis): تعني التهاب (مثل: جاسترايتس / التهاب غشاء المعدة)."
+            }
+        ],
+        "explanation": "تستكمل اللاحقات الشكوانية والتشخيصية؛ اللاحقة -emesis تشير للقيء، واللاحقة -emia تشير لحالة في الدم مثل الأنيميا (فقر الدم)، واللاحقة -itis وهي الأشهر في الطب وتشير لوجود التهاب في العضو المذكور مثل التهاب المعدة.",
+        "glossary": [
+            {
+                "en": "Vomiting",
+                "ar": "قيء"
+            },
+            {
+                "en": "Excessive",
+                "ar": "مفرط / زائد"
+            },
+            {
+                "en": "Hyperemesis",
+                "ar": "قيء مفرط (شديد)"
+            },
+            {
+                "en": "Anemia",
+                "ar": "فقر الدم / أنيميا"
+            },
+            {
+                "en": "Hemoglobin",
+                "ar": "هيموجلوبين"
+            },
+            {
+                "en": "Gastritis",
+                "ar": "التهاب المعدة"
+            }
+        ]
+    },
+    {
+        "slide_num": 20,
+        "title_en": "Symptoms/Diagnosis Suffixes (3)",
+        "title_ar": "لاحقات الأعراض والتشخيص (3)",
+        "image": "imges/introduction_L1/introduction_Page20.jpg",
+        "sentences": [
+            {
+                "en": "megaly: enlargement (Cardiomegaly is the enlargement of the heart).",
+                "ar": "ميجالي (-megaly): تعني تضخم (مثل: كارديوميجالي / تضخم حجم عضلة القلب)."
+            },
+            {
+                "en": "rrhage, -rrhagia: excessive bleeding (Hemorrhage means bleeding, which can be external or internal).",
+                "ar": "ريج / ريجيا (-rrhage, -rrhagia): تعني نزيف مفرط غزير (مثل: هيموريدج / النزيف الدموي الداخلي أو الخارجي)."
+            }
+        ],
+        "explanation": "آخر لاحقات في المحاضرة الأولى: اللاحقة -megaly وتدل على زيادة الحجم وتضخم العضو مثل تضخم القلب cardiomegaly؛ واللاحقة -rrhage أو -rrhagia وتدل على تدفق دموي شديد ونزيف مثل نزيف الدم الغزير hemorrhage.",
+        "glossary": [
+            {
+                "en": "Enlargement",
+                "ar": "تضخم / زيادة حجم"
+            },
+            {
+                "en": "Cardiomegaly",
+                "ar": "تضخم القلب"
+            },
+            {
+                "en": "Excessive bleeding",
+                "ar": "نزيف مفرط"
+            },
+            {
+                "en": "Hemorrhage",
+                "ar": "نزيف دموي"
+            },
+            {
+                "en": "External",
+                "ar": "خارجي"
+            },
+            {
+                "en": "Internal",
+                "ar": "داخلي"
+            }
+        ]
+    }
+];
+        const chapters = [{"name": "1. مقدمة وأجزاء الكلمة الطبية", "start": 1, "end": 4}, {"name": "2. الحروف الصوتية الرابطة والنسب", "start": 5, "end": 7}, {"name": "3. الاختصارات والتخصصات الطبية", "start": 8, "end": 10}, {"name": "4. لاحقات العمليات الجراحية", "start": 11, "end": 13}, {"name": "5. أجزاء وخلايا الجسم الهامة", "start": 14, "end": 16}, {"name": "6. التشخيص والأعراض المرضية", "start": 17, "end": 20}];
+        
+        let currentIndex = 0;
+        let viewMode = 'single';
+
+        function termHtml(terms) {
+            return terms.map(function(t) {
+                return '<div class="term"><span class="term-en">' + t.en + '</span><span class="term-ar">' + t.ar + '</span></div>';
+            }).join('');
+        }
+
+        function pairsHtml(pairs) {
+            return pairs.map(function(p) {
+                return '<div class="pair"><div class="ar">' + p.ar + '</div><div class="en">' + p.en + '</div></div>';
+            }).join('');
+        }
+
+        function navHtml() {
+            return '<div class="nav-row"><button class="btn" onclick="prevSlide()" ' + (currentIndex === 0 ? 'disabled' : '') + '>الشريحة السابقة</button><span class="counter">الشريحة ' + (currentIndex + 1) + ' من ' + slidesData.length + '</span><button class="btn" onclick="nextSlide()" ' + (currentIndex === slidesData.length - 1 ? 'disabled' : '') + '>الشريحة التالية</button></div>';
+        }
+
+        function slideHtml(slide, includeNav) {
+            return '<div class="slide-inner"><div class="s-header"><div><h3 class="s-title-ar">' + slide.title_ar + '</h3><div class="s-title-en">' + slide.title_en + '</div></div><span class="s-badge">SLIDE ' + slide.slide_num + '</span></div><div class="s-image-wrap"><img src="' + slide.image + '" alt="Slide ' + slide.slide_num + '"></div><section><div class="section-title">الترجمة التفصيلية الحرفية</div><div class="sentences">' + pairsHtml(slide.sentences) + '</div></section><section class="explain"><div class="section-title">الشرح الحيوي المبسط</div><p class="explain-text">' + slide.explanation + '</p></section><section><div class="section-title">مصطلحات الشريحة المهمة</div><div class="glossary-grid">' + termHtml(slide.glossary) + '</div></section></div>' + (includeNav ? navHtml() : '');
+        }
+
+        function loadSlide(index) {
+            currentIndex = Math.max(0, Math.min(index, slidesData.length - 1));
+            document.getElementById('singleView').innerHTML = slideHtml(slidesData[currentIndex], true);
+            updateActiveLink();
+        }
+
+        function nextSlide() {
+            loadSlide(currentIndex + 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prevSlide() {
+            loadSlide(currentIndex - 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function buildChapters() {
+            var root = document.getElementById('chaptersList');
+            root.innerHTML = chapters.map(function(ch) {
+                var links = slidesData.filter(function(s) {
+                    return s.slide_num >= ch.start && s.slide_num <= ch.end;
+                }).map(function(s) {
+                    return '<li><a class="slide-link" data-slide="' + s.slide_num + '" onclick="goToSlide(' + (s.slide_num - 1) + ')"><span>' + s.title_ar + '</span><span class="slide-no">' + s.slide_num + '</span></a></li>';
+                }).join('');
+                return '<div class="chapter"><div class="chapter-name">' + ch.name + '</div><ul class="slide-links">' + links + '</ul></div>';
+            }).join('');
+        }
+
+        function goToSlide(index) {
+            if (viewMode !== 'single') toggleView();
+            loadSlide(index);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateActiveLink() {
+            document.querySelectorAll('.slide-link').forEach(function(a) {
+                a.classList.toggle('active', Number(a.dataset.slide) === currentIndex + 1);
+            });
+        }
+
+        function toggleView() {
+            var single = document.getElementById('singleView');
+            var continuous = document.getElementById('continuousView');
+            var btn = document.getElementById('toggleBtn');
+            if (viewMode === 'single') {
+                viewMode = 'continuous';
+                single.style.display = 'none';
+                continuous.style.display = 'grid';
+                btn.textContent = 'عرض شريحة واحدة';
+                buildContinuous();
+            } else {
+                viewMode = 'single';
+                continuous.style.display = 'none';
+                single.style.display = 'block';
+                btn.textContent = 'عرض مستمر';
+                loadSlide(currentIndex);
+            }
+        }
+
+        function buildContinuous() {
+            document.getElementById('continuousView').innerHTML = slidesData.map(function(s) {
+                return '<article class="slide-block" id="slide-' + s.slide_num + '">' + slideHtml(s, false) + '</article>';
+            }).join('');
+        }
+
+        function buildPrint() {
+            document.getElementById('printSlides').innerHTML = slidesData.map(function(s) {
+                return '<article class="print-slide">' + slideHtml(s, false) + '</article>';
+            }).join('');
+        }
+
+        buildChapters();
+        loadSlide(0);
+        buildPrint();
+    </script>
+</body>
+</html>
