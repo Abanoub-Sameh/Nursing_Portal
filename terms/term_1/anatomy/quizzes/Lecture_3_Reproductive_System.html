@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة الثالثة: مصطلحات الجهاز التناسلي وعمليات النساء</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Inter:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #312e81;
+            --accent: #d97706;
+            --ink: #0f172a;
+            --muted: #475569;
+            --bg: #f8fafc;
+            --soft: #f5f3ff;
+            --accent-soft: #fef3c7;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Tajawal', 'Segoe UI', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--muted);
+            line-height: 1.65;
+        }
+        button {
+            font-family: inherit;
+        }
+        .app-header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: #fff;
+            padding: 14px 26px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, .16);
+        }
+        .app-title h1 {
+            font: 800 21px/1.2 Inter, sans-serif;
+        }
+        .app-title h2 {
+            margin-top: 3px;
+            font-size: 13px;
+            color: #e0e7ff;
+            font-weight: 700;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        .btn {
+            border: 1px solid rgba(255, 255, 255, .25);
+            background: rgba(255, 255, 255, .12);
+            color: #fff;
+            padding: 8px 13px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: .18s ease;
+        }
+        .btn:hover {
+            background: rgba(255, 255, 255, .22);
+            transform: translateY(-1px);
+        }
+        .btn-accent {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        .btn:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .layout {
+            max-width: 1380px;
+            margin: 20px auto;
+            padding: 0 18px;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+        }
+        .sidebar {
+            width: 300px;
+            flex: 0 0 300px;
+            position: sticky;
+            top: 88px;
+            max-height: calc(100vh - 105px);
+            overflow: auto;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 14px;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, .06);
+        }
+        .sidebar-title {
+            color: var(--ink);
+            font-weight: 800;
+            font-size: 15px;
+            margin-bottom: 12px;
+            padding-bottom: 7px;
+            border-bottom: 3px solid var(--primary);
+        }
+        .chapter {
+            margin-bottom: 12px;
+        }
+        .chapter-name {
+            font-weight: 800;
+            color: var(--primary-dark);
+            background: var(--soft);
+            border: 1px solid #e0e7ff;
+            padding: 7px 9px;
+            border-radius: 6px;
+            font-size: 12.5px;
+        }
+        .slide-links {
+            list-style: none;
+            padding: 7px 5px 0 0;
+            display: grid;
+            gap: 3px;
+        }
+        .slide-link {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            align-items: center;
+            color: #334155;
+            text-decoration: none;
+            border-radius: 5px;
+            padding: 6px 7px;
+            font-size: 11.5px;
+            cursor: pointer;
+        }
+        .slide-link:hover, .slide-link.active {
+            background: var(--primary);
+            color: #fff;
+        }
+        .slide-no {
+            font-family: Inter, sans-serif;
+            font-weight: 800;
+            font-size: 10px;
+            background: rgba(15, 23, 42, .08);
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+        .content {
+            flex: 1;
+            min-width: 0;
+            display: grid;
+            gap: 18px;
+        }
+        .slide-card, .slide-block {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            box-shadow: 0 5px 18px rgba(15, 23, 42, .07);
+            overflow: hidden;
+        }
+        .slide-inner {
+            padding: 18px;
+            display: grid;
+            gap: 15px;
+        }
+        .s-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 12px;
+        }
+        .s-title-ar {
+            color: var(--ink);
+            font-size: 22px;
+            line-height: 1.35;
+            font-weight: 800;
+        }
+        .s-title-en {
+            direction: ltr;
+            text-align: left;
+            color: var(--primary);
+            font-family: Inter, sans-serif;
+            font-weight: 800;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        .s-badge {
+            direction: ltr;
+            font: 800 12px/1 Inter, sans-serif;
+            color: #fff;
+            background: var(--primary);
+            padding: 8px 10px;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+        .s-image-wrap {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 6px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .s-image-wrap img {
+            width: 100%;
+            max-height: 560px;
+            object-fit: contain;
+            display: block;
+        }
+        .section-title {
+            color: var(--primary-dark);
+            font-weight: 800;
+            font-size: 14px;
+            border-right: 4px solid var(--primary);
+            padding-right: 8px;
+            margin-bottom: 8px;
+        }
+        .sentences {
+            display: grid;
+            gap: 8px;
+        }
+        .pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .pair .ar {
+            padding: 9px 10px;
+            color: #0f172a;
+            font-weight: 700;
+            background: #f8fafc;
+        }
+        .pair .en {
+            direction: ltr;
+            text-align: left;
+            padding: 9px 10px;
+            color: #1e293b;
+            font-family: Inter, Arial, sans-serif;
+            font-size: 13px;
+            border-right: 1px solid #e2e8f0;
+        }
+        .explain {
+            background: linear-gradient(180deg, #fff7ed, #fff);
+            border: 1px solid #fed7aa;
+            border-radius: 8px;
+            padding: 16px 18px;
+        }
+        .explain .section-title {
+            color: #9a3412;
+            border-color: var(--accent);
+        }
+        .explain-text {
+            color: #334155;
+            font-size: 17px;
+            line-height: 1.75;
+            font-weight: 500;
+        }
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 7px;
+        }
+        .term {
+            border: 1px solid #dbeafe;
+            background: #f8fafc;
+            border-radius: 6px;
+            padding: 8px 9px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .term-en {
+            direction: ltr;
+            text-align: left;
+            font-family: Inter, Arial, sans-serif;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 12.5px;
+        }
+        .term-ar {
+            color: #0f172a;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .nav-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 18px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+        }
+        .nav-row .btn {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        .counter {
+            color: #0f172a;
+            font-weight: 800;
+        }
+        #continuousView {
+            display: none;
+            gap: 18px;
+        }
+        #printOnlyContainer {
+            display: none;
+        }
+        @media(max-width: 980px) {
+            .app-header {
+                position: static;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+            .layout {
+                display: block;
+            }
+            .sidebar {
+                position: static;
+                width: auto;
+                max-height: none;
+                margin-bottom: 16px;
+            }
+            .pair {
+                grid-template-columns: 1fr;
+            }
+            .pair .en {
+                border-right: 0;
+                border-top: 1px solid #e2e8f0;
+            }
+            .glossary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @page {
+            size: A4;
+            margin: 10mm;
+        }
+        @media print {
+            body {
+                background: #fff;
+                color: #000;
+                font-size: 11.5px;
+            }
+            .app-header, .layout {
+                display: none!important;
+            }
+            #printOnlyContainer {
+                display: block!important;
+            }
+            .cover-page {
+                height: 277mm;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                color: #fff!important;
+                background: linear-gradient(135deg, var(--primary-dark), var(--primary), #4c1d95)!important;
+                padding: 28mm 18mm;
+                page-break-after: always;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .cover-page h1 {
+                font: 800 34px/1.25 Inter, sans-serif;
+                color: #fff!important;
+                margin-bottom: 8px;
+            }
+            .cover-page h2 {
+                font-size: 25px;
+                color: #fef3c7!important;
+                margin-bottom: 24px;
+            }
+            .cover-page p {
+                max-width: 165mm;
+                font-size: 14px;
+                line-height: 1.8;
+                color: #e0e7ff!important;
+            }
+            .print-slide {
+                page-break-inside: auto;
+                break-inside: auto;
+                margin-bottom: 4mm;
+                padding-bottom: 3mm;
+                border-bottom: 1px dashed #cbd5e1;
+            }
+            .slide-inner {
+                padding: 0;
+                gap: 2.5mm;
+            }
+            .slide-card, .slide-block {
+                box-shadow: none;
+                border: 0;
+                border-radius: 0;
+            }
+            .s-header {
+                padding-bottom: 1.5mm;
+            }
+            .s-title-ar {
+                font-size: 15px;
+            }
+            .s-title-en {
+                font-size: 10.5px;
+            }
+            .s-badge {
+                background: var(--primary)!important;
+                color: #fff!important;
+                font-size: 9px;
+                padding: 5px 7px;
+            }
+            .s-image-wrap {
+                padding: 2mm;
+                border-color: #d6d3d1;
+                background: #fff!important;
+            }
+            .s-image-wrap img {
+                max-height: 58mm;
+                object-fit: contain;
+            }
+            .section-title {
+                font-size: 10.5px;
+                margin-bottom: 1.5mm;
+            }
+            .pair {
+                gap: 0;
+                grid-template-columns: 1fr 1fr;
+                border-color: #cbd5e1;
+                break-inside: avoid;
+            }
+            .pair .ar, .pair .en {
+                padding: 1.2mm 1.5mm;
+                font-size: 9.5px;
+            }
+            .explain {
+                padding: 1.8mm;
+                background: #fff7ed!important;
+                border-color: #fdba74;
+            }
+            .explain-text {
+                font-size: 11.8px;
+                line-height: 1.6;
+            }
+            .glossary-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.2mm;
+            }
+            .term {
+                padding: 1mm 1.2mm;
+                gap: 1mm;
+                border-color: #cbd5e1;
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            .term-en, .term-ar {
+                font-size: 8.8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="app-title">
+            <h1>Medical Terminology - Lecture 3</h1>
+            <h2>المحاضرة الثالثة: مصطلحات الجهاز التناسلي وعمليات النساء والتوليد</h2>
+        </div>
+        <div class="controls">
+            <button class="btn btn-accent" onclick="window.print()">طباعة A4</button>
+            <button class="btn" id="toggleBtn" onclick="toggleView()">عرض مستمر</button>
+        </div>
+    </header>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-title">فصول المحاضرة</div>
+            <div id="chaptersList"></div>
+        </aside>
+        <main class="content">
+            <section id="singleView" class="slide-card"></section>
+            <section id="continuousView"></section>
+        </main>
+    </div>
+    <div id="printOnlyContainer">
+        <section class="cover-page">
+            <h1>Medical Terminology - Lecture 3</h1>
+            <h2>المحاضرة الثالثة: مصطلحات الجهاز التناسلي وعمليات النساء والتوليد</h2>
+            <p>نسخة دراسة وطباعة A4 تحتوي على صورة كل شريحة، ترجمة عربية دقيقة لكل جملة، شرح مبسط يربط الأفكار، وجدول مصطلحات إنجليزي/عربي مناسب للطلاب.</p>
+        </section>
+        <div id="printSlides"></div>
+    </div>
+    <script>
+        const slidesData = [
+    {
+        "slide_num": 1,
+        "title_en": "Reproductive System Terminology",
+        "title_ar": "مصطلحات الجهاز التناسلي",
+        "image": "imges/reproductive system _ L3/reproductive system_Page1.jpg",
+        "sentences": [
+            {
+                "en": "REPRODUCTIVE SYSTEM",
+                "ar": "الجهاز التناسلي."
+            },
+            {
+                "en": "By: Dr/Aisha Abdelnaser",
+                "ar": "بواسطة: الدكتورة/ عائشة عبد الناصر."
+            }
+        ],
+        "explanation": "شريحة الغلاف للمحاضرة الثالثة والأخيرة لمادة المصطلحات الطبية، وتركز بالكامل على مصطلحات وأعضاء وإجراءات الجهاز التناسلي (خصوصاً الأنثوي) وعمليات الحمل والولادة وجراحات الثدي.",
+        "glossary": [
+            {
+                "en": "Reproductive system",
+                "ar": "الجهاز التناسلي"
+            }
+        ]
+    },
+    {
+        "slide_num": 2,
+        "title_en": "Genitalia, Gonads, Testes & Ovaries",
+        "title_ar": "الأعضاء التناسلية والغدد التناسلية",
+        "image": "imges/reproductive system _ L3/reproductive system_Page2.jpg",
+        "sentences": [
+            {
+                "en": "Genitalia: external reproductive organs.",
+                "ar": "الأعضاء التناسلية الخارجية / جينيتاليا (Genitalia): هي الأعضاء التناسلية الواقعة خارج تجويف الجسم."
+            },
+            {
+                "en": "Gonads: internal reproductive organs.",
+                "ar": "الغدد التناسلية / جونادز (Gonads): هي الأعضاء التناسلية الداخلية الأساسية المنتجة للخلايا الجنسية."
+            },
+            {
+                "en": "Testes: produce spermatozoa (sperm cells).",
+                "ar": "الخصيتين (Testes): تنتجان الحيوانات المنوية (خلايا الحيوانات المنوية)."
+            },
+            {
+                "en": "Ovaries: produce ova (egg cells).",
+                "ar": "المبيضين (Ovaries): ينتجان البويضات (الخلايا البيضية)."
+            }
+        ],
+        "explanation": "تشرح الشريحة التقسيم الأساسي للأعضاء التناسلية: الأعضاء التناسلية الخارجية تسمى Genitalia، والأعضاء الداخلية الأساسية (الغدد التناسلية) تسمى Gonads وهي الخصيتين في الذكور لإنتاج الحيوانات المنوية، والمبيضين في الإناث لإنتاج البويضات.",
+        "glossary": [
+            {
+                "en": "Genitalia",
+                "ar": "الأعضاء التناسلية الخارجية"
+            },
+            {
+                "en": "Gonads",
+                "ar": "الغدد التناسلية الداخلية"
+            },
+            {
+                "en": "Testes",
+                "ar": "الخصيتين (مفردها خصية testis)"
+            },
+            {
+                "en": "Spermatozoa",
+                "ar": "الحيوانات المنوية (خلايا منوية)"
+            },
+            {
+                "en": "Ovaries",
+                "ar": "المبيضين (مفردها مبيض ovary)"
+            },
+            {
+                "en": "Ova",
+                "ar": "البويضات (مفردها بويضة ovum)"
+            }
+        ]
+    },
+    {
+        "slide_num": 3,
+        "title_en": "Combining Forms: Cervic/o, Colp/o & Vagin/o",
+        "title_ar": "الأشكال الرابطة: عنق الرحم والمهبل",
+        "image": "imges/reproductive system _ L3/reproductive system_Page3.jpg",
+        "sentences": [
+            {
+                "en": "Cervic/o: cervix (neck of the uterus).",
+                "ar": "سيرفيكو (cervic/o): تشير إلى عنق الرحم (والذي يمثل رقبة الرحم)."
+            },
+            {
+                "en": "Colp/o, Vagin/o: vagina.",
+                "ar": "كولبو (colp/o) وفاجينو (vagin/o): كلاهما يشيران إلى المهبل."
+            }
+        ],
+        "explanation": "الأشكال الرابطة الأساسية للجزء السفلي من الجهاز التناسلي الأنثوي. الشكل cervic/o يعني عنق الرحم (مثل cervical cancer سرطان عنق الرحم)، والشكلان colp/o و vagin/o كلاهما يعنيان المهبل (مثل colposcopy منظار المهبل).",
+        "glossary": [
+            {
+                "en": "Cervix",
+                "ar": "عنق الرحم"
+            },
+            {
+                "en": "Uterus",
+                "ar": "الرحم"
+            },
+            {
+                "en": "Vagina",
+                "ar": "المهبل"
+            }
+        ]
+    },
+    {
+        "slide_num": 4,
+        "title_en": "Combining Forms: Gynec/o, Hyster/o, Uter/o & Metr/o",
+        "title_ar": "الأشكال الرابطة: الأنثى وأنسجة الرحم",
+        "image": "imges/reproductive system _ L3/reproductive system_Page4.jpg",
+        "sentences": [
+            {
+                "en": "Gynec/o: Female.",
+                "ar": "جاينيكو (gynec/o): تشير إلى الأنثى أو المرأة (مثل: جاينيكولوجي / علم أمراض النساء)."
+            },
+            {
+                "en": "Hyster/o, Uter/o, Metr/o: uterus or uterine tissue.",
+                "ar": "هيستيرو (hyster/o)، يوتيرو (uter/o)، وميترو (metr/o): كلها تشير إلى الرحم أو أنسجة الرحم الداخلية."
+            }
+        ],
+        "explanation": "تشرح الشريحة الجذر الأساسي لطب النساء وهو gynec/o ويعني المرأة. كما تجمع الأشكال الثلاثة المرادفة للرحم وأنسجته العضلية والبطانية وهي hyster/o (مثل hysterectomy استئصال الرحم)، و uter/o (مثل uterine tube قناة الرحم)، و metr/o (مثل endometrium بطانة الرحم).",
+        "glossary": [
+            {
+                "en": "Female",
+                "ar": "أنثى / امرأة"
+            },
+            {
+                "en": "Uterine tissue",
+                "ar": "نسيج الرحم"
+            }
+        ]
+    },
+    {
+        "slide_num": 5,
+        "title_en": "Combining Forms: Oophor/o, Ovar/o, Salping/o & Vulv/o",
+        "title_ar": "الأشكال الرابطة: المبيض، الفالوب، والفرج",
+        "image": "imges/reproductive system _ L3/reproductive system_Page5.jpg",
+        "sentences": [
+            {
+                "en": "Oophor/o, Ovar/o: Ovary.",
+                "ar": "أووفورو (oophor/o) وأوفارو (ovar/o): كلاهما يشيران إلى المبيض (مثل: أووفوريتس / التهاب المبيض)."
+            },
+            {
+                "en": "salping/o: fallopian tube.",
+                "ar": "سالبينجو (salping/o): تشير إلى قناة فالوب (مثل: سالبينجيتس / التهاب قناة فالوب)."
+            },
+            {
+                "en": "vulv/o: vulva.",
+                "ar": "فولفو (vulv/o): تشير إلى الفرج (الأعضاء التناسلية الخارجية للأنثى) (مثل: فولفيتس / التهاب الفرج)."
+            }
+        ],
+        "explanation": "تستعرض هذه الشريحة الأشكال الرابطة لأعضاء الحوض الأنثوي: oophor/o و ovar/o للمبيض، و salping/o لقناة فالوب (التي تنقل البويضة من المبيض للرحم)، و vulv/o لفرج المرأة الخارجي.",
+        "glossary": [
+            {
+                "en": "Ovary",
+                "ar": "المبيض"
+            },
+            {
+                "en": "Fallopian tube",
+                "ar": "قناة فالوب (أنبوب الرحم)"
+            },
+            {
+                "en": "Vulva",
+                "ar": "الفرج (الفرج الأنثوي)"
+            }
+        ]
+    },
+    {
+        "slide_num": 6,
+        "title_en": "Procedures: Colposcopy",
+        "title_ar": "الإجراءات: منظار المهبل وعنق الرحم",
+        "image": "imges/reproductive system _ L3/reproductive system_Page6.jpg",
+        "sentences": [
+            {
+                "en": "Colposcopy: Examination of the cervix using special magnifying device (microscope).",
+                "ar": "منظار المهبل وعنق الرحم / كولبوسكوبي (Colposcopy): هو فحص بصري لعنق الرحم باستخدام جهاز تكبير طبي خاص (مجهر مهبلي كولبوسكوب)."
+            }
+        ],
+        "explanation": "الـ Colposcopy هو إجراء غير جراحي هام بالعيادة يُستخدم فيه مجهر مكبر ومضيء لرؤية جدار المهبل وعنق الرحم بوضوح تام، للكشف المبكر عن أي خلايا سرطانية أو قرح تأكلية بالنسيج المخاطي.",
+        "glossary": [
+            {
+                "en": "Colposcopy",
+                "ar": "منظار المهبل وعنق الرحم"
+            },
+            {
+                "en": "Magnifying device",
+                "ar": "جهاز تكبير (عدسة)"
+            },
+            {
+                "en": "Microscope",
+                "ar": "مجهر / ميكروسكوب"
+            }
+        ]
+    },
+    {
+        "slide_num": 7,
+        "title_en": "Procedures: Laparoscopy",
+        "title_ar": "الإجراءات: منظار البطن الجراحي",
+        "image": "imges/reproductive system _ L3/reproductive system_Page7.jpg",
+        "sentences": [
+            {
+                "en": "Laparoscopy: Surgical diagnostic procedure used to examine the abdominal structures.",
+                "ar": "منظار البطن / لاباروسكوبي (Laparoscopy): هو إجراء جراحي تشخيصي يُستخدم لفحص ورؤية تراكيب وأعضاء البطن والحوض الداخلية."
+            }
+        ],
+        "explanation": "الـ Laparoscopy هو عملية منظار البطن الجراحي (من خلال شقوق صغيرة بالبطن تسمى ثقب المفتاح)، ويستخدم لتشخيص أمراض الحوض والبطن مثل تكيسات المبيض، بطانة الرحم المهاجرة، أو استئصال الزائدة جراحياً.",
+        "glossary": [
+            {
+                "en": "Laparoscopy",
+                "ar": "منظار البطن الجراحي"
+            },
+            {
+                "en": "Diagnostic procedure",
+                "ar": "إجراء تشخيصي"
+            },
+            {
+                "en": "Abdominal structures",
+                "ar": "تراكيب وأعضاء البطن"
+            }
+        ]
+    },
+    {
+        "slide_num": 8,
+        "title_en": "Procedures: Hysteroscopy",
+        "title_ar": "الإجراءات: منظار الرحم الداخلي",
+        "image": "imges/reproductive system _ L3/reproductive system_Page8.jpg",
+        "sentences": [
+            {
+                "en": "Hysteroscopy: Direct visualization of the cervical canal and the uterine cavity using a hysteroscope.",
+                "ar": "منظار الرحم / هيستيروسكوبي (Hysteroscopy): هو الرؤية والمعاينة البصرية المباشرة لقناة عنق الرحم وتجويف الرحم الداخلي باستخدام جهاز منظار الرحم."
+            }
+        ],
+        "explanation": "الـ Hysteroscopy هو منظار الرحم الذي يتم إدخاله برفق عبر المهبل وعنق الرحم لتجويف الرحم مباشرة لرؤية وتشخيص سبب النزيف غير الطبيعي أو استئصال اللحميات والأورام الليفية الصغيرة داخل الرحم.",
+        "glossary": [
+            {
+                "en": "Hysteroscopy",
+                "ar": "منظار الرحم"
+            },
+            {
+                "en": "Visualization",
+                "ar": "رؤية بصرية / معاينة"
+            },
+            {
+                "en": "Cervical canal",
+                "ar": "قناة عنق الرحم"
+            },
+            {
+                "en": "Uterine cavity",
+                "ar": "تجويف الرحم"
+            },
+            {
+                "en": "Hysteroscope",
+                "ar": "جهاز منظار الرحم"
+            }
+        ]
+    },
+    {
+        "slide_num": 9,
+        "title_en": "Procedures: Hysterosalpingography (HSG)",
+        "title_ar": "الإجراءات: أشعة صبغة الرحم والأنابيب",
+        "image": "imges/reproductive system _ L3/reproductive system_Page9.jpg",
+        "sentences": [
+            {
+                "en": "Hysterosalpingography: X-ray examination of the uterus & fallopian tubes.",
+                "ar": "أشعة صبغة الرحم والأنابيب / هيستيروسالبينجوجرافي (Hysterosalpingography): هو فحص بالأشعة السينية (باستخدام الصبغة الملونة) لعقد الرحم وقنوات فالوب."
+            }
+        ],
+        "explanation": "الـ Hysterosalpingography (أشعة الصبغة HSG) هو فحص إشعاعي هام جداً لحالات تأخر الإنجاب، حيث يتم حقن صبغة سائلة ملونة عبر المهبل للرحم، وتصويرها بالأشعة السينية للتأكد من سلامة تجويف الرحم وعدم انسداد قنوات فالوب.",
+        "glossary": [
+            {
+                "en": "Hysterosalpingography",
+                "ar": "أشعة الصبغة للرحم والأنابيب"
+            },
+            {
+                "en": "X-ray examination",
+                "ar": "فحص بالأشعة السينية"
+            }
+        ]
+    },
+    {
+        "slide_num": 10,
+        "title_en": "Menstruation: Men/o & Suffixes",
+        "title_ar": "الدورة الشهرية: الجذور واللاحقات",
+        "image": "imges/reproductive system _ L3/reproductive system_Page10.jpg",
+        "sentences": [
+            {
+                "en": "men/o: month.",
+                "ar": "مينو (men/o): تشير إلى الشهر (الدورة الشهرية الطمثية)."
+            },
+            {
+                "en": "rrhea: discharge.",
+                "ar": "ريا (-rrhea): تعني تدفق، أو إفراز، أو تصريف سائل."
+            },
+            {
+                "en": "amenorrhea: absence of menstruation.",
+                "ar": "انقطاع الطمث / أمينوريا (amenorrhea): هو غياب أو انقطاع الدورة الشهرية."
+            },
+            {
+                "en": "dysmenorrhea: painful menstruation.",
+                "ar": "عسر الطمث / ديسمينوريا (dysmenorrhea): هو الدورة الشهرية المؤلمة وصعبة العبور."
+            },
+            {
+                "en": "menorrhagia: excessive menstrual bleeding (hemorrhage).",
+                "ar": "غزارة الطمث / مينوراجيا (menorrhagia): هو النزيف الحيضي المفرط أو الغزير جداً (نزيف طمثي)."
+            }
+        ],
+        "explanation": "توضح الشريحة مصطلحات الدورة الشهرية (Menstruation): الجذر men/o يعني شهرياً، واللاحقة rrhea تعني تدفق. دمجها يعطي: amenorrhea (انقطاع الدورة)، dysmenorrhea (آلام وعسر الدورة)، menorrhagia (نزيف الدورة الشديد).",
+        "glossary": [
+            {
+                "en": "Month",
+                "ar": "شهر"
+            },
+            {
+                "en": "Discharge",
+                "ar": "إفراز / تدفق سائل"
+            },
+            {
+                "en": "Amenorrhea",
+                "ar": "انقطاع الطمث (الدورة)"
+            },
+            {
+                "en": "Dysmenorrhea",
+                "ar": "عسر وطمث مؤلم"
+            },
+            {
+                "en": "Menorrhagia",
+                "ar": "غزارة النزيف الطمثي"
+            },
+            {
+                "en": "Menstruation",
+                "ar": "الدورة الشهرية (الطمث)"
+            }
+        ]
+    },
+    {
+        "slide_num": 11,
+        "title_en": "Reproductive Clinical Terms",
+        "title_ar": "المصطلحات السريرية للتكاثر",
+        "image": "imges/reproductive system _ L3/reproductive system_Page11.jpg",
+        "sentences": [
+            {
+                "en": "IVF: In Vitro Fertilization (test tube baby).",
+                "ar": "أطفال الأنابيب / الحقن المجهري (IVF): التخصيب المخبري خارج الجسم (طفل أنبوب الاختبار)."
+            },
+            {
+                "en": "Infertility: inability to conceive.",
+                "ar": "العقم / تأخر الإنجاب (Infertility): عدم القدرة على الحمل وتكوين الجنين."
+            },
+            {
+                "en": "HRT: Hormone Replacement Therapy (used for amenorrhea & menopause).",
+                "ar": "العلاج بالهرمونات البديلة (HRT): العلاج التعويضي بالهرمونات المصنعة (يستخدم لعلاج انقطاع الطمث وأعراض سن اليأس)."
+            },
+            {
+                "en": "Menopause: permanent cessation of menstruation.",
+                "ar": "سن اليأس / انقطاع الطمث التام (Menopause): التوقف الدائم والنهائي للدورة الشهرية بتقدم العمر."
+            },
+            {
+                "en": "Contraception: prevention of pregnancy and sexually transmitted illness.",
+                "ar": "وسائل منع الحمل (Contraception): طرق منع حدوث الحمل والوقاية من الأمراض المنقولة جنسياً."
+            }
+        ],
+        "explanation": "شريحة سريرية تجمع مصطلحات هامة: أطفال الأنابيب IVF، العقم infertility، العلاج الهرموني التعويضي HRT لمعالجة أعراض سن اليأس Menopause (توقف الطمث النهائي)، ووسائل تنظيم الأسرة ومنع الحمل contraception.",
+        "glossary": [
+            {
+                "en": "IVF",
+                "ar": "الحقن المجهري (أطفال أنابيب)"
+            },
+            {
+                "en": "Infertility",
+                "ar": "تأخر الإنجاب / العقم"
+            },
+            {
+                "en": "Hormone Replacement",
+                "ar": "العلاج الهرموني البديل"
+            },
+            {
+                "en": "Menopause",
+                "ar": "سن اليأس (انقطاع الطمث النهائي)"
+            },
+            {
+                "en": "Contraception",
+                "ar": "منع الحمل (تنظيم الأسرة)"
+            },
+            {
+                "en": "Sexually transmitted",
+                "ar": "المنقولة جنسياً"
+            }
+        ]
+    },
+    {
+        "slide_num": 12,
+        "title_en": "Birth Suffix: -natal & Variations",
+        "title_ar": "لاحقة الولادة: -ناتال وتغيراتها",
+        "image": "imges/reproductive system _ L3/reproductive system_Page12.jpg",
+        "sentences": [
+            {
+                "en": "The suffix -natal refers to birth.",
+                "ar": "اللاحقة ناتال (-natal): تشير وتتعلق بالولادة."
+            },
+            {
+                "en": "Prenatal: before birth.",
+                "ar": "بريناتال (Prenatal): تعني ما قبل الولادة (أثناء الحمل)."
+            },
+            {
+                "en": "Postnatal: after birth.",
+                "ar": "بوستناتال (Postnatal): تعني ما بعد الولادة (فترة النفاس للطفل)."
+            },
+            {
+                "en": "Perinatal: around birth.",
+                "ar": "بيريناتال (Perinatal): تعني حول الولادة (الفترة القصيرة قبل الولادة وبعدها مباشرة)."
+            },
+            {
+                "en": "Neonatal: new born (first 28 days of life).",
+                "ar": "نيوناتال (Neonatal): تعني حديث الولادة (الطفل في الـ 28 يوماً الأولى من عمره)."
+            }
+        ],
+        "explanation": "تشرح الشريحة اللاحقة -natal وهي تعني الولادة، وتغير البادئات لتغيير المعنى والوقت الزمني: pre- قبل الولادة، post- بعد الولادة، peri- المحيطة بالولادة سريرياً، و neo- حديث الولادة الصغير.",
+        "glossary": [
+            {
+                "en": "Birth",
+                "ar": "الولادة"
+            },
+            {
+                "en": "Prenatal",
+                "ar": "قبل الولادة (أثناء الحمل)"
+            },
+            {
+                "en": "Postnatal",
+                "ar": "بعد الولادة"
+            },
+            {
+                "en": "Perinatal",
+                "ar": "الفترة المحيطة بالولادة"
+            },
+            {
+                "en": "Neonatal",
+                "ar": "حديث الولادة (أقل من شهر)"
+            }
+        ]
+    },
+    {
+        "slide_num": 13,
+        "title_en": "Gravidity: Pregnancy Counts",
+        "title_ar": "الحمل: حساب عدد مرات الحمل",
+        "image": "imges/reproductive system _ L3/reproductive system_Page13.jpg",
+        "sentences": [
+            {
+                "en": "Multigravida: a woman who has been pregnant two or more times.",
+                "ar": "ملتيجرافيدا (Multigravida): امرأة حملت مرتين أو أكثر في حياتها (متعددة الحمل)."
+            },
+            {
+                "en": "Primigravida: a woman pregnant for the first time.",
+                "ar": "بريميجرافيدا (Primigravida): امرأة حامل للمرة الأولى في حياتها (حامل بكرية)."
+            }
+        ],
+        "explanation": "مفاهيم هامة جداً لتسجيل التاريخ الطبي للمرأة الحامل بالعيادة: Primigravida تعني حامل حالياً للمرة الأولى فقط، و Multigravida تعني حملت مرتين أو أكثر بغض النظر عن انتهاء الحمل بولادة طفل حي أو إجهاض.",
+        "glossary": [
+            {
+                "en": "Multigravida",
+                "ar": "متعددة مرات الحمل"
+            },
+            {
+                "en": "Primigravida",
+                "ar": "حامل للمرة الأولى"
+            }
+        ]
+    },
+    {
+        "slide_num": 14,
+        "title_en": "Parity: Birth Counts",
+        "title_ar": "الولادة: حساب عدد الولادات الحية",
+        "image": "imges/reproductive system _ L3/reproductive system_Page14.jpg",
+        "sentences": [
+            {
+                "en": "Unipara: a woman who has given birth to one viable child.",
+                "ar": "يونيبارا / بريميبارا (Unipara): امرأة أنجبت طفلاً حياً واحداً قابلاً للحياة."
+            },
+            {
+                "en": "Multipara: a woman who has given birth two or more times.",
+                "ar": "ملتيبارا (Multipara): امرأة أنجبت (ولدت) مرتين أو أكثر أطفالاً أحياء."
+            },
+            {
+                "en": "Nullipara: a woman who has never given birth to a viable child.",
+                "ar": "نليبارا (Nullipara): امرأة لم تلد وتنجب قط أي طفل حي قابل للحياة من قبل."
+            }
+        ],
+        "explanation": "تفرق الشريحة بين مصطلحات الولادة الحية (Parity) التي تعني إنجاب جنين حي عبر مرحلة القابلية للحياة (عادة 24 أسبوعاً)، وتصنف النساء إلى: Unipara (ولدت طفلاً واحداً)، Multipara (ولدت مرتين أو أكثر)، Nullipara (لم تلد طفلاً حياً أبداً).",
+        "glossary": [
+            {
+                "en": "Unipara",
+                "ar": "أنجبت طفلاً واحداً حياً"
+            },
+            {
+                "en": "Multipara",
+                "ar": "أنجبت مرتين أو أكثر"
+            },
+            {
+                "en": "Nullipara",
+                "ar": "لم تنجب طفلاً حياً قط"
+            },
+            {
+                "en": "Viable child",
+                "ar": "طفل قابل للحياة"
+            }
+        ]
+    },
+    {
+        "slide_num": 15,
+        "title_en": "Breast Procedures: Mammography",
+        "title_ar": "إجراءات الثدي: أشعة الماموجرام",
+        "image": "imges/reproductive system _ L3/reproductive system_Page15.jpg",
+        "sentences": [
+            {
+                "en": "MAMMOGRAPHY: mamm/o (breast) + graphy (process of recording).",
+                "ar": "تصوير الثدي بالأشعة / ماموجرافي (MAMMOGRAPHY): مامو (ثدي) + جرافي (عملية تصوير إشعاعي)."
+            },
+            {
+                "en": "radiographic examination of the breast.",
+                "ar": "هو الفحص الإشعاعي (التصوير بالأشعة السينية) لأنسجة الثدي للكشف عن الأورام."
+            }
+        ],
+        "explanation": "تفكك الشريحة المصطلح Mammography لغوياً: mamm/o تعني الثدي وجرافي تعني تصوير. وتبين أنه فحص إشعاعي وقائي هام جداً للنساء فوق سن الأربعين للكشف المبكر عن أورام وسرطانات الثدي قبل ظهور أعراضها.",
+        "glossary": [
+            {
+                "en": "Mammography",
+                "ar": "تصوير الثدي بالأشعة"
+            },
+            {
+                "en": "Radiographic",
+                "ar": "إشعاعي (باستخدام الأشعة السينية)"
+            }
+        ]
+    },
+    {
+        "slide_num": 16,
+        "title_en": "Breast Procedures: Lumpectomy",
+        "title_ar": "إجراءات الثدي: استئصال الكتلة الورمية",
+        "image": "imges/reproductive system _ L3/reproductive system_Page16.jpg",
+        "sentences": [
+            {
+                "en": "LUMPECTOMY: lump + ectomy (excision).",
+                "ar": "استئصال الورم الموضعي / لامبكتومي (LUMPECTOMY): لامب (كتلة ورمية) + إكتومي (استئصال جراحي للقطع)."
+            },
+            {
+                "en": "surgical removal of a breast lump.",
+                "ar": "هو الاستئصال الجراحي الموضعي لكتلة أو ورم داخل الثدي مع الحفاظ على بقية الثدي سليماً."
+            }
+        ],
+        "explanation": "تشرح الشريحة عملية الـ Lumpectomy وهي عملية جراحية تحفظية للثدي، حيث يقوم الجراح باستئصال الكتلة الورمية فقط (lump) مع حواف أمان بسيطة دون الحاجة لإزالة الثدي بالكامل، للمحافظة على شكل الثدي.",
+        "glossary": [
+            {
+                "en": "Lumpectomy",
+                "ar": "استئصال الكتلة الورمية"
+            },
+            {
+                "en": "Lump",
+                "ar": "كتلة / ورم موضعي"
+            },
+            {
+                "en": "Surgical removal",
+                "ar": "إزالة جراحية"
+            }
+        ]
+    },
+    {
+        "slide_num": 17,
+        "title_en": "Breast Procedures: Mastectomy",
+        "title_ar": "إجراءات الثدي: استئصال الثدي بالكامل",
+        "image": "imges/reproductive system _ L3/reproductive system_Page17.jpg",
+        "sentences": [
+            {
+                "en": "MASTECTOMY: mast/o (breast) + ectomy (removal).",
+                "ar": "استئصال الثدي / ماستكتومي (MASTECTOMY): ماستو (ثدي) + إكتومي (استئصال وإزالة جراحية للقطع)."
+            },
+            {
+                "en": "surgical removal of the breast.",
+                "ar": "هو عملية الاستئصال والإزالة الجراحية الكاملة لعضو الثدي بأكمله بسبب وجود ورم سرطاني واسع الانتشار."
+            }
+        ],
+        "explanation": "توضح الشريحة المصطلح الجراحي الهام Mastectomy ومكوناته: mast/o تعني ثدي و ectomy تعني استئصال. وتعرف العملية بأنها الإزالة الكلية لأنسجة الثدي كعلاج رئيسي لسرطان الثدي المتقدم للوقاية من الانتشار المسرطن.",
+        "glossary": [
+            {
+                "en": "Mastectomy",
+                "ar": "استئصال الثدي"
+            },
+            {
+                "en": "Breast removal",
+                "ar": "إزالة الثدي"
+            }
+        ]
+    },
+    {
+        "slide_num": 18,
+        "title_en": "Breast Pathologies: Mastitis",
+        "title_ar": "أمراض الثدي: التهاب الثدي",
+        "image": "imges/reproductive system _ L3/reproductive system_Page18.jpg",
+        "sentences": [
+            {
+                "en": "MASTITIS: mast/o (breast) + itis (inflammation).",
+                "ar": "التهاب الثدي / ماستايتس (MASTITIS): ماستو (ثدي) + آيتس (التهاب جاري)."
+            },
+            {
+                "en": "inflammation of the breast tissue.",
+                "ar": "هو حدوث التهاب أو عدوى بكتيرية حادة تصيب أنسجة الثدي وتسبب ألماً واحمراراً (شائع عند الرضاعة)."
+            }
+        ],
+        "explanation": "تنهي الشريحة المحاضرة بمرض شائع يصيب الثدي وهو الـ Mastitis (التهاب الثدي) المكون من mast/o (ثدي) و itis (التهاب). وهي حالة التهابية مؤلمة تحدث غالباً للمرضعات بسبب انسداد قنوات الحليب وتجمع البكتيريا.",
+        "glossary": [
+            {
+                "en": "Mastitis",
+                "ar": "التهاب الثدي"
+            },
+            {
+                "en": "Breast tissue",
+                "ar": "أنسجة الثدي"
+            }
+        ]
+    }
+];
+        const chapters = [{"name": "1. مقدمة وأقسام الغدد التناسلية", "start": 1, "end": 2}, {"name": "2. الأشكال الرابطة لأعضاء التناسل", "start": 3, "end": 5}, {"name": "3. إجراءات فحص الحوض بالمناظير", "start": 6, "end": 9}, {"name": "4. الطمث وعلاجات سن اليأس", "start": 10, "end": 11}, {"name": "5. مراحل الحمل والولادة وعدد المرات", "start": 12, "end": 14}, {"name": "6. أمراض الثدي والعمليات الجراحية", "start": 15, "end": 18}];
+        
+        let currentIndex = 0;
+        let viewMode = 'single';
+
+        function termHtml(terms) {
+            return terms.map(function(t) {
+                return '<div class="term"><span class="term-en">' + t.en + '</span><span class="term-ar">' + t.ar + '</span></div>';
+            }).join('');
+        }
+
+        function pairsHtml(pairs) {
+            return pairs.map(function(p) {
+                return '<div class="pair"><div class="ar">' + p.ar + '</div><div class="en">' + p.en + '</div></div>';
+            }).join('');
+        }
+
+        function navHtml() {
+            return '<div class="nav-row"><button class="btn" onclick="prevSlide()" ' + (currentIndex === 0 ? 'disabled' : '') + '>الشريحة السابقة</button><span class="counter">الشريحة ' + (currentIndex + 1) + ' من ' + slidesData.length + '</span><button class="btn" onclick="nextSlide()" ' + (currentIndex === slidesData.length - 1 ? 'disabled' : '') + '>الشريحة التالية</button></div>';
+        }
+
+        function slideHtml(slide, includeNav) {
+            return '<div class="slide-inner"><div class="s-header"><div><h3 class="s-title-ar">' + slide.title_ar + '</h3><div class="s-title-en">' + slide.title_en + '</div></div><span class="s-badge">SLIDE ' + slide.slide_num + '</span></div><div class="s-image-wrap"><img src="' + slide.image + '" alt="Slide ' + slide.slide_num + '"></div><section><div class="section-title">الترجمة التفصيلية الحرفية</div><div class="sentences">' + pairsHtml(slide.sentences) + '</div></section><section class="explain"><div class="section-title">الشرح الحيوي المبسط</div><p class="explain-text">' + slide.explanation + '</p></section><section><div class="section-title">مصطلحات الشريحة المهمة</div><div class="glossary-grid">' + termHtml(slide.glossary) + '</div></section></div>' + (includeNav ? navHtml() : '');
+        }
+
+        function loadSlide(index) {
+            currentIndex = Math.max(0, Math.min(index, slidesData.length - 1));
+            document.getElementById('singleView').innerHTML = slideHtml(slidesData[currentIndex], true);
+            updateActiveLink();
+        }
+
+        function nextSlide() {
+            loadSlide(currentIndex + 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prevSlide() {
+            loadSlide(currentIndex - 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function buildChapters() {
+            var root = document.getElementById('chaptersList');
+            root.innerHTML = chapters.map(function(ch) {
+                var links = slidesData.filter(function(s) {
+                    return s.slide_num >= ch.start && s.slide_num <= ch.end;
+                }).map(function(s) {
+                    return '<li><a class="slide-link" data-slide="' + s.slide_num + '" onclick="goToSlide(' + (s.slide_num - 1) + ')"><span>' + s.title_ar + '</span><span class="slide-no">' + s.slide_num + '</span></a></li>';
+                }).join('');
+                return '<div class="chapter"><div class="chapter-name">' + ch.name + '</div><ul class="slide-links">' + links + '</ul></div>';
+            }).join('');
+        }
+
+        function goToSlide(index) {
+            if (viewMode !== 'single') toggleView();
+            loadSlide(index);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateActiveLink() {
+            document.querySelectorAll('.slide-link').forEach(function(a) {
+                a.classList.toggle('active', Number(a.dataset.slide) === currentIndex + 1);
+            });
+        }
+
+        function toggleView() {
+            var single = document.getElementById('singleView');
+            var continuous = document.getElementById('continuousView');
+            var btn = document.getElementById('toggleBtn');
+            if (viewMode === 'single') {
+                viewMode = 'continuous';
+                single.style.display = 'none';
+                continuous.style.display = 'grid';
+                btn.textContent = 'عرض شريحة واحدة';
+                buildContinuous();
+            } else {
+                viewMode = 'single';
+                continuous.style.display = 'none';
+                single.style.display = 'block';
+                btn.textContent = 'عرض مستمر';
+                loadSlide(currentIndex);
+            }
+        }
+
+        function buildContinuous() {
+            document.getElementById('continuousView').innerHTML = slidesData.map(function(s) {
+                return '<article class="slide-block" id="slide-' + s.slide_num + '">' + slideHtml(s, false) + '</article>';
+            }).join('');
+        }
+
+        function buildPrint() {
+            document.getElementById('printSlides').innerHTML = slidesData.map(function(s) {
+                return '<article class="print-slide">' + slideHtml(s, false) + '</article>';
+            }).join('');
+        }
+
+        buildChapters();
+        loadSlide(0);
+        buildPrint();
+    </script>
+</body>
+</html>
