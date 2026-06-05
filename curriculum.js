@@ -54,7 +54,7 @@ const curriculumData = {
           ]
         },
         "biology": {
-          "name": "Biology",
+          "name": "Biology (رياضة)",
           "lectures": [
             {
               "num": 1,
