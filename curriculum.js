@@ -161,5 +161,6 @@ const curriculumData = {
       "name": "الترم السادس (Semester 6)",
       "subjects": {}
     }
-  }
+  },
+  "onesignal_app_id": "b5ae701e-5e1a-484e-bb16-1ef160e87e44"
 };
