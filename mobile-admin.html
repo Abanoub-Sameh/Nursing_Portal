@@ -1402,6 +1402,7 @@
         await saveCurriculumOnly(editLectureNum ? "Update lecture " + num : "Add lecture " + num);
 
         // Send notifications if checked
+        const notificationErrors = [];
         if ($("sendNotificationCheck").checked && onesignalAppId) {
           setStatus("جاري إرسال الإشعارات للطلاب...");
           for (const [fileType, meta] of Object.entries(FILE_TYPES)) {
@@ -1421,6 +1422,7 @@
                 await postOneSignalNotification(onesignalAppId, onesignalRestKey, notificationTitle, notificationMessage);
               } catch (e) {
                 console.error("Failed to send notification for " + fileType, e);
+                notificationErrors.push(e.message || String(e));
               }
             }
           }
@@ -1428,6 +1430,10 @@
 
         resetForm(true);
         renderLectures();
+        if (notificationErrors.length) {
+          setStatus("تم الرفع والحفظ، لكن فشل تجهيز الإشعار: " + notificationErrors[0], "err");
+          return;
+        }
         setStatus("تم الرفع والحفظ. موقع الطلاب هيتحدث خلال دقيقة تقريبًا.", "ok");
       } catch (err) {
         setStatus("فشل الحفظ: " + explainGithubError(err.message), "err");
@@ -1437,29 +1443,16 @@
     }
 
     async function postOneSignalNotification(appId, apiKey, title, message) {
-      const response = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflows/send-onesignal-notification.yml/dispatches`, {
-        method: "POST",
-        headers: {
-          ...headers(),
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          ref: BRANCH,
-          inputs: {
-            app_id: appId,
-            title: title,
-            message: message,
-            rest_key: apiKey,
-            url: "https://abanoub-sameh.github.io/Nursing_Portal/"
-          }
-        })
-      });
-      if (!response.ok) {
-        const errText = await response.text().catch(() => "");
-        let errData = {};
-        try { errData = JSON.parse(errText); } catch (_) {}
-        throw new Error(errData.message || errText || "GitHub Actions dispatch error " + response.status);
-      }
+      const requestId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+      const requestPath = `.notification-requests/${requestId}.json`;
+      const payload = {
+        app_id: appId,
+        title,
+        message,
+        url: "https://abanoub-sameh.github.io/Nursing_Portal/",
+        created_at: new Date().toISOString()
+      };
+      await putFile(requestPath, encodeBase64Unicode(JSON.stringify(payload, null, 2)), "Queue OneSignal notification");
       return true;
     }
 

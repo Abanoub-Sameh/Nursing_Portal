@@ -1,6 +1,9 @@
 name: Send OneSignal notification
 
 on:
+  push:
+    paths:
+      - ".notification-requests/*.json"
   workflow_dispatch:
     inputs:
       app_id:
@@ -12,33 +15,35 @@ on:
       message:
         description: Notification message
         required: true
-      rest_key:
-        description: OneSignal REST API key
-        required: false
       url:
         description: URL opened when students tap the notification
         required: false
         default: https://abanoub-sameh.github.io/Nursing_Portal/
 
+permissions:
+  contents: read
+
 jobs:
   send:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout notification request
+        if: github.event_name == 'push'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
       - name: Send push notification
         env:
           ONESIGNAL_REST_KEY: ${{ secrets.ONESIGNAL_REST_KEY }}
-          INPUT_REST_KEY: ${{ inputs.rest_key }}
-          APP_ID: ${{ inputs.app_id }}
-          TITLE: ${{ inputs.title }}
-          MESSAGE: ${{ inputs.message }}
-          TARGET_URL: ${{ inputs.url }}
+          DISPATCH_APP_ID: ${{ inputs.app_id }}
+          DISPATCH_TITLE: ${{ inputs.title }}
+          DISPATCH_MESSAGE: ${{ inputs.message }}
+          DISPATCH_URL: ${{ inputs.url }}
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.sha }}
+          EVENT_NAME: ${{ github.event_name }}
         run: |
-          if [ -n "$INPUT_REST_KEY" ]; then
-            echo "::add-mask::$INPUT_REST_KEY"
-          fi
-          if [ -z "$ONESIGNAL_REST_KEY" ]; then
-            ONESIGNAL_REST_KEY="$INPUT_REST_KEY"
-          fi
           if [ -z "$ONESIGNAL_REST_KEY" ]; then
             echo "Missing GitHub secret: ONESIGNAL_REST_KEY"
             exit 1
@@ -47,39 +52,78 @@ jobs:
           python3 - <<'PY'
           import json
           import os
+          import subprocess
           import urllib.error
           import urllib.request
+          from pathlib import Path
 
-          payload = {
-              "app_id": os.environ["APP_ID"],
-              "target_channel": "push",
-              "included_segments": ["Subscribed Users"],
-              "headings": {"en": os.environ["TITLE"], "ar": os.environ["TITLE"]},
-              "contents": {"en": os.environ["MESSAGE"], "ar": os.environ["MESSAGE"]},
-              "url": os.environ["TARGET_URL"],
-          }
+          def changed_request_files():
+              if os.environ["EVENT_NAME"] != "push":
+                  return []
+              before = os.environ.get("BEFORE_SHA", "")
+              after = os.environ.get("AFTER_SHA", "HEAD")
+              try:
+                  output = subprocess.check_output(
+                      ["git", "diff", "--name-only", before, after, "--", ".notification-requests"],
+                      text=True,
+                  )
+              except Exception:
+                  output = ""
+              files = [Path(line.strip()) for line in output.splitlines() if line.strip().endswith(".json")]
+              if files:
+                  return files
+              return sorted(Path(".notification-requests").glob("*.json"), key=lambda path: path.stat().st_mtime)[-1:]
 
-          request = urllib.request.Request(
-              "https://api.onesignal.com/notifications",
-              data=json.dumps(payload).encode("utf-8"),
-              headers={
-                  "Content-Type": "application/json; charset=utf-8",
-                  "Authorization": "Key " + os.environ["ONESIGNAL_REST_KEY"],
-              },
-              method="POST",
-          )
+          def dispatch_request():
+              if os.environ["EVENT_NAME"] != "workflow_dispatch":
+                  return []
+              return [{
+                  "app_id": os.environ["DISPATCH_APP_ID"],
+                  "title": os.environ["DISPATCH_TITLE"],
+                  "message": os.environ["DISPATCH_MESSAGE"],
+                  "url": os.environ["DISPATCH_URL"] or "https://abanoub-sameh.github.io/Nursing_Portal/",
+              }]
 
-          try:
-              with urllib.request.urlopen(request, timeout=30) as response:
-                  body = response.read().decode("utf-8", "replace")
-          except urllib.error.HTTPError as exc:
-              body = exc.read().decode("utf-8", "replace")
-              raise SystemExit(f"OneSignal error {exc.code}: {body}")
+          requests = []
+          for path in changed_request_files():
+              with path.open("r", encoding="utf-8") as handle:
+                  requests.append(json.load(handle))
+          requests.extend(dispatch_request())
 
-          result = json.loads(body or "{}")
-          if result.get("errors"):
-              raise SystemExit("OneSignal errors: " + json.dumps(result["errors"], ensure_ascii=False))
-          if not result.get("id"):
-              raise SystemExit("OneSignal accepted the request, but no notification id was returned. Check subscribed users.")
-          print("Notification sent:", result["id"])
+          if not requests:
+              raise SystemExit("No notification requests found.")
+
+          for item in requests:
+              payload = {
+                  "app_id": item["app_id"],
+                  "target_channel": "push",
+                  "included_segments": ["Subscribed Users"],
+                  "headings": {"en": item["title"], "ar": item["title"]},
+                  "contents": {"en": item["message"], "ar": item["message"]},
+                  "url": item.get("url") or "https://abanoub-sameh.github.io/Nursing_Portal/",
+              }
+
+              request = urllib.request.Request(
+                  "https://api.onesignal.com/notifications",
+                  data=json.dumps(payload).encode("utf-8"),
+                  headers={
+                      "Content-Type": "application/json; charset=utf-8",
+                      "Authorization": "Key " + os.environ["ONESIGNAL_REST_KEY"],
+                  },
+                  method="POST",
+              )
+
+              try:
+                  with urllib.request.urlopen(request, timeout=30) as response:
+                      body = response.read().decode("utf-8", "replace")
+              except urllib.error.HTTPError as exc:
+                  body = exc.read().decode("utf-8", "replace")
+                  raise SystemExit(f"OneSignal error {exc.code}: {body}")
+
+              result = json.loads(body or "{}")
+              if result.get("errors"):
+                  raise SystemExit("OneSignal errors: " + json.dumps(result["errors"], ensure_ascii=False))
+              if not result.get("id"):
+                  raise SystemExit("OneSignal accepted the request, but no notification id was returned. Check subscribed users.")
+              print("Notification sent:", result["id"])
           PY
