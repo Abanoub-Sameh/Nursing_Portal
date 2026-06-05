@@ -2,28 +2,33 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b1020">
-  <title>أدمن الموبايل | مكتبة تمريض</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#090d16">
+  <title>أدمن الموبايل 📱 | مكتبة تمريض</title>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --bg: #0b1020;
-      --panel: #111a2e;
-      --panel-2: #17223a;
-      --line: rgba(255, 255, 255, .09);
-      --text: #eef4ff;
-      --muted: #9fb0cc;
-      --blue: #5b7cfa;
-      --green: #15bf86;
-      --red: #ef476f;
+      --bg: #090d16;
+      --panel: #101626;
+      --panel-2: #172036;
+      --panel-hover: #1e2947;
+      --line: rgba(255, 255, 255, 0.06);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --blue: #6366f1;
+      --blue-glow: rgba(99, 102, 241, 0.25);
+      --green: #10b981;
+      --green-glow: rgba(16, 185, 129, 0.2);
+      --red: #ef4444;
       --amber: #f59e0b;
-      --radius: 12px;
+      --radius: 16px;
+      --radius-sm: 8px;
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     * {
@@ -34,18 +39,19 @@
 
     body {
       min-height: 100vh;
-      font-family: "Tajawal", system-ui, sans-serif;
+      font-family: "Tajawal", "Inter", system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
-      padding: 14px;
-      line-height: 1.5;
+      padding: 16px;
+      line-height: 1.6;
+      touch-action: manipulation;
     }
 
     .shell {
-      max-width: 760px;
+      max-width: 680px;
       margin: 0 auto;
       display: grid;
-      gap: 14px;
+      gap: 16px;
     }
 
     header {
@@ -53,27 +59,33 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 16px;
+      padding: 20px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: var(--panel);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
     }
 
     h1 {
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       font-weight: 900;
+      background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     h2 {
-      font-size: 1rem;
+      font-size: 1.1rem;
       border-right: 4px solid var(--blue);
       padding-right: 10px;
       font-weight: 800;
+      color: #fff;
     }
 
     .sub {
       color: var(--muted);
-      font-size: .86rem;
+      font-size: 0.82rem;
       margin-top: 3px;
     }
 
@@ -81,26 +93,34 @@
       color: #fff;
       background: var(--blue);
       text-decoration: none;
-      padding: 9px 12px;
-      border-radius: 10px;
+      padding: 9px 15px;
+      border-radius: var(--radius-sm);
       font-weight: 800;
       white-space: nowrap;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px var(--blue-glow);
+    }
+
+    .student-link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px var(--blue-glow);
     }
 
     .card {
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 16px;
+      padding: 20px;
       display: grid;
-      gap: 14px;
+      gap: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
 
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 12px;
     }
 
     label {
@@ -108,90 +128,204 @@
       gap: 6px;
       color: var(--muted);
       font-weight: 800;
-      font-size: .86rem;
+      font-size: 0.85rem;
     }
 
     input, select, button {
       width: 100%;
       font: inherit;
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
       border: 1px solid var(--line);
-      min-height: 44px;
+      min-height: 46px;
       outline: none;
+      transition: var(--transition);
     }
 
     input, select {
       background: var(--panel-2);
       color: var(--text);
-      padding: 10px 12px;
-      transition: border-color 0.2s;
+      padding: 10px 14px;
     }
 
     input:focus, select:focus {
       border-color: var(--blue);
+      box-shadow: 0 0 10px var(--blue-glow);
     }
 
-    input[type="file"] {
-      padding: 8px;
-      min-height: auto;
+    .files {
+      display: grid;
+      gap: 16px;
+    }
+
+    /* Category Cards to visually group each upload section */
+    .file-category-card {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+      transition: var(--transition);
+    }
+
+    .file-category-card:focus-within {
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .file-category-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
     }
 
     /* Target specific file inputs wrappers */
     .file-box {
-      background: rgba(255, 255, 255, 0.015);
-      border: 1px dashed var(--line);
-      border-radius: 10px;
-      padding: 12px;
-      display: block;
+      background: rgba(99, 102, 241, 0.02);
+      border: 1px dashed rgba(99, 102, 241, 0.2);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
+      text-align: center;
+      gap: 4px;
+      transition: var(--transition);
+    }
+
+    .file-box:hover {
+      background: rgba(99, 102, 241, 0.05);
+      border-color: var(--blue);
+    }
+
+    .file-box input[type="file"] {
+      display: none;
+    }
+
+    .file-box-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text);
     }
 
     .file-box small {
       display: block;
       color: var(--muted);
       font-weight: 400;
-      font-size: 0.78rem;
-      margin-bottom: 4px;
+      font-size: 0.76rem;
     }
 
-    .file-group {
-      display: grid;
+    .selected-files-list {
+      display: flex;
+      flex-wrap: wrap;
       gap: 6px;
-      background: rgba(255, 255, 255, 0.01);
-      border-radius: 10px;
+      padding: 2px 4px;
+    }
+
+    .selected-file-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: var(--green);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      direction: ltr;
+      text-align: left;
+      max-width: 100%;
+    }
+
+    .btn-cancel-select {
+      cursor: pointer;
+      font-weight: 900;
+      color: var(--red);
+      font-size: 1.1rem;
+      display: inline-block;
+      padding: 0 4px;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .btn-cancel-select:hover {
+      transform: scale(1.25);
     }
 
     button {
       color: #fff;
       background: var(--blue);
-      font-weight: 900;
+      font-weight: 800;
       cursor: pointer;
       border: none;
-      padding: 10px 12px;
-      transition: opacity 0.2s, background-color 0.2s;
+      padding: 10px 16px;
+      box-shadow: 0 4px 12px var(--blue-glow);
     }
 
-    button.secondary { background: var(--panel-2); border: 1px solid var(--line); }
-    button.success { background: var(--green); }
-    button.danger { background: var(--red); }
-    button:disabled { opacity: .55; cursor: wait; }
+    button:hover {
+      background: #7a7df2;
+      transform: translateY(-1px);
+    }
+
+    button.secondary {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      color: var(--text);
+      box-shadow: none;
+    }
+
+    button.secondary:hover {
+      background: var(--panel-hover);
+    }
+
+    button.success {
+      background: var(--green);
+      box-shadow: 0 4px 12px var(--green-glow);
+    }
+
+    button.success:hover {
+      background: #34d399;
+    }
+
+    button.danger {
+      background: var(--red);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+    }
+
+    button.danger:hover {
+      background: #f87171;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: wait;
+      transform: none !important;
+      box-shadow: none !important;
+    }
 
     .token-row {
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 8px;
+      gap: 12px;
       align-items: end;
     }
 
     .token-row button {
       width: auto;
-      min-width: 116px;
+      min-width: 120px;
     }
 
     .hint {
       color: var(--muted);
-      font-size: .82rem;
-      line-height: 1.7;
+      font-size: 0.8rem;
+      line-height: 1.6;
     }
 
     .remember-row {
@@ -201,7 +335,7 @@
       gap: 10px;
       flex-wrap: wrap;
       color: var(--muted);
-      font-size: .86rem;
+      font-size: 0.85rem;
       font-weight: 800;
     }
 
@@ -223,78 +357,73 @@
 
     .remember-row button {
       width: auto;
-      min-height: 36px;
-      padding: 7px 12px;
+      min-height: 38px;
+      padding: 7px 14px;
       font-size: 0.82rem;
     }
 
-    .notice {
-      border: 1px solid rgba(245, 158, 11, .3);
-      background: rgba(245, 158, 11, .08);
-      color: #fed7aa;
-      padding: 10px 12px;
-      border-radius: 10px;
-      line-height: 1.6;
-      font-size: .88rem;
-    }
-
-    .files {
-      display: grid;
-      gap: 12px;
-    }
-
-    /* Current files list styles - completely fixed */
+    /* Fixed files list styles using CSS Grid (no flex layout direction bugs) */
     .current-files-list {
       display: grid;
       gap: 6px;
     }
 
     .current-file-item {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.02);
       padding: 10px 14px;
-      border-radius: var(--radius);
+      border-radius: var(--radius-sm);
       border: 1px solid var(--line);
       gap: 12px;
+    }
+
+    .current-file-icon {
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .current-file-name {
       font-size: 0.86rem;
       direction: ltr;
       text-align: left;
-      word-break: break-word;
+      word-break: break-all;
       white-space: normal;
-      flex: 1;
-      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text);
     }
 
     .btn-remove-file {
-      width: auto !important;
-      min-height: auto !important;
-      background: rgba(239, 71, 111, 0.08) !important;
-      border: 1px solid rgba(239, 71, 111, 0.3) !important;
-      color: var(--red) !important;
+      width: auto;
+      min-height: auto;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: var(--red);
       cursor: pointer;
       font-weight: 800;
-      padding: 8px 16px !important;
-      border-radius: 8px !important;
-      transition: all 0.15s ease;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      transition: var(--transition);
       white-space: nowrap;
-      flex-shrink: 0;
+      box-shadow: none;
     }
 
     .btn-remove-file:hover {
-      background: rgba(239, 71, 111, 0.16) !important;
-      border-color: rgba(239, 71, 111, 0.5) !important;
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.4);
+      transform: none;
     }
 
     .actions {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 6px;
+      gap: 12px;
+      margin-top: 8px;
     }
 
     .lectures {
@@ -305,55 +434,85 @@
     .lecture {
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 10px;
+      gap: 12px;
       align-items: center;
       background: var(--panel-2);
       border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 12px;
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      transition: var(--transition);
     }
 
-    .lecture strong { display: block; font-size: 0.94rem; }
-    .lecture span { color: var(--muted); font-size: .82rem; margin-top: 2px; display: block; }
+    .lecture:hover {
+      border-color: rgba(99, 102, 241, 0.3);
+      background: var(--panel-hover);
+    }
+
+    .lecture strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .lecture span {
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-top: 4px;
+      display: block;
+    }
 
     .lecture-actions {
       display: flex;
-      gap: 6px;
+      gap: 8px;
     }
 
     .lecture-actions button {
       width: 42px;
-      min-height: 38px;
+      min-height: 42px;
       padding: 0;
       display: grid;
       place-items: center;
+      border-radius: 8px;
+      box-shadow: none;
     }
 
     .status {
       position: sticky;
-      bottom: 10px;
+      bottom: 16px;
       z-index: 100;
       min-height: 46px;
       border: 1px solid var(--line);
-      background: #0f172a;
-      border-radius: var(--radius);
-      padding: 12px;
-      color: var(--muted);
+      background: rgba(16, 22, 38, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      color: var(--text);
       font-weight: 800;
-      line-height: 1.55;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, .35);
+      line-height: 1.6;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
       font-size: 0.9rem;
+      transition: var(--transition);
     }
 
-    .status.ok { color: #86efac; border-color: rgba(21, 191, 134, .45); }
-    .status.err { color: #fda4af; border-color: rgba(239, 71, 111, .45); }
+    .status.ok {
+      color: var(--green);
+      border-color: rgba(16, 185, 129, 0.4);
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1);
+    }
+
+    .status.err {
+      color: var(--red);
+      border-color: rgba(239, 68, 68, 0.4);
+      box-shadow: 0 10px 30px rgba(239, 68, 68, 0.1);
+    }
 
     .progress-track {
       height: 6px;
       overflow: hidden;
       border-radius: 99px;
       background: rgba(255, 255, 255, 0.05);
-      margin-top: 4px;
+      margin-top: 6px;
     }
 
     .progress-fill {
@@ -364,7 +523,7 @@
     }
 
     @media (max-width: 620px) {
-      body { padding: 10px; }
+      body { padding: 12px; }
       header { align-items: flex-start; flex-direction: column; }
       .student-link { width: 100%; text-align: center; }
       .grid, .actions, .token-row { grid-template-columns: 1fr; }
@@ -379,15 +538,12 @@
         <h1>أدمن الموبايل 📱</h1>
         <p class="sub">رفع محاضرة أو تعديل بيانات الموقع من أي مكان</p>
       </div>
-      <a class="student-link" href="index.html" target="_blank">فتح موقع الطلاب</a>
+      <a class="student-link" href="https://abanoub-sameh.github.io/Nursing_Portal" target="_blank">فتح موقع الطلاب</a>
     </header>
 
     <!-- GitHub Token Authentication Card -->
     <section class="card">
       <h2>تسجيل GitHub</h2>
-      <div class="notice">
-        استخدم Token خاص بحسابك وصلاحيته على مستودع Nursing_Portal فقط. الصفحة لا تحفظ التوكن داخل الكود.
-      </div>
       <div class="token-row">
         <label>
           GitHub Token
@@ -402,9 +558,6 @@
         </label>
         <button class="secondary" id="clearTokenBtn" type="button">مسح المحفوظ</button>
       </div>
-      <p class="hint">
-        المطلوب في التوكن: Repository access للمسودع ده فقط، و Contents = Read and write.
-      </p>
     </section>
 
     <!-- Lecture Editor Card -->
@@ -422,17 +575,11 @@
         </label>
       </div>
 
-      <div class="grid">
-        <label>
-          إضافة مادة جديدة
-          <input id="newSubjectInput" type="text" placeholder="مثال: Histology">
-        </label>
-        <label>
-          مفتاح المادة
-          <input id="newSubjectKeyInput" type="text" placeholder="اختياري: histology">
-        </label>
+      <!-- Subject management row -->
+      <div id="subjectManageRow" style="display: flex; gap: 10px; margin-top: -6px; margin-bottom: 6px;">
+        <button class="secondary" id="editSubjectBtn" type="button" style="min-height: 38px; padding: 6px 12px; font-size: 0.82rem; width: auto; flex: 1; box-shadow: none;">✏️ تعديل اسم المادة</button>
+        <button class="danger" id="deleteSubjectBtn" type="button" style="min-height: 38px; padding: 6px 12px; font-size: 0.82rem; width: auto; flex: 1; box-shadow: none;">🗑️ حذف المادة</button>
       </div>
-      <button class="secondary" id="addSubjectBtn" type="button">إضافة المادة للقائمة</button>
 
       <div class="grid">
         <label>
@@ -446,43 +593,59 @@
       </div>
 
       <div class="files">
-        <!-- fileOriginal -->
-        <div class="file-group">
+        <!-- Category: Original PPT -->
+        <div class="file-category-card">
+          <div class="file-category-title">
+            <span>📊 الباور الأصلي للدكتورة</span>
+          </div>
           <label class="file-box">
-            الباور الأصلي للدكتورة
-            <small>اختار ملف أو أكتر</small>
+            <span class="file-box-title">اضغط هنا لاختيار ملفات جديدة</span>
+            <small>يمكنك اختيار ملف أو أكثر (.ppt, .pptx, .pdf)</small>
             <input id="fileOriginal" type="file" accept=".ppt,.pptx,.pdf" multiple>
           </label>
+          <div id="selectedFiles-original_ppt" class="selected-files-list"></div>
           <div id="currentFiles-original_ppt" class="current-files-list"></div>
         </div>
 
-        <!-- fileTranslated -->
-        <div class="file-group">
+        <!-- Category: Translated PPT -->
+        <div class="file-category-card">
+          <div class="file-category-title">
+            <span>📝 الباور المترجم والملخصات</span>
+          </div>
           <label class="file-box">
-            الباور المترجم
-            <small>PDF أو PowerPoint أو HTML</small>
+            <span class="file-box-title">اضغط هنا لاختيار ملفات جديدة</span>
+            <small>يمكنك اختيار ملف أو أكثر (.ppt, .pptx, .pdf, .html)</small>
             <input id="fileTranslated" type="file" accept=".ppt,.pptx,.pdf,.html" multiple>
           </label>
+          <div id="selectedFiles-translated_ppt" class="selected-files-list"></div>
           <div id="currentFiles-translated_ppt" class="current-files-list"></div>
         </div>
 
-        <!-- fileMyQuiz -->
-        <div class="file-group">
+        <!-- Category: Admin Quiz -->
+        <div class="file-category-card">
+          <div class="file-category-title">
+            <span>🎯 بنك أسئلة (الأدمن)</span>
+          </div>
           <label class="file-box">
-            بنك أسئلة (اجتهاد شخصي)
-            <small>ينفع HTML أو PDF</small>
+            <span class="file-box-title">اضغط هنا لاختيار ملفات جديدة</span>
+            <small>يمكنك اختيار ملف أو أكثر (.html, .pdf)</small>
             <input id="fileMyQuiz" type="file" accept=".html,.pdf" multiple>
           </label>
+          <div id="selectedFiles-my_quiz" class="selected-files-list"></div>
           <div id="currentFiles-my_quiz" class="current-files-list"></div>
         </div>
 
-        <!-- fileDoctorQuiz -->
-        <div class="file-group">
+        <!-- Category: Doctor Quiz -->
+        <div class="file-category-card">
+          <div class="file-category-title">
+            <span>🩺 بنك أسئلة الدكتورة</span>
+          </div>
           <label class="file-box">
-            بنك أسئلة الدكتورة
-            <small>ينفع HTML أو PDF</small>
+            <span class="file-box-title">اضغط هنا لاختيار ملفات جديدة</span>
+            <small>يمكنك اختيار ملف أو أكثر (.html, .pdf)</small>
             <input id="fileDoctorQuiz" type="file" accept=".html,.pdf" multiple>
           </label>
+          <div id="selectedFiles-doctor_quiz" class="selected-files-list"></div>
           <div id="currentFiles-doctor_quiz" class="current-files-list"></div>
         </div>
       </div>
@@ -530,6 +693,14 @@
     let uploadPlan = [];
     let busy = false;
 
+    // Managed arrays for new selected files pending upload
+    const selectedFilesToUpload = {
+      original_ppt: [],
+      translated_ppt: [],
+      my_quiz: [],
+      doctor_quiz: []
+    };
+
     const $ = (id) => document.getElementById(id);
 
     $("loadBtn").addEventListener("click", loadCurriculum);
@@ -546,9 +717,29 @@
       renderLectures();
     });
     
-    $("addSubjectBtn").addEventListener("click", addSubject);
     $("saveBtn").addEventListener("click", saveLecture);
     $("resetBtn").addEventListener("click", () => resetForm(true));
+    $("editSubjectBtn").addEventListener("click", editSubject);
+    $("deleteSubjectBtn").addEventListener("click", deleteSubject);
+
+    // Listen to changes on file inputs and add them to programmatically managed list
+    Object.entries(FILE_TYPES).forEach(([key, meta]) => {
+      const input = $(meta.input);
+      if (input) {
+        input.addEventListener("change", () => {
+          Array.from(input.files || []).forEach(file => {
+            // Avoid adding exact duplicate file objects
+            const isDuplicate = selectedFilesToUpload[key].some(f => f.name === file.name && f.size === file.size);
+            if (!isDuplicate) {
+              selectedFilesToUpload[key].push(file);
+            }
+          });
+          // Clear input so user can choose same files again if needed
+          input.value = "";
+          renderSelectedFiles(key);
+        });
+      }
+    });
 
     initSavedToken();
 
@@ -618,12 +809,14 @@
       return path.split("/").map(encodeURIComponent).join("/");
     }
 
+    // Unicode safe base64 decoder
     function decodeBase64Unicode(base64) {
       const binary = atob(base64.replace(/\n/g, ""));
       const bytes = Uint8Array.from(binary, ch => ch.charCodeAt(0));
       return new TextDecoder().decode(bytes);
     }
 
+    // Unicode safe base64 encoder
     function encodeBase64Unicode(text) {
       const bytes = new TextEncoder().encode(text);
       let binary = "";
@@ -709,45 +902,78 @@
         subjectSelect.add(new Option(subject.name, key));
       });
 
+      const manageRow = $("subjectManageRow");
       if (!subjectSelect.value) {
         $("lectureNum").value = 1;
+        if (manageRow) manageRow.style.display = "none";
         return;
       }
+      if (manageRow) manageRow.style.display = "flex";
       suggestNextLectureNum();
     }
 
-    function addSubject() {
-      if (!curriculumData) return;
-
-      const name = $("newSubjectInput").value.trim();
-      const customKey = $("newSubjectKeyInput").value.trim();
-      if (!name) {
-        setStatus("اكتب اسم المادة الجديدة.", "err");
+    async function editSubject() {
+      const selected = getSelectedSubject();
+      if (!selected) {
+        setStatus("اختار مادة الأول.", "err");
         return;
       }
-
-      const key = sanitizeKey(customKey || name);
-      const termKey = $("termSelect").value;
-      const subjects = curriculumData.terms[termKey].subjects;
-
-      if (subjects[key]) {
-        setStatus("المادة دي موجودة بالفعل.", "err");
+      const oldName = selected.subject.name;
+      const newName = prompt(`تعديل اسم المادة من "${oldName}" إلى:`, oldName);
+      if (newName === null) return; // cancelled
+      const trimmed = newName.trim();
+      if (!trimmed) {
+        setStatus("اسم المادة لا يمكن أن يكون فارغاً.", "err");
         return;
       }
+      if (trimmed === oldName) return;
 
-      subjects[key] = { name, lectures: [] };
-      fillSubjects();
-      $("subjectSelect").value = key;
-      $("newSubjectInput").value = "";
-      $("newSubjectKeyInput").value = "";
-      suggestNextLectureNum();
-      renderLectures();
-      setStatus("اتضافت المادة للقائمة. اضغط رفع وحفظ المحاضرة بعد إضافة أول محاضرة.", "ok");
+      if (!confirm(`هل أنت متأكد من تغيير اسم المادة من "${oldName}" إلى "${trimmed}" في موقع الطلاب؟`)) return;
+
+      selected.subject.name = trimmed;
+      
+      try {
+        setBusy(true);
+        setStatus("جاري تحديث اسم المادة على GitHub...");
+        await saveCurriculumOnly(`Rename subject ${oldName} to ${trimmed}`);
+        fillSubjects();
+        $("subjectSelect").value = selected.subjectKey;
+        renderLectures();
+        setStatus("تم تعديل اسم المادة بنجاح.", "ok");
+      } catch (err) {
+        setStatus("فشل تعديل الاسم: " + explainGithubError(err.message), "err");
+      } finally {
+        setBusy(false);
+      }
     }
 
-    function sanitizeKey(value) {
-      const key = value.toLowerCase().trim().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
-      return key || "subject_" + Date.now();
+    async function deleteSubject() {
+      const selected = getSelectedSubject();
+      if (!selected) {
+        setStatus("اختار مادة الأول.", "err");
+        return;
+      }
+      const name = selected.subject.name;
+      const lecturesCount = (selected.subject.lectures || []).length;
+      
+      if (!confirm(`⚠️ تحذير هام:\nهل أنت متأكد من حذف المادة "${name}" بالكامل؟\nسيتم حذف المادة وعدد (${lecturesCount}) محاضرة مرتبطة بها نهائياً من موقع الطلاب!`)) return;
+      if (!confirm(`تأكيد نهائي: هل تريد حقاً حذف مادة "${name}"؟ هذا الإجراء لا يمكن التراجع عنه.`)) return;
+
+      delete curriculumData.terms[selected.termKey].subjects[selected.subjectKey];
+      
+      try {
+        setBusy(true);
+        setStatus("جاري حذف المادة من GitHub...");
+        await saveCurriculumOnly(`Delete subject ${name}`);
+        fillSubjects();
+        resetForm(true);
+        renderLectures();
+        setStatus("تم حذف المادة بالكامل من الموقع.", "ok");
+      } catch (err) {
+        setStatus("فشل حذف المادة: " + explainGithubError(err.message), "err");
+      } finally {
+        setBusy(false);
+      }
     }
 
     function sanitizeFileName(name) {
@@ -780,13 +1006,46 @@
       $("editorTitle").textContent = "إضافة محاضرة";
       $("saveBtn").textContent = "رفع وحفظ المحاضرة";
       if (clearTitle) $("lectureTitle").value = "";
+      
       Object.values(FILE_TYPES).forEach(type => $(type.input).value = "");
       Object.keys(FILE_TYPES).forEach(key => {
+        // Reset managed arrays
+        selectedFilesToUpload[key] = [];
+        // Clear UI displays
         const container = $(`currentFiles-${key}`);
         if (container) container.innerHTML = "";
+        const selectedContainer = $(`selectedFiles-${key}`);
+        if (selectedContainer) selectedContainer.innerHTML = "";
       });
       uploadPlan = [];
       suggestNextLectureNum();
+    }
+
+    function renderSelectedFiles(key) {
+      const display = $(`selectedFiles-${key}`);
+      if (!display) return;
+      display.innerHTML = "";
+      
+      selectedFilesToUpload[key].forEach((file, index) => {
+        const badge = document.createElement("span");
+        badge.className = "selected-file-badge";
+        
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = `⏳ جاهز: ${file.name}`;
+        
+        const cancelBtn = document.createElement("span");
+        cancelBtn.className = "btn-cancel-select";
+        cancelBtn.textContent = " × ";
+        cancelBtn.title = "إلغاء التحديد";
+        cancelBtn.addEventListener("click", () => {
+          selectedFilesToUpload[key].splice(index, 1);
+          renderSelectedFiles(key);
+        });
+        
+        badge.appendChild(nameSpan);
+        badge.appendChild(cancelBtn);
+        display.appendChild(badge);
+      });
     }
 
     function renderLectures() {
@@ -832,19 +1091,18 @@
       return value ? [value] : [];
     }
 
-    辅助 = {
-      escapeHtml: function(text) {
-        return text.replace(/[&<>"']/g, ch => ({
-          "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
-        }[ch]));
-      }
-    };
-    
-    // Fixed: Keep it simple
     function escapeHtml(text) {
       return text.replace(/[&<>"']/g, ch => ({
         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
       }[ch]));
+    }
+
+    function getFileIcon(filename) {
+      const ext = filename.split('.').pop().toLowerCase();
+      if (ext === 'pdf') return '📕';
+      if (ext === 'ppt' || ext === 'pptx') return '📊';
+      if (ext === 'html' || ext === 'htm') return '🌐';
+      return '📄';
     }
 
     function editLecture(num) {
@@ -859,7 +1117,13 @@
       $("saveBtn").textContent = "حفظ التعديل";
       $("lectureNum").value = lecture.num;
       $("lectureTitle").value = lecture.title_ar || "";
+      
       Object.values(FILE_TYPES).forEach(type => $(type.input).value = "");
+      Object.keys(FILE_TYPES).forEach(key => {
+        selectedFilesToUpload[key] = [];
+        const selectedContainer = $(`selectedFiles-${key}`);
+        if (selectedContainer) selectedContainer.innerHTML = "";
+      });
       
       renderCurrentFiles();
 
@@ -880,9 +1144,15 @@
           const item = document.createElement("div");
           item.className = "current-file-item";
 
+          const filename = path.split("/").pop();
+
+          const iconSpan = document.createElement("span");
+          iconSpan.className = "current-file-icon";
+          iconSpan.textContent = getFileIcon(filename);
+
           const nameSpan = document.createElement("span");
           nameSpan.className = "current-file-name";
-          nameSpan.textContent = path.split("/").pop();
+          nameSpan.textContent = filename;
           nameSpan.title = path;
 
           const removeBtn = document.createElement("button");
@@ -890,13 +1160,13 @@
           removeBtn.className = "btn-remove-file";
           removeBtn.textContent = "حذف ❌";
           removeBtn.addEventListener("click", () => {
-            const filename = path.split("/").pop();
             if (!confirm(`هل أنت متأكد من حذف الملف "${filename}" من هذه المحاضرة؟`)) return;
             paths.splice(index, 1);
             editLectureFiles[key] = paths;
             renderCurrentFiles();
           });
 
+          item.appendChild(iconSpan);
           item.appendChild(nameSpan);
           item.appendChild(removeBtn);
           container.appendChild(item);
@@ -926,9 +1196,8 @@
 
     function collectSelectedFiles() {
       const selected = [];
-      Object.values(FILE_TYPES).forEach(meta => {
-        const input = $(meta.input);
-        Array.from(input.files || []).forEach(file => selected.push(file));
+      Object.values(selectedFilesToUpload).forEach(filesArray => {
+        filesArray.forEach(file => selected.push(file));
       });
       return selected;
     }
@@ -954,6 +1223,25 @@
         return;
       }
 
+      // Confirmation prompt when adding or modifying a lecture
+      if (editLectureNum !== null) {
+        const existingLec = lectures.find(item => Number(item.num) === Number(editLectureNum));
+        const oldTitle = existingLec ? existingLec.title_ar : "";
+        if (oldTitle !== title) {
+          if (!confirm(`هل أنت متأكد من تغيير اسم المحاضرة من "${oldTitle}" إلى "${title}"؟`)) {
+            return;
+          }
+        } else {
+          if (!confirm("هل أنت متأكد من حفظ التعديلات على هذه المحاضرة؟")) {
+            return;
+          }
+        }
+      } else {
+        if (!confirm(`هل أنت متأكد من إضافة المحاضرة "${title}"؟`)) {
+          return;
+        }
+      }
+
       try {
         setBusy(true);
         uploadPlan = collectSelectedFiles();
@@ -964,10 +1252,11 @@
         let uploadedCount = 0;
 
         for (const [fileType, meta] of Object.entries(FILE_TYPES)) {
-          const fileInput = $(meta.input);
           const paths = normalizeFiles(files[fileType]);
-          if (fileInput.files.length) {
-            for (const file of Array.from(fileInput.files)) {
+          const pendingFiles = selectedFilesToUpload[fileType];
+
+          if (pendingFiles.length) {
+            for (const file of pendingFiles) {
               const cleanName = sanitizeFileName(file.name);
               const path = `terms/term_${selected.termNumber}/${selected.subjectKey}/${meta.folder}/${cleanName}`;
               setStatus(`جاري رفع: ${cleanName}`);

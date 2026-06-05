@@ -1,102 +1,105 @@
 (function () {
   'use strict';
 
-  var DONE_KEY = 'nurLib_done';
-  var TERM_KEY = 'nurLib_term';
-  var SUB_KEY = 'nurLib_sub';
+  // LocalStorage Keys
+  const DONE_KEY = 'nurLib_done';
+  const TERM_KEY = 'nurLib_term';
+  const SUB_KEY = 'nurLib_sub';
 
-  var terms = curriculumData.terms;
-  var allTermKeys = Object.keys(terms);
-  var filledTermKeys = [];
-  var emptyTermKeys = [];
+  const terms = curriculumData.terms;
+  const allTermKeys = Object.keys(terms);
+  const filledTermKeys = [];
+  const emptyTermKeys = [];
 
-  allTermKeys.forEach(function (key) {
-    var subjects = terms[key].subjects || {};
-    var hasLectures = Object.keys(subjects).some(function (subKey) {
+  // Categorize terms based on content availability
+  allTermKeys.forEach((key) => {
+    const subjects = terms[key].subjects || {};
+    const hasContent = Object.keys(subjects).some((subKey) => {
       return (subjects[subKey].lectures || []).length > 0;
     });
-    if (hasLectures || Object.keys(subjects).length > 0) {
+    if (hasContent) {
       filledTermKeys.push(key);
     } else {
       emptyTermKeys.push(key);
     }
   });
 
-  var activeTerm = localStorage.getItem(TERM_KEY) || filledTermKeys[0] || allTermKeys[0];
-  var activeSub = localStorage.getItem(SUB_KEY) || null;
-  var allOpen = false;
-  var doneMap = loadDone();
+  // State Management
+  let activeTerm = localStorage.getItem(TERM_KEY) || filledTermKeys[0] || allTermKeys[0];
+  let activeSub = localStorage.getItem(SUB_KEY) || null;
+  const doneMap = loadDone();
 
-  var termBar = document.getElementById('termBar');
-  var subjectBar = document.getElementById('subjectBar');
-  var ctrlBar = document.getElementById('ctrlBar');
-  var btnToggle = document.getElementById('btnToggle');
-  var ctrlProg = document.getElementById('ctrlProgress');
-  var lecBox = document.getElementById('lectures');
-  var emptyBox = document.getElementById('emptyBox');
-  var subjectTitle = document.getElementById('subjectTitle');
-  var activeLabel = document.getElementById('activeLabel');
-  var activeTitle = document.getElementById('activeTitle');
+  // DOM Elements
+  const termBar = document.getElementById('termBar');
+  const subjectBar = document.getElementById('subjectBar');
+  const lecBox = document.getElementById('lectures');
+  const emptyBox = document.getElementById('emptyBox');
+  const emptyTitle = document.getElementById('emptyTitle');
+  const emptySub = document.getElementById('emptySub');
+  const studentGreeting = document.getElementById('studentGreeting');
 
-  var FILE_SLOTS = [
-    {
-      key: 'original_ppt',
-      label: 'الباور الأصلي',
-      icon: iconDocument()
-    },
-    {
-      key: 'translated_ppt',
-      label: 'الباور المترجم',
-      icon: iconNotes()
-    },
-    {
-      key: 'my_quiz',
-      label: 'بنك أسئلة (اجتهاد شخصي)',
-      icon: iconTarget()
-    },
-    {
-      key: 'doctor_quiz',
-      label: 'بنك أسئلة الدكتورة',
-      icon: iconStethoscope()
-    }
+  // File Slot Metadata
+  const FILE_SLOTS = [
+    { key: 'original_ppt', label: 'الباور الأصلي للدكتورة', class: 'original_ppt' },
+    { key: 'translated_ppt', label: 'الباور المترجم والملخصات', class: 'translated_ppt' },
+    { key: 'my_quiz', label: 'بنك أسئلة (الأدمن)', class: 'my_quiz' },
+    { key: 'doctor_quiz', label: 'بنك أسئلة الدكتورة', class: 'doctor_quiz' }
   ];
 
   function init() {
+    updateGreeting();
     renderTermBar();
     loadTerm(activeTerm);
-    btnToggle.addEventListener('click', toggleAll);
   }
 
+  // Time-based student greeting generator
+  function updateGreeting() {
+    const hour = new Date().getHours();
+    let text = "📚 محاضرات، ترجمه و بنوك في مكان واحد";
+    
+    if (hour >= 5 && hour < 12) {
+      text = "صباح الخير يا دكتور! جاهز لمذاكرة النهاردة؟ ☀️";
+    } else if (hour >= 12 && hour < 17) {
+      text = "📚 محاضرات، ترجمه و بنوك في مكان واحد";
+    } else if (hour >= 17 && hour < 24) {
+      text = "مساء الورد يا بطل! جاهز لجرعة مذاكرة لذيذة؟ 🌙";
+    } else {
+      text = "سهاري يا دكتور؟ عاش يا بطل، ربنا يوفقك ويسهلها عليك! 🦉";
+    }
+    
+    if (studentGreeting) studentGreeting.textContent = text;
+  }
+
+  // Render horizontal Term bar pills
   function renderTermBar() {
     termBar.innerHTML = '';
 
-    filledTermKeys.forEach(function (key) {
-      var pill = document.createElement('button');
+    filledTermKeys.forEach((key) => {
+      const pill = document.createElement('button');
       pill.className = 'term-pill' + (key === activeTerm ? ' active' : '');
       pill.textContent = shortTermName(terms[key].name);
       pill.setAttribute('data-t', key);
       pill.type = 'button';
-      pill.addEventListener('click', function () {
-        setTerm(key);
-      });
+      pill.addEventListener('click', () => setTerm(key));
       termBar.appendChild(pill);
     });
 
+    // Native select drop-down for empty terms
     if (emptyTermKeys.length > 0) {
-      var wrap = document.createElement('div');
+      const wrap = document.createElement('div');
       wrap.className = 'term-select-wrap';
 
-      var select = document.createElement('select');
+      const select = document.createElement('select');
       select.className = 'term-select-native';
       select.id = 'termSelectNative';
 
-      var placeholder = document.createElement('option');
+      const placeholder = document.createElement('option');
       placeholder.value = '';
       placeholder.textContent = 'باقي الترمات';
       placeholder.disabled = true;
       select.appendChild(placeholder);
 
-      emptyTermKeys.forEach(function (key) {
+      emptyTermKeys.forEach((key) => {
         select.add(new Option(shortTermName(terms[key].name), key));
       });
 
@@ -107,7 +110,7 @@
         select.value = '';
       }
 
-      select.addEventListener('change', function () {
+      select.addEventListener('change', () => {
         if (select.value) setTerm(select.value);
       });
 
@@ -124,117 +127,123 @@
   }
 
   function loadTerm(termKey) {
-    var term = terms[termKey];
-    var subjects = Object.keys(term.subjects || {});
+    const term = terms[termKey];
+    
+    // Sort subjects by lecture count descending
+    const sortedSubjects = Object.keys(term.subjects || {}).sort((a, b) => {
+      const countA = (term.subjects[a].lectures || []).length;
+      const countB = (term.subjects[b].lectures || []).length;
+      return countB - countA;
+    });
 
-    if (subjects.length === 0) {
+    if (sortedSubjects.length === 0) {
       activeSub = null;
       subjectBar.style.display = 'none';
-      ctrlBar.style.display = 'none';
       lecBox.style.display = 'none';
       emptyBox.style.display = '';
-      subjectTitle.textContent = 'لا توجد مواد';
-      updateHero(term.name, 'انت مستعجل علي ايه 🙂');
+      emptyTitle.textContent = 'انت مستعجل على ايه 🙂';
+      emptySub.textContent = 'الترم ده فاضي حالياً، المحاضرات هتنزل هنا أول ما تتوفر.';
       return;
     }
 
     if (!activeSub || !term.subjects[activeSub]) {
-      activeSub = firstSubjectWithLectures(term) || subjects[0];
+      activeSub = sortedSubjects[0];
     } else if ((term.subjects[activeSub].lectures || []).length === 0) {
-      activeSub = firstSubjectWithLectures(term) || activeSub;
+      activeSub = sortedSubjects[0] || activeSub;
     }
 
     localStorage.setItem(SUB_KEY, activeSub);
     subjectBar.style.display = '';
     lecBox.style.display = '';
     emptyBox.style.display = 'none';
-    renderSubjects(termKey, subjects);
+    
+    renderSubjects(termKey, sortedSubjects);
     renderLectures(termKey, activeSub);
   }
 
-  function renderSubjects(termKey, subjects) {
+  // Render active term's subjects scrollable chips (sorted by lecture count)
+  function renderSubjects(termKey, sortedSubjectKeys) {
     subjectBar.innerHTML = '';
 
-    subjects.forEach(function (subjectKey) {
-      var subject = terms[termKey].subjects[subjectKey];
-      var count = (subject.lectures || []).length;
-      var chip = document.createElement('button');
+    sortedSubjectKeys.forEach((subjectKey) => {
+      const subject = terms[termKey].subjects[subjectKey];
+      const count = (subject.lectures || []).length;
+      const chip = document.createElement('button');
       chip.className = 'sub-chip' + (subjectKey === activeSub ? ' active' : '');
       chip.type = 'button';
       chip.setAttribute('data-s', subjectKey);
-      chip.textContent = subject.name + ' · ' + count;
-      chip.addEventListener('click', function () {
+      chip.textContent = `${subject.name} · ${count}`;
+      chip.addEventListener('click', () => {
         activeSub = subjectKey;
         localStorage.setItem(SUB_KEY, subjectKey);
-        renderSubjects(termKey, subjects);
+        renderSubjects(termKey, sortedSubjectKeys);
         renderLectures(termKey, subjectKey);
       });
       subjectBar.appendChild(chip);
     });
   }
 
+  // Render lectures inside the active subject
   function renderLectures(termKey, subjectKey) {
-    var term = terms[termKey];
-    var subject = term.subjects[subjectKey];
-    var lectures = subject.lectures || [];
+    const term = terms[termKey];
+    const subject = term.subjects[subjectKey];
+    const lectures = subject.lectures || [];
 
     lecBox.innerHTML = '';
-    allOpen = false;
-    updateToggleBtn();
-    subjectTitle.textContent = subject.name;
 
     if (lectures.length === 0) {
-      ctrlBar.style.display = 'none';
-      lecBox.innerHTML = emptyMarkup('🙂', 'انت مستعجل علي ايه 🙂', '');
-      updateHero(term.name, subject.name);
+      lecBox.style.display = 'none';
+      emptyBox.style.display = '';
+      emptyTitle.textContent = 'المحاضرات لسه منزلتش 🙂';
+      emptySub.textContent = `مادة ${subject.name} مفيش فيها محاضرات مرفوعة لسه.`;
       return;
     }
 
-    ctrlBar.style.display = '';
+    lecBox.style.display = 'grid';
+    emptyBox.style.display = 'none';
 
-    lectures.forEach(function (lecture) {
+    lectures.forEach((lecture) => {
       lecBox.appendChild(makeLectureCard(termKey, subjectKey, lecture));
     });
-
-    updateStats(termKey, subjectKey, lectures);
   }
 
+  // Construct lecture accordion HTML element
   function makeLectureCard(termKey, subjectKey, lecture) {
-    var doneKey = termKey + '_' + subjectKey + '_' + lecture.num;
-    var isDone = !!doneMap[doneKey];
-    var files = lecture.files || {};
-    var available = countFiles(files);
+    const doneKey = `${termKey}_${subjectKey}_${lecture.num}`;
+    const isDone = !!doneMap[doneKey];
+    const files = lecture.files || {};
+    const availableFiles = countFiles(files);
 
-    var card = document.createElement('article');
+    const card = document.createElement('article');
     card.className = 'lec-card' + (isDone ? ' done' : '');
 
-    var head = document.createElement('div');
+    const head = document.createElement('div');
     head.className = 'lec-head';
 
-    var num = document.createElement('span');
+    const num = document.createElement('span');
     num.className = 'lec-num';
     num.textContent = lecture.num;
 
-    var main = document.createElement('div');
+    const main = document.createElement('div');
     main.className = 'lec-main';
 
-    var title = document.createElement('h3');
+    const title = document.createElement('h3');
     title.className = 'lec-title';
     title.textContent = lecture.title_ar;
 
-    var meta = document.createElement('div');
+    const meta = document.createElement('div');
     meta.className = 'lec-meta';
-    meta.appendChild(document.createTextNode(available + ' ملفات'));
+    meta.appendChild(document.createTextNode(`${availableFiles} ملفات`));
     meta.appendChild(makeFileDots(files));
 
     main.appendChild(title);
     main.appendChild(meta);
 
-    var actions = document.createElement('div');
+    const actions = document.createElement('div');
     actions.className = 'lec-actions';
-    actions.appendChild(makeCheckbox(doneKey, card, termKey, subjectKey));
+    actions.appendChild(makeCheckbox(doneKey, card));
 
-    var chev = document.createElement('span');
+    const chev = document.createElement('span');
     chev.className = 'lec-chev';
     chev.innerHTML = iconChevron();
     actions.appendChild(chev);
@@ -243,16 +252,20 @@
     head.appendChild(main);
     head.appendChild(actions);
 
-    var body = document.createElement('div');
+    const body = document.createElement('div');
     body.className = 'lec-body';
-    var inner = document.createElement('div');
+    
+    const inner = document.createElement('div');
     inner.className = 'lec-body-inner';
-    FILE_SLOTS.forEach(function (slot) {
+    
+    FILE_SLOTS.forEach((slot) => {
       inner.appendChild(makeFileRow(slot, normalizeFiles(files[slot.key])));
     });
     body.appendChild(inner);
 
-    head.addEventListener('click', function () {
+    // Accordion expand/collapse click handler (excluding tap on checkbox)
+    head.addEventListener('click', (event) => {
+      if (event.target.closest('.lec-cb')) return;
       toggleCard(card, body);
     });
 
@@ -261,18 +274,17 @@
     return card;
   }
 
-  function makeCheckbox(doneKey, card, termKey, subjectKey) {
-    var label = document.createElement('label');
+  // Create study checkbox "تمت المذاكرة"
+  function makeCheckbox(doneKey, card) {
+    const label = document.createElement('label');
     label.className = 'lec-cb';
     label.title = 'تمت المذاكرة';
-    label.addEventListener('click', function (event) {
-      event.stopPropagation();
-    });
 
-    var input = document.createElement('input');
+    const input = document.createElement('input');
     input.type = 'checkbox';
     input.checked = !!doneMap[doneKey];
-    input.addEventListener('change', function () {
+    
+    input.addEventListener('change', () => {
       if (input.checked) {
         doneMap[doneKey] = true;
       } else {
@@ -280,63 +292,65 @@
       }
       saveDone();
       card.classList.toggle('done', input.checked);
-      updateStats(termKey, subjectKey);
     });
 
-    var visual = document.createElement('span');
+    const visual = document.createElement('span');
     visual.className = 'lec-cb-v';
+    
     label.appendChild(input);
     label.appendChild(visual);
     return label;
   }
 
+  // Construct individual file slot row
   function makeFileRow(slot, paths) {
-    var row = document.createElement('div');
+    const row = document.createElement('div');
     row.className = 'f-row';
 
-    var label = document.createElement('div');
+    const label = document.createElement('div');
     label.className = 'f-label';
 
-    var icon = document.createElement('span');
-    icon.className = 'f-label-icon ' + slot.key;
-    icon.innerHTML = slot.icon;
+    const icon = document.createElement('span');
+    icon.className = 'f-label-icon ' + slot.class;
+    icon.innerHTML = getSlotSvgIcon(slot.key);
 
-    var text = document.createElement('span');
+    const text = document.createElement('span');
     text.textContent = slot.label;
 
     label.appendChild(icon);
     label.appendChild(text);
 
-    var buttons = document.createElement('div');
+    const buttons = document.createElement('div');
     buttons.className = 'f-btns';
 
     if (paths.length) {
-      paths.forEach(function (path, index) {
-        var item = document.createElement('div');
+      paths.forEach((path, index) => {
+        const item = document.createElement('div');
         item.className = 'f-file';
 
-        var name = document.createElement('span');
+        const name = document.createElement('span');
         name.className = 'f-file-name';
-        name.textContent = paths.length > 1 ? ('ملف ' + (index + 1)) : 'الملف';
+        name.textContent = paths.length > 1 ? (`ملف ${index + 1}: ${path.split("/").pop()}`) : path.split("/").pop();
+        name.title = path;
 
-        var actions = document.createElement('div');
+        const actions = document.createElement('div');
         actions.className = 'f-btns';
 
-        var url = encodeURI(path);
-        var openBtn = document.createElement('a');
+        const url = encodeURI(path);
+        const openBtn = document.createElement('a');
         openBtn.className = 'f-btn f-btn--open';
         openBtn.href = url;
         openBtn.target = '_blank';
         openBtn.rel = 'noopener';
         openBtn.innerHTML = iconOpen() + '<span>فتح</span>';
-        openBtn.addEventListener('click', stop);
+        openBtn.addEventListener('click', stopPropagation);
 
-        var downloadBtn = document.createElement('a');
+        const downloadBtn = document.createElement('a');
         downloadBtn.className = 'f-btn f-btn--dl';
         downloadBtn.href = url;
         downloadBtn.download = '';
         downloadBtn.innerHTML = iconDownload() + '<span>تحميل</span>';
-        downloadBtn.addEventListener('click', stop);
+        downloadBtn.addEventListener('click', stopPropagation);
 
         actions.appendChild(openBtn);
         actions.appendChild(downloadBtn);
@@ -345,7 +359,7 @@
         buttons.appendChild(item);
       });
     } else {
-      var na = document.createElement('div');
+      const na = document.createElement('div');
       na.className = 'f-na';
       na.textContent = 'غير متوفر';
       buttons.appendChild(na);
@@ -356,82 +370,42 @@
     return row;
   }
 
+  // Create four colored file status dots
   function makeFileDots(files) {
-    var dots = document.createElement('span');
+    const dots = document.createElement('span');
     dots.className = 'file-dots';
-    FILE_SLOTS.forEach(function (slot) {
-      var dot = document.createElement('span');
-      dot.className = 'file-dot' + (normalizeFiles(files[slot.key]).length ? ' on' : '');
+    FILE_SLOTS.forEach((slot) => {
+      const dot = document.createElement('span');
+      const count = normalizeFiles(files[slot.key]).length;
+      dot.className = 'file-dot' + (count ? ' on' : '');
       dots.appendChild(dot);
     });
     return dots;
   }
 
+  // Accordion slide animation toggle
   function toggleCard(card, body) {
-    if (card.classList.contains('open')) {
+    const isOpen = card.classList.contains('open');
+    if (isOpen) {
       body.style.maxHeight = body.scrollHeight + 'px';
-      body.offsetHeight;
+      body.offsetHeight; // Force DOM repaint
       body.style.maxHeight = '0';
       card.classList.remove('open');
-      return;
+    } else {
+      card.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+      const onEnd = () => {
+        if (card.classList.contains('open')) {
+          body.style.maxHeight = 'none';
+        }
+        body.removeEventListener('transitionend', onEnd);
+      };
+      body.addEventListener('transitionend', onEnd);
     }
-
-    card.classList.add('open');
-    body.style.maxHeight = body.scrollHeight + 'px';
-    var onEnd = function () {
-      body.style.maxHeight = 'none';
-      body.removeEventListener('transitionend', onEnd);
-    };
-    body.addEventListener('transitionend', onEnd);
-  }
-
-  function toggleAll() {
-    var cards = lecBox.querySelectorAll('.lec-card');
-    allOpen = !allOpen;
-
-    Array.prototype.forEach.call(cards, function (card) {
-      var body = card.querySelector('.lec-body');
-      if (allOpen) {
-        card.classList.add('open');
-        body.style.maxHeight = body.scrollHeight + 'px';
-        setTimeout(function () { body.style.maxHeight = 'none'; }, 260);
-      } else {
-        body.style.maxHeight = body.scrollHeight + 'px';
-        body.offsetHeight;
-        body.style.maxHeight = '0';
-        card.classList.remove('open');
-      }
-    });
-
-    updateToggleBtn();
-  }
-
-  function updateToggleBtn() {
-    btnToggle.textContent = allOpen ? 'إغلاق الكل' : 'عرض الكل';
-  }
-
-  function updateStats(termKey, subjectKey, lectures) {
-    var subject = terms[termKey].subjects[subjectKey];
-    lectures = lectures || subject.lectures || [];
-
-    var done = 0;
-    var files = 0;
-    lectures.forEach(function (lecture) {
-      if (doneMap[termKey + '_' + subjectKey + '_' + lecture.num]) done++;
-      files += countFiles(lecture.files || {});
-    });
-
-    ctrlProg.innerHTML = '<b>' + done + '</b> / ' + lectures.length + ' مكتملة';
-    updateHero(terms[termKey].name, subject.name);
-  }
-
-  function updateHero(termName, subjectName) {
-    activeLabel.textContent = shortTermName(termName);
-    activeTitle.textContent = subjectName || 'اختار المادة وابدأ';
   }
 
   function countFiles(files) {
-    return FILE_SLOTS.reduce(function (count, slot) {
+    return FILE_SLOTS.reduce((count, slot) => {
       return count + normalizeFiles(files[slot.key]).length;
     }, 0);
   }
@@ -448,17 +422,13 @@
   }
 
   function firstSubjectWithLectures(term) {
-    var subjects = Object.keys(term.subjects || {});
-    for (var i = 0; i < subjects.length; i++) {
+    const subjects = Object.keys(term.subjects || {});
+    for (let i = 0; i < subjects.length; i++) {
       if ((term.subjects[subjects[i]].lectures || []).length > 0) {
         return subjects[i];
       }
     }
     return null;
-  }
-
-  function emptyMarkup(icon, title, sub) {
-    return '<div class="empty-box"><div class="empty-icon">' + icon + '</div><p class="empty-title">' + title + '</p>' + (sub ? '<p class="empty-sub">' + sub + '</p>' : '') + '</div>';
   }
 
   function loadDone() {
@@ -473,16 +443,50 @@
     localStorage.setItem(DONE_KEY, JSON.stringify(doneMap));
   }
 
-  function stop(event) {
+  function stopPropagation(event) {
     event.stopPropagation();
   }
 
-  function svg(path, extra) {
-    return '<svg viewBox="0 0 24 24" aria-hidden="true" ' + (extra || '') + '><path d="' + path + '"></path></svg>';
+  // Custom Icon SVGs (Tajawal & Inter matching clean outline icons)
+  function getSlotSvgIcon(key) {
+    if (key === 'original_ppt') {
+      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22V4c0-.5.2-1 .6-1.4C5 2.2 5.5 2 6 2h8l6 6v14M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>';
+    }
+    if (key === 'translated_ppt') {
+      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+    }
+    if (key === 'my_quiz') {
+      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>';
+    }
+    if (key === 'doctor_quiz') {
+      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>';
+    }
+    return '';
   }
 
   function iconChevron() {
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>';
+  }
+
+  // Toggle All cards logic (fallback)
+  function toggleAll() {
+    const cards = lecBox.querySelectorAll('.lec-card');
+    let anyOpen = false;
+    Array.prototype.forEach.call(cards, (c) => { if (c.classList.contains('open')) anyOpen = true; });
+    
+    Array.prototype.forEach.call(cards, (card) => {
+      const body = card.querySelector('.lec-body');
+      if (!anyOpen) {
+        card.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        setTimeout(() => { if (card.classList.contains('open')) body.style.maxHeight = 'none'; }, 260);
+      } else {
+        body.style.maxHeight = body.scrollHeight + 'px';
+        body.offsetHeight;
+        body.style.maxHeight = '0';
+        card.classList.remove('open');
+      }
+    });
   }
 
   function iconOpen() {
@@ -490,25 +494,10 @@
   }
 
   function iconDownload() {
-    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v11"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>';
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>';
   }
 
-  function iconDocument() {
-    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"></path><path d="M14 3v5h5"></path><path d="M9 13h6"></path><path d="M9 17h5"></path></svg>';
-  }
-
-  function iconNotes() {
-    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v16H6z"></path><path d="M9 8h6"></path><path d="M9 12h6"></path><path d="M9 16h4"></path></svg>';
-  }
-
-  function iconTarget() {
-    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3"></path><path d="M12 19v3"></path><path d="M2 12h3"></path><path d="M19 12h3"></path></svg>';
-  }
-
-  function iconStethoscope() {
-    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4v5a4 4 0 0 0 8 0V4"></path><path d="M10 13v2a5 5 0 0 0 10 0v-1"></path><circle cx="20" cy="12" r="2"></circle></svg>';
-  }
-
+  // Document Readiness Init
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

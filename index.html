@@ -1,78 +1,73 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="theme-color" content="#0a0f1c">
-    <title>مكتبة تمريض</title>
-    <meta name="description" content="مكتبة تمريض — محاضرات وترجمة وبنوك أسئلة في مكان واحد">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/portal.css?v=20260603-ui3">
-    <script type="text/javascript">
-        (function (c, l, a, r, i, t, y) {
-            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
-            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
-            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
-        })(window, document, "clarity", "script", "x19k7hsc96");
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#050811">
+  <title>مكتبة تمريض 🩺 | بوابة الطلاب</title>
+  <meta name="description" content="مكتبة تمريض — محاضرات، ترجمة، وبنوك أسئلة في مكان واحد بشكل منظم وسهل للدراسة.">
+  
+  <!-- Google Fonts: Tajawal for Arabic, Inter for English/Numbers -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Styling Sheet -->
+  <link rel="stylesheet" href="assets/css/portal.css?v=20260605-v3">
+  
+  <!-- Clarity Tracking Code -->
+  <script type="text/javascript">
+    (function (c, l, a, r, i, t, y) {
+      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+      t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "x19k7hsc96");
+  </script>
 </head>
 <body>
 
-  <header class="app-hero" id="appHeader">
+  <!-- Ambient Glow Lights (CSS Art Background) -->
+  <div class="ambient-glow glow-1" aria-hidden="true"></div>
+  <div class="ambient-glow glow-2" aria-hidden="true"></div>
+
+  <!-- Hero Header Section -->
+  <header class="app-hero">
     <div class="brand-row">
       <div class="brand-mark" aria-hidden="true">
         <span>+</span>
       </div>
       <div>
         <h1 class="app-name">🩺 مكتبة تمريض</h1>
-        <p class="app-desc">📚 محاضرات، ترجمه و بنوك في مكان واحد</p>
-      </div>
-    </div>
-
-    <div class="hero-panel" id="heroPanel">
-      <div>
-        <p class="hero-label" id="activeLabel">جاهز للمذاكرة</p>
-        <h2 id="activeTitle">اختار المادة وابدأ</h2>
-      </div>
-      <div class="hero-emoji" aria-hidden="true">
-        <span>✨</span>
+        <!-- Dynamic Greeting will be rendered here -->
+        <p class="app-desc" id="studentGreeting">مرحبًا بك يا دكتور، جاهز للمذاكرة؟ ✨</p>
       </div>
     </div>
   </header>
 
+  <!-- Library Shell Navigation & Controls -->
   <section class="library-shell">
+    <!-- Horizontal Scroll Term Selector -->
     <nav class="term-bar" id="termBar" aria-label="اختيار الترم"></nav>
 
-    <div class="subject-head">
-      <div>
-        <p>المادة الحالية</p>
-        <strong id="subjectTitle">-</strong>
-      </div>
-      <button class="ctrl-btn" id="btnToggle" type="button">عرض الكل</button>
-    </div>
-
+    <!-- Horizontal Scroll Subject Selector -->
     <div class="subject-bar" id="subjectBar" aria-label="اختيار المادة"></div>
-
-    <div class="ctrl-bar" id="ctrlBar" style="display:none;">
-      <span class="ctrl-progress" id="ctrlProgress"></span>
-    </div>
   </section>
 
-  <!-- Lectures -->
+  <!-- Lectures Accordion Container -->
   <main class="lectures" id="lectures"></main>
 
-  <!-- Empty state -->
+  <!-- Empty State Placeholder -->
   <div class="empty-box" id="emptyBox" style="display:none;">
-    <div class="empty-icon">🙂</div>
-    <p class="empty-title">انت مستعجل علي ايه 🙂</p>
+    <div class="empty-icon">⏳</div>
+    <p class="empty-title" id="emptyTitle">انت مستعجل على ايه 🙂</p>
+    <p class="empty-sub" id="emptySub">المحاضرات هتنزل هنا قريب أول ما تتوفر.</p>
   </div>
 
-  <!-- Footer -->
+  <!-- App Footer -->
   <footer class="app-footer">by abanoub sameh ♥</footer>
 
-  <script src="curriculum.js?v=20260603-ui3"></script>
-  <script src="assets/js/portal.js?v=20260603-ui3"></script>
+  <!-- Scripts -->
+  <script src="curriculum.js?v=20260605-v3"></script>
+  <script src="assets/js/portal.js?v=20260605-v3"></script>
 </body>
 </html>
