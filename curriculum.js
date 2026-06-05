@@ -51,6 +51,18 @@ const curriculumData = {
                   "terms/term_1/anatomy/quizzes/Lecture_2_Prefixes_and_Procedures.html"
                 ]
               }
+            },
+            {
+              "num": 5,
+              "title_ar": "66",
+              "files": {
+                "original_ppt": [],
+                "translated_ppt": [],
+                "my_quiz": [
+                  "terms/term_1/anatomy/quizzes/Lecture_1_Fundamentals.html"
+                ],
+                "doctor_quiz": []
+              }
             }
           ]
         },
