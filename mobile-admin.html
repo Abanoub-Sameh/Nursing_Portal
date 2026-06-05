@@ -1437,24 +1437,35 @@
     }
 
     async function postOneSignalNotification(appId, apiKey, title, message) {
-      const response = await fetch("https://onesignal.com/api/v1/notifications", {
+      const payload = {
+        app_id: appId,
+        target_channel: "push",
+        contents: { "en": message, "ar": message },
+        headings: { "en": title, "ar": title },
+        included_segments: ["Subscribed Users"],
+        url: "https://abanoub-sameh.github.io/Nursing_Portal/"
+      };
+
+      const response = await fetch("https://api.onesignal.com/notifications", {
         method: "POST",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          "Authorization": "Basic " + apiKey
+          "Authorization": "Key " + apiKey
         },
-        body: JSON.stringify({
-          app_id: appId,
-          contents: { "en": message, "ar": message },
-          headings: { "en": title, "ar": title },
-          included_segments: ["Subscribed Users"]
-        })
+        body: JSON.stringify(payload)
       });
       if (!response.ok) {
-        const errData = await response.json().catch(() => ({}));
-        throw new Error(errData?.errors?.[0] || "OneSignal API returned error code " + response.status);
+        const errText = await response.text().catch(() => "");
+        let errData = {};
+        try { errData = JSON.parse(errText); } catch (_) {}
+        const errors = Array.isArray(errData.errors) ? errData.errors.join(" - ") : errData.errors;
+        throw new Error(errors || errData.message || errText || "OneSignal API error " + response.status);
       }
-      return response.json();
+      const result = await response.json().catch(() => ({}));
+      if (Array.isArray(result.errors) && result.errors.length) {
+        throw new Error(result.errors.join(" - "));
+      }
+      return result;
     }
 
     async function saveCurriculumOnly(message) {

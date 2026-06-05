@@ -529,18 +529,20 @@
       window.OneSignalDeferred = window.OneSignalDeferred || [];
       OneSignalDeferred.push(async function(OneSignal) {
         try {
-          // Detect subdirectory path for service worker
-          var swPath = '/OneSignalSDKWorker.js';
+          // Detect GitHub Pages subdirectory path for service worker.
+          // OneSignal expects serviceWorkerPath without a leading slash.
+          var swPath = 'OneSignalSDKWorker.js';
           var swScope = '/';
           var pathPrefix = location.pathname.replace(/\/[^\/]*$/, '');
           if (pathPrefix && pathPrefix !== '/') {
-            swPath = pathPrefix + '/OneSignalSDKWorker.js';
+            swPath = pathPrefix.replace(/^\//, '') + '/OneSignalSDKWorker.js';
             swScope = pathPrefix + '/';
           }
 
           await OneSignal.init({
             appId: appId,
             notifyButton: { enable: false },
+            allowLocalhostAsSecureOrigin: true,
             serviceWorkerParam: { scope: swScope },
             serviceWorkerPath: swPath
           });
