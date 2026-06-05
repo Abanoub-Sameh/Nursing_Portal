@@ -774,3 +774,114 @@ button, a {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* Custom Soft-Prompt Banner Styling */
+.notify-prompt {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(130%);
+  width: 92%;
+  max-width: 480px;
+  background: rgba(13, 18, 34, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 9999;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.notify-prompt.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+.notify-prompt-content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.notify-prompt-icon {
+  font-size: 2.1rem;
+  animation: pulseBell 2.5s infinite ease-in-out;
+}
+
+@keyframes pulseBell {
+  0%, 100% { transform: scale(1) rotate(0); }
+  50% { transform: scale(1.1) rotate(8deg); }
+}
+
+.notify-prompt-text h3 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.notify-prompt-text p {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.notify-prompt-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.notify-prompt-actions button {
+  flex: 1;
+  min-height: 38px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition);
+}
+
+.btn-notify-accept {
+  background: var(--blue) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px var(--blue-glow);
+}
+
+.btn-notify-accept:hover {
+  background: #7a7df2 !important;
+}
+
+.btn-notify-decline {
+  background: var(--paper-strong) !important;
+  color: var(--muted) !important;
+  border: 1px solid var(--line) !important;
+}
+
+.btn-notify-decline:hover {
+  background: var(--panel-hover) !important;
+  color: #fff !important;
+}
+
+@media (min-width: 560px) {
+  .notify-prompt {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 14px 20px;
+  }
+  .notify-prompt-actions {
+    flex-shrink: 0;
+    width: auto;
+  }
+  .notify-prompt-actions button {
+    padding-inline: 18px;
+    flex: initial;
+  }
+}
+

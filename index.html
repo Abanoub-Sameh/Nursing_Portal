@@ -14,6 +14,9 @@
   
   <!-- CSS Styling Sheet -->
   <link rel="stylesheet" href="assets/css/portal.css?v=20260605-v3">
+
+  <!-- OneSignal SDK Page -->
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
   
   <!-- Clarity Tracking Code -->
   <script type="text/javascript">
@@ -61,6 +64,21 @@
     <div class="empty-icon">⏳</div>
     <p class="empty-title" id="emptyTitle">انت مستعجل على ايه 🙂</p>
     <p class="empty-sub" id="emptySub">المحاضرات هتنزل هنا قريب أول ما تتوفر.</p>
+  </div>
+
+  <!-- Custom Soft-Prompt Notification Banner -->
+  <div id="notifyPrompt" class="notify-prompt" style="display: none;">
+    <div class="notify-prompt-content">
+      <span class="notify-prompt-icon">🔔</span>
+      <div class="notify-prompt-text">
+        <h3>تفعيل التنبيهات 📢</h3>
+        <p>اشترك لتصلك الإشعارات فور إضافة محاضرات وملخصات جديدة!</p>
+      </div>
+    </div>
+    <div class="notify-prompt-actions">
+      <button id="btnNotifyAccept" class="btn-notify-accept" type="button">تفعيل الآن</button>
+      <button id="btnNotifyDecline" class="btn-notify-decline" type="button">ليس الآن</button>
+    </div>
   </div>
 
   <!-- App Footer -->

@@ -6,28 +6,14 @@
   const TERM_KEY = 'nurLib_term';
   const SUB_KEY = 'nurLib_sub';
 
-  const terms = curriculumData.terms;
-  const allTermKeys = Object.keys(terms);
-  const filledTermKeys = [];
-  const emptyTermKeys = [];
-
-  // Categorize terms based on content availability
-  allTermKeys.forEach((key) => {
-    const subjects = terms[key].subjects || {};
-    const hasContent = Object.keys(subjects).some((subKey) => {
-      return (subjects[subKey].lectures || []).length > 0;
-    });
-    if (hasContent) {
-      filledTermKeys.push(key);
-    } else {
-      emptyTermKeys.push(key);
-    }
-  });
-
-  // State Management
-  let activeTerm = localStorage.getItem(TERM_KEY) || filledTermKeys[0] || allTermKeys[0];
-  let activeSub = localStorage.getItem(SUB_KEY) || null;
-  const doneMap = loadDone();
+  // State variables (initialized in init())
+  let terms = null;
+  let allTermKeys = [];
+  let filledTermKeys = [];
+  let emptyTermKeys = [];
+  let activeTerm = null;
+  let activeSub = null;
+  let doneMap = {};
 
   // DOM Elements
   const termBar = document.getElementById('termBar');
@@ -41,15 +27,42 @@
   // File Slot Metadata
   const FILE_SLOTS = [
     { key: 'original_ppt', label: 'الباور الأصلي للدكتورة', class: 'original_ppt' },
-    { key: 'translated_ppt', label: 'الباور المترجم والملخصات', class: 'translated_ppt' },
+    { key: 'translated_ppt', label: 'الباور المترجم', class: 'translated_ppt' },
     { key: 'my_quiz', label: 'بنك أسئلة (الأدمن)', class: 'my_quiz' },
     { key: 'doctor_quiz', label: 'بنك أسئلة الدكتورة', class: 'doctor_quiz' }
   ];
 
   function init() {
+    if (typeof curriculumData === 'undefined') {
+      throw new Error('لم يتم العثور على ملف البيانات (curriculum.js). يرجى التأكد من وجود الملف في نفس المجلد.');
+    }
+
+    terms = curriculumData.terms || {};
+    allTermKeys = Object.keys(terms);
+    filledTermKeys = [];
+    emptyTermKeys = [];
+
+    // Categorize terms based on content availability
+    allTermKeys.forEach((key) => {
+      const subjects = terms[key].subjects || {};
+      const hasContent = Object.keys(subjects).some((subKey) => {
+        return (subjects[subKey].lectures || []).length > 0;
+      });
+      if (hasContent) {
+        filledTermKeys.push(key);
+      } else {
+        emptyTermKeys.push(key);
+      }
+    });
+
+    activeTerm = localStorage.getItem(TERM_KEY) || filledTermKeys[0] || allTermKeys[0];
+    activeSub = localStorage.getItem(SUB_KEY) || null;
+    doneMap = loadDone();
+
     updateGreeting();
     renderTermBar();
     loadTerm(activeTerm);
+    initOneSignal();
   }
 
   // Time-based student greeting generator
@@ -497,10 +510,124 @@
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>';
   }
 
+  function initOneSignal() {
+    const appId = curriculumData.onesignal_app_id;
+
+    // Check if protocol is file:// (local load without web server)
+    if (location.protocol === 'file:') {
+      console.warn("⚠️ Web Push Notifications (OneSignal) do not work under the file:/// protocol due to browser security restrictions. Use a local server (run server.py) and open http://localhost:8000/index.html to test notifications.");
+      
+      // For testing aesthetics and behavior, simulate the soft-prompt on local file://
+      simulateSoftPromptForTesting();
+      return;
+    }
+
+    if (!appId) {
+      console.warn("⚠️ OneSignal App ID (onesignal_app_id) is not defined in curriculum.js. OneSignal will not initialize.");
+      return;
+    }
+
+    window.OneSignal = window.OneSignal || [];
+    OneSignal.push(function() {
+      OneSignal.init({
+        appId: appId,
+        notifyButton: {
+          enable: false,
+        },
+      });
+
+      checkNotificationPrompt();
+    });
+  }
+
+  function simulateSoftPromptForTesting() {
+    const dismissedThisSession = sessionStorage.getItem('notify_prompt_dismissed');
+    if (dismissedThisSession === 'true') {
+      return;
+    }
+
+    const promptBanner = document.getElementById('notifyPrompt');
+    if (promptBanner) {
+      promptBanner.style.display = 'flex';
+      setTimeout(() => promptBanner.classList.add('show'), 100);
+
+      const btnAccept = document.getElementById('btnNotifyAccept');
+      const btnDecline = document.getElementById('btnNotifyDecline');
+
+      if (btnAccept) {
+        btnAccept.onclick = () => {
+          promptBanner.classList.remove('show');
+          setTimeout(() => promptBanner.style.display = 'none', 400);
+          alert("🧪 وضع المحاكاة النشط (Local Test):\nتم النقر على 'تفعيل الآن'. في البيئة الحقيقية المرفوعة (HTTPS) أو باستخدام خادم محلي (localhost)، سيظهر طلب إذن المتصفح الأصلي لتلقي الإشعارات.");
+        };
+      }
+
+      if (btnDecline) {
+        btnDecline.onclick = () => {
+          promptBanner.classList.remove('show');
+          setTimeout(() => promptBanner.style.display = 'none', 400);
+          sessionStorage.setItem('notify_prompt_dismissed', 'true');
+        };
+      }
+    }
+  }
+
+  function checkNotificationPrompt() {
+    const permission = Notification.permission;
+    if (permission !== 'default') {
+      return;
+    }
+
+    const dismissedThisSession = sessionStorage.getItem('notify_prompt_dismissed');
+    if (dismissedThisSession === 'true') {
+      return;
+    }
+
+    const promptBanner = document.getElementById('notifyPrompt');
+    if (promptBanner) {
+      promptBanner.style.display = 'flex';
+      setTimeout(() => promptBanner.classList.add('show'), 100);
+
+      const btnAccept = document.getElementById('btnNotifyAccept');
+      const btnDecline = document.getElementById('btnNotifyDecline');
+
+      if (btnAccept) {
+        btnAccept.onclick = () => {
+          promptBanner.classList.remove('show');
+          setTimeout(() => promptBanner.style.display = 'none', 400);
+          
+          OneSignal.push(function() {
+            OneSignal.showNativePrompt();
+          });
+        };
+      }
+
+      if (btnDecline) {
+        btnDecline.onclick = () => {
+          promptBanner.classList.remove('show');
+          setTimeout(() => promptBanner.style.display = 'none', 400);
+          sessionStorage.setItem('notify_prompt_dismissed', 'true');
+        };
+      }
+    }
+  }
+
   // Document Readiness Init
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        init();
+      } catch (e) {
+        alert("Error during initialization: " + e.message + "\nStack: " + e.stack);
+        console.error(e);
+      }
+    });
   } else {
-    init();
+    try {
+      init();
+    } catch (e) {
+      alert("Error during initialization: " + e.message + "\nStack: " + e.stack);
+      console.error(e);
+    }
   }
 })();
