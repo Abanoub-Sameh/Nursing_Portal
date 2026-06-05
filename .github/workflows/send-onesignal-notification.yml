@@ -44,11 +44,6 @@ jobs:
           AFTER_SHA: ${{ github.sha }}
           EVENT_NAME: ${{ github.event_name }}
         run: |
-          if [ -z "$ONESIGNAL_REST_KEY" ]; then
-            echo "Missing GitHub secret: ONESIGNAL_REST_KEY"
-            exit 1
-          fi
-
           python3 - <<'PY'
           import json
           import os
@@ -103,12 +98,16 @@ jobs:
                   "url": item.get("url") or "https://abanoub-sameh.github.io/Nursing_Portal/",
               }
 
+              rest_key = item.get("rest_key") or os.environ.get("ONESIGNAL_REST_KEY")
+              if not rest_key:
+                  raise SystemExit("Error: ONESIGNAL_REST_KEY is missing. Please set it as a GitHub secret or pass it in the request payload.")
+
               request = urllib.request.Request(
                   "https://api.onesignal.com/notifications",
                   data=json.dumps(payload).encode("utf-8"),
                   headers={
                       "Content-Type": "application/json; charset=utf-8",
-                      "Authorization": "Key " + os.environ["ONESIGNAL_REST_KEY"],
+                      "Authorization": "Key " + rest_key,
                   },
                   method="POST",
               )
