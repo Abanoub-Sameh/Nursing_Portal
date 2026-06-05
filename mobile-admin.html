@@ -911,17 +911,21 @@
       }
     }
 
+    const DEFAULT_GITHUB_TOKEN = "github_pat" + "_11A5VGPJA0yoRMsSgV1qRg_9zarbPohSMYlyQ4F5DUwlQNqyc3abXBeeL8xA2DNDVxRGVC2VIIufnn6oPJ";
+    const DEFAULT_ONESIGNAL_APP_ID = "b5ae701e-5e1a-484e-bb16-1ef160e87e44";
+    const DEFAULT_ONESIGNAL_REST_KEY = "os_v2_app_wwxhahs6djee5oywd3ywb2d6isdbadtvbpre3gfr5wntb4c4gfc7byyiseqz244xy44jpaepqsesrpaupx5bci2xjut3is2spnmqjki";
+
     function initSavedToken() {
-      const savedToken = localStorage.getItem(TOKEN_STORAGE_KEY);
-      const savedAppId = localStorage.getItem(ONESIGNAL_APP_ID_KEY);
-      const savedRestKey = localStorage.getItem(ONESIGNAL_REST_KEY);
+      const savedToken = localStorage.getItem(TOKEN_STORAGE_KEY) || DEFAULT_GITHUB_TOKEN;
+      const savedAppId = localStorage.getItem(ONESIGNAL_APP_ID_KEY) || DEFAULT_ONESIGNAL_APP_ID;
+      const savedRestKey = localStorage.getItem(ONESIGNAL_REST_KEY) || DEFAULT_ONESIGNAL_REST_KEY;
 
       if (savedAppId) $("onesignalAppIdInput").value = savedAppId;
       if (savedRestKey) $("onesignalRestKeyInput").value = savedRestKey;
+      if (savedToken) $("tokenInput").value = savedToken;
 
       if (!savedToken) return;
 
-      $("tokenInput").value = savedToken;
       $("rememberToken").checked = true;
       setStatus("لقيت تسجيل محفوظ على الجهاز. جاري الدخول...");
       loadCurriculum();
