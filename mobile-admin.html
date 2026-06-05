@@ -3,290 +3,195 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#eef7f1">
+  <meta name="theme-color" content="#0b1020">
   <title>أدمن الموبايل | مكتبة تمريض</title>
+  
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --page: #eef7f1;
-      --paper: #ffffff;
-      --soft: #f7fbf8;
-      --ink: #13241b;
-      --muted: #64756b;
-      --line: rgba(19, 36, 27, .11);
-      --green: #12966f;
-      --blue: #2d69d8;
-      --red: #e84f65;
-      --amber: #d89417;
-      --shadow: 0 16px 36px rgba(23, 55, 39, .12);
-      --radius: 18px;
+      --bg: #0b1020;
+      --panel: #111a2e;
+      --panel-2: #17223a;
+      --line: rgba(255, 255, 255, .09);
+      --text: #eef4ff;
+      --muted: #9fb0cc;
+      --blue: #5b7cfa;
+      --green: #15bf86;
+      --red: #ef476f;
+      --amber: #f59e0b;
+      --radius: 12px;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
-      margin: 0;
       min-height: 100vh;
       font-family: "Tajawal", system-ui, sans-serif;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 10% 0%, rgba(18, 150, 111, .18), transparent 19rem),
-        linear-gradient(180deg, #f8fcf9 0%, var(--page) 46%, #e9f3ee 100%);
-      padding: 12px;
-    }
-
-    button, input, select {
-      font: inherit;
-    }
-
-    button, a, input, select {
-      -webkit-tap-highlight-color: transparent;
+      background: var(--bg);
+      color: var(--text);
+      padding: 14px;
+      line-height: 1.5;
     }
 
     .shell {
-      max-width: 820px;
+      max-width: 760px;
       margin: 0 auto;
       display: grid;
-      gap: 12px;
+      gap: 14px;
     }
 
-    .topbar {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-      align-items: center;
-      padding: 14px;
-      border-radius: 22px;
-      background: rgba(255,255,255,.82);
-      border: 1px solid rgba(255,255,255,.9);
-      box-shadow: var(--shadow);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
-
-    .mark {
-      width: 46px;
-      height: 46px;
-      flex: 0 0 46px;
-      display: grid;
-      place-items: center;
-      border-radius: 15px;
-      color: #fff;
-      background: linear-gradient(135deg, var(--green), var(--blue));
-      font-size: 1.25rem;
-      box-shadow: 0 14px 26px rgba(18, 150, 111, .22);
-    }
-
-    h1, h2, p { margin: 0; }
-
-    h1 {
-      font-size: 1.22rem;
-      font-weight: 900;
-      letter-spacing: 0;
-    }
-
-    .sub {
-      margin-top: 2px;
-      color: var(--muted);
-      font-size: .84rem;
-      font-weight: 700;
-    }
-
-    .student-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 40px;
-      padding: 8px 12px;
-      border-radius: 13px;
-      background: var(--ink);
-      color: #fff;
-      text-decoration: none;
-      font-size: .84rem;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-
-    .status-card {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      align-items: center;
-      padding: 12px 14px;
-      border-radius: 18px;
-      background: #102118;
-      color: #d7f7e8;
-      box-shadow: var(--shadow);
-    }
-
-    .status-card strong {
-      display: block;
-      font-size: .94rem;
-      font-weight: 900;
-    }
-
-    .status-card span {
-      display: block;
-      margin-top: 2px;
-      font-size: .78rem;
-      color: #9fd8bf;
-      font-weight: 700;
-    }
-
-    .status-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 99px;
-      background: var(--amber);
-      box-shadow: 0 0 0 5px rgba(216, 148, 23, .18);
-    }
-
-    .status-dot.ok {
-      background: var(--green);
-      box-shadow: 0 0 0 5px rgba(18, 150, 111, .18);
-    }
-
-    .card {
-      display: grid;
-      gap: 13px;
-      padding: 14px;
-      border-radius: var(--radius);
-      background: rgba(255,255,255,.88);
-      border: 1px solid rgba(255,255,255,.88);
-      box-shadow: 0 10px 24px rgba(23, 55, 39, .08);
-    }
-
-    .card-head {
+    header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 900;
     }
 
     h2 {
       font-size: 1rem;
-      font-weight: 900;
+      border-right: 4px solid var(--blue);
+      padding-right: 10px;
+      font-weight: 800;
     }
 
-    .mini {
+    .sub {
       color: var(--muted);
-      font-size: .8rem;
+      font-size: .86rem;
+      margin-top: 3px;
+    }
+
+    .student-link {
+      color: #fff;
+      background: var(--blue);
+      text-decoration: none;
+      padding: 9px 12px;
+      border-radius: 10px;
       font-weight: 800;
+      white-space: nowrap;
+      font-size: 0.88rem;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
 
     label {
       display: grid;
       gap: 6px;
       color: var(--muted);
-      font-size: .83rem;
-      font-weight: 900;
+      font-weight: 800;
+      font-size: .86rem;
+    }
+
+    input, select, button {
+      width: 100%;
+      font: inherit;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      min-height: 44px;
+      outline: none;
     }
 
     input, select {
-      width: 100%;
-      min-height: 46px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--soft);
-      color: var(--ink);
+      background: var(--panel-2);
+      color: var(--text);
       padding: 10px 12px;
-      outline: none;
-      font-weight: 800;
+      transition: border-color 0.2s;
     }
 
     input:focus, select:focus {
-      border-color: rgba(45, 105, 216, .45);
-      box-shadow: 0 0 0 4px rgba(45, 105, 216, .08);
+      border-color: var(--blue);
     }
 
     input[type="file"] {
+      padding: 8px;
       min-height: auto;
-      padding: 9px;
-      font-size: .82rem;
+    }
+
+    /* Target specific file inputs wrappers */
+    .file-box {
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      display: block;
+      cursor: pointer;
+    }
+
+    .file-box small {
+      display: block;
+      color: var(--muted);
+      font-weight: 400;
+      font-size: 0.78rem;
+      margin-bottom: 4px;
+    }
+
+    .file-group {
+      display: grid;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.01);
+      border-radius: 10px;
     }
 
     button {
-      width: 100%;
-      min-height: 46px;
-      border: 0;
-      border-radius: 14px;
-      padding: 10px 12px;
-      background: var(--blue);
       color: #fff;
-      cursor: pointer;
+      background: var(--blue);
       font-weight: 900;
+      cursor: pointer;
+      border: none;
+      padding: 10px 12px;
+      transition: opacity 0.2s, background-color 0.2s;
     }
 
-    button.secondary {
-      background: var(--soft);
-      color: var(--ink);
-      border: 1px solid var(--line);
-    }
-
+    button.secondary { background: var(--panel-2); border: 1px solid var(--line); }
     button.success { background: var(--green); }
     button.danger { background: var(--red); }
-    button:disabled { opacity: .6; cursor: wait; }
-
-    .token-row,
-    .grid,
-    .actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .upload-progress {
-      display: none;
-      gap: 8px;
-      padding: 12px;
-      border-radius: 16px;
-      background: var(--soft);
-      border: 1px solid var(--line);
-    }
-
-    .upload-progress.show {
-      display: grid;
-    }
-
-    .progress-info {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      color: var(--muted);
-      font-size: .8rem;
-      font-weight: 900;
-    }
-
-    .progress-track {
-      height: 10px;
-      overflow: hidden;
-      border-radius: 999px;
-      background: rgba(19, 36, 27, .1);
-    }
-
-    .progress-fill {
-      width: 0%;
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, var(--green), var(--blue));
-      transition: width .18s ease;
-    }
+    button:disabled { opacity: .55; cursor: wait; }
 
     .token-row {
+      display: grid;
       grid-template-columns: 1fr auto;
+      gap: 8px;
       align-items: end;
     }
 
     .token-row button {
       width: auto;
-      min-width: 128px;
+      min-width: 116px;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: .82rem;
+      line-height: 1.7;
     }
 
     .remember-row {
@@ -296,59 +201,100 @@
       gap: 10px;
       flex-wrap: wrap;
       color: var(--muted);
-      font-size: .82rem;
-      font-weight: 900;
+      font-size: .86rem;
+      font-weight: 800;
     }
 
     .remember-row label {
       display: flex;
+      flex-direction: row;
       align-items: center;
       gap: 8px;
       color: inherit;
+      cursor: pointer;
     }
 
     .remember-row input {
       width: 18px;
       min-height: 18px;
-      accent-color: var(--green);
+      accent-color: var(--blue);
+      cursor: pointer;
     }
 
     .remember-row button {
       width: auto;
       min-height: 36px;
-      padding: 7px 10px;
-      border-radius: 11px;
+      padding: 7px 12px;
+      font-size: 0.82rem;
     }
 
     .notice {
+      border: 1px solid rgba(245, 158, 11, .3);
+      background: rgba(245, 158, 11, .08);
+      color: #fed7aa;
       padding: 10px 12px;
-      border-radius: 14px;
-      background: rgba(216, 148, 23, .12);
-      border: 1px solid rgba(216, 148, 23, .28);
-      color: #8a5a08;
-      font-size: .84rem;
-      line-height: 1.65;
-      font-weight: 800;
+      border-radius: 10px;
+      line-height: 1.6;
+      font-size: .88rem;
     }
 
     .files {
       display: grid;
-      gap: 10px;
+      gap: 12px;
     }
 
-    .file-box {
+    /* Current files list styles - completely fixed */
+    .current-files-list {
       display: grid;
-      gap: 7px;
-      padding: 12px;
-      border-radius: 16px;
-      background: var(--soft);
-      border: 1px dashed rgba(19, 36, 27, .16);
+      gap: 6px;
     }
 
-    .file-box small {
-      color: var(--muted);
-      font-size: .76rem;
+    .current-file-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 10px 14px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      gap: 12px;
+    }
+
+    .current-file-name {
+      font-size: 0.86rem;
+      direction: ltr;
+      text-align: left;
+      word-break: break-word;
+      white-space: normal;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .btn-remove-file {
+      width: auto !important;
+      min-height: auto !important;
+      background: rgba(239, 71, 111, 0.08) !important;
+      border: 1px solid rgba(239, 71, 111, 0.3) !important;
+      color: var(--red) !important;
+      cursor: pointer;
       font-weight: 800;
+      padding: 8px 16px !important;
+      border-radius: 8px !important;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .btn-remove-file:hover {
+      background: rgba(239, 71, 111, 0.16) !important;
+      border-color: rgba(239, 71, 111, 0.5) !important;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 6px;
     }
 
     .lectures {
@@ -361,25 +307,14 @@
       grid-template-columns: 1fr auto;
       gap: 10px;
       align-items: center;
-      padding: 11px;
-      border-radius: 16px;
-      background: var(--soft);
+      background: var(--panel-2);
       border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
     }
 
-    .lecture strong {
-      display: block;
-      font-size: .93rem;
-      font-weight: 900;
-    }
-
-    .lecture span {
-      display: block;
-      margin-top: 2px;
-      color: var(--muted);
-      font-size: .78rem;
-      font-weight: 800;
-    }
+    .lecture strong { display: block; font-size: 0.94rem; }
+    .lecture span { color: var(--muted); font-size: .82rem; margin-top: 2px; display: block; }
 
     .lecture-actions {
       display: flex;
@@ -387,162 +322,168 @@
     }
 
     .lecture-actions button {
-      width: 38px;
-      min-height: 36px;
+      width: 42px;
+      min-height: 38px;
       padding: 0;
-      border-radius: 12px;
+      display: grid;
+      place-items: center;
     }
 
     .status {
       position: sticky;
       bottom: 10px;
-      z-index: 5;
-      min-height: 48px;
+      z-index: 100;
+      min-height: 46px;
+      border: 1px solid var(--line);
+      background: #0f172a;
+      border-radius: var(--radius);
       padding: 12px;
-      border-radius: 16px;
-      background: #102118;
-      color: #d7f7e8;
-      border: 1px solid rgba(255,255,255,.09);
-      box-shadow: 0 16px 34px rgba(16, 33, 24, .28);
+      color: var(--muted);
+      font-weight: 800;
       line-height: 1.55;
-      font-size: .86rem;
-      font-weight: 900;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .35);
+      font-size: 0.9rem;
     }
 
-    .status.ok { color: #96f0bd; }
-    .status.err { color: #ffb3bf; }
+    .status.ok { color: #86efac; border-color: rgba(21, 191, 134, .45); }
+    .status.err { color: #fda4af; border-color: rgba(239, 71, 111, .45); }
 
-    .hide-when-ready.ready {
-      display: none;
+    .progress-track {
+      height: 6px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.05);
+      margin-top: 4px;
     }
 
-    @media (min-width: 760px) {
-      body { padding: 22px; }
-      .shell { gap: 14px; }
-      .editor-layout {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 14px;
-      }
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: var(--green);
+      transition: width 0.2s ease;
     }
 
     @media (max-width: 620px) {
-      .topbar { grid-template-columns: 1fr; }
-      .student-link { width: 100%; }
-      .token-row, .grid, .actions { grid-template-columns: 1fr; }
+      body { padding: 10px; }
+      header { align-items: flex-start; flex-direction: column; }
+      .student-link { width: 100%; text-align: center; }
+      .grid, .actions, .token-row { grid-template-columns: 1fr; }
       .token-row button { width: 100%; }
     }
   </style>
 </head>
 <body>
   <main class="shell">
-    <header class="topbar">
-      <div class="brand">
-        <div class="mark" aria-hidden="true">🩺</div>
-        <div>
-          <h1>أدمن الموبايل</h1>
-          <p class="sub">ارفع محاضراتك من أي مكان، والموقع يتحدث لوحده</p>
-        </div>
+    <header>
+      <div>
+        <h1>أدمن الموبايل 📱</h1>
+        <p class="sub">رفع محاضرة أو تعديل بيانات الموقع من أي مكان</p>
       </div>
       <a class="student-link" href="index.html" target="_blank">فتح موقع الطلاب</a>
     </header>
 
-    <section class="status-card">
-      <div>
-        <strong id="connectionTitle">جاهز للتوصيل</strong>
-        <span id="connectionSub">استخدم التوكن مرة واحدة واحفظه على جهازك</span>
-      </div>
-      <span class="status-dot" id="connectionDot"></span>
-    </section>
-
-    <section class="card hide-when-ready" id="loginCard">
-      <div class="card-head">
-        <h2>تسجيل GitHub</h2>
-        <span class="mini">آمن على جهازك فقط</span>
-      </div>
+    <!-- GitHub Token Authentication Card -->
+    <section class="card">
+      <h2>تسجيل GitHub</h2>
       <div class="notice">
-        لا يتم وضع التوكن داخل كود الموقع. لو حفظته، سيتخزن على متصفح موبايلك فقط.
+        استخدم Token خاص بحسابك وصلاحيته على مستودع Nursing_Portal فقط. الصفحة لا تحفظ التوكن داخل الكود.
       </div>
       <div class="token-row">
         <label>
           GitHub Token
           <input id="tokenInput" type="password" autocomplete="off" placeholder="الصق التوكن هنا">
         </label>
-        <button id="loadBtn" type="button">دخول</button>
+        <button id="loadBtn" type="button">تحميل البيانات</button>
       </div>
       <div class="remember-row">
         <label>
           <input id="rememberToken" type="checkbox">
-          افتح تلقائيًا على الجهاز ده
+          احفظه على الجهاز ده وافتح تلقائيًا
         </label>
         <button class="secondary" id="clearTokenBtn" type="button">مسح المحفوظ</button>
       </div>
+      <p class="hint">
+        المطلوب في التوكن: Repository access للمسودع ده فقط، و Contents = Read and write.
+      </p>
     </section>
 
+    <!-- Lecture Editor Card -->
     <section class="card" id="editorCard" style="display:none;">
-      <div class="card-head">
-        <h2 id="editorTitle">إضافة محاضرة</h2>
-        <span class="mini">يدعم أكتر من ملف</span>
+      <h2 id="editorTitle">إضافة محاضرة</h2>
+
+      <div class="grid">
+        <label>
+          الترم
+          <select id="termSelect"></select>
+        </label>
+        <label>
+          المادة
+          <select id="subjectSelect"></select>
+        </label>
       </div>
 
-      <div class="editor-layout">
-        <div class="card" style="box-shadow:none; padding:0; border:0; background:transparent;">
-          <div class="grid">
-            <label>
-              الترم
-              <select id="termSelect"></select>
-            </label>
-            <label>
-              المادة
-              <select id="subjectSelect"></select>
-            </label>
-          </div>
+      <div class="grid">
+        <label>
+          إضافة مادة جديدة
+          <input id="newSubjectInput" type="text" placeholder="مثال: Histology">
+        </label>
+        <label>
+          مفتاح المادة
+          <input id="newSubjectKeyInput" type="text" placeholder="اختياري: histology">
+        </label>
+      </div>
+      <button class="secondary" id="addSubjectBtn" type="button">إضافة المادة للقائمة</button>
 
-          <div class="grid">
-            <label>
-              إضافة مادة جديدة
-              <input id="newSubjectInput" type="text" placeholder="مثال: Histology">
-            </label>
-            <label>
-              مفتاح المادة
-              <input id="newSubjectKeyInput" type="text" placeholder="اختياري: histology">
-            </label>
-          </div>
-          <button class="secondary" id="addSubjectBtn" type="button">إضافة المادة للقائمة</button>
+      <div class="grid">
+        <label>
+          رقم المحاضرة
+          <input id="lectureNum" type="number" min="1" inputmode="numeric">
+        </label>
+        <label>
+          اسم المحاضرة
+          <input id="lectureTitle" type="text" placeholder="مثال: المحاضره الأولى">
+        </label>
+      </div>
 
-          <div class="grid">
-            <label>
-              رقم المحاضرة
-              <input id="lectureNum" type="number" min="1" inputmode="numeric">
-            </label>
-            <label>
-              اسم المحاضرة
-              <input id="lectureTitle" type="text" placeholder="مثال: المحاضرة الأولى">
-            </label>
-          </div>
-        </div>
-
-        <div class="files">
+      <div class="files">
+        <!-- fileOriginal -->
+        <div class="file-group">
           <label class="file-box">
             الباور الأصلي للدكتورة
             <small>اختار ملف أو أكتر</small>
             <input id="fileOriginal" type="file" accept=".ppt,.pptx,.pdf" multiple>
           </label>
+          <div id="currentFiles-original_ppt" class="current-files-list"></div>
+        </div>
+
+        <!-- fileTranslated -->
+        <div class="file-group">
           <label class="file-box">
             الباور المترجم
             <small>PDF أو PowerPoint أو HTML</small>
             <input id="fileTranslated" type="file" accept=".ppt,.pptx,.pdf,.html" multiple>
           </label>
+          <div id="currentFiles-translated_ppt" class="current-files-list"></div>
+        </div>
+
+        <!-- fileMyQuiz -->
+        <div class="file-group">
           <label class="file-box">
             بنك أسئلة (اجتهاد شخصي)
             <small>ينفع HTML أو PDF</small>
             <input id="fileMyQuiz" type="file" accept=".html,.pdf" multiple>
           </label>
+          <div id="currentFiles-my_quiz" class="current-files-list"></div>
+        </div>
+
+        <!-- fileDoctorQuiz -->
+        <div class="file-group">
           <label class="file-box">
             بنك أسئلة الدكتورة
             <small>ينفع HTML أو PDF</small>
             <input id="fileDoctorQuiz" type="file" accept=".html,.pdf" multiple>
           </label>
+          <div id="currentFiles-doctor_quiz" class="current-files-list"></div>
         </div>
       </div>
 
@@ -550,27 +491,21 @@
         <button class="success" id="saveBtn" type="button">رفع وحفظ المحاضرة</button>
         <button class="secondary" id="resetBtn" type="button">تفريغ النموذج</button>
       </div>
-
-      <div class="upload-progress" id="uploadProgress">
-        <div class="progress-info">
-          <span id="progressLabel">جاهز للرفع</span>
-          <span id="progressPercent">0%</span>
-        </div>
-        <div class="progress-track" aria-hidden="true">
-          <div class="progress-fill" id="progressFill"></div>
-        </div>
-      </div>
     </section>
 
+    <!-- Lectures List Card -->
     <section class="card" id="lecturesCard" style="display:none;">
-      <div class="card-head">
-        <h2>محاضرات المادة</h2>
-        <span class="mini" id="lectureCountLabel">0 محاضرات</span>
-      </div>
+      <h2>محاضرات المادة</h2>
       <div id="lecturesList" class="lectures"></div>
     </section>
 
-    <div class="status" id="statusBox">جاهز</div>
+    <!-- Dynamic Status Bar -->
+    <div class="status" id="statusBox">
+      <span id="statusText">جاهز</span>
+      <div class="progress-track" id="progressTrack" style="display:none;">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
   </main>
 
   <script>
@@ -579,6 +514,7 @@
     const BRANCH = "main";
     const API_ROOT = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents`;
     const TOKEN_STORAGE_KEY = "nursingPortalGithubToken";
+    
     const FILE_TYPES = {
       original_ppt: { input: "fileOriginal", folder: "original" },
       translated_ppt: { input: "fileTranslated", folder: "guides" },
@@ -590,21 +526,26 @@
     let curriculumData = null;
     let curriculumSha = "";
     let editLectureNum = null;
+    let editLectureFiles = {};
     let uploadPlan = [];
+    let busy = false;
 
     const $ = (id) => document.getElementById(id);
 
     $("loadBtn").addEventListener("click", loadCurriculum);
     $("clearTokenBtn").addEventListener("click", clearSavedToken);
+    
     $("termSelect").addEventListener("change", () => {
       fillSubjects();
       resetForm(false);
       renderLectures();
     });
+    
     $("subjectSelect").addEventListener("change", () => {
       resetForm(false);
       renderLectures();
     });
+    
     $("addSubjectBtn").addEventListener("click", addSubject);
     $("saveBtn").addEventListener("click", saveLecture);
     $("resetBtn").addEventListener("click", () => resetForm(true));
@@ -613,38 +554,30 @@
 
     function setStatus(message, type = "") {
       const box = $("statusBox");
+      const text = $("statusText");
       box.className = `status ${type}`;
-      box.textContent = message;
-    }
-
-    function setConnection(ready) {
-      $("connectionTitle").textContent = ready ? "متصل بـ GitHub" : "جاهز للتوصيل";
-      $("connectionSub").textContent = ready ? "تقدر تضيف أو تعدل المحاضرات الآن" : "استخدم التوكن مرة واحدة واحفظه على جهازك";
-      $("connectionDot").classList.toggle("ok", ready);
-      $("loginCard").classList.toggle("ready", ready);
-    }
-
-    function setBusy(value) {
-      document.querySelectorAll("button, input, select").forEach(el => {
-        if (el.id !== "tokenInput") el.disabled = value;
-      });
+      text.textContent = message;
     }
 
     function setProgress(percent, label) {
-      const safePercent = Math.max(0, Math.min(100, Math.round(percent || 0)));
-      $("uploadProgress").classList.add("show");
-      $("progressFill").style.width = safePercent + "%";
-      $("progressPercent").textContent = safePercent + "%";
-      $("progressLabel").textContent = label || "جاري الرفع...";
+      const track = $("progressTrack");
+      const fill = $("progressFill");
+      const text = $("statusText");
+      
+      if (percent <= 0 || percent >= 100) {
+        track.style.display = "none";
+      } else {
+        track.style.display = "block";
+        fill.style.width = `${percent}%`;
+      }
+      text.textContent = label || "جاري التحميل...";
     }
 
-    function hideProgressSoon() {
-      setTimeout(() => {
-        $("uploadProgress").classList.remove("show");
-        $("progressFill").style.width = "0%";
-        $("progressPercent").textContent = "0%";
-        $("progressLabel").textContent = "جاهز للرفع";
-      }, 1600);
+    function setBusy(value) {
+      busy = value;
+      document.querySelectorAll("button, input, select").forEach(el => {
+        if (el.id !== "tokenInput") el.disabled = value;
+      });
     }
 
     function headers() {
@@ -668,7 +601,8 @@
       if (res.status === 404 && method === "GET") return null;
 
       if (!res.ok) {
-        throw new Error(data?.message || "GitHub رفض الطلب.");
+        const msg = data?.message || "GitHub رفض الطلب.";
+        throw new Error(msg);
       }
 
       return data;
@@ -676,8 +610,12 @@
 
     function encodePathWithQuery(value) {
       const [path, query] = value.split("?");
-      const encodedPath = path.split("/").map(encodeURIComponent).join("/");
+      const encodedPath = encodePath(path);
       return query ? `${encodedPath}?${query}` : encodedPath;
+    }
+
+    function encodePath(path) {
+      return path.split("/").map(encodeURIComponent).join("/");
     }
 
     function decodeBase64Unicode(base64) {
@@ -715,7 +653,7 @@
         } else {
           localStorage.removeItem(TOKEN_STORAGE_KEY);
         }
-        setStatus("جاري تحميل بيانات المحاضرات...");
+        setStatus("جاري تحميل بيانات المحاضرات من GitHub...");
         const file = await githubJson("curriculum.js?ref=" + BRANCH);
         if (!file?.content) throw new Error("لم أستطع قراءة curriculum.js");
         curriculumSha = file.sha;
@@ -723,11 +661,9 @@
         fillTerms();
         $("editorCard").style.display = "grid";
         $("lecturesCard").style.display = "grid";
-        setConnection(true);
         renderLectures();
-        setStatus("تم التحميل. جاهز للشغل.", "ok");
+        setStatus("تم تحميل البيانات. تقدر تضيف أو تعدل الآن.", "ok");
       } catch (err) {
-        setConnection(false);
         setStatus("فشل التحميل: " + explainGithubError(err.message), "err");
       } finally {
         setBusy(false);
@@ -737,9 +673,10 @@
     function initSavedToken() {
       const savedToken = localStorage.getItem(TOKEN_STORAGE_KEY);
       if (!savedToken) return;
+
       $("tokenInput").value = savedToken;
       $("rememberToken").checked = true;
-      setStatus("لقيت تسجيل محفوظ. جاري الدخول...");
+      setStatus("لقيت تسجيل محفوظ على الجهاز. جاري الدخول...");
       loadCurriculum();
     }
 
@@ -752,7 +689,6 @@
       token = "";
       curriculumData = null;
       curriculumSha = "";
-      setConnection(false);
       setStatus("تم مسح التوكن المحفوظ من المتصفح.", "ok");
     }
 
@@ -782,6 +718,7 @@
 
     function addSubject() {
       if (!curriculumData) return;
+
       const name = $("newSubjectInput").value.trim();
       const customKey = $("newSubjectKeyInput").value.trim();
       if (!name) {
@@ -805,7 +742,7 @@
       $("newSubjectKeyInput").value = "";
       suggestNextLectureNum();
       renderLectures();
-      setStatus("اتضافت المادة. احفظ أول محاضرة عشان تظهر للطلاب.", "ok");
+      setStatus("اتضافت المادة للقائمة. اضغط رفع وحفظ المحاضرة بعد إضافة أول محاضرة.", "ok");
     }
 
     function sanitizeKey(value) {
@@ -839,10 +776,15 @@
 
     function resetForm(clearTitle) {
       editLectureNum = null;
+      editLectureFiles = {};
       $("editorTitle").textContent = "إضافة محاضرة";
       $("saveBtn").textContent = "رفع وحفظ المحاضرة";
       if (clearTitle) $("lectureTitle").value = "";
       Object.values(FILE_TYPES).forEach(type => $(type.input).value = "");
+      Object.keys(FILE_TYPES).forEach(key => {
+        const container = $(`currentFiles-${key}`);
+        if (container) container.innerHTML = "";
+      });
       uploadPlan = [];
       suggestNextLectureNum();
     }
@@ -852,15 +794,13 @@
       const list = $("lecturesList");
       list.innerHTML = "";
       if (!selected) {
-        list.innerHTML = "<p class='mini'>أضف مادة أولاً.</p>";
-        $("lectureCountLabel").textContent = "0 محاضرات";
+        list.innerHTML = "<p class='hint'>أضف مادة أولاً.</p>";
         return;
       }
 
       const lectures = selected.subject.lectures || [];
-      $("lectureCountLabel").textContent = `${lectures.length} محاضرات`;
       if (!lectures.length) {
-        list.innerHTML = "<p class='mini'>لا توجد محاضرات في هذه المادة بعد.</p>";
+        list.innerHTML = "<p class='hint'>لا توجد محاضرات في هذه المادة بعد.</p>";
         return;
       }
 
@@ -892,6 +832,15 @@
       return value ? [value] : [];
     }
 
+    辅助 = {
+      escapeHtml: function(text) {
+        return text.replace(/[&<>"']/g, ch => ({
+          "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+        }[ch]));
+      }
+    };
+    
+    // Fixed: Keep it simple
     function escapeHtml(text) {
       return text.replace(/[&<>"']/g, ch => ({
         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
@@ -904,13 +853,55 @@
       if (!lecture) return;
 
       editLectureNum = Number(num);
+      editLectureFiles = JSON.parse(JSON.stringify(lecture.files || {}));
+
       $("editorTitle").textContent = "تعديل محاضرة";
       $("saveBtn").textContent = "حفظ التعديل";
       $("lectureNum").value = lecture.num;
       $("lectureTitle").value = lecture.title_ar || "";
       Object.values(FILE_TYPES).forEach(type => $(type.input).value = "");
+      
+      renderCurrentFiles();
+
       window.scrollTo({ top: 0, behavior: "smooth" });
-      setStatus("اختار ملفات جديدة لإضافتها بجانب القديم. لو مش اخترت حاجة، القديم هيفضل كما هو.", "ok");
+      setStatus("اختر ملفات جديدة لإضافتها، أو احذف ملفات قديمة من القائمة بالأسفل.", "ok");
+    }
+
+    function renderCurrentFiles() {
+      Object.entries(FILE_TYPES).forEach(([key, meta]) => {
+        const container = $(`currentFiles-${key}`);
+        if (!container) return;
+        container.innerHTML = "";
+
+        if (editLectureNum === null || !editLectureFiles[key]) return;
+
+        const paths = normalizeFiles(editLectureFiles[key]);
+        paths.forEach((path, index) => {
+          const item = document.createElement("div");
+          item.className = "current-file-item";
+
+          const nameSpan = document.createElement("span");
+          nameSpan.className = "current-file-name";
+          nameSpan.textContent = path.split("/").pop();
+          nameSpan.title = path;
+
+          const removeBtn = document.createElement("button");
+          removeBtn.type = "button";
+          removeBtn.className = "btn-remove-file";
+          removeBtn.textContent = "حذف ❌";
+          removeBtn.addEventListener("click", () => {
+            const filename = path.split("/").pop();
+            if (!confirm(`هل أنت متأكد من حذف الملف "${filename}" من هذه المحاضرة؟`)) return;
+            paths.splice(index, 1);
+            editLectureFiles[key] = paths;
+            renderCurrentFiles();
+          });
+
+          item.appendChild(nameSpan);
+          item.appendChild(removeBtn);
+          container.appendChild(item);
+        });
+      });
     }
 
     async function deleteLecture(num) {
@@ -921,7 +912,7 @@
       selected.subject.lectures = (selected.subject.lectures || []).filter(item => Number(item.num) !== Number(num));
       try {
         setBusy(true);
-        setStatus("جاري حفظ الحذف...");
+        setStatus("جاري حفظ الحذف على GitHub...");
         await saveCurriculumOnly("Delete lecture " + num);
         resetForm(true);
         renderLectures();
@@ -931,6 +922,15 @@
       } finally {
         setBusy(false);
       }
+    }
+
+    function collectSelectedFiles() {
+      const selected = [];
+      Object.values(FILE_TYPES).forEach(meta => {
+        const input = $(meta.input);
+        Array.from(input.files || []).forEach(file => selected.push(file));
+      });
+      return selected;
     }
 
     async function saveLecture() {
@@ -960,26 +960,26 @@
         setStatus(uploadPlan.length ? "جاري رفع الملفات المختارة..." : "جاري حفظ البيانات...");
         setProgress(0, uploadPlan.length ? `0 من ${uploadPlan.length} ملفات` : "لا توجد ملفات جديدة");
 
-        const oldLecture = lectures.find(item => Number(item.num) === Number(editLectureNum)) || { files: {} };
-        const files = { ...oldLecture.files };
+        const files = editLectureNum !== null ? { ...editLectureFiles } : {};
         let uploadedCount = 0;
 
         for (const [fileType, meta] of Object.entries(FILE_TYPES)) {
           const fileInput = $(meta.input);
-          if (!fileInput.files.length) continue;
           const paths = normalizeFiles(files[fileType]);
-          for (const file of Array.from(fileInput.files)) {
-            const cleanName = sanitizeFileName(file.name);
-            const path = `terms/term_${selected.termNumber}/${selected.subjectKey}/${meta.folder}/${cleanName}`;
-            setStatus(`جاري رفع: ${cleanName}`);
-            const base64 = await fileToBase64(file);
-            await putFile(path, base64, `Upload ${cleanName}`, null, (filePercent) => {
-              const overall = ((uploadedCount + (filePercent / 100)) / Math.max(uploadPlan.length, 1)) * 100;
-              setProgress(overall, `رفع ${uploadedCount + 1} من ${uploadPlan.length}: ${cleanName}`);
-            });
-            uploadedCount++;
-            setProgress((uploadedCount / Math.max(uploadPlan.length, 1)) * 100, `تم رفع ${uploadedCount} من ${uploadPlan.length}`);
-            if (!paths.includes(path)) paths.push(path);
+          if (fileInput.files.length) {
+            for (const file of Array.from(fileInput.files)) {
+              const cleanName = sanitizeFileName(file.name);
+              const path = `terms/term_${selected.termNumber}/${selected.subjectKey}/${meta.folder}/${cleanName}`;
+              setStatus(`جاري رفع: ${cleanName}`);
+              const base64 = await fileToBase64(file);
+              await putFile(path, base64, `Upload ${cleanName}`, null, (filePercent) => {
+                const overall = ((uploadedCount + (filePercent / 100)) / Math.max(uploadPlan.length, 1)) * 100;
+                setProgress(overall, `رفع ${uploadedCount + 1} من ${uploadPlan.length}: ${cleanName}`);
+              });
+              uploadedCount++;
+              setProgress((uploadedCount / Math.max(uploadPlan.length, 1)) * 100, `تم رفع ${uploadedCount} من ${uploadPlan.length}`);
+              if (!paths.includes(path)) paths.push(path);
+            }
           }
           files[fileType] = paths;
         }
@@ -995,28 +995,16 @@
         selected.subject.lectures = lectures;
 
         setStatus("جاري تحديث قاعدة البيانات...");
-        setProgress(100, "جاري حفظ قاعدة البيانات...");
         await saveCurriculumOnly(editLectureNum ? "Update lecture " + num : "Add lecture " + num);
 
         resetForm(true);
         renderLectures();
         setStatus("تم الرفع والحفظ. موقع الطلاب هيتحدث خلال دقيقة تقريبًا.", "ok");
-        hideProgressSoon();
       } catch (err) {
-        setProgress(100, "توقف الرفع");
         setStatus("فشل الحفظ: " + explainGithubError(err.message), "err");
       } finally {
         setBusy(false);
       }
-    }
-
-    function collectSelectedFiles() {
-      const selected = [];
-      Object.values(FILE_TYPES).forEach(meta => {
-        const input = $(meta.input);
-        Array.from(input.files || []).forEach(file => selected.push(file));
-      });
-      return selected;
     }
 
     async function saveCurriculumOnly(message) {
