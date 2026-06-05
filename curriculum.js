@@ -15,6 +15,17 @@ const curriculumData = {
                 "my_quiz": "terms/term_1/anatomy/quizzes/Anatomy_Quiz_L1.html",
                 "doctor_quiz": ""
               }
+            },
+            {
+              "num": 2,
+              "title_ar": "المحاضره ر",
+              "files": {
+                "original_ppt": [
+                  "terms/term_1/anatomy/original/المحاضرة الأولى مترجمه _ المصطلحات الطبية.pdf",
+                  "terms/term_1/anatomy/original/المحاضرة الثالثه مترجمه _ المصطلحات الطبية.pdf",
+                  "terms/term_1/anatomy/original/المحاضرة الثانية مترجمه _ المصطلحات الطبية.pdf"
+                ]
+              }
             }
           ]
         },
