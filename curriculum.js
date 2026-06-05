@@ -27,18 +27,6 @@ const curriculumData = {
                 ],
                 "doctor_quiz": []
               }
-            },
-            {
-              "num": 3,
-              "title_ar": "3",
-              "files": {
-                "original_ppt": [],
-                "translated_ppt": [],
-                "my_quiz": [
-                  "terms/term_1/anatomy/quizzes/Lecture_1_Fundamentals.html"
-                ],
-                "doctor_quiz": []
-              }
             }
           ]
         },
