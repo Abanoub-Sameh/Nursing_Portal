@@ -75,10 +75,19 @@ const curriculumData = {
               "num": 1,
               "title_ar": "المحاضره الاولي",
               "files": {
-                "original_ppt": "terms/term_1/physiology/original/Physiology  1.pdf",
-                "translated_ppt": "terms/term_1/physiology/guides/Blood_Physiology_Slides_Per_Page.pdf",
-                "my_quiz": "terms/term_1/physiology/quizzes/Physiology_Quiz_L1,2.html",
-                "doctor_quiz": "terms/term_1/physiology/quizzes/Questions_L1_Blood_Spring_2026.pdf"
+                "original_ppt": [
+                  "terms/term_1/physiology/original/Physiology  1.pdf",
+                  "terms/term_1/physiology/original/data collection - 3rd lecture.pdf"
+                ],
+                "translated_ppt": [
+                  "terms/term_1/physiology/guides/Blood_Physiology_Slides_Per_Page.pdf"
+                ],
+                "my_quiz": [
+                  "terms/term_1/physiology/quizzes/Physiology_Quiz_L1,2.html"
+                ],
+                "doctor_quiz": [
+                  "terms/term_1/physiology/quizzes/Questions_L1_Blood_Spring_2026.pdf"
+                ]
               }
             },
             {
