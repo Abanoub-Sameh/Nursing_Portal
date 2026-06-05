@@ -76,8 +76,7 @@ const curriculumData = {
               "title_ar": "المحاضره الاولي",
               "files": {
                 "original_ppt": [
-                  "terms/term_1/physiology/original/Physiology  1.pdf",
-                  "terms/term_1/physiology/original/data collection - 3rd lecture.pdf"
+                  "terms/term_1/physiology/original/Physiology  1.pdf"
                 ],
                 "translated_ppt": [
                   "terms/term_1/physiology/guides/Blood_Physiology_Slides_Per_Page.pdf"
