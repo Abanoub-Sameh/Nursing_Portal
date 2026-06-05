@@ -546,6 +546,16 @@
             serviceWorkerParam: { scope: swScope },
             serviceWorkerPath: swPath
           });
+
+          if (OneSignal.Notifications.permission) {
+            await OneSignal.User.PushSubscription.optIn();
+          }
+
+          console.log("OneSignal subscription:", {
+            permission: OneSignal.Notifications.permission,
+            optedIn: OneSignal.User.PushSubscription.optedIn,
+            id: OneSignal.User.PushSubscription.id
+          });
           console.log("✅ OneSignal initialized successfully.");
         } catch (e) {
           console.warn("⚠️ OneSignal init failed:", e);
@@ -594,6 +604,12 @@
           OneSignalDeferred.push(async function(OneSignal) {
             try {
               await OneSignal.Notifications.requestPermission();
+              await OneSignal.User.PushSubscription.optIn();
+              console.log("OneSignal subscription after prompt:", {
+                permission: OneSignal.Notifications.permission,
+                optedIn: OneSignal.User.PushSubscription.optedIn,
+                id: OneSignal.User.PushSubscription.id
+              });
             } catch (e) {
               console.warn("OneSignal requestPermission failed, trying native:", e);
               if (typeof Notification !== 'undefined') {

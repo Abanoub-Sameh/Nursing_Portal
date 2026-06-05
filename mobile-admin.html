@@ -1465,6 +1465,9 @@
       if (Array.isArray(result.errors) && result.errors.length) {
         throw new Error(result.errors.join(" - "));
       }
+      if (!result.id) {
+        throw new Error("OneSignal قبل الطلب، لكن لا يوجد طلاب مشتركين بالإشعارات حتى الآن.");
+      }
       return result;
     }
 
