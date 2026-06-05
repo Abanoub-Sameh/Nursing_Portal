@@ -571,6 +571,8 @@
         </label>
         <button class="secondary" id="clearTokenBtn" type="button">مسح المحفوظ</button>
       </div>
+      <!-- Save OneSignal Settings button — only visible after login -->
+      <button id="saveSettingsBtn" type="button" class="success" style="display:none;">💾 حفظ إعدادات OneSignal على الموقع</button>
     </section>
 
     <!-- Lecture Editor Card -->
@@ -744,13 +746,16 @@
     $("resetBtn").addEventListener("click", () => resetForm(true));
     $("editSubjectBtn").addEventListener("click", editSubject);
     $("deleteSubjectBtn").addEventListener("click", deleteSubject);
+    $("saveSettingsBtn").addEventListener("click", saveOneSignalSettings);
     $("toggleSettingsBtn").addEventListener("click", () => {
       const card = $("loginCard");
       if (card.style.display === "none") {
         card.style.display = "grid";
+        $("saveSettingsBtn").style.display = "block";
         $("toggleSettingsBtn").textContent = "❌ إغلاق الإعدادات";
       } else {
         card.style.display = "none";
+        $("saveSettingsBtn").style.display = "none";
         $("toggleSettingsBtn").textContent = "⚙️ الإعدادات والمفاتيح";
       }
     });
@@ -896,6 +901,7 @@
         $("lecturesCard").style.display = "grid";
         $("loginCard").style.display = "none";
         $("toggleSettingsBtn").style.display = "block";
+        $("saveSettingsBtn").style.display = "none"; // hidden until settings panel opened
         renderLectures();
         setStatus("تم تحميل البيانات. تقدر تضيف أو تعدل الآن.", "ok");
       } catch (err) {
@@ -932,10 +938,53 @@
       $("editorCard").style.display = "none";
       $("lecturesCard").style.display = "none";
       $("loginCard").style.display = "grid";
+      $("toggleSettingsBtn").style.display = "none";
+      $("saveSettingsBtn").style.display = "none";
       token = "";
       curriculumData = null;
       curriculumSha = "";
       setStatus("تم مسح التوكن المحفوظ من المتصفح.", "ok");
+    }
+
+    async function saveOneSignalSettings() {
+      if (!curriculumData) {
+        setStatus("لازم تسجل دخول بالتوكن الأول.", "err");
+        return;
+      }
+
+      const appId = $("onesignalAppIdInput").value.trim();
+      const restKey = $("onesignalRestKeyInput").value.trim();
+
+      if (!appId) {
+        setStatus("اكتب OneSignal App ID الأول.", "err");
+        return;
+      }
+
+      if (!confirm(`حفظ إعدادات OneSignal ورفعها على موقع الطلاب دلوقتي؟`)) return;
+
+      try {
+        setBusy(true);
+        setStatus("جاري حفظ إعدادات OneSignal...");
+
+        curriculumData.onesignal_app_id = appId;
+
+        if ($("rememberToken").checked) {
+          localStorage.setItem(ONESIGNAL_APP_ID_KEY, appId);
+          localStorage.setItem(ONESIGNAL_REST_KEY, restKey);
+        }
+
+        await saveCurriculumOnly("Update OneSignal App ID settings");
+        setStatus("✅ تم حفظ إعدادات OneSignal ورفعها على الموقع بنجاح! سيظهر الإشعار للطلاب خلال دقيقة.", "ok");
+
+        // Close settings panel
+        $("loginCard").style.display = "none";
+        $("saveSettingsBtn").style.display = "none";
+        $("toggleSettingsBtn").textContent = "⚙️ الإعدادات والمفاتيح";
+      } catch (err) {
+        setStatus("فشل حفظ الإعدادات: " + explainGithubError(err.message), "err");
+      } finally {
+        setBusy(false);
+      }
     }
 
     function fillTerms() {
