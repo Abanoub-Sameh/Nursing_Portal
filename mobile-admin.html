@@ -538,7 +538,10 @@
         <h1>أدمن الموبايل 📱</h1>
         <p class="sub">رفع محاضرة أو تعديل بيانات الموقع من أي مكان</p>
       </div>
-      <a class="student-link" href="https://abanoub-sameh.github.io/Nursing_Portal" target="_blank">فتح موقع الطلاب</a>
+      <div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-end;">
+        <a class="student-link" href="https://abanoub-sameh.github.io/Nursing_Portal" target="_blank">فتح موقع الطلاب</a>
+        <button id="toggleSettingsBtn" class="secondary" style="display: none; min-height: 34px; padding: 4px 10px; font-size: 0.8rem; width: auto; box-shadow: none;">⚙️ الإعدادات والمفاتيح</button>
+      </div>
     </header>
 
     <!-- GitHub Token Authentication Card -->
@@ -741,6 +744,16 @@
     $("resetBtn").addEventListener("click", () => resetForm(true));
     $("editSubjectBtn").addEventListener("click", editSubject);
     $("deleteSubjectBtn").addEventListener("click", deleteSubject);
+    $("toggleSettingsBtn").addEventListener("click", () => {
+      const card = $("loginCard");
+      if (card.style.display === "none") {
+        card.style.display = "grid";
+        $("toggleSettingsBtn").textContent = "❌ إغلاق الإعدادات";
+      } else {
+        card.style.display = "none";
+        $("toggleSettingsBtn").textContent = "⚙️ الإعدادات والمفاتيح";
+      }
+    });
 
     // Listen to changes on file inputs and add them to programmatically managed list
     Object.entries(FILE_TYPES).forEach(([key, meta]) => {
@@ -882,6 +895,7 @@
         $("editorCard").style.display = "grid";
         $("lecturesCard").style.display = "grid";
         $("loginCard").style.display = "none";
+        $("toggleSettingsBtn").style.display = "block";
         renderLectures();
         setStatus("تم تحميل البيانات. تقدر تضيف أو تعدل الآن.", "ok");
       } catch (err) {
@@ -1328,6 +1342,12 @@
         const onesignalRestKey = $("onesignalRestKeyInput").value.trim();
         if (onesignalAppId) {
           curriculumData.onesignal_app_id = onesignalAppId;
+        }
+
+        // Save keys locally if remember token is active
+        if ($("rememberToken").checked) {
+          localStorage.setItem(ONESIGNAL_APP_ID_KEY, onesignalAppId);
+          localStorage.setItem(ONESIGNAL_REST_KEY, onesignalRestKey);
         }
 
         await saveCurriculumOnly(editLectureNum ? "Update lecture " + num : "Add lecture " + num);
