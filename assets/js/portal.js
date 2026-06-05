@@ -510,105 +510,107 @@
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>';
   }
 
+  // ── OneSignal Integration ──────────────────────────────────────
+  // The soft-prompt banner is shown INDEPENDENTLY of OneSignal SDK.
+  // OneSignal is only triggered when the user clicks "Accept".
+
   function initOneSignal() {
     const appId = curriculumData.onesignal_app_id;
 
     // Check if protocol is file:// (local load without web server)
     if (location.protocol === 'file:') {
-      console.warn("⚠️ Web Push Notifications (OneSignal) do not work under the file:/// protocol due to browser security restrictions. Use a local server (run server.py) and open http://localhost:8000/index.html to test notifications.");
-      
-      // For testing aesthetics and behavior, simulate the soft-prompt on local file://
-      simulateSoftPromptForTesting();
+      console.warn("⚠️ OneSignal لا يعمل على بروتوكول file:///. استخدم خادم محلي (server.py) للاختبار.");
+      showSoftPromptBanner(true); // test mode
       return;
     }
 
-    if (!appId) {
-      console.warn("⚠️ OneSignal App ID (onesignal_app_id) is not defined in curriculum.js. OneSignal will not initialize.");
-      return;
-    }
+    // Initialize OneSignal SDK v16 in the background (won't block banner)
+    if (appId) {
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        try {
+          // Detect subdirectory path for service worker
+          var swPath = '/OneSignalSDKWorker.js';
+          var swScope = '/';
+          var pathPrefix = location.pathname.replace(/\/[^\/]*$/, '');
+          if (pathPrefix && pathPrefix !== '/') {
+            swPath = pathPrefix + '/OneSignalSDKWorker.js';
+            swScope = pathPrefix + '/';
+          }
 
-    window.OneSignal = window.OneSignal || [];
-    OneSignal.push(function() {
-      OneSignal.init({
-        appId: appId,
-        notifyButton: {
-          enable: false,
-        },
-      });
-
-      checkNotificationPrompt();
-    });
-  }
-
-  function simulateSoftPromptForTesting() {
-    const dismissedThisSession = sessionStorage.getItem('notify_prompt_dismissed');
-    if (dismissedThisSession === 'true') {
-      return;
-    }
-
-    const promptBanner = document.getElementById('notifyPrompt');
-    if (promptBanner) {
-      promptBanner.style.display = 'flex';
-      setTimeout(() => promptBanner.classList.add('show'), 100);
-
-      const btnAccept = document.getElementById('btnNotifyAccept');
-      const btnDecline = document.getElementById('btnNotifyDecline');
-
-      if (btnAccept) {
-        btnAccept.onclick = () => {
-          promptBanner.classList.remove('show');
-          setTimeout(() => promptBanner.style.display = 'none', 400);
-          alert("🧪 وضع المحاكاة النشط (Local Test):\nتم النقر على 'تفعيل الآن'. في البيئة الحقيقية المرفوعة (HTTPS) أو باستخدام خادم محلي (localhost)، سيظهر طلب إذن المتصفح الأصلي لتلقي الإشعارات.");
-        };
-      }
-
-      if (btnDecline) {
-        btnDecline.onclick = () => {
-          promptBanner.classList.remove('show');
-          setTimeout(() => promptBanner.style.display = 'none', 400);
-          sessionStorage.setItem('notify_prompt_dismissed', 'true');
-        };
-      }
-    }
-  }
-
-  function checkNotificationPrompt() {
-    const permission = Notification.permission;
-    if (permission !== 'default') {
-      return;
-    }
-
-    const dismissedThisSession = sessionStorage.getItem('notify_prompt_dismissed');
-    if (dismissedThisSession === 'true') {
-      return;
-    }
-
-    const promptBanner = document.getElementById('notifyPrompt');
-    if (promptBanner) {
-      promptBanner.style.display = 'flex';
-      setTimeout(() => promptBanner.classList.add('show'), 100);
-
-      const btnAccept = document.getElementById('btnNotifyAccept');
-      const btnDecline = document.getElementById('btnNotifyDecline');
-
-      if (btnAccept) {
-        btnAccept.onclick = () => {
-          promptBanner.classList.remove('show');
-          setTimeout(() => promptBanner.style.display = 'none', 400);
-          
-          OneSignal.push(function() {
-            OneSignal.showNativePrompt();
+          await OneSignal.init({
+            appId: appId,
+            notifyButton: { enable: false },
+            serviceWorkerParam: { scope: swScope },
+            serviceWorkerPath: swPath
           });
-        };
-      }
+          console.log("✅ OneSignal initialized successfully.");
+        } catch (e) {
+          console.warn("⚠️ OneSignal init failed:", e);
+        }
+      });
+    } else {
+      console.warn("⚠️ OneSignal App ID غير موجود في curriculum.js.");
+    }
 
-      if (btnDecline) {
-        btnDecline.onclick = () => {
-          promptBanner.classList.remove('show');
-          setTimeout(() => promptBanner.style.display = 'none', 400);
-          sessionStorage.setItem('notify_prompt_dismissed', 'true');
-        };
-      }
+    // Show the soft-prompt banner regardless of OneSignal status
+    showSoftPromptBanner(false);
+  }
+
+  function showSoftPromptBanner(isTestMode) {
+    // Don't show if permission already granted or denied
+    if (!isTestMode && typeof Notification !== 'undefined' && Notification.permission !== 'default') {
+      return;
+    }
+
+    // Don't show if dismissed this session
+    if (sessionStorage.getItem('notify_prompt_dismissed') === 'true') {
+      return;
+    }
+
+    var promptBanner = document.getElementById('notifyPrompt');
+    if (!promptBanner) return;
+
+    promptBanner.style.display = 'flex';
+    setTimeout(function() { promptBanner.classList.add('show'); }, 300);
+
+    var btnAccept = document.getElementById('btnNotifyAccept');
+    var btnDecline = document.getElementById('btnNotifyDecline');
+
+    if (btnAccept) {
+      btnAccept.onclick = function() {
+        promptBanner.classList.remove('show');
+        setTimeout(function() { promptBanner.style.display = 'none'; }, 400);
+
+        if (isTestMode) {
+          alert("🧪 وضع المحاكاة: في البيئة الحقيقية (HTTPS) سيظهر طلب إذن المتصفح الأصلي.");
+          return;
+        }
+
+        // Try OneSignal v16 first, then fallback to native prompt
+        if (window.OneSignalDeferred) {
+          OneSignalDeferred.push(async function(OneSignal) {
+            try {
+              await OneSignal.Notifications.requestPermission();
+            } catch (e) {
+              console.warn("OneSignal requestPermission failed, trying native:", e);
+              if (typeof Notification !== 'undefined') {
+                Notification.requestPermission();
+              }
+            }
+          });
+        } else if (typeof Notification !== 'undefined') {
+          Notification.requestPermission();
+        }
+      };
+    }
+
+    if (btnDecline) {
+      btnDecline.onclick = function() {
+        promptBanner.classList.remove('show');
+        setTimeout(function() { promptBanner.style.display = 'none'; }, 400);
+        sessionStorage.setItem('notify_prompt_dismissed', 'true');
+      };
     }
   }
 
