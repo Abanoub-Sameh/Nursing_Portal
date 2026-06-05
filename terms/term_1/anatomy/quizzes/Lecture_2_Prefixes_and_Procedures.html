@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة الثانية: البادئات، اللاحقات، الألوان والفحوصات الحيوية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Inter:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #312e81;
+            --accent: #d97706;
+            --ink: #0f172a;
+            --muted: #475569;
+            --bg: #f8fafc;
+            --soft: #f5f3ff;
+            --accent-soft: #fef3c7;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Tajawal', 'Segoe UI', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--muted);
+            line-height: 1.65;
+        }
+        button {
+            font-family: inherit;
+        }
+        .app-header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: #fff;
+            padding: 14px 26px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, .16);
+        }
+        .app-title h1 {
+            font: 800 21px/1.2 Inter, sans-serif;
+        }
+        .app-title h2 {
+            margin-top: 3px;
+            font-size: 13px;
+            color: #e0e7ff;
+            font-weight: 700;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        .btn {
+            border: 1px solid rgba(255, 255, 255, .25);
+            background: rgba(255, 255, 255, .12);
+            color: #fff;
+            padding: 8px 13px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: .18s ease;
+        }
+        .btn:hover {
+            background: rgba(255, 255, 255, .22);
+            transform: translateY(-1px);
+        }
+        .btn-accent {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        .btn:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .layout {
+            max-width: 1380px;
+            margin: 20px auto;
+            padding: 0 18px;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+        }
+        .sidebar {
+            width: 300px;
+            flex: 0 0 300px;
+            position: sticky;
+            top: 88px;
+            max-height: calc(100vh - 105px);
+            overflow: auto;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 14px;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, .06);
+        }
+        .sidebar-title {
+            color: var(--ink);
+            font-weight: 800;
+            font-size: 15px;
+            margin-bottom: 12px;
+            padding-bottom: 7px;
+            border-bottom: 3px solid var(--primary);
+        }
+        .chapter {
+            margin-bottom: 12px;
+        }
+        .chapter-name {
+            font-weight: 800;
+            color: var(--primary-dark);
+            background: var(--soft);
+            border: 1px solid #e0e7ff;
+            padding: 7px 9px;
+            border-radius: 6px;
+            font-size: 12.5px;
+        }
+        .slide-links {
+            list-style: none;
+            padding: 7px 5px 0 0;
+            display: grid;
+            gap: 3px;
+        }
+        .slide-link {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            align-items: center;
+            color: #334155;
+            text-decoration: none;
+            border-radius: 5px;
+            padding: 6px 7px;
+            font-size: 11.5px;
+            cursor: pointer;
+        }
+        .slide-link:hover, .slide-link.active {
+            background: var(--primary);
+            color: #fff;
+        }
+        .slide-no {
+            font-family: Inter, sans-serif;
+            font-weight: 800;
+            font-size: 10px;
+            background: rgba(15, 23, 42, .08);
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+        .content {
+            flex: 1;
+            min-width: 0;
+            display: grid;
+            gap: 18px;
+        }
+        .slide-card, .slide-block {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            box-shadow: 0 5px 18px rgba(15, 23, 42, .07);
+            overflow: hidden;
+        }
+        .slide-inner {
+            padding: 18px;
+            display: grid;
+            gap: 15px;
+        }
+        .s-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 12px;
+        }
+        .s-title-ar {
+            color: var(--ink);
+            font-size: 22px;
+            line-height: 1.35;
+            font-weight: 800;
+        }
+        .s-title-en {
+            direction: ltr;
+            text-align: left;
+            color: var(--primary);
+            font-family: Inter, sans-serif;
+            font-weight: 800;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        .s-badge {
+            direction: ltr;
+            font: 800 12px/1 Inter, sans-serif;
+            color: #fff;
+            background: var(--primary);
+            padding: 8px 10px;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+        .s-image-wrap {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 6px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .s-image-wrap img {
+            width: 100%;
+            max-height: 560px;
+            object-fit: contain;
+            display: block;
+        }
+        .section-title {
+            color: var(--primary-dark);
+            font-weight: 800;
+            font-size: 14px;
+            border-right: 4px solid var(--primary);
+            padding-right: 8px;
+            margin-bottom: 8px;
+        }
+        .sentences {
+            display: grid;
+            gap: 8px;
+        }
+        .pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .pair .ar {
+            padding: 9px 10px;
+            color: #0f172a;
+            font-weight: 700;
+            background: #f8fafc;
+        }
+        .pair .en {
+            direction: ltr;
+            text-align: left;
+            padding: 9px 10px;
+            color: #1e293b;
+            font-family: Inter, Arial, sans-serif;
+            font-size: 13px;
+            border-right: 1px solid #e2e8f0;
+        }
+        .explain {
+            background: linear-gradient(180deg, #fff7ed, #fff);
+            border: 1px solid #fed7aa;
+            border-radius: 8px;
+            padding: 16px 18px;
+        }
+        .explain .section-title {
+            color: #9a3412;
+            border-color: var(--accent);
+        }
+        .explain-text {
+            color: #334155;
+            font-size: 17px;
+            line-height: 1.75;
+            font-weight: 500;
+        }
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 7px;
+        }
+        .term {
+            border: 1px solid #dbeafe;
+            background: #f8fafc;
+            border-radius: 6px;
+            padding: 8px 9px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .term-en {
+            direction: ltr;
+            text-align: left;
+            font-family: Inter, Arial, sans-serif;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 12.5px;
+        }
+        .term-ar {
+            color: #0f172a;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .nav-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 18px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+        }
+        .nav-row .btn {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        .counter {
+            color: #0f172a;
+            font-weight: 800;
+        }
+        #continuousView {
+            display: none;
+            gap: 18px;
+        }
+        #printOnlyContainer {
+            display: none;
+        }
+        @media(max-width: 980px) {
+            .app-header {
+                position: static;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+            .layout {
+                display: block;
+            }
+            .sidebar {
+                position: static;
+                width: auto;
+                max-height: none;
+                margin-bottom: 16px;
+            }
+            .pair {
+                grid-template-columns: 1fr;
+            }
+            .pair .en {
+                border-right: 0;
+                border-top: 1px solid #e2e8f0;
+            }
+            .glossary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @page {
+            size: A4;
+            margin: 10mm;
+        }
+        @media print {
+            body {
+                background: #fff;
+                color: #000;
+                font-size: 11.5px;
+            }
+            .app-header, .layout {
+                display: none!important;
+            }
+            #printOnlyContainer {
+                display: block!important;
+            }
+            .cover-page {
+                height: 277mm;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                color: #fff!important;
+                background: linear-gradient(135deg, var(--primary-dark), var(--primary), #4c1d95)!important;
+                padding: 28mm 18mm;
+                page-break-after: always;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .cover-page h1 {
+                font: 800 34px/1.25 Inter, sans-serif;
+                color: #fff!important;
+                margin-bottom: 8px;
+            }
+            .cover-page h2 {
+                font-size: 25px;
+                color: #fef3c7!important;
+                margin-bottom: 24px;
+            }
+            .cover-page p {
+                max-width: 165mm;
+                font-size: 14px;
+                line-height: 1.8;
+                color: #e0e7ff!important;
+            }
+            .print-slide {
+                page-break-inside: auto;
+                break-inside: auto;
+                margin-bottom: 4mm;
+                padding-bottom: 3mm;
+                border-bottom: 1px dashed #cbd5e1;
+            }
+            .slide-inner {
+                padding: 0;
+                gap: 2.5mm;
+            }
+            .slide-card, .slide-block {
+                box-shadow: none;
+                border: 0;
+                border-radius: 0;
+            }
+            .s-header {
+                padding-bottom: 1.5mm;
+            }
+            .s-title-ar {
+                font-size: 15px;
+            }
+            .s-title-en {
+                font-size: 10.5px;
+            }
+            .s-badge {
+                background: var(--primary)!important;
+                color: #fff!important;
+                font-size: 9px;
+                padding: 5px 7px;
+            }
+            .s-image-wrap {
+                padding: 2mm;
+                border-color: #d6d3d1;
+                background: #fff!important;
+            }
+            .s-image-wrap img {
+                max-height: 58mm;
+                object-fit: contain;
+            }
+            .section-title {
+                font-size: 10.5px;
+                margin-bottom: 1.5mm;
+            }
+            .pair {
+                gap: 0;
+                grid-template-columns: 1fr 1fr;
+                border-color: #cbd5e1;
+                break-inside: avoid;
+            }
+            .pair .ar, .pair .en {
+                padding: 1.2mm 1.5mm;
+                font-size: 9.5px;
+            }
+            .explain {
+                padding: 1.8mm;
+                background: #fff7ed!important;
+                border-color: #fdba74;
+            }
+            .explain-text {
+                font-size: 11.8px;
+                line-height: 1.6;
+            }
+            .glossary-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.2mm;
+            }
+            .term {
+                padding: 1mm 1.2mm;
+                gap: 1mm;
+                border-color: #cbd5e1;
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            .term-en, .term-ar {
+                font-size: 8.8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="app-title">
+            <h1>Medical Terminology - Lecture 2</h1>
+            <h2>المحاضرة الثانية: البادئات، اللاحقات، الألوان والتقييم السريري</h2>
+        </div>
+        <div class="controls">
+            <button class="btn btn-accent" onclick="window.print()">طباعة A4</button>
+            <button class="btn" id="toggleBtn" onclick="toggleView()">عرض مستمر</button>
+        </div>
+    </header>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-title">فصول المحاضرة</div>
+            <div id="chaptersList"></div>
+        </aside>
+        <main class="content">
+            <section id="singleView" class="slide-card"></section>
+            <section id="continuousView"></section>
+        </main>
+    </div>
+    <div id="printOnlyContainer">
+        <section class="cover-page">
+            <h1>Medical Terminology - Lecture 2</h1>
+            <h2>المحاضرة الثانية: البادئات، اللاحقات، الألوان والتقييم السريري</h2>
+            <p>نسخة دراسة وطباعة A4 تحتوي على صورة كل شريحة، ترجمة عربية دقيقة لكل جملة، شرح مبسط يربط الأفكار، وجدول مصطلحات إنجليزي/عربي مناسب للطلاب.</p>
+        </section>
+        <div id="printSlides"></div>
+    </div>
+    <script>
+        const slidesData = [
+    {
+        "slide_num": 1,
+        "title_en": "Medical Terminology Suffixes & Colors",
+        "title_ar": "لاحقات المصطلحات الطبية والألوان",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page1.jpg",
+        "sentences": [
+            {
+                "en": "THE FUNDAMENTALS OF MEDICAL TERMINOLOGY",
+                "ar": "أساسيات المصطلحات الطبية."
+            },
+            {
+                "en": "By Dr/Aisha Abdelnaser",
+                "ar": "بواسطة الدكتورة/ عائشة عبد الناصر."
+            },
+            {
+                "en": "Lecture of Obstetrics & Gynecology",
+                "ar": "مدرس التوليد وأمراض النساء."
+            }
+        ],
+        "explanation": "شريحة الغلاف للمحاضرة الثانية من مادة المصطلحات الطبية، للدكتورة عائشة عبد الناصر. نستكمل فيها دراسة أجزاء الكلمات وتصنيفاتها كالبادئات والألوان والتخصصات.",
+        "glossary": [
+            {
+                "en": "Fundamentals",
+                "ar": "أساسيات"
+            },
+            {
+                "en": "Medical Terminology",
+                "ar": "المصطلحات الطبية"
+            }
+        ]
+    },
+    {
+        "slide_num": 2,
+        "title_en": "Miscellaneous Suffixes",
+        "title_ar": "لاحقات متنوعة وهامة",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page2.jpg",
+        "sentences": [
+            {
+                "en": "MISCELLANEOUS SUFFIXES: -able, -ible: capable of, able to (injectable, edible).",
+                "ar": "لاحقات متنوعة: إيبل / إيبل (-able, -ible): تعني قادر على، أو يمكن القيام به (مثل: إنجكتبل / قابل للحقن، إدبل / صالح للأكل)."
+            },
+            {
+                "en": "-ac, -al, -an, -ar, -ary, -eal, -ic, -ive, -tic: pertaining to.",
+                "ar": "لاحقات النسبة: آك، آل، آن، آر، آري، إيل، إيك، إيف، تيك (-ac, -al, -an, -ar, -ary, -eal, -ic, -ive, -tic): كلها تعني منسوب إلى أو متعلق بـ (مثل: حرقفي، جلدي، وسطي، زندي، شعيري، سحائي، كبدي، غازٍ، ازرقاقي)."
+            },
+            {
+                "en": "-eum, -ium: Membrane (peritoneum, myocardium).",
+                "ar": "يوم / إيوم (-eum, -ium): تعني غشاء أو نسيج غشائي (مثل: بريتونيوم / غشاء البريتون في البطن، مايوكارديوم / عضلة القلب)."
+            },
+            {
+                "en": "-ia, -ism: condition or theory (paranoia, dwarfism).",
+                "ar": "يا / إزم (-ia, -ism): تعني حالة مرضية أو نظرية (مثل: بارانويا / جنون الارتياب، دوارفزم / القزامة)."
+            },
+            {
+                "en": "-ose: Sugar (Fructose).",
+                "ar": "أوز (-ose): تعني سكر (مثل: فركتوز / سكر الفاكهة)."
+            },
+            {
+                "en": "-ous: characterized by (Cancerous).",
+                "ar": "أوز (-ous): تعني يتميز بـ أو يتصف بـ (مثل: كانسيرس / سرطاني)."
+            }
+        ],
+        "explanation": "تستعرض هذه الشريحة مجموعة من اللاحقات اللغوية المتنوعة المستخدمة بكثرة في المصطلحات الطبية لتحديد النسب للعضو (مثل متعلق بالجلد dermal) أو الأغشية المحيطة بالأعضاء (مثل myocardium غشاء عضلة القلب) أو تحديد السكريات (المنتهية بـ ose) أو الصفات التشخيصية.",
+        "glossary": [
+            {
+                "en": "Injectable",
+                "ar": "قابل للحقن"
+            },
+            {
+                "en": "Edible",
+                "ar": "صالح للأكل"
+            },
+            {
+                "en": "Pertaining to",
+                "ar": "متعلق بـ / منسوب إلى"
+            },
+            {
+                "en": "Membrane",
+                "ar": "غشاء"
+            },
+            {
+                "en": "Peritoneum",
+                "ar": "الصفاق (الغشاء البريتوني في البطن)"
+            },
+            {
+                "en": "Myocardium",
+                "ar": "عضلة القلب"
+            },
+            {
+                "en": "Paranoia",
+                "ar": "جنون الارتياب (البارانويا)"
+            },
+            {
+                "en": "Dwarfism",
+                "ar": "القزامة"
+            },
+            {
+                "en": "Fructose",
+                "ar": "سكر الفاكهة (الفركتوز)"
+            },
+            {
+                "en": "Cancerous",
+                "ar": "سرطاني"
+            }
+        ]
+    },
+    {
+        "slide_num": 3,
+        "title_en": "Miscellaneous Word Parts",
+        "title_ar": "أجزاء كلمات منوعة",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page3.jpg",
+        "sentences": [
+            {
+                "en": "adip/o, lip/o: fat (adipose, hyperlipidemia).",
+                "ar": "أديبو / ليبو (adip/o, lip/o): تعني دهن أو دهون (مثل: أديبوس / نسيج دهني، هايبرليبيديميا / ارتفاع الدهون في الدم)."
+            },
+            {
+                "en": "glyc/o: sugar (Hyperglycemia).",
+                "ar": "جلايكو (glyc/o): تعني سكر (مثل: هايبرجلايسيميا / ارتفاع السكر في الدم)."
+            },
+            {
+                "en": "hemat/o: blood (Hematology).",
+                "ar": "هيماتو (hemat/o): تعني دم (مثل: هيماتولوجي / علم أمراض الدم)."
+            },
+            {
+                "en": "lact/o: milk (Lactation).",
+                "ar": "لاكتو (lact/o): تعني حليب / لبن (مثل: لاكتيشن / الرضاعة وإدرار الحليب)."
+            },
+            {
+                "en": "micro: small (microscopy).",
+                "ar": "مايكرو (micro): تعني صغير جداً مجهري (مثل: مايكروسكوبي / الفحص المجهري)."
+            },
+            {
+                "en": "muc/o: mucus (Mucous).",
+                "ar": "ميوكو (muc/o): تعني مخاط أو مخاطي (مثل: ميوكس / غشاء مخاطي)."
+            }
+        ],
+        "explanation": "تشرح الشريحة جذور وبادئات عامة هامة جداً لتركيب الجسم والمواد الحيوية: جذور الدهون (lip/o و adip/o)، جذر السكر (glyc/o)، جذر الدم (hemat/o)، وجذر الحليب (lact/o)، وبادئة الصغر المتناهي (micro-).",
+        "glossary": [
+            {
+                "en": "Adipose",
+                "ar": "دهني"
+            },
+            {
+                "en": "Hyperlipidemia",
+                "ar": "ارتفاع الدهون في الدم"
+            },
+            {
+                "en": "Hyperglycemia",
+                "ar": "ارتفاع السكر في الدم"
+            },
+            {
+                "en": "Hematology",
+                "ar": "علم أمراض الدم"
+            },
+            {
+                "en": "Lactation",
+                "ar": "إدرار الحليب / الرضاعة"
+            },
+            {
+                "en": "Microscopy",
+                "ar": "تنظير مجهري (فحص بالميكروسكوب)"
+            },
+            {
+                "en": "Mucus",
+                "ar": "مخاط"
+            }
+        ]
+    },
+    {
+        "slide_num": 4,
+        "title_en": "Numerical Prefixes (1-3)",
+        "title_ar": "البادئات العددية (1-3)",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page4.jpg",
+        "sentences": [
+            {
+                "en": "mono-, uni-: one (Mononuclear, unilateral).",
+                "ar": "مونو / يوني (-mono-, -uni): تعني واحد أو أحادي (مثل: مونونيوكلير / أحادي النواة، يونيلاترال / أحادي الجانب)."
+            },
+            {
+                "en": "bi-, di-: two (bicuspid, disaccharide).",
+                "ar": "باي / داي (-bi-, -di): تعني اثنان أو ثنائي (مثل: بايكسبد / ثنائي الشرفات بصمامات القلب، دايسكرايد / سكر ثنائي)."
+            },
+            {
+                "en": "tri-: three (tricuspid).",
+                "ar": "تراي (-tri): تعني ثلاثة أو ثلاثي (مثل: ترايكسبد / ثلاثي الشرفات بصمامات القلب)."
+            }
+        ],
+        "explanation": "تستعرض الشريحة البادئات الرقمية التي تدل على الأعداد من 1 إلى 3. تستخدم بكثرة في تشريح القلب (مثل الصمامات bicuspid و tricuspid) أو وصف الحالات الجسدية أحادية أو ثنائية الجانب.",
+        "glossary": [
+            {
+                "en": "Mononuclear",
+                "ar": "أحادي النواة"
+            },
+            {
+                "en": "Unilateral",
+                "ar": "أحادي الجانب (على ناحية واحدة)"
+            },
+            {
+                "en": "Bicuspid",
+                "ar": "ثنائي الشرفات (الصمام الميترالي)"
+            },
+            {
+                "en": "Dizygotic",
+                "ar": "ثنائي التوأم / من بويضتين"
+            },
+            {
+                "en": "Disaccharide",
+                "ar": "سكر ثنائي"
+            },
+            {
+                "en": "Tricuspid",
+                "ar": "ثلاثي الشرفات (الصمام ثلاثي الشرف)"
+            }
+        ]
+    },
+    {
+        "slide_num": 5,
+        "title_en": "Numerical Prefixes (4, 100, 1000th) & Hyper-",
+        "title_ar": "البادئات العددية (4 وما فوق) وبادئة الزيادة",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page5.jpg",
+        "sentences": [
+            {
+                "en": "quad-, quadri-, tetra: four (quadriplegia).",
+                "ar": "كواد / كوادري / تيترا (-quad-, -quadri-, -tetra): تعني أربعة أو رباعي (مثل: كوادريبليجيا / شلل رباعي للأطراف الأربعة)."
+            },
+            {
+                "en": "centi-: one hundred (centigrade).",
+                "ar": "سنتي (-centi): تعني جزء من مائة أو مائة (مثل: سنتيجريد / درجة الحرارة المئوية)."
+            },
+            {
+                "en": "milli: one thousandth (milliunit).",
+                "ar": "ملّي (-milli): تعني جزء من ألف (مثل: ملّي يونيت / جزء من الألف من الوحدة)."
+            },
+            {
+                "en": "hyper: excessive, more than normal (hyperglycemia).",
+                "ar": "هايبر (-hyper): تعني زائد، أو مفرط، أو أعلى من المعدل الطبيعي (مثل: هايبرجلايسيميا / زيادة السكر في الدم)."
+            }
+        ],
+        "explanation": "نستعرض هنا البادئة للرقم أربعة (quad- أو tetra-) والبادئات الكسرية الحسابية (centi- و milli-)، وننتقل لأهم بادئات الكمية الطبية وهي hyper- وتعني الزيادة المرضية لشيء في الجسم عن الطبيعي.",
+        "glossary": [
+            {
+                "en": "Quadriplegia",
+                "ar": "شلل رباعي للأطراف"
+            },
+            {
+                "en": "Centigrade",
+                "ar": "درجة مئوية (مقسمة لمائة درجة)"
+            },
+            {
+                "en": "Milliunit",
+                "ar": "ملّي وحدة (1/1000 من الوحدة)"
+            },
+            {
+                "en": "Hyper",
+                "ar": "زائد / مفرط / فوق الطبيعي"
+            }
+        ]
+    },
+    {
+        "slide_num": 6,
+        "title_en": "Quantity Prefixes: Hemi-, Semi-, Hypo-",
+        "title_ar": "بادئات الكمية: النصف والنقصان",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page6.jpg",
+        "sentences": [
+            {
+                "en": "hemi-, semi-: half, partly (hemiparesis, semi-fowler’s).",
+                "ar": "هيمي / سيمي (-hemi-, -semi): تعني نصف أو نصفي أو جزئي (مثل: هيميباريسيس / ضعف أو شلل نصفي طولي للجسم، وضعية سيمي-فاولر / استلقاء شبه مائل بزاوية 30-45 درجة)."
+            },
+            {
+                "en": "hypo: under, less than normal (hypoglycemia).",
+                "ar": "هايبو (-hypo): تعني تحت، أو ناقِص، أو أقل من المعدل الطبيعي (مثل: هايبوجلايسيميا / انخفاض سكر الدم تحت الطبيعي)."
+            }
+        ],
+        "explanation": "تشرح الشريحة بادئات تعني النصف (Hemi و Semi) المستخدمة في تشريح ووصف ضعف الحركة النصفي أو وضعيات استلقاء المريض، ثم تقدم البادئة hypo- وتعني نقص أو انخفاض الشيء في الجسم مثل نقص سكر الدم.",
+        "glossary": [
+            {
+                "en": "Hemiparesis",
+                "ar": "ضعف نصفي طولي بالجسم"
+            },
+            {
+                "en": "Semi-Fowler's position",
+                "ar": "وضعية فاولر النصفية (رفع السرير 30-45 درجة)"
+            },
+            {
+                "en": "Hypo",
+                "ar": "تحت / ناقص / أقل من المعدل"
+            },
+            {
+                "en": "Hypoglycemia",
+                "ar": "انخفاض سكر الدم"
+            }
+        ]
+    },
+    {
+        "slide_num": 7,
+        "title_en": "Quantity & Pregnancy Prefixes",
+        "title_ar": "بادئات الكمية والحمل",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page7.jpg",
+        "sentences": [
+            {
+                "en": "multi-, poly-: many (multigravid, polyuria).",
+                "ar": "ملتي / بولي (-multi-, -poly): تعني متعدد، أو كثير (مثل: ملتيجرافيدا / متعددة الحمل، بوليوريا / كثرة وإفراط إخراج البول)."
+            },
+            {
+                "en": "nulli-: none (nulliparous).",
+                "ar": "نلّي (-nulli): تعني لا شيء أو انعدام (مثل: نليباروس / امرأة لم تلد أي طفل من قبل قط)."
+            },
+            {
+                "en": "primi-: first (primigravida).",
+                "ar": "بريمي (-primi): تعني الأول أو المرة الأولى (مثل: بريميجرافيدا / امرأة حامل للمرة الأولى في حياتها)."
+            },
+            {
+                "en": "super-, ultra: excessive, above (superior, ultrasound).",
+                "ar": "سوبر / ألترا (-super-, -ultra): تعني فائق، أو أعلى، أو مفرط (مثل: سوبيريور / علوي، ألتراساوند / الموجات فوق الصوتية)."
+            }
+        ],
+        "explanation": "تستعرض الشريحة بادئات الحمل والولادة الهامة جداً في النساء والتوليد: multigravida (حامل عدة مرات)، primigravida (حامل للمرة الأولى)، nulliparous (لم تلد قط)، وبادئات الكثرة poly- و multi- والزيادة ultra-.",
+        "glossary": [
+            {
+                "en": "Multigravida",
+                "ar": "متعددة مرات الحمل"
+            },
+            {
+                "en": "Polyuria",
+                "ar": "إفراز البول الزائد (كثرة التبول)"
+            },
+            {
+                "en": "Nulliparous",
+                "ar": "لم تلد قط (بكرية الولادة)"
+            },
+            {
+                "en": "Primigravida",
+                "ar": "حامل للمرة الأولى"
+            },
+            {
+                "en": "Superior",
+                "ar": "علوي (اتجاه للأعلى)"
+            },
+            {
+                "en": "Ultrasound",
+                "ar": "الموجات فوق الصوتية"
+            }
+        ]
+    },
+    {
+        "slide_num": 8,
+        "title_en": "Position & Direction Prefixes (1)",
+        "title_ar": "بادئات الوضع والاتجاه (1)",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page8.jpg",
+        "sentences": [
+            {
+                "en": "ab: away from (Abduction is movement of a body part away from the midline).",
+                "ar": "آب (ab-): تعني بعيداً عن (التبعيد / Abduction: هي حركة تحريك جزء من الجسم بعيداً عن الخط المنصف للجسم)."
+            },
+            {
+                "en": "ad: toward (Adduction is movement of a body part toward the midline).",
+                "ar": "آد (ad-): تعني باتجاه أو تقريب نحو (التقريب / Adduction: هي حركة تحريك جزء من الجسم باتجاه الخط المنصف للجسم)."
+            },
+            {
+                "en": "endo: inside (Endolymph is the fluid found within the membranous labyrinth of the ear).",
+                "ar": "إندو (endo-): تعني داخل أو داخلي (الليمف الداخلي / Endolymph: هو السائل الموجود داخل التيه الغشائي للأذن الداخلية)."
+            }
+        ],
+        "explanation": "تشرح الشريحة بادئات تحديد الحركة والاتجاه بالنسبة لمنتصف الجسم: ab- للتبعييد ونقل الذراع/الساق للخارج، و ad- للتقريب للداخل. والبادئة endo- وتعني داخل شيء ما كالغشاء الداخلي للأذن.",
+        "glossary": [
+            {
+                "en": "Abduction",
+                "ar": "التبعييد (الحركة للخارج)"
+            },
+            {
+                "en": "Adduction",
+                "ar": "التقريب (الحركة للداخل)"
+            },
+            {
+                "en": "Midline",
+                "ar": "الخط المنصف للجسم"
+            },
+            {
+                "en": "Endolymph",
+                "ar": "الليمف الداخلي للأذن"
+            },
+            {
+                "en": "Labyrinth",
+                "ar": "التيه (القنوات السمعية بالأذن)"
+            }
+        ]
+    },
+    {
+        "slide_num": 9,
+        "title_en": "Position & Direction Prefixes (2)",
+        "title_ar": "بادئات الوضع والاتجاه (2)",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page9.jpg",
+        "sentences": [
+            {
+                "en": "intra: within (Intraosseous means within the bone).",
+                "ar": "إنترا (intra-): تعني داخل أو في حدود داخلية (مثل: إنترأوسيوس / داخل العظم)."
+            },
+            {
+                "en": "retro-: behind, backward (Retrograde means going back in position or time).",
+                "ar": "ريترو (-retro): تعني خلف، أو وراء، أو تراجعي للخلف (مثل: ريتروجريد / تراجعي / التحرك للخلف في الموضع أو الزمن)."
+            },
+            {
+                "en": "trans: across (Transference occurs when one’s feelings are unconsciously redirected to another).",
+                "ar": "ترانس (trans-): تعني عبر، أو من خلال، أو انتقال (مثل: ترانسفيرنس / انتقال المشاعر لا شعورياً وتوجيهها لشخص آخر)."
+            }
+        ],
+        "explanation": "نستعرض هنا ثلاث بادئات اتجاهية: intra- وتعني بالداخل التام (مثل الحقن داخل العظم intraosseous)، و retro- وتعني خلف أو تراجعي للخلف، و trans- وتعني عبر أو ناقل من مكان لآخر.",
+        "glossary": [
+            {
+                "en": "Intraosseous",
+                "ar": "داخل العظم"
+            },
+            {
+                "en": "Retrograde",
+                "ar": "تراجعي / حركة للخلف"
+            },
+            {
+                "en": "Transference",
+                "ar": "انتقال / تحويل المشاعر"
+            },
+            {
+                "en": "Redirected",
+                "ar": "إعادة توجيه / تحويل"
+            }
+        ]
+    },
+    {
+        "slide_num": 10,
+        "title_en": "Position & Direction Prefixes (3)",
+        "title_ar": "بادئات الوضع والاتجاه (3)",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page10.jpg",
+        "sentences": [
+            {
+                "en": "super-, supra: above, on top (Superficial; near or on the surface).",
+                "ar": "سوبر / سوبرا (-super-, -supra): تعني فوق، أو أعلى، أو على السطح (مثل: سوبيرفيشيال / سطحي؛ أي قريب من السطح أو عليه)."
+            },
+            {
+                "en": "Supraclavicular: above the clavicle.",
+                "ar": "سوبرا كلافيكولر (Supraclavicular): تعني فوق الترقوة (Clavicle)."
+            }
+        ],
+        "explanation": "البادئات super- و supra- تعنيان الفوقية والاعتلاء الجسدي. تعطي الشريحة مثالاً للمصطلح superficial ويعني سطحي (عكس عميق deep)، و supraclavicular ويعني الموضع التشريحي الواقع فوق عظمة الترقوة مباشرة.",
+        "glossary": [
+            {
+                "en": "Superficial",
+                "ar": "سطحي (قريب من السطح)"
+            },
+            {
+                "en": "Supraclavicular",
+                "ar": "فوق الترقوة"
+            },
+            {
+                "en": "Clavicle",
+                "ar": "عظمة الترقوة"
+            }
+        ]
+    },
+    {
+        "slide_num": 11,
+        "title_en": "Miscellaneous Prefixes (1)",
+        "title_ar": "بادئات طبية منوعة (1)",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page11.jpg",
+        "sentences": [
+            {
+                "en": "brady: slow (Bradypnea means decreased respiratory rate).",
+                "ar": "برادي (-brady): تعني بطيء (مثل: براديبنيا / بطء معدل التنفس)."
+            },
+            {
+                "en": "dys-: bad, difficult (Difficulty swallowing is referred to as dysphagia).",
+                "ar": "ديس (-dys): تعني صعوبة، أو عسر، أو اضطراب (مثل: ديسفاجيا / صعوبة البلع)."
+            },
+            {
+                "en": "mal-: bad (Malabsorption; inability to properly absorb food & nutrients).",
+                "ar": "مال (-mal): تعني سيء، أو خلل، أو رداءة (مثل: مال-أبسوربشن / سوء الامتصاص؛ وهو عدم القدرة على امتصاص الطعام والمغذيات بشكل صحيح)."
+            }
+        ],
+        "explanation": "تشرح الشريحة بادئات تدل على خلل أو بطء: brady- وتعني البطء (مثل بطء التنفس bradypnea أو بطء ضربات القلب bradycardia)، و dys- وتعني الصعوبة والعسر كصعوبة البلع dysphagia، و mal- وتعني الخلل والضعف كسوء الامتصاص للجهاز الهضمي.",
+        "glossary": [
+            {
+                "en": "Bradypnea",
+                "ar": "بطء التنفس (انخفاض معدل التنفس)"
+            },
+            {
+                "en": "Respiratory rate",
+                "ar": "معدل التنفس"
+            },
+            {
+                "en": "Dysphagia",
+                "ar": "عسر / صعوبة البلع"
+            },
+            {
+                "en": "Swallowing",
+                "ar": "البلع"
+            },
+            {
+                "en": "Malabsorption",
+                "ar": "سوء الامتصاص للأمعاء"
+            },
+            {
+                "en": "Nutrients",
+                "ar": "العناصر الغذائية / المغذيات"
+            }
+        ]
+    },
+    {
+        "slide_num": 12,
+        "title_en": "Miscellaneous Prefixes (2)",
+        "title_ar": "بادئات طبية منوعة (2)",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page12.jpg",
+        "sentences": [
+            {
+                "en": "Tachypnea; fast respirations.",
+                "ar": "تاكيبنيا (Tachypnea): تعني سرعة أو تسارع التنفس."
+            },
+            {
+                "en": "Apathy; absence of emotion.",
+                "ar": "أباثي (Apathy): تعني اللامبالاة والفتور / غياب العواطف والمشاعر."
+            },
+            {
+                "en": "Analgesia; absence of sensibility to pain.",
+                "ar": "أنالجيسيا (Analgesia): تعني تسكين الألم / فقدان الإحساس بالألم."
+            },
+            {
+                "en": "a-, an-: no, not, without.",
+                "ar": "أ / أن (-a-, -an): تعني انعدام، أو غياب، أو بدون (حروف نفي)."
+            }
+        ],
+        "explanation": "نستعرض هنا البادئة tachy- وتعني السرعة والتسارع مثل تسارع التنفس tachypnea أو تسارع ضربات القلب tachycardia. كما نستعرض بادئتي النفي والغياب الشائعتين a- و an- كغياب المشاعر apathy وفقدان الإحساس بالألم analgesia.",
+        "glossary": [
+            {
+                "en": "Tachypnea",
+                "ar": "تسارع التنفس"
+            },
+            {
+                "en": "Apathy",
+                "ar": "اللامبالاة / الخمول العاطفي"
+            },
+            {
+                "en": "Emotion",
+                "ar": "العواطف / المشاعر"
+            },
+            {
+                "en": "Analgesia",
+                "ar": "تسكين الألم / فقد الألم"
+            },
+            {
+                "en": "Sensibility",
+                "ar": "الإحساس / الشعور"
+            }
+        ]
+    },
+    {
+        "slide_num": 13,
+        "title_en": "Combining Forms for Colors (1)",
+        "title_ar": "الأشكال الرابطة للألوان (1)",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page13.jpg",
+        "sentences": [
+            {
+                "en": "alb/o, albin/o, leuk/o(leuc/o): white (Leukocytes; white cells).",
+                "ar": "ألبو / ألبينو / ليكو (alb/o, albin/o, leuk/o): تعني اللون الأبيض (مثل: ليكوسايتس / خلايا الدم البيضاء، ألبينو / المهق الأبيض)."
+            },
+            {
+                "en": "chlor/o: green (Chlorophyll; green cells in the plants).",
+                "ar": "كلورو (chlor/o): تعني اللون الأخضر (مثل: كلوروفيل / الخلايا والصبغة الخضراء في النباتات)."
+            },
+            {
+                "en": "cyan/o: blue (Cyanosis; bluish discoloration).",
+                "ar": "سيانو (cyan/o): تعني اللون الأزرق (مثل: سيانوسيس / ازرقاق الجلد بسبب نقص الأكسجين)."
+            },
+            {
+                "en": "erythr/o: red (Erythrocytes; red blood cells).",
+                "ar": "إريثرو (erythr/o): تعني اللون الأحمر (مثل: إريثروسايتس / خلايا الدم الحمراء)."
+            }
+        ],
+        "explanation": "تبين هذه الشريحة الأشكال الرابطة للألوان الطبية الأساسية: الأبيض (leuk/o) مثل كرات الدم البيضاء، الأخضر (chlor/o) مثل الكلوروفيل، الأزرق (cyan/o) مثل تلون الجلد باللون الأزرق لنقص الأكسجين، والأحمر (erythr/o) مثل خلايا الدم الحمراء.",
+        "glossary": [
+            {
+                "en": "Leukocytes",
+                "ar": "خلايا الدم البيضاء"
+            },
+            {
+                "en": "Chlorophyll",
+                "ar": "الكلوروفيل (الصبغة الخضراء)"
+            },
+            {
+                "en": "Cyanosis",
+                "ar": "الازرقاق للجلد"
+            },
+            {
+                "en": "Erythrocytes",
+                "ar": "خلايا الدم الحمراء"
+            }
+        ]
+    },
+    {
+        "slide_num": 14,
+        "title_en": "Combining Forms for Colors (2)",
+        "title_ar": "الأشكال الرابطة للألوان (2)",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page14.jpg",
+        "sentences": [
+            {
+                "en": "melan/o: Melanin; dark cells.",
+                "ar": "ميلانو (melan/o): تعني اللون الأسود الداكن أو الصبغة الداكنة (مثل: ميلانين / الصبغة الداكنة بالجلد والشعر)."
+            },
+            {
+                "en": "xanth/o: Xanthophobia; is the fear of the yellow color.",
+                "ar": "زانثو (xanth/o): تعني اللون الأصفر (مثل: زانثوفوبيا / فوبيا وخوف غير طبيعي من اللون الأصفر)."
+            }
+        ],
+        "explanation": "نستكمل ألوان المصطلحات؛ الشكل melan/o يشير للون الأسود والصبغة الداكنة (ميلانين Melanain)، والشكل xanth/o يشير للون الأصفر مثل فوبيا اللون الأصفر xanthophobia أو الأورام الصفراء بالجلد xanthomas.",
+        "glossary": [
+            {
+                "en": "Melanin",
+                "ar": "صبغة الميلانين الداكنة"
+            },
+            {
+                "en": "Xanthophobia",
+                "ar": "فوبيا اللون الأصفر"
+            },
+            {
+                "en": "Yellow color",
+                "ar": "اللون الأصفر"
+            }
+        ]
+    },
+    {
+        "slide_num": 15,
+        "title_en": "Medical Evaluation Terms",
+        "title_ar": "مصطلحات التقييم الطبي",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page15.jpg",
+        "sentences": [
+            {
+                "en": "Normal range: acceptable limit.",
+                "ar": "المدى الطبيعي (Normal range): هو الحد المقبول للقياسات الطبية."
+            },
+            {
+                "en": "Pathologic: condition involving a disease process.",
+                "ar": "مرضي (Pathologic): حالة طبية تنطوي على عملية مرضيّة داخل الجسم."
+            },
+            {
+                "en": "Diagnosis: naming a disease or condition based on scientific evaluation.",
+                "ar": "التشخيص (Diagnosis): تسمية المرض أو الحالة بناءً على التقييم العلمي."
+            },
+            {
+                "en": "Prognosis: anticipated outcome of a disease.",
+                "ar": "التنبؤ بسير المرض (Prognosis): النتيجة أو التطور المتوقع للمرض في المستقبل."
+            },
+            {
+                "en": "Signs: observable characteristics that have been gathered through the use of the senses (As auscultates for breath sounds).",
+                "ar": "العلامات (Signs): الخصائص السريرية القابلة للملاحظة والقياس والتي يجمعها الطبيب بحواسه وأجهزته (مثل استماع الطبيب لأصوات التنفس بالصدر)."
+            },
+            {
+                "en": "Symptoms: subjective data; made by the client or significant others based on their perception.",
+                "ar": "الأعراض (Symptoms): البيانات الذاتية الشكوانية؛ التي يدلي بها المريض أو المقربون منه بناءً على إحساسهم الشخصي بالألم أو التعب."
+            }
+        ],
+        "explanation": "شريحة هامة جداً تفرق بدقة بين العلامة المقاسة سريرياً (Sign) مثل سماع صوت صدر المريض أو قياس ضغط الدم، والعَرَض الذاتي الشكواني للمريض (Symptom) مثل الشعور بالصداع. وتعرف المدى الطبيعي والتشخيص والتنبؤ بالمستقبل المرضي للمريض.",
+        "glossary": [
+            {
+                "en": "Normal range",
+                "ar": "المدى / المعدل الطبيعي"
+            },
+            {
+                "en": "Pathologic",
+                "ar": "مرضي (مرتبط بالمرض)"
+            },
+            {
+                "en": "Prognosis",
+                "ar": "سير المرض المتوقع"
+            },
+            {
+                "en": "Signs",
+                "ar": "علامات سريرية (يلاحظها الطبيب)"
+            },
+            {
+                "en": "Symptoms",
+                "ar": "أعراض (يشعر بها المريض)"
+            },
+            {
+                "en": "Auscultates",
+                "ar": "يستمع سريرياً بالسماعة"
+            },
+            {
+                "en": "Subjective data",
+                "ar": "بيانات ذاتية (غير مقاسة موضوعياً)"
+            }
+        ]
+    },
+    {
+        "slide_num": 16,
+        "title_en": "Vital Signs: Pulse",
+        "title_ar": "العلامات الحيوية: النبض",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page16.jpg",
+        "sentences": [
+            {
+                "en": "Vital signs: Pulse (P): Expansion of an artery referred to as heart beats.",
+                "ar": "العلامات الحيوية: النبض (Pulse): هو تمدد الشريان الناتج عن ضربات القلب وضخ الدم فيه."
+            },
+            {
+                "en": "Pulse rate (PR): is the number of heart beats per minute.",
+                "ar": "معدل النبض (Pulse rate): هو عدد ضربات القلب في الدقيقة الواحدة (bpm)."
+            }
+        ],
+        "explanation": "تشرح الشريحة أولى العلامات الحيوية الأساسية للمريض: النبض (Pulse) وهو التمدد الشرياني المحسوس باليد مع كل نبضة قلب، ومعدل النبض (PR) وهو عدد النبضات المحسوسة خلال 60 ثانية كاملة.",
+        "glossary": [
+            {
+                "en": "Vital signs",
+                "ar": "العلامات الحيوية"
+            },
+            {
+                "en": "Pulse",
+                "ar": "النبض"
+            },
+            {
+                "en": "Expansion",
+                "ar": "تمدد / اتساع"
+            },
+            {
+                "en": "Artery",
+                "ar": "شريان"
+            },
+            {
+                "en": "Pulse rate",
+                "ar": "معدل النبض"
+            },
+            {
+                "en": "Heart beats",
+                "ar": "ضربات القلب"
+            }
+        ]
+    },
+    {
+        "slide_num": 17,
+        "title_en": "Vital Signs: Respiration",
+        "title_ar": "العلامات الحيوية: التنفس",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page17.jpg",
+        "sentences": [
+            {
+                "en": "Respiration (R): ventilation or breathing.",
+                "ar": "التنفس (R): التهوئة الميكانيكية أو عملية التنفس للرئتين."
+            },
+            {
+                "en": "Measured by counting the rise and fall of the chest during breathing.",
+                "ar": "يتم قياسه عن طريق عدّ مرات ارتفاع وانخفاض جدار الصدر أثناء عملية التنفس."
+            }
+        ],
+        "explanation": "العلامة الحيوية الثانية: التنفس (Respiration). يتم قياسه سريرياً بمراقبة حركة الصدر دون إعلام المريض ليكون القياس طبيعياً، ويتم عد دورات الشهيق والزفير (ارتفاع وانخفاض الصدر) في الدقيقة.",
+        "glossary": [
+            {
+                "en": "Respiration",
+                "ar": "التنفس"
+            },
+            {
+                "en": "Ventilation",
+                "ar": "التهوئة"
+            },
+            {
+                "en": "Breathing",
+                "ar": "التنفس / أخذ النفس"
+            },
+            {
+                "en": "Measured",
+                "ar": "مقاس / يتم قياسه"
+            },
+            {
+                "en": "Rise and fall",
+                "ar": "ارتفاع وانخفاض"
+            },
+            {
+                "en": "Chest",
+                "ar": "الصدر"
+            }
+        ]
+    },
+    {
+        "slide_num": 18,
+        "title_en": "Vital Signs: Temperature",
+        "title_ar": "العلامات الحيوية: درجة الحرارة",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page18.jpg",
+        "sentences": [
+            {
+                "en": "Temperature (T): Balance between heat lost and heat produced by the body.",
+                "ar": "درجة الحرارة (Temperature): هي التوازن الحراري بين الحرارة المفقودة والحرارة المنتجة بواسطة خلايا وأعضاء الجسم."
+            },
+            {
+                "en": "Measured in Centigrade and Fahrenheit.",
+                "ar": "يتم قياسها بالدرجة المئوية (سيلسيوس / Centigrade) أو الدرجة الفهرنهايتية (Fahrenheit)."
+            }
+        ],
+        "explanation": "العلامة الحيوية الثالثة: درجة حرارة الجسم (T). وتعرف فسيولوجياً بأنها التوازن الدقيق بين ما ينتجه الجسم من طاقة وحرارة داخلياً وبين ما يفقده للوسط المحيط. وتقاس بالترمومتر بوحدات السيليسيوس أو الفهرنهايت.",
+        "glossary": [
+            {
+                "en": "Temperature",
+                "ar": "درجة الحرارة"
+            },
+            {
+                "en": "Balance",
+                "ar": "توازن"
+            },
+            {
+                "en": "Heat lost",
+                "ar": "الحرارة المفقودة"
+            },
+            {
+                "en": "Heat produced",
+                "ar": "الحرارة المنتجة"
+            },
+            {
+                "en": "Centigrade",
+                "ar": "درجة مئوية (سيلسيوس)"
+            },
+            {
+                "en": "Fahrenheit",
+                "ar": "درجة فهرنهايت"
+            }
+        ]
+    },
+    {
+        "slide_num": 19,
+        "title_en": "Vital Signs: Blood Pressure",
+        "title_ar": "العلامات الحيوية: ضغط الدم",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page19.jpg",
+        "sentences": [
+            {
+                "en": "Blood pressure (BP): Pressure of the circulating blood on the blood vessel.",
+                "ar": "ضغط الدم (Blood pressure): هو الضغط الذي يمارسه الدم الجاري والمندفع على جدران الأوعية الدموية."
+            },
+            {
+                "en": "mm Hg (mercury) is the standard unit of measure.",
+                "ar": "ملم زئبق (mm Hg) هو وحدة القياس المعيارية لضغط الدم بالطب."
+            },
+            {
+                "en": "Systolic: maximum arterial pressure during contraction.",
+                "ar": "الانقباضي (Systolic): هو أقصى ضغط شرياني مسجل أثناء انقباض عضلة القلب وضخ الدم."
+            },
+            {
+                "en": "Diastolic: pressure during relaxation.",
+                "ar": "الانبساطي (Diastolic): هو ضغط الدم الشرياني المسجل أثناء انبساط وراحة عضلة القلب."
+            }
+        ],
+        "explanation": "العلامة الحيوية الرابعة: ضغط الدم (BP) وهو قياس قوة دفع الدم على جدران الشرايين. يتكون من قراءتين: القراءة العليا الانقباضية (Systolic) مع ضخ الدم، والقراءة الدنيا الانبساطية (Diastolic) مع راحة القلب.",
+        "glossary": [
+            {
+                "en": "Blood pressure",
+                "ar": "ضغط الدم"
+            },
+            {
+                "en": "Circulating blood",
+                "ar": "الدم الجاري / الدورة الدموية"
+            },
+            {
+                "en": "Mercury",
+                "ar": "الزئبق"
+            },
+            {
+                "en": "Systolic",
+                "ar": "الضغط الانقباضي"
+            },
+            {
+                "en": "Diastolic",
+                "ar": "الضغط الانبساطي"
+            },
+            {
+                "en": "Contraction",
+                "ar": "انقباض (القلب)"
+            },
+            {
+                "en": "Relaxation",
+                "ar": "انبساط / ارتخاء (القلب)"
+            }
+        ]
+    },
+    {
+        "slide_num": 20,
+        "title_en": "Vital Signs: Oxygen Saturation",
+        "title_ar": "العلامات الحيوية: تشبع الأكسجين",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page20.jpg",
+        "sentences": [
+            {
+                "en": "Oxygen saturation: Measure of the concentration of oxygen.",
+                "ar": "تشبع الأكسجين (Oxygen saturation): هو قياس نسبة تركيز الأكسجين في خلايا الدم الحمراء."
+            },
+            {
+                "en": "Measured using a pulse oximeter.",
+                "ar": "يتم قياسه وتحديده خارجياً باستخدام جهاز مقياس النبض وتأكسج الدم (Pulse Oximeter)."
+            }
+        ],
+        "explanation": "تشرح الشريحة تشبع الأكسجين في الدم كعلامة حيوية هامة لتقييم كفاءة الجهاز التنفسي والقلب، ويتم قياسها بجهاز صغير وسهل يوضع على إصبع المريض يسمى pulse oximeter يعطي النسبة المئوية للتشبع (الطبيعي فوق 95%).",
+        "glossary": [
+            {
+                "en": "Oxygen saturation",
+                "ar": "تشبع الأكسجين"
+            },
+            {
+                "en": "Concentration",
+                "ar": "تركيز"
+            },
+            {
+                "en": "Pulse oximeter",
+                "ar": "جهاز قياس تأكسج الدم بالنبض"
+            }
+        ]
+    },
+    {
+        "slide_num": 21,
+        "title_en": "Vital Signs: Pain",
+        "title_ar": "العلامات الحيوية: الألم",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page21.jpg",
+        "sentences": [
+            {
+                "en": "Pain: Unpleasant feeling caused by intense or damaging stimuli.",
+                "ar": "الألم (Pain): شعور وإحساس غير مريح وغير سار ينتج عن محفزات حسية شديدة أو مسببة لتلف أنسجة الجسم."
+            }
+        ],
+        "explanation": "يعتبر الألم الآن في الطب الحديث هو العلامة الحيوية الخامسة (The 5th Vital Sign). وتعرف الشريحة الألم فسيولوجياً بأنه إشارة تحذيرية غير مريحة يرسلها الجهاز العصبي استجابة لإصابة أو تلف في الأنسجة.",
+        "glossary": [
+            {
+                "en": "Pain",
+                "ar": "الألم"
+            },
+            {
+                "en": "Unpleasant feeling",
+                "ar": "شعور غير مريح / مزعج"
+            },
+            {
+                "en": "Damaging stimuli",
+                "ar": "مؤثرات متلفة للأنسجة"
+            }
+        ]
+    },
+    {
+        "slide_num": 22,
+        "title_en": "Physical Examination Techniques",
+        "title_ar": "تقنيات الفحص السريري الجسدي",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page22.jpg",
+        "sentences": [
+            {
+                "en": "Technique: Inspection, Palpation, Percussion, Auscultation.",
+                "ar": "التقنيات الأربعة للفحص السريري: المعاينة البصرية (Inspection)، الجس باليد (Palpation)، النقر بالأصابع (Percussion)، والاستماع بالسماعة (Auscultation)."
+            }
+        ],
+        "explanation": "تحدد الشريحة المبادئ والخطوات الأربعة المتبعة بالترتيب عند إجراء أي فحص طبي جسدي سريري للمريض بالعيادة للوصول للتشخيص الصحيح.",
+        "glossary": [
+            {
+                "en": "Technique",
+                "ar": "تقنية / أسلوب"
+            },
+            {
+                "en": "Inspection",
+                "ar": "معاينة / فحص بالنظر"
+            },
+            {
+                "en": "Palpation",
+                "ar": "الجس باليد واللمس"
+            },
+            {
+                "en": "Percussion",
+                "ar": "النقر جهاراً بالأصابع"
+            },
+            {
+                "en": "Auscultation",
+                "ar": "الاستماع بالسماعة الطبية"
+            }
+        ]
+    },
+    {
+        "slide_num": 23,
+        "title_en": "Fascilitating Examination: Inspection",
+        "title_ar": "تسهيل الفحص: المعاينة بالنظر",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page23.jpg",
+        "sentences": [
+            {
+                "en": "Inspection: Eyes are used to observe.",
+                "ar": "المعاينة البصرية (Inspection): تُستخدم العينان فيها لملاحظة ومراقبة جسد المريض."
+            },
+            {
+                "en": "Checking for skin color.",
+                "ar": "مثل فحص لون الجلد (لملاحظة شحوب أو ازرقاق أو صفار)."
+            }
+        ],
+        "explanation": "تشرح الشريحة التقنية الأولى وهي Inspection (النظر والمعاينة البصرية). يقوم الطبيب بالاعتماد الكلي على عينيه لفحص لون المريض، حركته، تناسق جسده، ووجود أي كدمات أو تغيرات جلدية ظاهرية واضحة.",
+        "glossary": [
+            {
+                "en": "Observe",
+                "ar": "يلاحظ / يعاين بالعين"
+            },
+            {
+                "en": "Skin color",
+                "ar": "لون الجلد"
+            },
+            {
+                "en": "Checking",
+                "ar": "فحص / مراجعة"
+            }
+        ]
+    },
+    {
+        "slide_num": 24,
+        "title_en": "Fascilitating Examination: Palpation",
+        "title_ar": "تسهيل الفحص: الجس باليد",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page24.jpg",
+        "sentences": [
+            {
+                "en": "Palpation: Hands are used to feel for the texture, size, consistency, and location of body parts.",
+                "ar": "الجس باليد (Palpation): تُستخدم الأيدي فيها لتحسس ومعاينة نسيج، وحجم، وتماسك، وموضع أجزاء وأعضاء الجسم الداعمة."
+            },
+            {
+                "en": "Feeling for lumps.",
+                "ar": "مثل تحسس وجس وجود أي كتل أو أورام غير طبيعية تحت الجلد باليد."
+            }
+        ],
+        "explanation": "التقنية الثانية هي Palpation (التحسس باليد). يعتمد الطبيب على أصابعه وراحة يده للضغط برفق لتحسس درجة حرارة العضو، حجمه، وملمسه للتأكد من سلامته وخلوه من التضخم أو الكتل الصلبة المتورمة.",
+        "glossary": [
+            {
+                "en": "Texture",
+                "ar": "ملمس / نسيج"
+            },
+            {
+                "en": "Size",
+                "ar": "الحجم"
+            },
+            {
+                "en": "Consistency",
+                "ar": "قوام العضو (لين أو صلب)"
+            },
+            {
+                "en": "Location",
+                "ar": "الموضع / المكان"
+            },
+            {
+                "en": "Lumps",
+                "ar": "كتل / أورام صغيرة تحت الجلد"
+            }
+        ]
+    },
+    {
+        "slide_num": 25,
+        "title_en": "Fascilitating Examination: Percussion",
+        "title_ar": "تسهيل الفحص: النقر السريري",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page25.jpg",
+        "sentences": [
+            {
+                "en": "Percussion: The fist or fingertips are used to tap the body part to determine the size, borders, and consistency of body organs.",
+                "ar": "النقر السريري (Percussion): تُستخدم قبضة اليد أو أطراف الأصابع للنقر الخفيف على جزء من الجسم لتحديد حجم وحدود وقوام الأعضاء الداخلية للجسد."
+            },
+            {
+                "en": "Checking for colon distention (Percussion hearing).",
+                "ar": "مثل الفحص للتأكد من وجود انتفاخ وتجمع غازات بالقولون (من خلال سماع اختلاف رنين الصوت الناتج عن النقر)."
+            }
+        ],
+        "explanation": "التقنية الثالثة هي Percussion (النقر). يضع الطبيب إصبعاً على جدار الجسم وينقر عليه بطرف إصبعه الآخر. الاختلاف في نغمة الصوت الناتجة يحدد هل العضو ممتلئ بغاز (مثل انتفاخ القولون) أو سائل أو صلب (كالكبد).",
+        "glossary": [
+            {
+                "en": "Fist",
+                "ar": "قبضة اليد"
+            },
+            {
+                "en": "Fingertips",
+                "ar": "أطراف الأصابع"
+            },
+            {
+                "en": "Tap",
+                "ar": "ينقر / يضرب برفق"
+            },
+            {
+                "en": "Determine",
+                "ar": "تحديد / معرفة"
+            },
+            {
+                "en": "Borders",
+                "ar": "حدود الأعضاء"
+            },
+            {
+                "en": "Colon distention",
+                "ar": "انتفاخ القولون (تجمع غازات)"
+            },
+            {
+                "en": "Percussion hearing",
+                "ar": "الاستماع للنقر (تحليل نغمة الصوت)"
+            }
+        ]
+    },
+    {
+        "slide_num": 26,
+        "title_en": "Fascilitating Examination: Auscultation",
+        "title_ar": "تسهيل الفحص: الاستماع بالسماعة",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page26.jpg",
+        "sentences": [
+            {
+                "en": "Auscultation: A stethoscope is used to listen for sounds within the body.",
+                "ar": "الاستماع بالسماعة (Auscultation): تُستخدم السماعة الطبية للاستماع للأصوات الطبيعية أو المرضية الصادرة من داخل أعضاء الجسم."
+            },
+            {
+                "en": "Listening for breath sounds.",
+                "ar": "مثل الاستماع لأصوات التنفس ودخول الهواء بالرئتين وصمامات القلب والامعاء."
+            }
+        ],
+        "explanation": "التقنية الرابعة والأخيرة بالترتيب هي Auscultation (الاستماع بالسماعة الطبية). يعتمد الطبيب كلياً على سماعته لسماع تدفق الهواء بالرئتين، أصوات ضربات القلب وصماماته، وحركات الأمعاء الهضمية بالبطن للكشف عن أي خلل.",
+        "glossary": [
+            {
+                "en": "Stethoscope",
+                "ar": "السماعة الطبية"
+            },
+            {
+                "en": "Listen",
+                "ar": "يستمع / يُنصت"
+            },
+            {
+                "en": "Sounds within the body",
+                "ar": "الأصوات الداخلية للجسم"
+            },
+            {
+                "en": "Breath sounds",
+                "ar": "أصوات التنفس"
+            }
+        ]
+    },
+    {
+        "slide_num": 27,
+        "title_en": "Recording Suffixes: -gram",
+        "title_ar": "لاحقات التسجيل: -جرام",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page27.jpg",
+        "sentences": [
+            {
+                "en": "gram: a record (Echocardiogram).",
+                "ar": "جرام (-gram): تعني رسم أو وثيقة تسجيل أو صورة مسجلة (مثل: إيكوكارديوجرام / رسم تخطيط صدى القلب بالموجات)."
+            }
+        ],
+        "explanation": "تشرح الشريحة اللاحقة -gram وهي تعني وثيقة أو رسم بياني ناتج عن جهاز قياس، مثل رسم صدى القلب بالموجات فوق الصوتية Echocardiogram (المعروف اختصاراً بـ إيكو القلب).",
+        "glossary": [
+            {
+                "en": "Record",
+                "ar": "رسم / سجل / وثيقة مصورة"
+            },
+            {
+                "en": "Echocardiogram",
+                "ar": "تخطيط صدى القلب (الإيكو)"
+            }
+        ]
+    },
+    {
+        "slide_num": 28,
+        "title_en": "Recording Suffixes: -graph",
+        "title_ar": "لاحقات التسجيل: -جراف",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page28.jpg",
+        "sentences": [
+            {
+                "en": "graph: instrument for recording (Radiograph).",
+                "ar": "جراف (-graph): تعني الجهاز أو الآلة المستخدمة للتسجيل والرسم البياني (مثل: راديوجراف / جهاز أو صورة الأشعة السينية المسجلة)."
+            }
+        ],
+        "explanation": "اللاحقة -graph تشير بالأساس للآلة أو الجهاز الطبي الفعلي الذي يسجل البيانات أو يطبعها، مثل الراديوجراف وهو آلة التصوير بالأشعة السينية أو الآلة التي تنتج الرسوم.",
+        "glossary": [
+            {
+                "en": "Instrument",
+                "ar": "أداة / جهاز طبي"
+            },
+            {
+                "en": "Recording",
+                "ar": "تسجيل / رسم"
+            },
+            {
+                "en": "Radiograph",
+                "ar": "صورة الأشعة السينية (الناتجة)"
+            }
+        ]
+    },
+    {
+        "slide_num": 29,
+        "title_en": "Recording Suffixes: -graphy",
+        "title_ar": "لاحقات التسجيل: -جرافي",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page29.jpg",
+        "sentences": [
+            {
+                "en": "graphy: process of recording (Radiography).",
+                "ar": "جرافي (-graphy): تعني عملية أو طريقة تصوير وتسجيل البيانات الطبية (مثل: راديوجرافي / عملية التصوير الإشعاعي بالأشعة السينية)."
+            }
+        ],
+        "explanation": "اللاحقة -graphy تدل على العملية الجارية للتصوير أو التسجيل نفسه كإجراء طبي كامل، مثل عملية التصوير بالأشعة Radiography التي يقوم بها فني الأشعة داخل القسم.",
+        "glossary": [
+            {
+                "en": "Process",
+                "ar": "عملية / طريقة إجراء"
+            },
+            {
+                "en": "Radiography",
+                "ar": "عملية التصوير بالأشعة"
+            }
+        ]
+    },
+    {
+        "slide_num": 30,
+        "title_en": "Diagnostic Procedures: Endoscopy",
+        "title_ar": "الإجراءات التشخيصية: التنظير الداخلي",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page30.jpg",
+        "sentences": [
+            {
+                "en": "Endoscopy (endo = inside + scopy = visual examination using a lighted instrument).",
+                "ar": "التنظير الداخلي / إندوسكوبي (Endoscopy): (إندو = بالداخل + سكوبي = فحص بصري باستخدام أداة مضيئة/منظار)."
+            },
+            {
+                "en": "It makes use of an endoscope (endo + scope) to view the internal body cavities or organs.",
+                "ar": "تستخدم هذه العملية جهاز المنظار الداخلي (إندوسكوب) لرؤية وفحص تجاويف أو أعضاء الجسم الداخلية بالعين."
+            }
+        ],
+        "explanation": "تشرح الشريحة المصطلح الهام جداً Endoscopy (المنظار الداخلي) وتفكك أجزاءه لغوياً لتسهيل فهمه: endo (داخل) و scopy (فحص بالنظر)، وتبين أنه يتم إدخال أنبوب مرن مزود بضوء وكاميرا لرؤية الأعضاء كالمعدة أو القولون.",
+        "glossary": [
+            {
+                "en": "Endoscopy",
+                "ar": "التنظير الداخلي"
+            },
+            {
+                "en": "Endoscope",
+                "ar": "المنظار الطبي (الجهاز)"
+            },
+            {
+                "en": "Internal cavities",
+                "ar": "التجاويف الداخلية للجسم"
+            },
+            {
+                "en": "View",
+                "ar": "رؤية / معاينة"
+            }
+        ]
+    },
+    {
+        "slide_num": 31,
+        "title_en": "Diagnostic Instrumentation: Catheters & Cannulas",
+        "title_ar": "الأدوات التشخيصية: القساطر والكانيولات",
+        "image": "imges/introduction 2_ L2/introduction 2_Page1_Page31.jpg",
+        "sentences": [
+            {
+                "en": "Catheters & Cannulas are instruments inserted into a body cavity, for withdraw &/or installation of fluids.",
+                "ar": "القساطر (Catheters) والكانيولات (Cannulas) هي أدوات طبية يتم إدخالها داخل تجاويف الجسم أو الأوعية، بغرض سحب (بزل) أو إدخال (حقن) السوائل والمحاليل الطبية."
+            }
+        ],
+        "explanation": "الشريحة الأخيرة في المحاضرة الثانية تفرق وتعرف أداتين شائعتين جداً وهما: القسطرة (Catheter) وهو أنبوب مرن لإدخال أو إخراج السوائل مثل قسطرة البول، والكانيولا (Cannula) وهي أنبوب يدخل الأوعية الدموية لتسريب الأدوية والمحاليل.",
+        "glossary": [
+            {
+                "en": "Catheters",
+                "ar": "القساطر (أنابيب سحب أو ضخ)"
+            },
+            {
+                "en": "Cannulas",
+                "ar": "الكانيولات (إبر حقن المحاليل)"
+            },
+            {
+                "en": "Body cavity",
+                "ar": "تجويف الجسم"
+            },
+            {
+                "en": "Withdraw",
+                "ar": "سحب / استخراج"
+            },
+            {
+                "en": "Installation",
+                "ar": "إدخال / حقن السوائل"
+            }
+        ]
+    }
+];
+        const chapters = [{"name": "1. لاحقات وجذور طبية متنوعة", "start": 1, "end": 3}, {"name": "2. البادئات الرقمية وكميات الدم", "start": 4, "end": 7}, {"name": "3. بادئات الاتجاهات والتموضع الجسدي", "start": 8, "end": 10}, {"name": "4. بادئات الخلل والألوان الحيوية", "start": 11, "end": 14}, {"name": "5. التقييم السريري (العلامات والأعراض)", "start": 15, "end": 15}, {"name": "6. قياس العلامات الحيوية (Vital Signs)", "start": 16, "end": 21}, {"name": "7. تقنيات الفحص الجسدي الأربعة", "start": 22, "end": 26}, {"name": "8. لاحقات التسجيل، التنظير والأدوات", "start": 27, "end": 31}];
+        
+        let currentIndex = 0;
+        let viewMode = 'single';
+
+        function termHtml(terms) {
+            return terms.map(function(t) {
+                return '<div class="term"><span class="term-en">' + t.en + '</span><span class="term-ar">' + t.ar + '</span></div>';
+            }).join('');
+        }
+
+        function pairsHtml(pairs) {
+            return pairs.map(function(p) {
+                return '<div class="pair"><div class="ar">' + p.ar + '</div><div class="en">' + p.en + '</div></div>';
+            }).join('');
+        }
+
+        function navHtml() {
+            return '<div class="nav-row"><button class="btn" onclick="prevSlide()" ' + (currentIndex === 0 ? 'disabled' : '') + '>الشريحة السابقة</button><span class="counter">الشريحة ' + (currentIndex + 1) + ' من ' + slidesData.length + '</span><button class="btn" onclick="nextSlide()" ' + (currentIndex === slidesData.length - 1 ? 'disabled' : '') + '>الشريحة التالية</button></div>';
+        }
+
+        function slideHtml(slide, includeNav) {
+            return '<div class="slide-inner"><div class="s-header"><div><h3 class="s-title-ar">' + slide.title_ar + '</h3><div class="s-title-en">' + slide.title_en + '</div></div><span class="s-badge">SLIDE ' + slide.slide_num + '</span></div><div class="s-image-wrap"><img src="' + slide.image + '" alt="Slide ' + slide.slide_num + '"></div><section><div class="section-title">الترجمة التفصيلية الحرفية</div><div class="sentences">' + pairsHtml(slide.sentences) + '</div></section><section class="explain"><div class="section-title">الشرح الحيوي المبسط</div><p class="explain-text">' + slide.explanation + '</p></section><section><div class="section-title">مصطلحات الشريحة المهمة</div><div class="glossary-grid">' + termHtml(slide.glossary) + '</div></section></div>' + (includeNav ? navHtml() : '');
+        }
+
+        function loadSlide(index) {
+            currentIndex = Math.max(0, Math.min(index, slidesData.length - 1));
+            document.getElementById('singleView').innerHTML = slideHtml(slidesData[currentIndex], true);
+            updateActiveLink();
+        }
+
+        function nextSlide() {
+            loadSlide(currentIndex + 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prevSlide() {
+            loadSlide(currentIndex - 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function buildChapters() {
+            var root = document.getElementById('chaptersList');
+            root.innerHTML = chapters.map(function(ch) {
+                var links = slidesData.filter(function(s) {
+                    return s.slide_num >= ch.start && s.slide_num <= ch.end;
+                }).map(function(s) {
+                    return '<li><a class="slide-link" data-slide="' + s.slide_num + '" onclick="goToSlide(' + (s.slide_num - 1) + ')"><span>' + s.title_ar + '</span><span class="slide-no">' + s.slide_num + '</span></a></li>';
+                }).join('');
+                return '<div class="chapter"><div class="chapter-name">' + ch.name + '</div><ul class="slide-links">' + links + '</ul></div>';
+            }).join('');
+        }
+
+        function goToSlide(index) {
+            if (viewMode !== 'single') toggleView();
+            loadSlide(index);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateActiveLink() {
+            document.querySelectorAll('.slide-link').forEach(function(a) {
+                a.classList.toggle('active', Number(a.dataset.slide) === currentIndex + 1);
+            });
+        }
+
+        function toggleView() {
+            var single = document.getElementById('singleView');
+            var continuous = document.getElementById('continuousView');
+            var btn = document.getElementById('toggleBtn');
+            if (viewMode === 'single') {
+                viewMode = 'continuous';
+                single.style.display = 'none';
+                continuous.style.display = 'grid';
+                btn.textContent = 'عرض شريحة واحدة';
+                buildContinuous();
+            } else {
+                viewMode = 'single';
+                continuous.style.display = 'none';
+                single.style.display = 'block';
+                btn.textContent = 'عرض مستمر';
+                loadSlide(currentIndex);
+            }
+        }
+
+        function buildContinuous() {
+            document.getElementById('continuousView').innerHTML = slidesData.map(function(s) {
+                return '<article class="slide-block" id="slide-' + s.slide_num + '">' + slideHtml(s, false) + '</article>';
+            }).join('');
+        }
+
+        function buildPrint() {
+            document.getElementById('printSlides').innerHTML = slidesData.map(function(s) {
+                return '<article class="print-slide">' + slideHtml(s, false) + '</article>';
+            }).join('');
+        }
+
+        buildChapters();
+        loadSlide(0);
+        buildPrint();
+    </script>
+</body>
+</html>
