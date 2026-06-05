@@ -1,0 +1,85 @@
+name: Send OneSignal notification
+
+on:
+  workflow_dispatch:
+    inputs:
+      app_id:
+        description: OneSignal App ID
+        required: true
+      title:
+        description: Notification title
+        required: true
+      message:
+        description: Notification message
+        required: true
+      rest_key:
+        description: OneSignal REST API key
+        required: false
+      url:
+        description: URL opened when students tap the notification
+        required: false
+        default: https://abanoub-sameh.github.io/Nursing_Portal/
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send push notification
+        env:
+          ONESIGNAL_REST_KEY: ${{ secrets.ONESIGNAL_REST_KEY }}
+          INPUT_REST_KEY: ${{ inputs.rest_key }}
+          APP_ID: ${{ inputs.app_id }}
+          TITLE: ${{ inputs.title }}
+          MESSAGE: ${{ inputs.message }}
+          TARGET_URL: ${{ inputs.url }}
+        run: |
+          if [ -n "$INPUT_REST_KEY" ]; then
+            echo "::add-mask::$INPUT_REST_KEY"
+          fi
+          if [ -z "$ONESIGNAL_REST_KEY" ]; then
+            ONESIGNAL_REST_KEY="$INPUT_REST_KEY"
+          fi
+          if [ -z "$ONESIGNAL_REST_KEY" ]; then
+            echo "Missing GitHub secret: ONESIGNAL_REST_KEY"
+            exit 1
+          fi
+
+          python3 - <<'PY'
+          import json
+          import os
+          import urllib.error
+          import urllib.request
+
+          payload = {
+              "app_id": os.environ["APP_ID"],
+              "target_channel": "push",
+              "included_segments": ["Subscribed Users"],
+              "headings": {"en": os.environ["TITLE"], "ar": os.environ["TITLE"]},
+              "contents": {"en": os.environ["MESSAGE"], "ar": os.environ["MESSAGE"]},
+              "url": os.environ["TARGET_URL"],
+          }
+
+          request = urllib.request.Request(
+              "https://api.onesignal.com/notifications",
+              data=json.dumps(payload).encode("utf-8"),
+              headers={
+                  "Content-Type": "application/json; charset=utf-8",
+                  "Authorization": "Key " + os.environ["ONESIGNAL_REST_KEY"],
+              },
+              method="POST",
+          )
+
+          try:
+              with urllib.request.urlopen(request, timeout=30) as response:
+                  body = response.read().decode("utf-8", "replace")
+          except urllib.error.HTTPError as exc:
+              body = exc.read().decode("utf-8", "replace")
+              raise SystemExit(f"OneSignal error {exc.code}: {body}")
+
+          result = json.loads(body or "{}")
+          if result.get("errors"):
+              raise SystemExit("OneSignal errors: " + json.dumps(result["errors"], ensure_ascii=False))
+          if not result.get("id"):
+              raise SystemExit("OneSignal accepted the request, but no notification id was returned. Check subscribed users.")
+          print("Notification sent:", result["id"])
+          PY
