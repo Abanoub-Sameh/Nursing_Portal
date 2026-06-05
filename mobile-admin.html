@@ -242,6 +242,43 @@
       gap: 10px;
     }
 
+    .upload-progress {
+      display: none;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 16px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+    }
+
+    .upload-progress.show {
+      display: grid;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: .8rem;
+      font-weight: 900;
+    }
+
+    .progress-track {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(19, 36, 27, .1);
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--green), var(--blue));
+      transition: width .18s ease;
+    }
+
     .token-row {
       grid-template-columns: 1fr auto;
       align-items: end;
@@ -513,6 +550,16 @@
         <button class="success" id="saveBtn" type="button">رفع وحفظ المحاضرة</button>
         <button class="secondary" id="resetBtn" type="button">تفريغ النموذج</button>
       </div>
+
+      <div class="upload-progress" id="uploadProgress">
+        <div class="progress-info">
+          <span id="progressLabel">جاهز للرفع</span>
+          <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
     </section>
 
     <section class="card" id="lecturesCard" style="display:none;">
@@ -543,6 +590,7 @@
     let curriculumData = null;
     let curriculumSha = "";
     let editLectureNum = null;
+    let uploadPlan = [];
 
     const $ = (id) => document.getElementById(id);
 
@@ -580,6 +628,23 @@
       document.querySelectorAll("button, input, select").forEach(el => {
         if (el.id !== "tokenInput") el.disabled = value;
       });
+    }
+
+    function setProgress(percent, label) {
+      const safePercent = Math.max(0, Math.min(100, Math.round(percent || 0)));
+      $("uploadProgress").classList.add("show");
+      $("progressFill").style.width = safePercent + "%";
+      $("progressPercent").textContent = safePercent + "%";
+      $("progressLabel").textContent = label || "جاري الرفع...";
+    }
+
+    function hideProgressSoon() {
+      setTimeout(() => {
+        $("uploadProgress").classList.remove("show");
+        $("progressFill").style.width = "0%";
+        $("progressPercent").textContent = "0%";
+        $("progressLabel").textContent = "جاهز للرفع";
+      }, 1600);
     }
 
     function headers() {
@@ -778,6 +843,7 @@
       $("saveBtn").textContent = "رفع وحفظ المحاضرة";
       if (clearTitle) $("lectureTitle").value = "";
       Object.values(FILE_TYPES).forEach(type => $(type.input).value = "");
+      uploadPlan = [];
       suggestNextLectureNum();
     }
 
@@ -890,10 +956,13 @@
 
       try {
         setBusy(true);
-        setStatus("جاري رفع الملفات المختارة...");
+        uploadPlan = collectSelectedFiles();
+        setStatus(uploadPlan.length ? "جاري رفع الملفات المختارة..." : "جاري حفظ البيانات...");
+        setProgress(0, uploadPlan.length ? `0 من ${uploadPlan.length} ملفات` : "لا توجد ملفات جديدة");
 
         const oldLecture = lectures.find(item => Number(item.num) === Number(editLectureNum)) || { files: {} };
         const files = { ...oldLecture.files };
+        let uploadedCount = 0;
 
         for (const [fileType, meta] of Object.entries(FILE_TYPES)) {
           const fileInput = $(meta.input);
@@ -903,7 +972,13 @@
             const cleanName = sanitizeFileName(file.name);
             const path = `terms/term_${selected.termNumber}/${selected.subjectKey}/${meta.folder}/${cleanName}`;
             setStatus(`جاري رفع: ${cleanName}`);
-            await putFile(path, await fileToBase64(file), `Upload ${cleanName}`);
+            const base64 = await fileToBase64(file);
+            await putFile(path, base64, `Upload ${cleanName}`, null, (filePercent) => {
+              const overall = ((uploadedCount + (filePercent / 100)) / Math.max(uploadPlan.length, 1)) * 100;
+              setProgress(overall, `رفع ${uploadedCount + 1} من ${uploadPlan.length}: ${cleanName}`);
+            });
+            uploadedCount++;
+            setProgress((uploadedCount / Math.max(uploadPlan.length, 1)) * 100, `تم رفع ${uploadedCount} من ${uploadPlan.length}`);
             if (!paths.includes(path)) paths.push(path);
           }
           files[fileType] = paths;
@@ -920,16 +995,28 @@
         selected.subject.lectures = lectures;
 
         setStatus("جاري تحديث قاعدة البيانات...");
+        setProgress(100, "جاري حفظ قاعدة البيانات...");
         await saveCurriculumOnly(editLectureNum ? "Update lecture " + num : "Add lecture " + num);
 
         resetForm(true);
         renderLectures();
         setStatus("تم الرفع والحفظ. موقع الطلاب هيتحدث خلال دقيقة تقريبًا.", "ok");
+        hideProgressSoon();
       } catch (err) {
+        setProgress(100, "توقف الرفع");
         setStatus("فشل الحفظ: " + explainGithubError(err.message), "err");
       } finally {
         setBusy(false);
       }
+    }
+
+    function collectSelectedFiles() {
+      const selected = [];
+      Object.values(FILE_TYPES).forEach(meta => {
+        const input = $(meta.input);
+        Array.from(input.files || []).forEach(file => selected.push(file));
+      });
+      return selected;
     }
 
     async function saveCurriculumOnly(message) {
@@ -938,7 +1025,7 @@
       curriculumSha = result.content.sha;
     }
 
-    async function putFile(path, base64Content, message, knownSha = null) {
+    async function putFile(path, base64Content, message, knownSha = null, onProgress = null) {
       let sha = knownSha;
       if (!sha) {
         const existing = await githubJson(path + "?ref=" + BRANCH);
@@ -948,10 +1035,42 @@
       const body = { message, content: base64Content, branch: BRANCH };
       if (sha) body.sha = sha;
 
-      return githubJson(path, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
+      if (!onProgress) {
+        return githubJson(path, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body)
+        });
+      }
+
+      return githubPutJson(path, body, onProgress);
+    }
+
+    function githubPutJson(path, body, onProgress) {
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("PUT", `${API_ROOT}/${encodePathWithQuery(path)}`);
+        Object.entries(headers()).forEach(([key, value]) => xhr.setRequestHeader(key, value));
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.upload.onprogress = (event) => {
+          if (!event.lengthComputable) return;
+          onProgress((event.loaded / event.total) * 100);
+        };
+
+        xhr.onload = () => {
+          let data = null;
+          try { data = JSON.parse(xhr.responseText); } catch (_) {}
+          if (xhr.status >= 200 && xhr.status < 300) {
+            onProgress(100);
+            resolve(data);
+          } else {
+            reject(new Error(data?.message || "GitHub رفض الطلب."));
+          }
+        };
+
+        xhr.onerror = () => reject(new Error("فشل الاتصال أثناء رفع الملف."));
+        xhr.send(JSON.stringify(body));
       });
     }
 
@@ -967,7 +1086,7 @@
     function explainGithubError(message) {
       if (/Bad credentials/i.test(message)) return "التوكن غير صحيح أو انتهت صلاحيته.";
       if (/Not Found/i.test(message)) return "التوكن لا يملك صلاحية على المستودع أو المسار غير موجود.";
-      if (/sha/i.test(message) || /conflict/i.test(message)) return "فيه تحديث أحدث على GitHub. اضغط دخول وجرب تاني.";
+      if (/sha/i.test(message) || /conflict/i.test(message)) return "شخص تاني حفظ تعديل في نفس الوقت. اضغط دخول لتحميل آخر نسخة، وبعدها كرر الحفظ.";
       return message;
     }
   </script>
