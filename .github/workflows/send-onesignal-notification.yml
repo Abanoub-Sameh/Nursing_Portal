@@ -89,7 +89,7 @@ jobs:
 
           for item in requests:
               # Delay the notification by 6 minutes to allow GitHub Pages to build
-              send_time = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=6)
+              send_time = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=3)
               send_after_str = send_time.strftime('%Y-%m-%dT%H:%M:%SZ')
 
               payload = {
