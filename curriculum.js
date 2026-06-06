@@ -15,18 +15,6 @@ const curriculumData = {
                 "my_quiz": "terms/term_1/anatomy/quizzes/Anatomy_Quiz_L1.html",
                 "doctor_quiz": ""
               }
-            },
-            {
-              "num": 2,
-              "title_ar": "المحاضره الثانيه",
-              "files": {
-                "original_ppt": [],
-                "translated_ppt": [],
-                "my_quiz": [
-                  "terms/term_1/anatomy/quizzes/Lecture_2_Prefixes_and_Procedures.html"
-                ],
-                "doctor_quiz": []
-              }
             }
           ]
         },
