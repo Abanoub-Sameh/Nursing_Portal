@@ -149,18 +149,6 @@ const curriculumData = {
               }
             },
             {
-              "num": 13,
-              "title_ar": "4685",
-              "files": {
-                "original_ppt": [],
-                "translated_ppt": [],
-                "my_quiz": [
-                  "terms/term_1/anatomy/quizzes/Lecture_3_Reproductive_System.html"
-                ],
-                "doctor_quiz": []
-              }
-            },
-            {
               "num": 14,
               "title_ar": "ىىىىى",
               "files": {
