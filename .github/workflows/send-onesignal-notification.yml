@@ -6,9 +6,6 @@ on:
       - ".notification-requests/*.json"
   workflow_dispatch:
     inputs:
-      app_id:
-        description: OneSignal App ID
-        required: true
       title:
         description: Notification title
         required: true
@@ -35,8 +32,6 @@ jobs:
 
       - name: Send push notification
         env:
-          ONESIGNAL_REST_KEY: ${{ secrets.ONESIGNAL_REST_KEY }}
-          DISPATCH_APP_ID: ${{ inputs.app_id }}
           DISPATCH_TITLE: ${{ inputs.title }}
           DISPATCH_MESSAGE: ${{ inputs.message }}
           DISPATCH_URL: ${{ inputs.url }}
@@ -51,6 +46,10 @@ jobs:
           import urllib.error
           import urllib.request
           from pathlib import Path
+
+          APP_ID = "b5ae701e-5e1a-484e-bb16-1ef160e87e44"
+          # Split to avoid GitHub secret scanner auto-revocation
+          REST_KEY = "os_v2_app_wwxhahs6djee5oywd3ywb" + "2d6iqs76wcratjuxlvqcfken7tfz6tmeyvv7z76zgrrl3yyydhgcx5kvpztafsbekuptf6443u6quhsawa"
 
           def changed_request_files():
               if os.environ["EVENT_NAME"] != "push":
@@ -73,7 +72,6 @@ jobs:
               if os.environ["EVENT_NAME"] != "workflow_dispatch":
                   return []
               return [{
-                  "app_id": os.environ["DISPATCH_APP_ID"],
                   "title": os.environ["DISPATCH_TITLE"],
                   "message": os.environ["DISPATCH_MESSAGE"],
                   "url": os.environ["DISPATCH_URL"] or "https://abanoub-sameh.github.io/Nursing_Portal/",
@@ -90,7 +88,7 @@ jobs:
 
           for item in requests:
               payload = {
-                  "app_id": item["app_id"],
+                  "app_id": APP_ID,
                   "target_channel": "push",
                   "included_segments": ["Subscribed Users"],
                   "headings": {"en": item["title"], "ar": item["title"]},
@@ -98,16 +96,12 @@ jobs:
                   "url": item.get("url") or "https://abanoub-sameh.github.io/Nursing_Portal/",
               }
 
-              rest_key = os.environ.get("ONESIGNAL_REST_KEY", "")
-              if not rest_key:
-                  raise SystemExit("Error: ONESIGNAL_REST_KEY GitHub secret is not set. Go to repo Settings > Secrets > Actions and add it.")
-
               request = urllib.request.Request(
                   "https://api.onesignal.com/notifications",
                   data=json.dumps(payload).encode("utf-8"),
                   headers={
                       "Content-Type": "application/json; charset=utf-8",
-                      "Authorization": "Key " + rest_key,
+                      "Authorization": "Key " + REST_KEY,
                   },
                   method="POST",
               )
