@@ -75,6 +75,18 @@ const curriculumData = {
                 ],
                 "doctor_quiz": []
               }
+            },
+            {
+              "num": 7,
+              "title_ar": "88",
+              "files": {
+                "original_ppt": [],
+                "translated_ppt": [],
+                "my_quiz": [],
+                "doctor_quiz": [
+                  "terms/term_1/anatomy/quizzes/Lecture_2_Prefixes_and_Procedures.html"
+                ]
+              }
             }
           ]
         },
