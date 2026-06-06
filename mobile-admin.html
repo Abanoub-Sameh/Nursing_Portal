@@ -1409,25 +1409,30 @@
         const notificationErrors = [];
         if ($("sendNotificationCheck").checked && onesignalAppId) {
           setStatus("جاري إرسال الإشعارات للطلاب...");
+          
+          const uploadedTypes = [];
+          const emojis = [];
+          
           for (const [fileType, meta] of Object.entries(FILE_TYPES)) {
             const pendingFiles = selectedFilesToUpload[fileType];
             if (pendingFiles.length > 0) {
-              let typeName = "";
-              let typeEmoji = "";
-              if (fileType === 'original_ppt') { typeName = "الباور الأصلي للدكتورة"; typeEmoji = "📊"; }
-              else if (fileType === 'translated_ppt') { typeName = "الباور المترجم"; typeEmoji = "📝"; }
-              else if (fileType === 'my_quiz') { typeName = "بنك أسئلة (الأدمن)"; typeEmoji = "🎯"; }
-              else if (fileType === 'doctor_quiz') { typeName = "بنك أسئلة الدكتورة"; typeEmoji = "🩺"; }
+              if (fileType === 'original_ppt') { uploadedTypes.push("الباور الأصلي"); emojis.push("📊"); }
+              else if (fileType === 'translated_ppt') { uploadedTypes.push("الباور المترجم"); emojis.push("📝"); }
+              else if (fileType === 'my_quiz') { uploadedTypes.push("بنك أسئلة (الأدمن)"); emojis.push("🎯"); }
+              else if (fileType === 'doctor_quiz') { uploadedTypes.push("بنك الدكتورة"); emojis.push("🩺"); }
+            }
+          }
 
-              const notificationTitle = `${typeEmoji} ملف جديد متوفر`;
-              const notificationMessage = `تم إضافة ${typeName} للمحاضرة ${num} في مادة ${selected.subject.name}`;
+          if (uploadedTypes.length > 0) {
+            const emojiStr = emojis.join("");
+            const notificationTitle = `${emojiStr} ملفات جديدة متوفرة`;
+            const notificationMessage = `تم إضافة: ${uploadedTypes.join(" و ")} للمحاضرة ${num} في مادة ${selected.subject.name}`;
 
-              try {
-                await postOneSignalNotification(onesignalAppId, onesignalRestKey, notificationTitle, notificationMessage);
-              } catch (e) {
-                console.error("Failed to send notification for " + fileType, e);
-                notificationErrors.push(e.message || String(e));
-              }
+            try {
+              await postOneSignalNotification(onesignalAppId, onesignalRestKey, notificationTitle, notificationMessage);
+            } catch (e) {
+              console.error("Failed to send notification", e);
+              notificationErrors.push(e.message || String(e));
             }
           }
         }
