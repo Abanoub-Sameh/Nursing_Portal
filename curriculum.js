@@ -15,18 +15,6 @@ const curriculumData = {
                 "my_quiz": "terms/term_1/anatomy/quizzes/Anatomy_Quiz_L1.html",
                 "doctor_quiz": ""
               }
-            },
-            {
-              "num": 2,
-              "title_ar": "المحاضره التانيه",
-              "files": {
-                "original_ppt": [],
-                "translated_ppt": [],
-                "my_quiz": [
-                  "terms/term_1/anatomy/quizzes/أسئلة_الميد_ثنائي_اللغة.pdf"
-                ],
-                "doctor_quiz": []
-              }
             }
           ]
         },
