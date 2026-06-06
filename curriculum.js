@@ -246,5 +246,5 @@ const curriculumData = {
       "subjects": {}
     }
   },
-  "onesignal_app_id": "s76wcratjuxlvqcfken7tfz6t"
+  "onesignal_app_id": "b5ae701e-5e1a-484e-bb16-1ef160e87e44"
 };
