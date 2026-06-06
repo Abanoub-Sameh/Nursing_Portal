@@ -136,19 +136,6 @@ const curriculumData = {
                 "my_quiz": "",
                 "doctor_quiz": ""
               }
-            },
-            {
-              "num": 2,
-              "title_ar": "المحاضره الثانيه",
-              "files": {
-                "original_ppt": [
-                  "terms/term_1/biostatistics/original/أسئلة_الميد_ثنائي_اللغة.pdf",
-                  "terms/term_1/biostatistics/original/test_arabic.pdf"
-                ],
-                "translated_ppt": [],
-                "my_quiz": [],
-                "doctor_quiz": []
-              }
             }
           ]
         }
