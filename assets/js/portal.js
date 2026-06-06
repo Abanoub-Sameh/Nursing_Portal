@@ -632,22 +632,30 @@
     }
   }
 
-  // Document Readiness Init
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      try {
-        init();
-      } catch (e) {
-        alert("Error during initialization: " + e.message + "\nStack: " + e.stack);
-        console.error(e);
-      }
+  function loadCurriculumData() {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'curriculum.js?v=' + Date.now();
+      script.onload = resolve;
+      script.onerror = () => reject(new Error('لم يتم العثور على ملف البيانات (curriculum.js).'));
+      document.head.appendChild(script);
     });
-  } else {
+  }
+
+  async function startApp() {
     try {
+      await loadCurriculumData();
       init();
     } catch (e) {
-      alert("Error during initialization: " + e.message + "\nStack: " + e.stack);
+      alert("Error during initialization: " + e.message);
       console.error(e);
     }
+  }
+
+  // Document Readiness Init
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startApp);
+  } else {
+    startApp();
   }
 })();
