@@ -63,6 +63,18 @@ const curriculumData = {
                 ],
                 "doctor_quiz": []
               }
+            },
+            {
+              "num": 6,
+              "title_ar": "السادسه",
+              "files": {
+                "original_ppt": [],
+                "translated_ppt": [],
+                "my_quiz": [],
+                "doctor_quiz": [
+                  "terms/term_1/anatomy/quizzes/test_arabic.pdf"
+                ]
+              }
             }
           ]
         },
