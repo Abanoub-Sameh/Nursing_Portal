@@ -114,9 +114,15 @@ jobs:
                   raise SystemExit(f"OneSignal error {exc.code}: {body}")
 
               result = json.loads(body or "{}")
-              if result.get("errors"):
-                  raise SystemExit("OneSignal errors: " + json.dumps(result["errors"], ensure_ascii=False))
-              if not result.get("id"):
-                  raise SystemExit("OneSignal accepted the request, but no notification id was returned. Check subscribed users.")
-              print("Notification sent:", result["id"])
+              errors = result.get("errors", [])
+              if errors:
+                  no_subs = any("not subscribed" in str(e).lower() for e in errors)
+                  if no_subs:
+                      print("Warning: No subscribed users yet. Notification queued but no one received it.")
+                  else:
+                      raise SystemExit("OneSignal errors: " + json.dumps(errors, ensure_ascii=False))
+              elif result.get("id"):
+                  print("Notification sent:", result["id"])
+              else:
+                  print("Warning: OneSignal accepted the request but returned no notification ID.")
           PY
