@@ -123,6 +123,18 @@ const curriculumData = {
                 ],
                 "doctor_quiz": []
               }
+            },
+            {
+              "num": 11,
+              "title_ar": "48",
+              "files": {
+                "original_ppt": [],
+                "translated_ppt": [],
+                "my_quiz": [
+                  "terms/term_1/anatomy/quizzes/Lecture_3_Reproductive_System.html"
+                ],
+                "doctor_quiz": []
+              }
             }
           ]
         },
