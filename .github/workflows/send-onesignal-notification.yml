@@ -40,6 +40,7 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
         run: |
           python3 - <<'PY'
+          import datetime
           import json
           import os
           import subprocess
@@ -87,6 +88,10 @@ jobs:
               raise SystemExit("No notification requests found.")
 
           for item in requests:
+              # Delay the notification by 6 minutes to allow GitHub Pages to build
+              send_time = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=6)
+              send_after_str = send_time.strftime('%Y-%m-%dT%H:%M:%SZ')
+
               payload = {
                   "app_id": APP_ID,
                   "target_channel": "push",
@@ -94,6 +99,7 @@ jobs:
                   "headings": {"en": item["title"], "ar": item["title"]},
                   "contents": {"en": item["message"], "ar": item["message"]},
                   "url": item.get("url") or "https://abanoub-sameh.github.io/Nursing_Portal/",
+                  "send_after": send_after_str,
               }
 
               request = urllib.request.Request(
