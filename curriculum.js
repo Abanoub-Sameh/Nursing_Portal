@@ -99,18 +99,6 @@ const curriculumData = {
                 "my_quiz": [],
                 "doctor_quiz": []
               }
-            },
-            {
-              "num": 9,
-              "title_ar": "رر",
-              "files": {
-                "original_ppt": [],
-                "translated_ppt": [],
-                "my_quiz": [
-                  "terms/term_1/anatomy/quizzes/Lecture_1_Fundamentals.html"
-                ],
-                "doctor_quiz": []
-              }
             }
           ]
         },
