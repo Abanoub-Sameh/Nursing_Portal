@@ -98,9 +98,9 @@ jobs:
                   "url": item.get("url") or "https://abanoub-sameh.github.io/Nursing_Portal/",
               }
 
-              rest_key = item.get("rest_key") or os.environ.get("ONESIGNAL_REST_KEY")
+              rest_key = os.environ.get("ONESIGNAL_REST_KEY", "")
               if not rest_key:
-                  raise SystemExit("Error: ONESIGNAL_REST_KEY is missing. Please set it as a GitHub secret or pass it in the request payload.")
+                  raise SystemExit("Error: ONESIGNAL_REST_KEY GitHub secret is not set. Go to repo Settings > Secrets > Actions and add it.")
 
               request = urllib.request.Request(
                   "https://api.onesignal.com/notifications",
