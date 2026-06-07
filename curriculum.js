@@ -159,7 +159,9 @@ const curriculumData = {
                 ],
                 "translated_ppt": [],
                 "my_quiz": [],
-                "doctor_quiz": []
+                "doctor_quiz": [
+                  "terms/term_1/microbiology/quizzes/DOC-20251023-WA0002.(1).pdf"
+                ]
               }
             }
           ]
