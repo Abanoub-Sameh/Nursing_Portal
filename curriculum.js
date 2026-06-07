@@ -79,20 +79,7 @@ const curriculumData = {
         },
         "biology": {
           "name": "Biology (رياضة)",
-          "lectures": [
-            {
-              "num": 1,
-              "title_ar": "المحاضره الاولي",
-              "files": {
-                "original_ppt": [],
-                "translated_ppt": [],
-                "my_quiz": [
-                  "terms/term_1/biology/quizzes/Biology_Quiz_L1.html"
-                ],
-                "doctor_quiz": []
-              }
-            }
-          ]
+          "lectures": []
         },
         "physiology": {
           "name": "Physiology",
