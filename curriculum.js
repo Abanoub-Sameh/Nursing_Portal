@@ -15,6 +15,18 @@ const curriculumData = {
                 "my_quiz": "terms/term_1/anatomy/quizzes/Anatomy_Quiz_L1.html",
                 "doctor_quiz": ""
               }
+            },
+            {
+              "num": 2,
+              "title_ar": "المحاضره الثانيه",
+              "files": {
+                "original_ppt": [
+                  "terms/term_1/anatomy/original/9 Skeletal system.pdf"
+                ],
+                "translated_ppt": [],
+                "my_quiz": [],
+                "doctor_quiz": []
+              }
             }
           ]
         },
