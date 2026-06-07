@@ -1,0 +1,3093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🩺 Medical Terminology Quiz Bank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #080c14;
+            --bg-card: #0e1626;
+            --border: rgba(6, 182, 212, 0.08);
+            --accent-primary: #06b6d4; /* Clinical Cyan */
+            --accent-glow: rgba(6, 182, 212, 0.3);
+            --accent-secondary: #eab308; /* Gold */
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.12);
+            --success-border: rgba(16, 185, 129, 0.3);
+            --error: #ef4444;
+            --error-bg: rgba(239, 68, 68, 0.12);
+            --error-border: rgba(239, 68, 68, 0.3);
+            --warning: #f59e0b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --shadow: 0 4px 24px rgba(0,0,0,0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated clinical energy background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 0%, rgba(6,182,212,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(234,179,8,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(99,102,241,0.04) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app-container {
+            position: relative;
+            z-index: 1;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 16px;
+            padding-bottom: 100px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            padding: 32px 16px 20px;
+            margin-bottom: 16px;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(6,182,212,0.12);
+            border: 1px solid rgba(6,182,212,0.25);
+            color: #a5f3fc;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 50px;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .header-badge .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f8fafc 0%, #a5f3fc 50%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .arabic-notice {
+            margin-top: 16px;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            color: #f59e0b;
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 600;
+            direction: rtl;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+
+        /* ===== STATS BAR ===== */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(6,182,212,0.25);
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-primary);
+        }
+
+        .stat-value.correct { color: var(--success); }
+        .stat-value.wrong { color: var(--error); }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-section {
+            margin-bottom: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-header span {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 50px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== MODE SELECTOR ===== */
+        .mode-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            flex: 1;
+            min-width: 100px;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-family: inherit;
+        }
+
+        .mode-btn:hover {
+            border-color: rgba(6,182,212,0.3);
+            color: var(--text-primary);
+        }
+
+        .mode-btn.active {
+            background: rgba(6,182,212,0.15);
+            border-color: var(--accent-primary);
+            color: #a5f3fc;
+            box-shadow: 0 0 20px rgba(6,182,212,0.15);
+        }
+
+        /* ===== TOPIC FILTER ===== */
+        .topic-filter {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            scrollbar-width: none;
+        }
+        .topic-filter::-webkit-scrollbar { display: none; }
+
+        .topic-chip {
+            white-space: nowrap;
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .topic-chip:hover {
+            border-color: rgba(6,182,212,0.3);
+        }
+
+        .topic-chip.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: #080c14;
+        }
+
+        /* ===== ACTION ROW ===== */
+        .action-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-btn:hover {
+            border-color: rgba(6,182,212,0.3);
+            color: var(--text-primary);
+            background: rgba(6,182,212,0.08);
+        }
+
+        /* ===== QUESTION CARD ===== */
+        .question-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.4s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-card:nth-child(1) { animation-delay: 0.05s; }
+        .question-card:nth-child(2) { animation-delay: 0.1s; }
+        .question-card:nth-child(3) { animation-delay: 0.15s; }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .question-number .q-badge {
+            background: rgba(6,182,212,0.15);
+            color: #a5f3fc;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .question-topic-badge {
+            display: inline-block;
+            background: rgba(234,179,8,0.12);
+            color: #fef08a;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .question-text {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }
+
+        /* ===== OPTIONS ===== */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: var(--radius-sm);
+            background: rgba(255,255,255,0.01);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: left;
+            font-family: inherit;
+            line-height: 1.5;
+            width: 100%;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: rgba(6,182,212,0.3);
+            background: rgba(6,182,212,0.06);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .option-btn .option-letter {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.06);
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: all 0.25s ease;
+        }
+
+        .option-btn:hover:not(.disabled) .option-letter {
+            background: rgba(6,182,212,0.2);
+            color: #a5f3fc;
+        }
+
+        .option-btn.correct {
+            border-color: var(--success-border);
+            background: var(--success-bg);
+            color: var(--success);
+        }
+        .option-btn.correct .option-letter {
+            background: rgba(16,185,129,0.2);
+            color: var(--success);
+        }
+
+        .option-btn.wrong {
+            border-color: var(--error-border);
+            background: var(--error-bg);
+            color: var(--error);
+        }
+        .option-btn.wrong .option-letter {
+            background: rgba(239,68,68,0.2);
+            color: var(--error);
+        }
+
+        .option-btn.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .option-btn.correct.disabled, .option-btn.wrong.disabled {
+            opacity: 1;
+        }
+
+        .option-btn.selected-exam {
+            border-color: rgba(6,182,212,0.5);
+            background: rgba(6,182,212,0.1);
+            color: #a5f3fc;
+        }
+        .option-btn.selected-exam .option-letter {
+            background: rgba(6,182,212,0.2);
+            color: #a5f3fc;
+        }
+
+        /* ===== EXPLANATION ===== */
+        .explanation {
+            margin-top: 14px;
+            padding: 14px 16px;
+            background: rgba(6,182,212,0.06);
+            border: 1px solid rgba(6,182,212,0.15);
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .explanation strong {
+            color: #a5f3fc;
+        }
+
+        /* ===== RESULT SCREEN ===== */
+        .result-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .result-screen .score-circle {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 6px solid var(--accent-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            position: relative;
+        }
+
+        .result-screen .score-circle::before {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            border: 2px solid rgba(6,182,212,0.15);
+        }
+
+        .score-percent {
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-family: 'JetBrains Mono', monospace;
+            color: #a5f3fc;
+        }
+
+        .score-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .result-message {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .result-sub {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 32px;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .result-stat {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+        }
+
+        .result-stat .val {
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .result-stat .lbl {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        /* ===== PAGINATION / CONTROLS ===== */
+        .controls-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(8,12,20,0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            padding: 12px 16px;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .ctrl-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .ctrl-btn:hover {
+            border-color: rgba(6,182,212,0.3);
+            color: var(--text-primary);
+        }
+
+        .ctrl-btn.primary {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: #080c14;
+            font-weight: 700;
+        }
+
+        .ctrl-btn.primary:hover {
+            background: #22d3ee;
+            box-shadow: 0 0 24px var(--accent-glow);
+        }
+
+        .ctrl-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            display: flex;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .app-container { padding: 10px; padding-bottom: 90px; }
+            .header h1 { font-size: 1.4rem; }
+            .question-card { padding: 18px; }
+            .stat-value { font-size: 1.25rem; }
+            .stats-bar { gap: 6px; }
+            .stat-card { padding: 10px 6px; }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="app-container" id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-badge">
+                <span class="pulse"></span> abanoub sameh
+            </div>
+            <h1>🩺 Medical Terminology Quiz</h1>
+            
+            <div class="arabic-notice">
+                ⚠️ الكويز ده علي اول 3 محاضره في مادة الترمنولوجي.
+            </div>
+        </header>
+
+        <!-- Stats -->
+        <div class="stats-bar" id="statsBar">
+            <div class="stat-card">
+                <div class="stat-value" id="totalQ">0</div>
+                <div class="stat-label">Questions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value correct" id="correctCount">0</div>
+                <div class="stat-label">Correct</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value wrong" id="wrongCount">0</div>
+                <div class="stat-label">Wrong</div>
+            </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-section">
+            <div class="progress-header">
+                <span>Progress</span>
+                <span id="progressText">0 / 0</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill" style="width:0%"></div>
+            </div>
+        </div>
+
+        <!-- Mode Selector -->
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="practice" id="modePractice">📝 Practice</button>
+            <button class="mode-btn" data-mode="exam" id="modeExam">🎯 Exam Mode</button>
+            <button class="mode-btn" data-mode="review" id="modeReview">📖 Review Wrong</button>
+        </div>
+
+        <!-- Topic Filter -->
+        <div class="topic-filter" id="topicFilter"></div>
+
+        <!-- Action Row -->
+        <div class="action-row">
+            <button class="action-btn" id="shuffleBtn" onclick="shuffleQuestions()">🔀 Shuffle</button>
+            <button class="action-btn" id="resetBtn" onclick="resetQuiz()">🔄 Reset All</button>
+            <button class="action-btn" id="showAllBtn" onclick="showAllQuestions()">📋 Show All</button>
+        </div>
+
+        <!-- Questions Container -->
+        <div id="questionsContainer"></div>
+
+        <!-- Result Screen -->
+        <div id="resultScreen" class="result-screen hidden"></div>
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="controls-bar" id="controlsBar">
+        <button class="ctrl-btn" id="prevBtn" onclick="changePage(-1)">◀ Prev</button>
+        <span class="page-info" id="pageInfo">1 / 1</span>
+        <button class="ctrl-btn" id="nextBtn" onclick="changePage(1)">Next ▶</button>
+        <button class="ctrl-btn primary hidden" id="finishBtn" onclick="showResults()">🏁 Finish</button>
+    </div>
+
+    <script>
+    // ========================
+    // QUESTION BANK DATABASE
+    // ========================
+    const allQuestions = [
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Which component of a medical term usually precedes the word root and modifies its meaning?",
+        "options": [
+            "Suffix",
+            "Combining vowel",
+            "Prefix",
+            "Eponym"
+        ],
+        "correct": 2,
+        "explanation": "A prefix is the word beginning of the term, usually precedes the root, and modifies the meaning of the root.",
+        "id": 1
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "If 'partum' means labor, what is the meaning of 'Antepartum'?",
+        "options": [
+            "During labor",
+            "Before labor",
+            "After labor",
+            "Difficulty in labor"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'Ante-' means 'Before'. Therefore, 'Antepartum' means before labor.",
+        "id": 2
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Which prefix also means 'before', similar to 'Ante-'?",
+        "options": [
+            "Post-",
+            "Hyper-",
+            "Pre-",
+            "Hypo-"
+        ],
+        "correct": 2,
+        "explanation": "Both 'Ante-' and 'Pre-' are prefixes that mean 'before'.",
+        "id": 3
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "What is a 'Word Root' in medical terminology?",
+        "options": [
+            "The ending of a term that modifies the meaning",
+            "The beginning of a term that indicates position",
+            "A basic medical word, usually indicating a body part or organ, derived from Latin or Greek",
+            "A vowel used to connect two terms"
+        ],
+        "correct": 2,
+        "explanation": "A word root is a basic medical word, usually referring to a body part or organ, and is derived from Latin or Greek words.",
+        "id": 4
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "What is a 'Suffix' in medical terminology?",
+        "options": [
+            "The beginning of the term that modifies the meaning",
+            "The word ending of the term, which follows the root and modifies its meaning",
+            "The vowel used to link a root with another root",
+            "A term named after the scientist who discovered it"
+        ],
+        "correct": 1,
+        "explanation": "A suffix is the word ending of the term, usually following the word root and modifying the meaning of the root.",
+        "id": 5
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "In the medical term 'Erythrocyte', what does the suffix '-cyte' mean?",
+        "options": [
+            "Red",
+            "Inflammation",
+            "Cell",
+            "Pain"
+        ],
+        "correct": 2,
+        "explanation": "In 'Erythrocyte' (red cell), 'erythr/o' is the combining form for red, and '-cyte' is the suffix meaning cell.",
+        "id": 6
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "In the medical term 'Gastritis', what is the meaning of the suffix '-itis'?",
+        "options": [
+            "Stomach",
+            "Pain",
+            "Enlargement",
+            "Inflammation"
+        ],
+        "correct": 3,
+        "explanation": "The suffix '-itis' means inflammation. Gastritis is inflammation of the stomach ('gaster' = stomach).",
+        "id": 7
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "What is the primary function of a 'Combining Vowel' in medical terminology?",
+        "options": [
+            "To change the meaning of the word root",
+            "To indicate whether a word is singular or plural",
+            "To facilitate pronunciation and connect the root with a suffix or another root",
+            "To identify the person who discovered the disease"
+        ],
+        "correct": 2,
+        "explanation": "A combining vowel is used to facilitate the pronunciation of words and to connect the root with a suffix (or another root).",
+        "id": 8
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Which vowel letters can be used as combining vowels?",
+        "options": [
+            "Only o",
+            "Only a, e, and o",
+            "a, e, i, o, u, and y",
+            "Any consonant letter"
+        ],
+        "correct": 2,
+        "explanation": "The combining vowel letters are: a, e, i, o, u, & y.",
+        "id": 9
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "In the term 'Acrocyanosis', identify the combining form, combining vowel, and root in order:",
+        "options": [
+            "acr / o / acr/o",
+            "acr/o / o / acr",
+            "cyan/o / o / cyan",
+            "osis / i / os"
+        ],
+        "correct": 1,
+        "explanation": "In Acrocyanosis (cyanosis of extremities), 'acr/o' is the combining form, 'o' is the combining vowel, and 'acr' is the root.",
+        "id": 10
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Match the term 'Psychology' to its combining form, combining vowel, and root:",
+        "options": [
+            "psych/o / o / psych",
+            "logy / o / log",
+            "psych / y / psych/o",
+            "psy / o / chology"
+        ],
+        "correct": 0,
+        "explanation": "In Psychology (study of the mind), 'psych/o' is the combining form, 'o' is the combining vowel, and 'psych' is the root.",
+        "id": 11
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Identify the combining form, combining vowel, and root for the term 'Cholesterase':",
+        "options": [
+            "chol/e / e / chol",
+            "ester / e / ester/e",
+            "ase / a / as",
+            "choles / o / choles/o"
+        ],
+        "correct": 0,
+        "explanation": "In Cholesterase, 'chol/e' is the combining form, 'e' is the combining vowel, and 'chol' is the root.",
+        "id": 12
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "What is the definition of an 'Eponym' in the medical field?",
+        "options": [
+            "A shortened form of a word or phrase",
+            "A suffix indicating surgical puncture",
+            "Names derived from a proper noun (originating from a person, place, or thing) used for diseases, organs, or procedures",
+            "A combining form containing the vowel 'y'"
+        ],
+        "correct": 2,
+        "explanation": "Eponyms are names derived from a proper noun. They may originate from the name of a person, place, or thing, and describe diseases, organs, procedures, or body functions.",
+        "id": 13
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Which of the following is the definition of an 'Abbreviation'?",
+        "options": [
+            "A suffix modifying a root",
+            "A shortened form of a word or phrase",
+            "A name derived from a proper noun",
+            "A vowel used to connect two roots"
+        ],
+        "correct": 1,
+        "explanation": "An abbreviation is a shortened form of a word or phrase.",
+        "id": 14
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "What do the abbreviations 'CXR', 'tab', and 'CPR' stand for?",
+        "options": [
+            "Cardiac X-Ray, tablet, Cardiopulmonary Recovery",
+            "Chest X-Ray, tablet, Cardiopulmonary Resuscitation",
+            "Cervical X-Ray, tabulate, Cardiovascular Resuscitation",
+            "Chest X-Ray, tubule, Cardiopulmonary Resuscitation"
+        ],
+        "correct": 1,
+        "explanation": "According to the lecture text, CXR stands for chest x-ray, tab stands for tablet, and CPR stands for cardiopulmonary resuscitation.",
+        "id": 15
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Which suffix means 'study or science or specialty'?",
+        "options": [
+            "-logist",
+            "-logy",
+            "-plasty",
+            "-scopy"
+        ],
+        "correct": 1,
+        "explanation": "The suffix '-logy' means study, science, or specialty.",
+        "id": 16
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Which suffix means 'one who studies or specialist'?",
+        "options": [
+            "-logy",
+            "-logist",
+            "-stomy",
+            "-centesis"
+        ],
+        "correct": 1,
+        "explanation": "The suffix '-logist' means one who studies or specialist.",
+        "id": 17
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "What is the difference between Anesthesiology and Anesthesiologist?",
+        "options": [
+            "Anesthesiology is the specialist; Anesthesiologist is the study",
+            "Anesthesiology is the medical specialty dealing with anesthesia; Anesthesiologist is the physician who specializes in it",
+            "Anesthesiology refers to surgical repair; Anesthesiologist refers to surgical puncture",
+            "There is no difference in meaning"
+        ],
+        "correct": 1,
+        "explanation": "Anesthesiology is the branch of medical science that deals with the study of anesthesia. Anesthesiologist is the physician who specializes in anesthesia.",
+        "id": 18
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Match the medical specialty 'Gynecology' to its specialist, meaning, and combining form:",
+        "options": [
+            "Gynecologist / Female / gynec/o",
+            "Gynecologist / Heart / gynec/o",
+            "Gerontologist / Elderly / ger/o",
+            "Gynecologist / Disease / gynec/o"
+        ],
+        "correct": 0,
+        "explanation": "Gynecology has the specialist Gynecologist, means female, and uses the combining form 'gynec/o'.",
+        "id": 19
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Match the medical specialty 'Neonatology' to its specialist, meaning, and combining form:",
+        "options": [
+            "Neonatologist / New, birth / ne/o, nat/o",
+            "Neonatologist / Nerve / ne/o, neur/o",
+            "Neonatologist / Kidney / ne/o, nephr/o",
+            "Obstetrician / Pregnancy / obstet/o"
+        ],
+        "correct": 0,
+        "explanation": "Neonatology has the specialist Neonatologist, means new or birth, and uses the combining forms 'ne/o' and 'nat/o'.",
+        "id": 20
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Match the medical specialty 'Cardiology' to its specialist, meaning, and combining form:",
+        "options": [
+            "Cardiologist / Heart / cardi/o",
+            "Dermatologist / Skin / dermat/o",
+            "Urologist / Urine tract / ur/o",
+            "Cardiologist / Brain / cardi/o"
+        ],
+        "correct": 0,
+        "explanation": "Cardiology is the study of the heart ('cardi/o') and the specialist is a Cardiologist.",
+        "id": 21
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Match the medical specialty 'Immunology' to its specialist, meaning, and combining form:",
+        "options": [
+            "Immunologist / Immune system / immune/o",
+            "Gynecologist / Female / gynec/o",
+            "Immunologist / Eye / immune/o",
+            "Anesthesiologist / Sensation / esthesi/o"
+        ],
+        "correct": 0,
+        "explanation": "Immunology is the study of the immune system ('immune/o') and the specialist is an Immunologist.",
+        "id": 22
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "A physician who specializes in diagnosing and treating skin disorders is a:",
+        "options": [
+            "Cardiologist",
+            "Gynecologist",
+            "Dermatologist",
+            "Immunologist"
+        ],
+        "correct": 2,
+        "explanation": "A Dermatologist specializes in dermatology, which is the study of the skin ('dermat/o').",
+        "id": 23
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Match the medical specialty 'Ophthalmology' to its specialist, meaning, and combining form:",
+        "options": [
+            "Ophthalmologist / Eye / ophthalm/o",
+            "Ophthalmologist / Ear / ophthalm/o",
+            "Optometrist / Glasses / opt/o",
+            "Ophthalmologist / Bones / ophthalm/o"
+        ],
+        "correct": 0,
+        "explanation": "Ophthalmology has the specialist Ophthalmologist, means eye, and uses the combining form 'ophthal/o'.",
+        "id": 24
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Match the medical specialty 'Pathology' to its specialist, meaning, and combining form:",
+        "options": [
+            "Pathologist / Disease / path/o",
+            "Pathologist / Sensation / path/o",
+            "Pediatrician / Children / ped/o",
+            "Pathologist / Radiation / path/o"
+        ],
+        "correct": 0,
+        "explanation": "Pathology has the specialist Pathologist, means disease, and uses the combining form 'path/o'.",
+        "id": 25
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Match the medical specialty 'Urology' to its specialist, meaning, and combining form:",
+        "options": [
+            "Urologist / Urinary or urine tract / ur/o",
+            "Urologist / Uterus / ur/o",
+            "Urologist / Joints / ur/o",
+            "Nephrologist / Kidney / nephr/o"
+        ],
+        "correct": 0,
+        "explanation": "Urology has the specialist Urologist, means urinary or urine tract, and uses the combining form 'ur/o'.",
+        "id": 26
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Which medical specialist deals with radiation ('radi/o')?",
+        "options": [
+            "Pathologist",
+            "Immunologist",
+            "Radiologist",
+            "Cardiologist"
+        ],
+        "correct": 2,
+        "explanation": "A Radiologist specializes in radiology, which involves radiation or radius ('radi/o').",
+        "id": 27
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "What is the surgical meaning of the suffix '-centesis'?",
+        "options": [
+            "Surgical removal or excision",
+            "Surgical repair or reconstruction",
+            "Surgical puncture to aspirate or remove fluid",
+            "Process of loosening or destroying"
+        ],
+        "correct": 2,
+        "explanation": "The suffix '-centesis' means surgical puncture to aspirate or remove fluid (e.g., Paracentesis).",
+        "id": 28
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "What is the surgical meaning of the suffix '-ectomy'?",
+        "options": [
+            "Surgical repair",
+            "Surgical puncture",
+            "Excision (surgical removal or cutting out)",
+            "Creation of an opening"
+        ],
+        "correct": 2,
+        "explanation": "The suffix '-ectomy' means excision, surgical removal, or cutting out (e.g., Appendectomy).",
+        "id": 29
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "What is the surgical meaning of the suffix '-lysis'?",
+        "options": [
+            "Suture or stitching",
+            "Process of loosening, freeing, or destroying",
+            "Visual examination",
+            "Surgical repair"
+        ],
+        "correct": 1,
+        "explanation": "The suffix '-lysis' means process of loosening, freeing, or destroying (e.g., hydrolysis).",
+        "id": 30
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "What is the surgical meaning of the suffix '-plasty'?",
+        "options": [
+            "Creation of an opening",
+            "Surgical repair",
+            "Suture or stitching",
+            "Visual examination"
+        ],
+        "correct": 1,
+        "explanation": "The suffix '-plasty' means surgical repair (e.g., Rhinoplasty).",
+        "id": 31
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "What is the surgical meaning of the suffix '-rrhaphy'?",
+        "options": [
+            "Suture (fusing a wound by stitches)",
+            "Excessive bleeding",
+            "Surgical puncture",
+            "Process of destroying"
+        ],
+        "correct": 0,
+        "explanation": "The suffix '-rrhaphy' means suture (fusing a wound by stitches, e.g., Herniorrhaphy).",
+        "id": 32
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "What is the surgical meaning of the suffix '-scopy'?",
+        "options": [
+            "Creation of an opening",
+            "Instrument for recording",
+            "Visual examination with the use of a lighted instrument",
+            "Surgical repair"
+        ],
+        "correct": 2,
+        "explanation": "The suffix '-scopy' means visual examination with the use of a lighted instrument (e.g., Colonoscopy).",
+        "id": 33
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "What is the surgical meaning of the suffix '-stomy'?",
+        "options": [
+            "Surgical removal",
+            "Surgical puncture",
+            "Creation of an opening",
+            "Process of loosening"
+        ],
+        "correct": 2,
+        "explanation": "The suffix '-stomy' means creation of an opening (e.g., Colostomy).",
+        "id": 34
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "If 'aden/o' means gland, what is the meaning of 'Adenopathy'?",
+        "options": [
+            "Inflammation of a gland",
+            "Enlargement of the glands",
+            "Surgical removal of a gland",
+            "Tumor of a gland"
+        ],
+        "correct": 1,
+        "explanation": "The word root 'aden/o' means gland. 'Adenopathy' refers to the enlargement of the glands.",
+        "id": 35
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "If 'bi/o' means life or living, what is a 'Biopsy'?",
+        "options": [
+            "The study of living organisms",
+            "A procedure used to extract cells or tissues for examination",
+            "The anticipated outcome of a disease",
+            "A visual examination of internal organs"
+        ],
+        "correct": 1,
+        "explanation": "The root 'bi/o' means life or living. A biopsy is a procedure used to extract cells or tissues for examination.",
+        "id": 36
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Which roots represent the brain, and what is the term for brain disease/disorder?",
+        "options": [
+            "my/o; Myitis",
+            "vas/o; Vasodilation",
+            "cerebr/o and encephal/o; Encephalopathy",
+            "hepat/o; Hepatomegaly"
+        ],
+        "correct": 2,
+        "explanation": "The roots for brain are 'cerebr/o' and 'encephal/o'. 'Encephalopathy' refers to a disease or disorder of the brain.",
+        "id": 37
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "What does the root 'hepat/o' represent, and what does 'Hepatomegaly' mean?",
+        "options": [
+            "Heart; enlargement of the heart",
+            "Kidney; inflammation of the kidney",
+            "Liver; enlargement of the liver",
+            "Stomach; inflammation of the stomach"
+        ],
+        "correct": 2,
+        "explanation": "The root 'hepat/o' represents the liver. 'Hepatomegaly' is the enlargement of the liver.",
+        "id": 38
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Which roots represent the breast, and what is 'Mammogram' and 'Mastitis'?",
+        "options": [
+            "mamm/o and mast/o; Mammogram is breast x-ray, Mastitis is breast tissue infection",
+            "gynec/o; Mammogram is breast removal, Mastitis is breast pain",
+            "vas/o; Mammogram is vessel x-ray, Mastitis is vessel infection",
+            "aden/o; Mammogram is gland x-ray, Mastitis is gland infection"
+        ],
+        "correct": 0,
+        "explanation": "The roots for breast are 'mamm/o' and 'mast/o'. A mammogram is an x-ray of the breast, and mastitis is an infection of the breast tissue.",
+        "id": 39
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Which roots represent muscle, and what is 'Myosin'?",
+        "options": [
+            "aden/o; a gland protein",
+            "muscul/o and my/o; Myosin is one of the muscle proteins",
+            "vas/o; a vessel protein",
+            "oste/o; a bone protein"
+        ],
+        "correct": 1,
+        "explanation": "The roots for muscle are 'muscul/o' and 'my/o'. Myosin is one of the muscle proteins.",
+        "id": 40
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "What does the root 'vas/o' represent, and what is 'Vasodilation'?",
+        "options": [
+            "Vessel; widening of the blood vessels",
+            "Vessel; narrowing of the blood vessels",
+            "Vein; inflammation of a vein",
+            "Valve; surgical repair of a valve"
+        ],
+        "correct": 0,
+        "explanation": "The root 'vas/o' represents vessel. Widening of the blood vessels is known as vasodilation.",
+        "id": 41
+    },
+    {
+        "topic": "Word Structure & Surgery",
+        "question": "Define 'Diagnosis' and 'Symptoms' according to the lecture:",
+        "options": [
+            "Diagnosis is subjective data from client; Symptoms are scientific determinations",
+            "Diagnosis is scientific determination of a disease after evaluation; Symptoms are subjective data perceived by the client representing a disorder/disease",
+            "Diagnosis is a test procedure; Symptoms are signs observed by a nurse",
+            "There is no clinical difference between them"
+        ],
+        "correct": 1,
+        "explanation": "Diagnosis is the scientific determination of a disease process or condition after evaluation. Symptoms are subjective data (disorder or disease changes in health status) perceived by the client.",
+        "id": 42
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "Match the suffixes '-algia', '-cele', and '-edema' to their correct meanings:",
+        "options": [
+            "pain / swelling / hernia",
+            "pain / hernia / swelling (excess fluid in tissues)",
+            "hernia / pain / swelling",
+            "vomiting / blood condition / pain"
+        ],
+        "correct": 1,
+        "explanation": "'-algia' means pain (e.g. Arthralgia is joint pain), '-cele' means hernia (e.g. Rectocele), and '-edema' means swelling / presence of excess fluid in tissues.",
+        "id": 43
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "Match the suffixes '-emesis', '-emia', and '-itis' to their correct meanings:",
+        "options": [
+            "vomiting / condition of the blood / inflammation",
+            "blood condition / vomiting / inflammation",
+            "inflammation / vomiting / blood condition",
+            "bleeding / anemia / stomach"
+        ],
+        "correct": 0,
+        "explanation": "'-emesis' means vomiting (Hyperemesis), '-emia' means condition of the blood (Anemia), and '-itis' means inflammation (Gastritis).",
+        "id": 44
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What is the meaning of the suffix '-megaly' and the suffix combination '-rrhage, -rrhagia'?",
+        "options": [
+            "enlargement / vomiting",
+            "pain / excessive bleeding",
+            "enlargement / excessive bleeding",
+            "hernia / condition of the blood"
+        ],
+        "correct": 2,
+        "explanation": "'-megaly' means enlargement (Cardiomegaly) and '-rrhage / -rrhagia' means excessive bleeding (Hemorrhage).",
+        "id": 45
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What do the suffixes '-able' and '-ible' mean, and what is an example?",
+        "options": [
+            "pertaining to; dermal",
+            "capable of, able to; injectable or edible",
+            "membrane; myocardium",
+            "condition; paranoia"
+        ],
+        "correct": 1,
+        "explanation": "'-able' and '-ible' mean capable of or able to, as in injectable or edible.",
+        "id": 46
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "Which of the following group of suffixes all mean 'pertaining to'?",
+        "options": [
+            "-eum, -ium",
+            "-ia, -ism",
+            "-ac, -al, -an, -ar, -ary, -eal, -ic, -ive, -tic",
+            "-ose, -ous"
+        ],
+        "correct": 2,
+        "explanation": "All of these suffixes mean 'pertaining to': -ac, -al, -an, -ar, -ary, -eal, -ic, -ive, -tic (e.g. iliac, dermal, median, ulnar, capillary, meningeal, hepatic, invasive, cyanotic).",
+        "id": 47
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What do the suffixes '-eum' and '-ium' mean, and what are some examples?",
+        "options": [
+            "Pertaining to; hepatic, invasive",
+            "Membrane; peritoneum, myocardium",
+            "Condition or theory; dwarfism, paranoia",
+            "Sugar; fructose"
+        ],
+        "correct": 1,
+        "explanation": "'-eum' and '-ium' mean membrane, as in peritoneum and myocardium.",
+        "id": 48
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What do the suffixes '-ia' and '-ism' mean, and what are some examples?",
+        "options": [
+            "Sugar; glucose",
+            "Membrane; peritoneum",
+            "Condition or theory; paranoia, dwarfism",
+            "Characterized by; cancerous"
+        ],
+        "correct": 2,
+        "explanation": "'-ia' and '-ism' mean condition or theory, as in paranoia and dwarfism.",
+        "id": 49
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the suffix '-ose' mean, and what is an example?",
+        "options": [
+            "Membrane; peritoneum",
+            "Sugar; Fructose",
+            "Characterized by; cancerous",
+            "Capable of; edible"
+        ],
+        "correct": 1,
+        "explanation": "The suffix '-ose' means sugar, as in Fructose.",
+        "id": 50
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the suffix '-ous' mean, and what is an example?",
+        "options": [
+            "Condition or theory; dwarfism",
+            "Sugar; fructose",
+            "Characterized by; cancerous",
+            "Pertaining to; dermal"
+        ],
+        "correct": 2,
+        "explanation": "The suffix '-ous' means characterized by, as in cancerous.",
+        "id": 51
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What do the roots 'adip/o' and 'lip/o' represent, and what are some examples?",
+        "options": [
+            "Fat; adipose, hyperlipidemia",
+            "Sugar; hyperglycemia",
+            "Blood; hematology",
+            "Milk; lactation"
+        ],
+        "correct": 0,
+        "explanation": "The roots 'adip/o' and 'lip/o' mean fat, as in adipose and hyperlipidemia.",
+        "id": 52
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the root 'glyc/o' represent, and what is 'Hyperglycemia'?",
+        "options": [
+            "Fat; excessive fat in blood",
+            "Sugar; excessive blood sugar",
+            "Blood; a blood study",
+            "Milk; milk production"
+        ],
+        "correct": 1,
+        "explanation": "The root 'glyc/o' means sugar. 'Hyperglycemia' is excessive blood sugar.",
+        "id": 53
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the root 'hemat/o' represent, and what is 'Hematology'?",
+        "options": [
+            "Sugar; study of diabetes",
+            "Milk; study of breast milk",
+            "Blood; the study of blood",
+            "Fat; study of lipids"
+        ],
+        "correct": 2,
+        "explanation": "The root 'hemat/o' means blood. 'Hematology' is the study of blood.",
+        "id": 54
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the root 'lact/o' represent, and what is 'Lactation'?",
+        "options": [
+            "Blood; blood clotting",
+            "Milk; secretion of milk (lactation)",
+            "Fat; fat digestion",
+            "Sugar; sugar fermentation"
+        ],
+        "correct": 1,
+        "explanation": "The root 'lact/o' means milk. 'Lactation' refers to milk secretion.",
+        "id": 55
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the root 'micro' mean, and what is 'Microscopy'?",
+        "options": [
+            "Large; examination of large objects",
+            "Small; the study of small objects (microscopy)",
+            "Mucus; mucous membrane",
+            "Fat; fat cell study"
+        ],
+        "correct": 1,
+        "explanation": "The root 'micro' means small. 'Microscopy' is the use of microscopes to view small objects.",
+        "id": 56
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the root 'muc/o' represent, and what is 'Mucous'?",
+        "options": [
+            "Milk; pertaining to milk",
+            "Mucus; pertaining to mucus (or mucous membrane)",
+            "Small; microscopic cells",
+            "Sugar; sugar molecules"
+        ],
+        "correct": 1,
+        "explanation": "The root 'muc/o' means mucus. 'Mucous' means pertaining to mucus.",
+        "id": 57
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What prefixes mean 'one', and what are some examples?",
+        "options": [
+            "bi-, di-; Bicuspid",
+            "tri-; Tricuspid",
+            "mono-, uni-; Mononuclear, Unilateral",
+            "quad-; Quadriplegia"
+        ],
+        "correct": 2,
+        "explanation": "The prefixes 'mono-' and 'uni-' mean one. Examples: Mononuclear (one nucleus cell), Unilateral (one side).",
+        "id": 58
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What prefixes mean 'two', and what are some examples?",
+        "options": [
+            "mono-, uni-; Mononuclear",
+            "bi-, di-; Bicuspid (valves of heart), Dizygotic (twins) / disaccharide",
+            "tri-; Tricuspid",
+            "quad-; Quadriplegia"
+        ],
+        "correct": 1,
+        "explanation": "The prefixes 'bi-' and 'di-' mean two. Examples: Bicuspid (two cusps), Dizygotic (two zygotes), disaccharide (two sugars).",
+        "id": 59
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What prefix means 'three', and what is an example?",
+        "options": [
+            "bi-; Bicuspid",
+            "tri-; Tricuspid valve of the heart",
+            "quad-; Quadriplegia",
+            "centi-; Centigrade"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'tri-' means three. Example: Tricuspid valve (three cusps).",
+        "id": 60
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What prefixes mean 'four', and what is an example?",
+        "options": [
+            "tri-; Tricuspid",
+            "quad-, quadri-, tetra-; Quadriplegia (paralysis of four extremities)",
+            "centi-; Centigrade",
+            "milli-; Milliunit"
+        ],
+        "correct": 1,
+        "explanation": "The prefixes 'quad-', 'quadri-', and 'tetra-' mean four. Example: Quadriplegia (paralysis of four limbs).",
+        "id": 61
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the prefix 'centi-' mean, and what is an example?",
+        "options": [
+            "One thousandth; Milliunit",
+            "One hundred / hundredth; Centigrade",
+            "First; Primigravida",
+            "None; Nulliparous"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'centi-' means one hundred or one hundredth, as in Centigrade.",
+        "id": 62
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the prefix 'milli-' mean, and what is an example?",
+        "options": [
+            "One hundredth; Centigrade",
+            "One thousandth; A milliunit is 1/1000 of a unit",
+            "Many; Polyuria",
+            "First; Primigravida"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'milli-' means one thousandth. Example: Milliunit.",
+        "id": 63
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the prefix 'hyper-' mean, and what is an example?",
+        "options": [
+            "Under, less than normal; Hypoglycemia",
+            "Excessive, more than normal; Hyperglycemia (excessive blood sugar)",
+            "Half, partly; Hemiparesis",
+            "None; Nulliparous"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'hyper-' means excessive or more than normal. Example: Hyperglycemia.",
+        "id": 64
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the prefix 'hypo-' mean, and what is an example?",
+        "options": [
+            "Excessive, more than normal; Hyperglycemia",
+            "Under, less than normal; Hypoglycemia (decreased sugar in the blood)",
+            "Half, partly; Hemiparesis",
+            "First; Primigravida"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'hypo-' means under or less than normal. Example: Hypoglycemia.",
+        "id": 65
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What do the prefixes 'hemi-' and 'semi-' mean, and what are their examples?",
+        "options": [
+            "None; Nulliparous",
+            "Half or partly; Hemiparesis (weakness of one entire side), Semi-Fowler's position",
+            "Many; Polyuria",
+            "First; Primigravida"
+        ],
+        "correct": 1,
+        "explanation": "The prefixes 'hemi-' and 'semi-' mean half or partly. Examples: Hemiparesis (weakness of half the body), Semi-Fowler's position (head elevated 30-45 degrees).",
+        "id": 66
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What do the prefixes 'multi-' and 'poly-' mean, and what are their examples?",
+        "options": [
+            "None; Nulliparous",
+            "First; Primigravida",
+            "Many; Multigravida (more than one pregnancy), Polyuria (increased urine production)",
+            "Half; Hemiparesis"
+        ],
+        "correct": 2,
+        "explanation": "The prefixes 'multi-' and 'poly-' mean many. Examples: Multigravida, Polyuria.",
+        "id": 67
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the prefix 'nulli-' mean, and what is an example?",
+        "options": [
+            "First; Primigravida",
+            "None; Nulliparous (a woman who hasn't given birth)",
+            "Many; Multigravida",
+            "Half; Hemiparesis"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'nulli-' means none. Example: Nulliparous.",
+        "id": 68
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the prefix 'primi-' mean, and what is an example?",
+        "options": [
+            "None; Nulliparous",
+            "First; Primigravida (woman in her first pregnancy)",
+            "Many; Multigravida",
+            "Above; Superior"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'primi-' means first. Example: Primigravida.",
+        "id": 69
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What do the prefixes 'super-' and 'ultra-' mean, and what are their examples?",
+        "options": [
+            "Under, less than; Hypoglycemia",
+            "Excessive, above; Superior vena cava, Ultrasound",
+            "Slow; Bradypnea",
+            "Difficulty; Dysphagia"
+        ],
+        "correct": 1,
+        "explanation": "The prefixes 'super-' and 'ultra-' mean excessive or above. Examples: Superior, Ultrasound.",
+        "id": 70
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "Define the directional prefixes 'ab-' and 'ad-', and match their clinical movements:",
+        "options": [
+            "ab- means toward midline (adduction); ad- means away from midline (abduction)",
+            "ab- means away from midline (Abduction); ad- means toward midline (Adduction)",
+            "ab- means within; ad- means behind",
+            "ab- means across; ad- means above"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'ab-' means away from (Abduction: movement of a body part away from midline). The prefix 'ad-' means toward (Adduction: movement of a body part toward midline).",
+        "id": 71
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the prefix 'endo-' mean, and what is 'Endolymph'?",
+        "options": [
+            "Away from; fluid outside the cell",
+            "Inside; fluid found within the membranous labyrinth of the ear",
+            "Behind; retrograde fluid",
+            "Across; transferred fluid"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'endo-' means inside. 'Endolymph' is the fluid found inside the membranous labyrinth of the ear.",
+        "id": 72
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the prefix 'intra-' mean, and what is 'Intraosseous'?",
+        "options": [
+            "Behind; retrograde bone",
+            "Within; Intraosseous means within the bone",
+            "Across; through the bone",
+            "Above; above the bone"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'intra-' means within. 'Intraosseous' means within the bone.",
+        "id": 73
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the prefix 'retro-' mean, and what is 'Retrograde'?",
+        "options": [
+            "Across; transference of position",
+            "Behind, backward; Retrograde means going back in position or time",
+            "Inside; endolymph flow",
+            "Above; supraclavicular"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'retro-' means behind or backward. 'Retrograde' means going back/backward in position or time.",
+        "id": 74
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the prefix 'trans-' mean, and what is 'Transference' in psychology?",
+        "options": [
+            "Within; within the mind",
+            "Across; when one's feelings are unconsciously redirected (across) to another",
+            "Behind; backward feelings",
+            "Slow; lack of emotion"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'trans-' means across. In psychology, 'Transference' is when feelings are unconsciously redirected/transferred across to another.",
+        "id": 75
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What do the prefixes 'super-' and 'supra-' mean, and what are their examples?",
+        "options": [
+            "Under; Subcutaneous, Subclavicular",
+            "Above; Superficial (near/on the surface), Supraclavicular (above the clavicle)",
+            "Inside; Endolymph",
+            "Slow; Bradypnea"
+        ],
+        "correct": 1,
+        "explanation": "The prefixes 'super-' and 'supra-' mean above. Examples: Superficial (on or near the surface), Supraclavicular (above the clavicle).",
+        "id": 76
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the prefix 'brady-' mean, and what is 'Bradypnea'?",
+        "options": [
+            "Fast; fast respiratory rate",
+            "Slow; decreased respiratory rate (slow breathing)",
+            "Bad/difficult; difficulty breathing",
+            "Absence of; absence of breathing"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'brady-' means slow. 'Bradypnea' means decreased respiratory rate (slow breathing).",
+        "id": 77
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the prefix 'dys-' mean, and what is 'Dysphagia'?",
+        "options": [
+            "Slow; slow swallowing",
+            "Bad, difficult; difficulty swallowing",
+            "Absence of; inability to swallow",
+            "Excessive; excessive swallowing"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'dys-' means bad or difficult. 'Dysphagia' means difficulty swallowing.",
+        "id": 78
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the prefix 'mal-' mean, and what is 'Malabsorption'?",
+        "options": [
+            "Fast; rapid absorption",
+            "Bad; inability to properly absorb food & nutrients",
+            "Slow; slow absorption",
+            "Within; absorption within the bone"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'mal-' means bad. 'Malabsorption' is the bad/improper absorption of food & nutrients.",
+        "id": 79
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What does the prefix 'tachy-' mean, and what is 'Tachypnea'?",
+        "options": [
+            "Slow; decreased respirations",
+            "Fast; fast respirations (rapid breathing)",
+            "Difficulty; difficult breathing",
+            "Absence of; stopped breathing"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'tachy-' means fast. 'Tachypnea' means fast respirations.",
+        "id": 80
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "What do the prefixes 'a-' and 'an-' mean, and what are the examples 'Apathy' and 'Analgesia'?",
+        "options": [
+            "Excessive; excessive emotion, excessive pain",
+            "Difficulty; difficult emotion, difficult pain",
+            "Absence of; Apathy is absence of emotion, Analgesia is absence of sensibility to pain",
+            "Slow; slow emotion, slow pain response"
+        ],
+        "correct": 2,
+        "explanation": "The prefixes 'a-' and 'an-' mean absence of. 'Apathy' is the absence of emotion, and 'Analgesia' is the absence of sensibility to pain.",
+        "id": 81
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "Which color roots mean 'white'?",
+        "options": [
+            "chlor/o",
+            "cyano/o",
+            "alb/o, albin/o, leuk/o (leuc/o)",
+            "erythr/o"
+        ],
+        "correct": 2,
+        "explanation": "The roots 'alb/o', 'albin/o', and 'leuk/o' (*leuc/o*) all mean white (e.g. Leukocytes are white blood cells).",
+        "id": 82
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "Which color root means 'green'?",
+        "options": [
+            "alb/o",
+            "cyano/o",
+            "chlor/o",
+            "xanth/o"
+        ],
+        "correct": 2,
+        "explanation": "The root 'chlor/o' means green (e.g. Chlorophyll is the green pigment in plants).",
+        "id": 83
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "Which color root means 'blue', and what is the term for bluish discoloration?",
+        "options": [
+            "leuk/o; Leukocytosis",
+            "cyano/o; Cyanosis",
+            "melan/o; Melanin",
+            "erythr/o; Erythrocyte"
+        ],
+        "correct": 1,
+        "explanation": "The root 'cyano/o' means blue. 'Cyanosis' refers to bluish discoloration of the skin.",
+        "id": 84
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "Which color root means 'red', and what is the term for red blood cells?",
+        "options": [
+            "cyano/o; Cyanosis",
+            "erythr/o; Erythrocytes",
+            "xanth/o; Xanthocyte",
+            "leuk/o; Leukocyte"
+        ],
+        "correct": 1,
+        "explanation": "The root 'erythr/o' means red. 'Erythrocytes' are red blood cells.",
+        "id": 85
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "Which color root means 'dark/black', and what is the pigment?",
+        "options": [
+            "xanth/o; Xanthophyll",
+            "melan/o; Melanin",
+            "leuk/o; Leukocyte",
+            "chlor/o; Chlorophyll"
+        ],
+        "correct": 1,
+        "explanation": "The root 'melan/o' means dark or black. 'Melanin' is the dark pigment cell.",
+        "id": 86
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "Which color root means 'yellow', and what does 'Xanthophobia' mean?",
+        "options": [
+            "chlor/o; fear of green colors",
+            "melan/o; fear of dark rooms",
+            "xanth/o; fear of the yellow color",
+            "cyano/o; fear of cold blue water"
+        ],
+        "correct": 2,
+        "explanation": "The root 'xanth/o' means yellow. 'Xanthophobia' is the clinical fear of the yellow color.",
+        "id": 87
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "The prefix 'hemi-' in hemiparesis refers to half. What is hemiparesis?",
+        "options": [
+            "Paralysis of four extremities",
+            "Weakness of one entire side of the body",
+            "Difficulty swallowing",
+            "Absence of respiratory drive"
+        ],
+        "correct": 1,
+        "explanation": "Hemiparesis refers to weakness of one entire side (half) of the body.",
+        "id": 88
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "A client in the supine position on a bed with the head of the bed elevated at 30\u201345 degrees is in:",
+        "options": [
+            "Fowler's position",
+            "Semi-Fowler's position",
+            "Prone position",
+            "Trendelenburg position"
+        ],
+        "correct": 1,
+        "explanation": "Semi-Fowler's position is assumed when a client is supine on a bed with the head of the bed elevated at about 30\u201345 degrees.",
+        "id": 89
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "If a woman is pregnant for the first time, she is described as:",
+        "options": [
+            "Nulliparous",
+            "Primigravida",
+            "Multigravida",
+            "Unipara"
+        ],
+        "correct": 1,
+        "explanation": "Primigravida means a woman in her first ('primi-') pregnancy.",
+        "id": 90
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "If a woman has had more than one pregnancy, she is described as:",
+        "options": [
+            "Primigravida",
+            "Nulliparous",
+            "Multigravida",
+            "Nulligravida"
+        ],
+        "correct": 2,
+        "explanation": "Multigravida refers to a woman who has had more than one ('multi-') pregnancy.",
+        "id": 91
+    },
+    {
+        "topic": "Suffixes, Prefixes & Colors",
+        "question": "A woman who has never given birth to a viable child is:",
+        "options": [
+            "Primigravida",
+            "Nulliparous",
+            "Multipara",
+            "Unipara"
+        ],
+        "correct": 1,
+        "explanation": "Nulliparous means a woman who has not ('nulli-') given birth.",
+        "id": 92
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "What is defined as the anticipated outcome of a disease?",
+        "options": [
+            "Diagnosis",
+            "Signs",
+            "Prognosis",
+            "Symptoms"
+        ],
+        "correct": 2,
+        "explanation": "Prognosis is the anticipated outcome of a disease.",
+        "id": 93
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "What is defined as a condition involving a disease process?",
+        "options": [
+            "Normal range",
+            "Symptoms",
+            "Pathologic",
+            "Prognosis"
+        ],
+        "correct": 2,
+        "explanation": "Pathologic is defined as a condition involving a disease process.",
+        "id": 94
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "What is the definition of 'Signs' in clinical evaluation?",
+        "options": [
+            "Subjective data perceived by the client",
+            "Observable characteristics that have been gathered through the use of the senses",
+            "The anticipated outcome of a disease",
+            "An acceptable biological limit"
+        ],
+        "correct": 1,
+        "explanation": "Signs are objective, observable characteristics that have been gathered through the use of the senses (e.g. skin color, listening to breath sounds).",
+        "id": 95
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "What is the definition of 'Symptoms'?",
+        "options": [
+            "Observable clinical data collected with a stethoscope",
+            "Subjective data made by the client or significant others based on their perception",
+            "A diagnosis based on laboratory tests",
+            "The standard normal range of blood pressure"
+        ],
+        "correct": 1,
+        "explanation": "Symptoms are subjective data; made by the client or significant others based on their perception.",
+        "id": 96
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "What is defined as the naming of a disease or condition based on scientific evaluation?",
+        "options": [
+            "Prognosis",
+            "Diagnosis",
+            "Pathology",
+            "Auscultation"
+        ],
+        "correct": 1,
+        "explanation": "Diagnosis is naming a disease or condition based on scientific evaluation.",
+        "id": 97
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "What is the 'Normal Range' in clinical terms?",
+        "options": [
+            "The symptoms reported by the patient",
+            "The prognosis of a chronic condition",
+            "The acceptable limit of a biological value",
+            "The physical examination methods"
+        ],
+        "correct": 2,
+        "explanation": "Normal range is the acceptable limit of a biological measurement or value.",
+        "id": 98
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "What is 'Pulse' and how is 'Pulse Rate (PR)' measured?",
+        "options": [
+            "Ventilation; measured by counting breaths per minute",
+            "Expansion of an artery referred to as heartbeats; PR is number of heartbeats per minute",
+            "Pressure of circulating blood; measured in mm Hg",
+            "Temperature of the body; measured in Centigrade"
+        ],
+        "correct": 1,
+        "explanation": "Pulse is the expansion of an artery referred to as heartbeats. Pulse rate (PR) is the number of heartbeats per minute.",
+        "id": 99
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "How is 'Respiration (R)' defined and measured?",
+        "options": [
+            "Ventilation or breathing; measured by counting the rise and fall of the chest during breathing",
+            "Heartbeat frequency; measured by auscultating the chest",
+            "Pressure of circulating blood; measured with a blood pressure cuff",
+            "Oxygen saturation; measured with a pulse oximeter"
+        ],
+        "correct": 0,
+        "explanation": "Respiration (R) is ventilation or breathing, measured by counting the rise and fall of the chest during breathing.",
+        "id": 100
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "What is 'Temperature (T)' in clinical assessment, and what units are used to measure it?",
+        "options": [
+            "The pressure of circulating blood; mm Hg",
+            "The balance between heat lost and heat produced by the body; measured in Centigrade and Fahrenheit",
+            "The concentration of oxygen; percent",
+            "The intensity of pain; 1 to 10 scale"
+        ],
+        "correct": 1,
+        "explanation": "Temperature (T) is the balance between heat lost and heat produced by the body. It is measured in Centigrade (\u00b0C) and Fahrenheit (\u00b0F).",
+        "id": 101
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "What is the standard unit of measure for 'Blood Pressure (BP)'?",
+        "options": [
+            "Centigrade (\u00b0C)",
+            "Percent (%)",
+            "mm Hg (mercury)",
+            "Beats per minute (bpm)"
+        ],
+        "correct": 2,
+        "explanation": "Blood pressure (BP) is the pressure of the circulating blood on the blood vessels. The standard unit of measure is mm Hg (millimeters of mercury).",
+        "id": 102
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "Define the terms 'Systolic' and 'Diastolic' blood pressure:",
+        "options": [
+            "Systolic is pressure during relaxation; Diastolic is maximum pressure during contraction",
+            "Systolic is maximum arterial pressure during contraction; Diastolic is pressure during relaxation",
+            "Systolic is pressure in veins; Diastolic is pressure in arteries",
+            "Systolic is measured in bpm; Diastolic is measured in mm Hg"
+        ],
+        "correct": 1,
+        "explanation": "Systolic is the maximum arterial pressure during contraction of the heart. Diastolic is the pressure during relaxation of the heart.",
+        "id": 103
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "What is 'Oxygen Saturation' and what device is used to measure it?",
+        "options": [
+            "The pressure of arterial blood; Sphygmomanometer",
+            "A measure of the concentration of oxygen; measured using a pulse oximeter",
+            "The respiratory rate; Stethoscope",
+            "The temperature of blood; Thermometer"
+        ],
+        "correct": 1,
+        "explanation": "Oxygen saturation is a measure of the concentration of oxygen in the blood, measured using a pulse oximeter.",
+        "id": 104
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "How is 'Pain' defined in the medical introduction notes?",
+        "options": [
+            "A purely objective clinical sign",
+            "An unpleasant feeling caused by intense or damaging stimuli",
+            "The pressure of blood on vessels",
+            "The anticipated outcome of a disease"
+        ],
+        "correct": 1,
+        "explanation": "Pain is defined as an unpleasant feeling caused by intense or damaging stimuli.",
+        "id": 105
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "What are the four primary physical examination methods in order?",
+        "options": [
+            "Inspection, Percussion, Auscultation, Catheterization",
+            "Inspection, Palpation, Percussion, Auscultation",
+            "Palpation, Percussion, Auscultation, Diagnosis",
+            "Observation, Feeling, Tapping, Listening"
+        ],
+        "correct": 1,
+        "explanation": "The four methods of physical examination are: 1. Inspection, 2. Palpation, 3. Percussion, 4. Auscultation.",
+        "id": 106
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "Describe the physical examination method 'Inspection' and give its example:",
+        "options": [
+            "Using hands to feel for lumps",
+            "Using a stethoscope to listen to breath sounds",
+            "Using eyes to observe (e.g., checking for skin color)",
+            "Using fingertips to tap the abdomen"
+        ],
+        "correct": 2,
+        "explanation": "Inspection is the method where eyes are used to observe, such as checking for skin color.",
+        "id": 107
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "Describe the physical exam method 'Palpation' and give its example:",
+        "options": [
+            "Using eyes to observe rashes",
+            "Using a stethoscope to listen to heartbeats",
+            "Using hands to feel for texture, size, consistency, and location of body parts (e.g., feeling for lumps)",
+            "Using a fist to tap the chest"
+        ],
+        "correct": 2,
+        "explanation": "Palpation is the method where hands are used to feel for texture, size, consistency, and location of body parts, such as feeling for lumps.",
+        "id": 108
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "Describe the physical exam method 'Percussion' and give its example:",
+        "options": [
+            "Using eyes to look at pupillary response",
+            "Using the fist or fingertips to tap a body part to determine size, borders, and consistency (e.g., checking for colon distention)",
+            "Using a stethoscope to listen to bowel sounds",
+            "Using a catheter to drain fluids"
+        ],
+        "correct": 1,
+        "explanation": "Percussion is the method where the fist or fingertips are used to tap the body part to determine size, borders, and consistency, such as checking for colon distention.",
+        "id": 109
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "Describe the physical exam method 'Auscultation' and give its example:",
+        "options": [
+            "Using hands to feel for abdominal tenderness",
+            "Using fingertips to tap the borders of the liver",
+            "Using a stethoscope to listen for sounds within the body (e.g., listening for breath sounds)",
+            "Using a speculum to view the cervix"
+        ],
+        "correct": 2,
+        "explanation": "Auscultation is the method where a stethoscope is used to listen to sounds within the body, such as listening for breath sounds.",
+        "id": 110
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "Match the diagnostic suffix '-gram' to its definition and example:",
+        "options": [
+            "Instrument for recording; Radiograph",
+            "Process of recording; Radiography",
+            "A record; Echocardiogram",
+            "Visual examination; Endoscopy"
+        ],
+        "correct": 2,
+        "explanation": "The suffix '-gram' means a record (e.g., Echocardiogram).",
+        "id": 111
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "Match the diagnostic suffix '-graph' to its definition and example:",
+        "options": [
+            "A record; Echocardiogram",
+            "Process of recording; Radiography",
+            "Instrument for recording; Radiograph",
+            "Visual examination; Endoscope"
+        ],
+        "correct": 2,
+        "explanation": "The suffix '-graph' means an instrument for recording (e.g., Radiograph).",
+        "id": 112
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "Match the diagnostic suffix '-graphy' to its definition and example:",
+        "options": [
+            "A record; Echocardiogram",
+            "Instrument for recording; Radiograph",
+            "Process of recording; Radiography",
+            "Creation of an opening; Colostomy"
+        ],
+        "correct": 2,
+        "explanation": "The suffix '-graphy' means the process of recording (e.g., Radiography).",
+        "id": 113
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "What is 'Endoscopy' and what instrument does it make use of?",
+        "options": [
+            "Surgical repair of a joint; Arthroplasty",
+            "Visual examination of internal body cavities or organs using a lighted instrument; makes use of an endoscope",
+            "Surgical puncture to withdraw fluid; Catheter",
+            "Recording of heart activity; Echocardiograph"
+        ],
+        "correct": 1,
+        "explanation": "Endoscopy (*endo* = inside + *scopy* = visual exam) is the visual examination of internal body cavities/organs, utilizing a device called an endoscope.",
+        "id": 114
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "What is a 'Catheter'?",
+        "options": [
+            "An instrument used to listen to bowel sounds",
+            "An instrument inserted into a body cavity for withdrawing and/or installing fluids",
+            "A record of the electrical activity of muscles",
+            "A device used to magnify the cervix during exam"
+        ],
+        "correct": 1,
+        "explanation": "Catheters are instruments inserted into a body cavity to withdraw and/or install fluids.",
+        "id": 115
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "In medical terminology, the prefix 'A-' in Apathy and 'An-' in Analgesia mean:",
+        "options": [
+            "Excessive",
+            "Absence of",
+            "Difficulty",
+            "Slow"
+        ],
+        "correct": 1,
+        "explanation": "Both 'a-' and 'an-' are prefixes meaning absence of.",
+        "id": 116
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "When a nurse listens to a client's lung sounds, which exam method is being utilized?",
+        "options": [
+            "Inspection",
+            "Palpation",
+            "Percussion",
+            "Auscultation"
+        ],
+        "correct": 3,
+        "explanation": "Listening to breath sounds is a clinical application of auscultation.",
+        "id": 117
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "When a nurse taps a patient's abdomen to check for fluid or gas, which exam method is this?",
+        "options": [
+            "Inspection",
+            "Palpation",
+            "Percussion",
+            "Auscultation"
+        ],
+        "correct": 2,
+        "explanation": "Tapping a body part to check consistency or distention is percussion.",
+        "id": 118
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "When a physician feels a patient's neck to check for swollen lymph nodes, which exam method is this?",
+        "options": [
+            "Inspection",
+            "Palpation",
+            "Percussion",
+            "Auscultation"
+        ],
+        "correct": 1,
+        "explanation": "Feeling for size, consistency, and lumps with the hands is palpation.",
+        "id": 119
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "An echocardiogram is a record of heart activity. What does the suffix '-gram' mean?",
+        "options": [
+            "Process of recording",
+            "Instrument for recording",
+            "A record",
+            "Visual examination"
+        ],
+        "correct": 2,
+        "explanation": "The suffix '-gram' denotes a record or product of recording.",
+        "id": 120
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "What is the standard unit of measurement for body temperature in the clinical notes?",
+        "options": [
+            "Celsius only",
+            "Centigrade and Fahrenheit",
+            "Kelvin",
+            "mm Hg"
+        ],
+        "correct": 1,
+        "explanation": "Body temperature is measured in Centigrade and Fahrenheit.",
+        "id": 121
+    },
+    {
+        "topic": "Clinical Terms & Exam",
+        "question": "Which parameter is measured by counting the rise and fall of the chest?",
+        "options": [
+            "Pulse rate",
+            "Blood pressure",
+            "Respiration",
+            "Oxygen saturation"
+        ],
+        "correct": 2,
+        "explanation": "Counting the rise and fall of the chest is the method for determining respiration rate.",
+        "id": 122
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "Define the terms 'Genitalia' and 'Gonads':",
+        "options": [
+            "Genitalia are internal organs; Gonads are external organs",
+            "Genitalia are external reproductive organs; Gonads are internal reproductive organs",
+            "Genitalia produce sperm; Gonads produce egg cells",
+            "There is no anatomical distinction"
+        ],
+        "correct": 1,
+        "explanation": "Genitalia refers to the external reproductive organs. Gonads refers to the internal reproductive organs.",
+        "id": 123
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "What are the male and female gonads, and what cells do they produce?",
+        "options": [
+            "Male: Prostate (sperm), Female: Uterus (ova)",
+            "Male: Testes (produce spermatozoa/sperm cells), Female: Ovaries (produce ova/egg cells)",
+            "Male: Testes (ova), Female: Ovaries (spermatozoa)",
+            "Male: Genitalia (sperm), Female: Gonads (ova)"
+        ],
+        "correct": 1,
+        "explanation": "The testes are male gonads producing spermatozoa (sperm cells). The ovaries are female gonads producing ova (egg cells).",
+        "id": 124
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "What does the combining form 'cervic/o' represent?",
+        "options": [
+            "Vagina",
+            "Uterus",
+            "Cervix",
+            "Ovary"
+        ],
+        "correct": 2,
+        "explanation": "The combining form 'cervic/o' represents the cervix.",
+        "id": 125
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "Which combining forms represent the vagina?",
+        "options": [
+            "cervic/o",
+            "colp/o and vagin/o",
+            "hyster/o",
+            "oophor/o"
+        ],
+        "correct": 1,
+        "explanation": "The combining forms for vagina are 'colp/o' and 'vagin/o'.",
+        "id": 126
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "What does the combining form 'gynec/o' represent?",
+        "options": [
+            "Female",
+            "Uterus",
+            "Ovary",
+            "Birth"
+        ],
+        "correct": 0,
+        "explanation": "The combining form 'gynec/o' represents female.",
+        "id": 127
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "Which combining forms represent the uterus?",
+        "options": [
+            "colp/o, vagin/o",
+            "hyster/o, uter/o, and metro/o",
+            "oophor/o, ovar/o",
+            "salping/o"
+        ],
+        "correct": 1,
+        "explanation": "The uterus is represented by 'hyster/o', 'uter/o', and 'metro/o'.",
+        "id": 128
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "Which combining forms represent the ovary?",
+        "options": [
+            "salping/o",
+            "vulv/o",
+            "oophor/o and ovar/o",
+            "colp/o"
+        ],
+        "correct": 2,
+        "explanation": "The ovary is represented by 'oophor/o' and 'ovar/o'.",
+        "id": 129
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "What does the combining form 'salping/o' represent?",
+        "options": [
+            "Ovary",
+            "Vagina",
+            "Fallopian tubes",
+            "Vulva"
+        ],
+        "correct": 2,
+        "explanation": "The combining form 'salping/o' represents the fallopian tubes.",
+        "id": 130
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "What does the combining form 'vulv/o' represent?",
+        "options": [
+            "Vagina",
+            "Uterus",
+            "Vulva",
+            "Cervix"
+        ],
+        "correct": 2,
+        "explanation": "The combining form 'vulv/o' represents the vulva.",
+        "id": 131
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "What is 'Colposcopy'?",
+        "options": [
+            "Visual examination of the abdomen",
+            "Examination of the cervix using a special magnifying device (microscope)",
+            "Direct visualization of the uterine cavity",
+            "X-ray examination of the fallopian tubes"
+        ],
+        "correct": 1,
+        "explanation": "Colposcopy (*colp/o* = vagina/cervix area + *scopy*) is the examination of the cervix using a special magnifying device (microscope).",
+        "id": 132
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "What is 'Laparoscopy'?",
+        "options": [
+            "A radiographic exam of the breasts",
+            "A surgical diagnostic procedure used to examine the abdominal structures",
+            "Direct visual examination of the cervix",
+            "An opening created in the colon"
+        ],
+        "correct": 1,
+        "explanation": "Laparoscopy is a surgical diagnostic procedure used to examine the abdominal structures.",
+        "id": 133
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "What is 'Hysteroscopy'?",
+        "options": [
+            "X-ray of the uterus and fallopian tubes",
+            "Direct visualization of the cervical canal and the uterine cavity using a hysteroscope",
+            "Surgical removal of the uterus",
+            "Surgical repair of the vagina"
+        ],
+        "correct": 1,
+        "explanation": "Hysteroscopy (*hyster/o* = uterus + *scopy*) is the direct visualization of the cervical canal and uterine cavity with a hysteroscope.",
+        "id": 134
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "What is 'Hysterosalpingography'?",
+        "options": [
+            "Surgical removal of the ovaries and fallopian tubes",
+            "X-ray examination of the uterus and fallopian tubes",
+            "Suture of a torn vaginal wall",
+            "Visual examination of the cervix"
+        ],
+        "correct": 1,
+        "explanation": "Hysterosalpingography (*hyster/o* = uterus + *salping/o* = fallopian tube + *graphy* = process of recording) is the x-ray examination of the uterus and fallopian tubes.",
+        "id": 135
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "Define the root 'men/o' and the suffix '-rrhea':",
+        "options": [
+            "men/o = painful; -rrhea = bleeding",
+            "men/o = month; -rrhea = discharge",
+            "men/o = uterus; -rrhea = suture",
+            "men/o = pregnancy; -rrhea = birth"
+        ],
+        "correct": 1,
+        "explanation": "The root 'men/o' means month. The suffix '-rrhea' means discharge.",
+        "id": 136
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "What is 'Amenorrhea'?",
+        "options": [
+            "Painful menstruation",
+            "Absence of menstruation (discharge)",
+            "Excessive menstrual bleeding",
+            "Normal menstrual cycle"
+        ],
+        "correct": 1,
+        "explanation": "Amenorrhea is the absence of menstruation/discharge (prefix 'a-' = absence of + 'men/o' = month + '-rrhea' = discharge).",
+        "id": 137
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "What is 'Dysmenorrhea'?",
+        "options": [
+            "Absence of menstruation",
+            "Painful or difficult menstruation",
+            "Excessive menstrual bleeding",
+            "First menstruation"
+        ],
+        "correct": 1,
+        "explanation": "Dysmenorrhea is painful or difficult menstruation (prefix 'dys-' = bad/difficult + 'men/o' = month + '-rrhea' = discharge).",
+        "id": 138
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "What is 'Menorrhagia'?",
+        "options": [
+            "Absence of menstruation",
+            "Painful menstruation",
+            "Excessive menstrual bleeding (hemorrhage)",
+            "End of menstrual cycles"
+        ],
+        "correct": 2,
+        "explanation": "Menorrhagia is excessive menstrual bleeding ('men/o' = month + '-rrhagia' = hemorrhage).",
+        "id": 139
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "What do the medical abbreviations 'IVF' and 'HRT' stand for?",
+        "options": [
+            "Intravenous Fluid, Heart Rate Therapy",
+            "In Vitro Fertilization, Hormone Replacement Therapy",
+            "In Vivo Fertilization, Hormone Replacement Therapy",
+            "Intravaginal Fluid, Heart Resuscitation Treatment"
+        ],
+        "correct": 1,
+        "explanation": "IVF stands for In Vitro Fertilization. HRT stands for Hormone Replacement Therapy.",
+        "id": 140
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "Define the terms 'Infertility', 'Menopause', and 'Contraception':",
+        "options": [
+            "Infertility is inability to conceive; Menopause is cessation of menstruation; Contraception is prevention of pregnancy and STDs",
+            "Infertility is hormone replacement; Menopause is painful period; Contraception is IVF",
+            "Infertility is zero births; Menopause is first period; Contraception is birth delivery",
+            "There are no medical definitions provided"
+        ],
+        "correct": 0,
+        "explanation": "According to the notes: Infertility is inability to conceive; Menopause is the cessation of menstruation/cycles; Contraception is the prevention of pregnancy and sexually transmitted illness.",
+        "id": 141
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "The suffix '-natal' refers to birth. Define Prenatal, Postnatal, Perinatal, and Neonatal:",
+        "options": [
+            "Prenatal: after birth; Postnatal: before birth; Perinatal: newborn; Neonatal: around birth",
+            "Prenatal: before birth; Postnatal: after birth; Perinatal: around birth; Neonatal: newborn (new birth)",
+            "Prenatal: first birth; Postnatal: multiple births; Perinatal: zero births; Neonatal: premature birth",
+            "All terms refer to the mother, not the child"
+        ],
+        "correct": 1,
+        "explanation": "'-natal' refers to birth. Prenatal is before birth, Postnatal is after birth, Perinatal is around birth, and Neonatal is new birth / newborn.",
+        "id": 142
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "Define the terms 'Unipara', 'Multipara', and 'Nullipara':",
+        "options": [
+            "Unipara: one pregnancy; Multipara: many pregnancies; Nullipara: zero pregnancies",
+            "Unipara: one viable birth; Multipara: multiple viable births; Nullipara: zero viable births",
+            "Unipara: first birth; Multipara: many births; Nullipara: first pregnancy",
+            "These terms refer to male reproductive function"
+        ],
+        "correct": 1,
+        "explanation": "'-para' refers to viable births. Unipara is one birth, Multipara is multiple births, and Nullipara is zero births.",
+        "id": 143
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "What is 'Mammography'?",
+        "options": [
+            "Surgical removal of the breast",
+            "Radiographic (x-ray) examination of the breast",
+            "Inflammation of the breast tissue",
+            "Removal of a breast lump"
+        ],
+        "correct": 1,
+        "explanation": "Mammography (*mamm/o* = breast + *-graphy* = process of recording) is the radiographic examination of the breast.",
+        "id": 144
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "What is a 'Lumpectomy'?",
+        "options": [
+            "Surgical removal of the entire breast",
+            "Surgical removal of a breast lump",
+            "Infection of the breast tissue",
+            "X-ray of the breast"
+        ],
+        "correct": 1,
+        "explanation": "A lumpectomy (lump + *-ectomy* = surgical removal) is the surgical removal of a breast lump.",
+        "id": 145
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "What is a 'Mastectomy'?",
+        "options": [
+            "Inflammation of the breast",
+            "Surgical removal of the breast",
+            "Surgical repair of the breast",
+            "X-ray examination of the breast"
+        ],
+        "correct": 1,
+        "explanation": "Mastectomy (*mast/o* = breast + *-ectomy* = excision/removal) is the surgical removal of the breast.",
+        "id": 146
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "What is 'Mastitis'?",
+        "options": [
+            "Surgical removal of the breast",
+            "Inflammation or infection of the breast tissue",
+            "Radiographic examination of the breast",
+            "A benign breast lump"
+        ],
+        "correct": 1,
+        "explanation": "Mastitis (*mast/o* = breast + *-itis* = inflammation) is the inflammation of the breast.",
+        "id": 147
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "A woman who is pregnant for the first time is a primigravida, and a woman who has had more than one pregnancy is a multigravida. What does 'gravida' refer to?",
+        "options": [
+            "Births",
+            "Pregnancies",
+            "Menstrual cycles",
+            "Breast surgery"
+        ],
+        "correct": 1,
+        "explanation": "Gravida refers to pregnancies, regardless of outcome.",
+        "id": 148
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "Which of the following combining forms represents the ovaries?",
+        "options": [
+            "salping/o",
+            "cervic/o",
+            "oophor/o and ovar/o",
+            "vulv/o"
+        ],
+        "correct": 2,
+        "explanation": "Ovaries are represented by 'oophor/o' and 'ovar/o'.",
+        "id": 149
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "If a surgeon performs a surgical procedure to repair a patient's nose, the suffix used is:",
+        "options": [
+            "-ectomy",
+            "-plasty",
+            "-rrhaphy",
+            "-stomy"
+        ],
+        "correct": 1,
+        "explanation": "'-plasty' means surgical repair. A nose repair is a Rhinoplasty.",
+        "id": 150
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "Which prefix means 'toward', as in moving a limb toward the body midline?",
+        "options": [
+            "ab-",
+            "ad-",
+            "endo-",
+            "trans-"
+        ],
+        "correct": 1,
+        "explanation": "The prefix 'ad-' means toward, as in adduction.",
+        "id": 151
+    },
+    {
+        "topic": "Reproductive System",
+        "question": "If 'brady-' means slow, what prefix means 'fast'?",
+        "options": [
+            "dys-",
+            "mal-",
+            "tachy-",
+            "a-"
+        ],
+        "correct": 2,
+        "explanation": "The prefix 'tachy-' means fast, as in tachypnea (fast breathing) or tachycardia (fast heart rate).",
+        "id": 152
+    }
+];
+
+    // ========================
+    // APP STATE
+    // ========================
+    let state = {
+        mode: 'practice', // practice, exam, review
+        currentPage: 0,
+        questionsPerPage: 5,
+        activeTopic: 'All',
+        answered: {},    // { questionId: selectedIndex }
+        shuffled: false,
+        showAll: false,
+    };
+
+    let filteredQuestions = [...allQuestions];
+
+    // ========================
+    // INIT
+    // ========================
+    function init() {
+        // Load saved state
+        const saved = localStorage.getItem('terminology_quiz_state');
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved);
+                state.answered = parsed.answered || {};
+            } catch(e) {}
+        }
+
+        buildTopicFilter();
+        updateStats();
+        filterAndRender();
+
+        // Mode buttons
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                state.mode = btn.dataset.mode;
+                state.currentPage = 0;
+                state.showAll = false;
+                filterAndRender();
+            });
+        });
+    }
+
+    // ========================
+    // TOPICS
+    // ========================
+    function getTopics() {
+        const topics = new Set();
+        allQuestions.forEach(q => topics.add(q.topic));
+        return ['All', ...Array.from(topics)];
+    }
+
+    function buildTopicFilter() {
+        const container = document.getElementById('topicFilter');
+        const topics = getTopics();
+        container.innerHTML = topics.map(t => 
+            `<button class="topic-chip ${t === state.activeTopic ? 'active' : ''}" onclick="selectTopic('${t}')">${t}</button>`
+        ).join('');
+    }
+
+    function selectTopic(topic) {
+        state.activeTopic = topic;
+        state.currentPage = 0;
+        state.showAll = false;
+        buildTopicFilter();
+        filterAndRender();
+    }
+
+    // ========================
+    // FILTER & RENDER
+    // ========================
+    function filterAndRender() {
+        let qs = [...allQuestions];
+
+        // Topic filter
+        if (state.activeTopic !== 'All') {
+            qs = qs.filter(q => q.topic === state.activeTopic);
+        }
+
+        // Review mode: only wrong answers
+        if (state.mode === 'review') {
+            qs = qs.filter(q => {
+                const ans = state.answered[q.id];
+                return ans !== undefined && ans !== q.correct;
+            });
+        }
+
+        filteredQuestions = qs;
+        renderQuestions();
+        updateStats();
+        updatePagination();
+
+        // Hide result screen
+        document.getElementById('resultScreen').classList.add('hidden');
+        document.getElementById('questionsContainer').classList.remove('hidden');
+    }
+
+    function renderQuestions() {
+        const container = document.getElementById('questionsContainer');
+        const start = state.showAll ? 0 : state.currentPage * state.questionsPerPage;
+        const end = state.showAll ? filteredQuestions.length : start + state.questionsPerPage;
+        const pageQuestions = filteredQuestions.slice(start, end);
+
+        if (pageQuestions.length === 0) {
+            container.innerHTML = `
+                <div style="text-align:center;padding:60px 20px;color:var(--text-muted)">
+                    <div style="font-size:3rem;margin-bottom:16px">📭</div>
+                    <div style="font-size:1.1rem;font-weight:600;color:var(--text-secondary);margin-bottom:8px">
+                        ${state.mode === 'review' ? 'No wrong answers to review!' : 'No questions found'}
+                    </div>
+                    <div style="font-size:0.85rem">
+                        ${state.mode === 'review' ? 'Great job! Try answering more questions first.' : 'Try a different topic.'}
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = pageQuestions.map((q, idx) => {
+            const answered = state.answered[q.id] !== undefined;
+            const selectedIdx = state.answered[q.id];
+            const isExamMode = state.mode === 'exam';
+
+            const letters = ['A', 'B', 'C', 'D'];
+
+            return `
+                <div class="question-card" id="q${q.id}">
+                    <div class="question-number">
+                        <span class="q-badge">Q${q.id}</span>
+                        <span class="question-topic-badge">${q.topic}</span>
+                    </div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options-list">
+                        ${q.options.map((opt, oi) => {
+                            let cls = 'option-btn';
+                            if (answered && !isExamMode) {
+                                cls += ' disabled';
+                                if (oi === q.correct) cls += ' correct';
+                                else if (oi === selectedIdx) cls += ' wrong';
+                            } else if (answered && isExamMode) {
+                                cls += ' disabled';
+                                if (oi === selectedIdx) cls += ' selected-exam';
+                            }
+                            return `
+                                <button class="${cls}" onclick="selectAnswer(${q.id}, ${oi})" ${answered ? 'disabled' : ''}>
+                                    <span class="option-letter">${letters[oi]}</span>
+                                    <span>${opt}</span>
+                                </button>
+                            `;
+                        }).join('')}
+                    </div>
+                    ${answered && !isExamMode ? `
+                        <div class="explanation">
+                            <strong>${selectedIdx === q.correct ? '✅ Correct!' : '❌ Incorrect.'}</strong> ${q.explanation}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ========================
+    // ANSWER HANDLER
+    // ========================
+    function selectAnswer(qId, optIdx) {
+        if (state.answered[qId] !== undefined) return;
+
+        state.answered[qId] = optIdx;
+        saveState();
+        
+        // Re-render to show feedback
+        if (state.mode !== 'exam') {
+            renderQuestions();
+        } else {
+            // In exam mode, mark selected
+            const card = document.getElementById(`q${qId}`);
+            const buttons = card.querySelectorAll('.option-btn');
+            buttons.forEach((btn, idx) => {
+                btn.classList.add('disabled');
+                btn.disabled = true;
+                if (idx === optIdx) {
+                    btn.classList.add('selected-exam');
+                }
+            });
+        }
+
+        updateStats();
+        updatePagination();
+    }
+
+    // ========================
+    // STATS
+    // ========================
+    function updateStats() {
+        let answeredCount = 0;
+        let correct = 0;
+        let wrong = 0;
+
+        filteredQuestions.forEach(q => {
+            const ans = state.answered[q.id];
+            if (ans !== undefined) {
+                answeredCount++;
+                if (ans === q.correct) correct++;
+                else wrong++;
+            }
+        });
+
+        document.getElementById('totalQ').textContent = filteredQuestions.length;
+        document.getElementById('correctCount').textContent = correct;
+        document.getElementById('wrongCount').textContent = wrong;
+
+        const pct = filteredQuestions.length > 0 ? Math.round((answeredCount / filteredQuestions.length) * 100) : 0;
+        document.getElementById('progressText').textContent = `${answeredCount} / ${filteredQuestions.length}`;
+        document.getElementById('progressFill').style.width = pct + '%';
+
+        // Show finish button when enough answered
+        const finishBtn = document.getElementById('finishBtn');
+        if (answeredCount >= filteredQuestions.length * 0.5 && filteredQuestions.length > 0) {
+            finishBtn.classList.remove('hidden');
+        } else {
+            finishBtn.classList.add('hidden');
+        }
+    }
+
+    // ========================
+    // PAGINATION
+    // ========================
+    function updatePagination() {
+        const totalPages = state.showAll ? 1 : Math.max(1, Math.ceil(filteredQuestions.length / state.questionsPerPage));
+        const current = state.showAll ? 1 : state.currentPage + 1;
+
+        document.getElementById('pageInfo').textContent = `${current} / ${totalPages}`;
+        document.getElementById('prevBtn').disabled = state.showAll || state.currentPage === 0;
+        document.getElementById('nextBtn').disabled = state.showAll || state.currentPage >= totalPages - 1;
+    }
+
+    function changePage(dir) {
+        const totalPages = Math.ceil(filteredQuestions.length / state.questionsPerPage);
+        state.currentPage = Math.max(0, Math.min(totalPages - 1, state.currentPage + dir));
+        renderQuestions();
+        updatePagination();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ========================
+    // ACTIONS
+    // ========================
+    function shuffleQuestions() {
+        for (let i = filteredQuestions.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [filteredQuestions[i], filteredQuestions[j]] = [filteredQuestions[j], filteredQuestions[i]];
+        }
+        filteredQuestions.forEach(q => {
+            const correctOption = q.options[q.correct];
+            const shuffledOptions = [...q.options];
+            for (let i = shuffledOptions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+            }
+            q.options = shuffledOptions;
+            q.correct = shuffledOptions.indexOf(correctOption);
+        });
+        state.currentPage = 0;
+        state.showAll = false;
+        renderQuestions();
+        updatePagination();
+    }
+
+    // Rest of operations
+    function resetQuiz() {
+        if (!confirm('Are you sure you want to reset all answers?')) return;
+        state.answered = {};
+        state.currentPage = 0;
+        state.showAll = false;
+        localStorage.removeItem('terminology_quiz_state');
+        filterAndRender();
+    }
+
+    function showAllQuestions() {
+        state.showAll = !state.showAll;
+        const btn = document.getElementById('showAllBtn');
+        btn.textContent = state.showAll ? '📄 Paginate' : '📋 Show All';
+        filterAndRender();
+    }
+
+    // ========================
+    // RESULTS
+    // ========================
+    function showResults() {
+        let answeredCount = 0;
+        let correct = 0;
+        let wrong = 0;
+
+        filteredQuestions.forEach(q => {
+            const ans = state.answered[q.id];
+            if (ans !== undefined) {
+                answeredCount++;
+                if (ans === q.correct) correct++;
+                else wrong++;
+            }
+        });
+
+        const pct = answeredCount > 0 ? Math.round((correct / answeredCount) * 100) : 0;
+        let message = '', sub = '';
+        if (pct >= 90) { message = '🌟 Outstanding!'; sub = 'You have mastered medical terminology!'; }
+        else if (pct >= 75) { message = '👏 Great Job!'; sub = 'You have a very strong clinical vocabulary!'; }
+        else if (pct >= 60) { message = '👍 Good Work!'; sub = 'A bit more review and you\'ll be excellent!'; }
+        else if (pct >= 40) { message = '📚 Keep Studying!'; sub = 'Review the wrong definitions and roots.'; }
+        else { message = '💪 Don\'t Give Up!'; sub = 'Use the Review Wrong mode to focus on weak prefixes/roots.'; }
+
+        const circleColor = pct >= 75 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--error)';
+
+        document.getElementById('questionsContainer').classList.add('hidden');
+        const resultScreen = document.getElementById('resultScreen');
+        resultScreen.classList.remove('hidden');
+        resultScreen.innerHTML = `
+            <div class="score-circle" style="border-color: ${circleColor}">
+                <div class="score-percent" style="color: ${circleColor}">${pct}%</div>
+                <div class="score-label">Score</div>
+            </div>
+            <div class="result-message">${message}</div>
+            <div class="result-sub">${sub}</div>
+            <div class="result-stats">
+                <div class="result-stat">
+                    <div class="val" style="color:var(--text-primary)">${answeredCount}</div>
+                    <div class="lbl">Answered</div>
+                </div>
+                <div class="result-stat">
+                    <div class="val" style="color:var(--success)">${correct}</div>
+                    <div class="lbl">Correct</div>
+                </div>
+                <div class="result-stat">
+                    <div class="val" style="color:var(--error)">${wrong}</div>
+                    <div class="lbl">Wrong</div>
+                </div>
+            </div>
+            <button class="ctrl-btn primary" onclick="reviewWrong()" style="margin:8px;padding:12px 28px">📖 Review Wrong Answers</button>
+            <button class="ctrl-btn" onclick="backToQuiz()" style="margin:8px;padding:12px 28px">◀ Back to Quiz</button>
+            <button class="ctrl-btn" onclick="resetQuiz()" style="margin:8px;padding:12px 28px">🔄 Reset & Retry</button>
+        `;
+    }
+
+    // Reuse review/back functions
+    function reviewWrong() {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('modeReview').classList.add('active');
+        state.mode = 'review';
+        state.currentPage = 0;
+        state.showAll = false;
+        filterAndRender();
+    }
+
+    function backToQuiz() {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('modePractice').classList.add('active');
+        state.mode = 'practice';
+        state.currentPage = 0;
+        state.showAll = false;
+        filterAndRender();
+    }
+
+    // ========================
+    // PERSISTENCE
+    // ========================
+    function saveState() {
+        localStorage.setItem('terminology_quiz_state', JSON.stringify({
+            answered: state.answered
+        }));
+    }
+
+    // ========================
+    // START
+    // ========================
+    document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
