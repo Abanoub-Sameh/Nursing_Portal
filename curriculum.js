@@ -205,10 +205,10 @@ const curriculumData = {
               "num": 3,
               "title_ar": "المحاضره الثالثه",
               "files": {
-                "original_ppt": [],
-                "translated_ppt": [
-                  "terms/term_1/biostatistics/guides/data collection - 3rd lecture.pdf"
+                "original_ppt": [
+                  "terms/term_1/biostatistics/original/data collection - 3rd lecture.pdf"
                 ],
+                "translated_ppt": [],
                 "my_quiz": [],
                 "doctor_quiz": []
               }
