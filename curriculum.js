@@ -149,6 +149,18 @@ const curriculumData = {
                 "my_quiz": "terms/term_1/microbiology/quizzes/Micro_Quiz_L1.html",
                 "doctor_quiz": ""
               }
+            },
+            {
+              "num": 2,
+              "title_ar": "المحاضره الثانيه",
+              "files": {
+                "original_ppt": [
+                  "terms/term_1/microbiology/original/Sterilization.pdf"
+                ],
+                "translated_ppt": [],
+                "my_quiz": [],
+                "doctor_quiz": []
+              }
             }
           ]
         },
