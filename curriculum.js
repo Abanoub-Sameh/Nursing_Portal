@@ -79,7 +79,18 @@ const curriculumData = {
         },
         "biology": {
           "name": "Biology (رياضة)",
-          "lectures": []
+          "lectures": [
+            {
+              "num": 1,
+              "title_ar": "المحاضره الاولي",
+              "files": {
+                "original_ppt": "terms/term_1/biology/original/Lect. 1.pdf",
+                "translated_ppt": "terms/term_1/biology/guides/احياء  - المحاضرة الأولى مترجم.pdf",
+                "my_quiz": "terms/term_1/biology/quizzes/Biology_Quiz_L1.html",
+                "doctor_quiz": ""
+              }
+            }
+          ]
         },
         "physiology": {
           "name": "Physiology",
