@@ -62,6 +62,18 @@ const curriculumData = {
                 "my_quiz": "terms/term_1/terminology/quizzes/Terminology_Quiz_L1,2,3.html",
                 "doctor_quiz": ""
               }
+            },
+            {
+              "num": 4,
+              "title_ar": "المحاضره الرابعه",
+              "files": {
+                "original_ppt": [
+                  "terms/term_1/terminology/original/محاضرات مصطلحات طبية.pdf"
+                ],
+                "translated_ppt": [],
+                "my_quiz": [],
+                "doctor_quiz": []
+              }
             }
           ]
         },
