@@ -200,6 +200,18 @@ const curriculumData = {
                 "my_quiz": [],
                 "doctor_quiz": []
               }
+            },
+            {
+              "num": 3,
+              "title_ar": "المحاضره الثالثه",
+              "files": {
+                "original_ppt": [],
+                "translated_ppt": [
+                  "terms/term_1/biostatistics/guides/data collection - 3rd lecture.pdf"
+                ],
+                "my_quiz": [],
+                "doctor_quiz": []
+              }
             }
           ]
         }
