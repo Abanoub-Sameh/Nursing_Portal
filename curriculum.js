@@ -97,7 +97,7 @@ const curriculumData = {
           "lectures": [
             {
               "num": 1,
-              "title_ar": "المحاضره الاولي",
+              "title_ar": "فسيولجى الدم",
               "files": {
                 "original_ppt": [
                   "terms/term_1/physiology/original/Physiology  1.pdf"
