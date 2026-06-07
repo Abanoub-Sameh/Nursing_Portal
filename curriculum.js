@@ -84,10 +84,12 @@ const curriculumData = {
               "num": 1,
               "title_ar": "المحاضره الاولي",
               "files": {
-                "original_ppt": "terms/term_1/biology/original/اول محاضره - احياء.pptx",
-                "translated_ppt": "terms/term_1/biology/guides/احياء - المحاضره الاولي مترجمه.pdf",
-                "my_quiz": "terms/term_1/biology/quizzes/Biology_Quiz_L1.html",
-                "doctor_quiz": ""
+                "original_ppt": [],
+                "translated_ppt": [],
+                "my_quiz": [
+                  "terms/term_1/biology/quizzes/Biology_Quiz_L1.html"
+                ],
+                "doctor_quiz": []
               }
             }
           ]
