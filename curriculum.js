@@ -178,13 +178,15 @@ const curriculumData = {
           "name": "Biostatistics",
           "lectures": [
             {
-              "num": 1,
+              "num": 2,
               "title_ar": "المحاضره الثانية",
               "files": {
-                "original_ppt": "terms/term_1/biostatistics/original/Data collection1.pdf",
-                "translated_ppt": "",
-                "my_quiz": "",
-                "doctor_quiz": ""
+                "original_ppt": [
+                  "terms/term_1/biostatistics/original/Data collection1.pdf"
+                ],
+                "translated_ppt": [],
+                "my_quiz": [],
+                "doctor_quiz": []
               }
             }
           ]
