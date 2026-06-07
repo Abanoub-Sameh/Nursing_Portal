@@ -27,6 +27,18 @@ const curriculumData = {
                 "my_quiz": [],
                 "doctor_quiz": []
               }
+            },
+            {
+              "num": 3,
+              "title_ar": "Test",
+              "files": {
+                "original_ppt": [
+                  "terms/term_1/anatomy/original/data collection - 3rd lecture.pdf"
+                ],
+                "translated_ppt": [],
+                "my_quiz": [],
+                "doctor_quiz": []
+              }
             }
           ]
         },
