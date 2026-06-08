@@ -100,10 +100,16 @@ const curriculumData = {
               "num": 2,
               "title_ar": "المحاضره الثانية",
               "files": {
-                "original_ppt": "terms/term_1/biology/original/Lect 2.pdf",
-                "translated_ppt": "terms/term_1/biology/guides/احياء  - المحاضرة الثانيه مترجم.pdf",
-                "my_quiz": "",
-                "doctor_quiz": ""
+                "original_ppt": [
+                  "terms/term_1/biology/original/Lect 2.pdf"
+                ],
+                "translated_ppt": [
+                  "terms/term_1/biology/guides/احياء  - المحاضرة الثانيه مترجم.pdf"
+                ],
+                "my_quiz": [
+                  "terms/term_1/biology/quizzes/Biology_Quiz_L2_p18.html"
+                ],
+                "doctor_quiz": []
               }
             }
           ]
