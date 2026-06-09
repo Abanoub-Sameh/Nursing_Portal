@@ -154,6 +154,18 @@ const curriculumData = {
                 "my_quiz": "terms/term_1/physiology/quizzes/Physiology_Quiz_L1,2.html",
                 "doctor_quiz": "terms/term_1/physiology/quizzes/MCQs_L1_Pulmonary_Nursing Accelerated_Spring_2026.pdf"
               }
+            },
+            {
+              "num": 3,
+              "title_ar": "المحاضره الثالثه",
+              "files": {
+                "original_ppt": [
+                  "https://github.com/Abanoub-Sameh/Nursing_Portal/releases/download/lecture-assets/Physiology_L3_Test_File.pdf"
+                ],
+                "translated_ppt": [],
+                "my_quiz": [],
+                "doctor_quiz": []
+              }
             }
           ]
         },
