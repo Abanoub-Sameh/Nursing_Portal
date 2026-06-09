@@ -29,8 +29,12 @@ const curriculumData = {
                 "original_ppt": [
                   "terms/term_1/anatomy/original/9 Skeletal system.pdf"
                 ],
-                "translated_ppt": [],
-                "my_quiz": [],
+                "translated_ppt": [
+                  "terms/term_1/anatomy/guides/الجهاز الهيكلي – محاضرة 2 مترحم _ Skeletal System.pdf"
+                ],
+                "my_quiz": [
+                  "terms/term_1/anatomy/quizzes/Anatomy_Quiz_Skeletal.html"
+                ],
                 "doctor_quiz": []
               }
             }
