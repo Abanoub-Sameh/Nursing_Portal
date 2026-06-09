@@ -24,7 +24,7 @@ const curriculumData = {
             },
             {
               "num": 2,
-              "title_ar": "المحاضره الثانيه",
+              "title_ar": "المحاضره الثانيه - Skeletal System",
               "files": {
                 "original_ppt": [
                   "terms/term_1/anatomy/original/9 Skeletal system.pdf"
