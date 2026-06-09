@@ -8,12 +8,18 @@ const curriculumData = {
           "lectures": [
             {
               "num": 1,
-              "title_ar": "المحاضره الاولي",
+              "title_ar": "المحاضره الاولي -Introduction to Human Anatomy",
               "files": {
-                "original_ppt": "terms/term_1/anatomy/original/1 Introduction to Human Anatomy.ppt",
-                "translated_ppt": "terms/term_1/anatomy/guides/ماده الاناتومي المحاضره الاولي.pdf",
-                "my_quiz": "terms/term_1/anatomy/quizzes/Anatomy_Quiz_L1.html",
-                "doctor_quiz": ""
+                "original_ppt": [
+                  "terms/term_1/anatomy/original/1 Introduction to Human Anatomy.ppt"
+                ],
+                "translated_ppt": [
+                  "terms/term_1/anatomy/guides/ماده الاناتومي المحاضره الاولي.pdf"
+                ],
+                "my_quiz": [
+                  "terms/term_1/anatomy/quizzes/Anatomy_Quiz_L1.html"
+                ],
+                "doctor_quiz": []
               }
             },
             {
