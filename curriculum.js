@@ -145,9 +145,9 @@ const curriculumData = {
               "num": 2,
               "title_ar": "المحاضره الثانية",
               "files": {
-                "original_ppt": "terms/term_1/physiology/original/Nursing_Pulmonary Physiology_L1_2025.pdf",
-                "translated_ppt": "terms/term_1/physiology/guides/المحاضره الثانيه مترجمه - فسيولوجي الجهاز التنفسي.pdf",
-                "my_quiz": "terms/term_1/physiology/quizzes/Physiology_Quiz_L1,2.html",
+                "original_ppt": "terms/term_1/physiology/original/Nursing_Pulmonary Physiology_2026.pdf",
+                "translated_ppt": "terms/term_1/physiology/guides/مترجم محاضرة 2 _ Pulmonary Physiology.pdf",
+                "my_quiz": "terms/term_1/physiology/quizzes/Physio_L2_Pulmonary_Quiz.html",
                 "doctor_quiz": "terms/term_1/physiology/quizzes/MCQs_L1_Pulmonary_Nursing Accelerated_Spring_2026.pdf"
               }
             },
