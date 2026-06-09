@@ -143,7 +143,7 @@ const curriculumData = {
             },
             {
               "num": 2,
-              "title_ar": "المحاضره الثانية",
+              "title_ar": "المحاضره الثانية -Pulmonary Physiology",
               "files": {
                 "original_ppt": "terms/term_1/physiology/original/Nursing_Pulmonary Physiology_2026.pdf",
                 "translated_ppt": "terms/term_1/physiology/guides/مترجم محاضرة 2 _ Pulmonary Physiology.pdf",
@@ -182,14 +182,10 @@ const curriculumData = {
               "num": 2,
               "title_ar": "المحاضره الثانيه",
               "files": {
-                "original_ppt": [
-                  "terms/term_1/microbiology/original/Sterilization.pdf"
-                ],
-                "translated_ppt": [],
-                "my_quiz": [],
-                "doctor_quiz": [
-                  "terms/term_1/microbiology/quizzes/DOC-20251023-WA0002.(1).pdf"
-                ]
+                "original_ppt": "terms/term_1/microbiology/original/Sterilization.pdf",
+                "translated_ppt": "terms/term_1/microbiology/guides/مترجم محاضرة 2 _ Sterilization & Disinfection.pdf",
+                "my_quiz": "terms/term_1/microbiology/quizzes/Micro_L2_Sterilization_Quiz.html",
+                "doctor_quiz": "terms/term_1/microbiology/quizzes/DOC-20251023-WA0002.(1).pdf"
               }
             }
           ]
@@ -207,14 +203,12 @@ const curriculumData = {
           "lectures": [
             {
               "num": 1,
-              "title_ar": "المحاضره الاولى",
+              "title_ar": "المحاضره الاولى - Overview to Biostatistics",
               "files": {
-                "original_ppt": [
-                  "terms/term_1/biostatistics/original/Biostatisic - 1st lecture.pdf"
-                ],
-                "translated_ppt": [],
-                "my_quiz": [],
-                "doctor_quiz": []
+                "original_ppt": "terms/term_1/biostatistics/original/Biostatisic - 1st lecture.pdf",
+                "translated_ppt": "terms/term_1/biostatistics/guides/نظرة عامة على الإحصاء الحيوي – محاضرة 1 مترحم  _ Overview to Biostatistics.pdf",
+                "my_quiz": "terms/term_1/biostatistics/quizzes/Biostatistics_L1_Overview_Quiz.html",
+                "doctor_quiz": ""
               }
             },
             {
