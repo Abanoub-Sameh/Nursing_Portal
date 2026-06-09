@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="theme-color" content="#090d16">
-  <title>أدمن الموبايل 📱 | مكتبة تمريض (Improved - Releases)</title>
+  <title>أدمن الموبايل 📱 | مكتبة تمريض (GitHub Releases Upload - Fixed Validation)</title>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -533,7 +533,7 @@
   <main class="shell">
     <header>
       <div>
-        <h1>أدمن الموبايل 📱 (Improved - GitHub Releases)</h1>
+        <h1>أدمن الموبايل 📱 (GitHub Releases للملفات الكبيرة - Fixed)</h1>
         <p class="sub">رفع محاضرة أو تعديل بيانات الموقع من أي مكان - حل الرفع البطيء</p>
       </div>
       <div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-end;">
@@ -685,6 +685,7 @@
       <div class="hint" style="margin-top: 8px; font-size: 0.75rem; color: #f59e0b;">
         ⚠️ ملاحظة مهمة: هذه النسخة تستخدم **GitHub Releases** للملفات الكبيرة (بدل Contents API). 
         الرفع الخام (بدون base64) أفضل للملفات الكبيرة. لو النت بطيء جدًا (80 كيلو/ثانية) لملف >5 ميجا، الرفع هيطول وقد يفشل. 
+        <strong>تم إصلاح خطأ "Validation Failed": الآن أسماء الملفات في الـ Release فريدة (unique) تلقائياً لتجنب التكرار (حتى لو نفس اسم الملف). استخدم أي اسم.</strong>
         <strong>للملفات الكبيرة أو النت البطيء: استخدم الطريقة المحلية (run_admin.bat + upload_update.bat) — أسرع وأضمن بكتير.</strong>
       </div>
     </section>
@@ -1341,11 +1342,20 @@
       return selected;
     }
 
-    // New: Get or create the assets release (for large files)
+    // New: Get or create the assets release (for large files) - fixed to use correct releases API
     async function getOrCreateAssetsRelease() {
-      let release = await githubJson(`releases/tags/${RELEASE_TAG}`);
-      if (release) return release;
-
+      const releasesBase = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases`;
+      
+      // Try to get existing release using direct fetch (not githubJson which is for contents)
+      let res = await fetch(`${releasesBase}/tags/${RELEASE_TAG}`, {
+        headers: headers()
+      });
+      
+      if (res.ok) {
+        return await res.json();
+      }
+      
+      // Not found, create new
       const createBody = {
         tag_name: RELEASE_TAG,
         name: RELEASE_NAME,
@@ -1354,7 +1364,7 @@
         prerelease: false
       };
 
-      const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases`, {
+      res = await fetch(releasesBase, {
         method: "POST",
         headers: { ...headers(), "Content-Type": "application/json" },
         body: JSON.stringify(createBody)
@@ -1362,7 +1372,17 @@
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error(err.message || "Failed to create release for assets.");
+        let msg = err.message || "Failed to create release for assets.";
+        if (err.errors && Array.isArray(err.errors) && err.errors.length > 0) {
+          const errDetails = err.errors.map(e => {
+            const code = e.code || e.resource || '';
+            const field = e.field ? ` (${e.field})` : '';
+            const emsg = e.message || '';
+            return `${code}${field}${emsg ? ': ' + emsg : ''}`.trim();
+          }).join(' | ');
+          msg += ` [${errDetails}]`;
+        }
+        throw new Error(msg);
       }
       return await res.json();
     }
@@ -1395,6 +1415,15 @@
             try {
               const data = JSON.parse(xhr.responseText);
               msg = data.message || msg;
+              if (data.errors && Array.isArray(data.errors) && data.errors.length > 0) {
+                const errDetails = data.errors.map(e => {
+                  const code = e.code || e.resource || '';
+                  const field = e.field ? ` (${e.field})` : '';
+                  const emsg = e.message || '';
+                  return `${code}${field}${emsg ? ': ' + emsg : ''}`.trim();
+                }).join(' | ');
+                msg += ` [${errDetails}]`;
+              }
             } catch (_) {}
             reject(new Error(msg));
           }
@@ -1482,9 +1511,11 @@
           } else if (pendingFiles.length) {
             for (const file of pendingFiles) {
               const cleanName = sanitizeFileName(file.name);
+              // Use unique asset name to prevent "Validation Failed" / "already_exists" on re-uploads or same basenames across lectures
+              const uniqueName = `${selected.termKey}-${selected.subjectKey}-lec${num}-${fileType}-${Date.now().toString().slice(-8)}-${cleanName}`;
               setStatus(`جاري رفع: ${cleanName} (كـ Release Asset)`);
 
-              const asset = await uploadAssetToRelease(assetsRelease, file, cleanName, (filePercent) => {
+              const asset = await uploadAssetToRelease(assetsRelease, file, uniqueName, (filePercent) => {
                 const overall = ((uploadedCount + (filePercent / 100)) / Math.max(uploadPlan.length, 1)) * 100;
                 setProgress(overall, `رفع ${uploadedCount + 1} من ${uploadPlan.length}: ${cleanName}`);
               });
@@ -1657,8 +1688,9 @@
       if (/Not Found/i.test(message)) return "التوكن لا يملك صلاحية على المستودع أو المسار غير موجود.";
       if (/sha/i.test(message) || /conflict/i.test(message)) return "شخص تاني حفظ تعديل في نفس الوقت. اضغط دخول لتحميل آخر نسخة، وبعدها كرر الحفظ.";
       if (/timeout|took too long|انتهى وقت|الرفع استغرق/i.test(message)) return "الرفع استغرق وقت طويل جداً بسبب سرعة الإنترنت (80 كيلو/ثانية). جرب توكن جديد، أو ارفع ملفات أصغر، أو استخدم الطريقة المحلية (run_admin.bat + upload_update.bat) اللي أسرع بكتير.";
+      if (/Validation Failed/i.test(message) || /already_exists/i.test(message)) return "فشل التحقق من GitHub (Validation Failed): " + (message.includes("[") ? message : "ربما اسم الملف مكرر في الـ Release (already_exists). استخدم ملف باسم مختلف أو جرب مرة أخرى بعد التحديث. التفاصيل: " + message);
       return message;
     }
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a091b6d61c4c406b',t:'MTc4MTAyNDY1Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
