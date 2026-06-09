@@ -126,54 +126,21 @@ const curriculumData = {
         },
         "physiology": {
           "name": "Physiology",
-          "lectures": [
-            {
-              "num": 1,
-              "title_ar": "فسيولجى الدم",
-              "files": {
-                "original_ppt": [
-                  "terms/term_1/physiology/original/Physiology  1.pdf"
-                ],
-                "translated_ppt": [
-                  "terms/term_1/physiology/guides/Blood_Physiology_Slides_Per_Page.pdf"
-                ],
-                "my_quiz": [
-                  "terms/term_1/physiology/quizzes/Physiology_Quiz_L1,2.html"
-                ],
-                "doctor_quiz": [
-                  "terms/term_1/physiology/quizzes/Questions_L1_Blood_Spring_2026.pdf"
-                ]
-              }
-            },
-            {
-              "num": 2,
-              "title_ar": "المحاضره الثانية",
-              "files": {
-                "original_ppt": "terms/term_1/physiology/original/Nursing_Pulmonary Physiology_L1_2025.pdf",
-                "translated_ppt": "terms/term_1/physiology/guides/المحاضره الثانيه مترجمه - فسيولوجي الجهاز التنفسي.pdf",
-                "my_quiz": "terms/term_1/physiology/quizzes/Physiology_Quiz_L1,2.html",
-                "doctor_quiz": "terms/term_1/physiology/quizzes/MCQs_L1_Pulmonary_Nursing Accelerated_Spring_2026.pdf"
-              }
-            },
+          "lectures": [,
             {
               "num": 3,
-              "title_ar": "المحاضره الثالثه - CVS Physiology",
+              "title_ar": "المحاضرة الثالثة فسيولوجي",
               "files": {
                 "original_ppt": [
-                  "https://github.com/Abanoub-Sameh/Nursing_Portal/releases/download/lecture-assets/Physiology_L3_Test_File.pdf"
+                  "https://github.com/Abanoub-Sameh/Nursing_Portal/releases/download/lecture-assets/term_1-physiology-lec3-test-slow-20260609.pdf"
                 ],
-                "translated_ppt": [
-                  "terms/term_1/physiology/guides/مترجم محاضرة 3 _ CVS Physiology.pdf"
-                ],
-                "my_quiz": [
-                  "terms/term_1/physiology/quizzes/Physio_L3_CVS_Quiz.html"
-                ],
+                "translated_ppt": [],
+                "my_quiz": [],
                 "doctor_quiz": []
               }
-            }
+            },
           ]
-        },
-        "microbiology": {
+        },: {
           "name": "Microbiology",
           "lectures": [
             {
