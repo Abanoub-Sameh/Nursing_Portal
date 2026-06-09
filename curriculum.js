@@ -251,13 +251,17 @@ const curriculumData = {
             },
             {
               "num": 3,
-              "title_ar": "المحاضره الثالثه",
+              "title_ar": "المحاضره الثالثه - Methods of Data Collection",
               "files": {
                 "original_ppt": [
                   "terms/term_1/biostatistics/original/data collection - 3rd lecture.pdf"
                 ],
-                "translated_ppt": [],
-                "my_quiz": [],
+                "translated_ppt": [
+                  "terms/term_1/biostatistics/guides/طرق جمع البيانات – محاضرة 3 مترحم _ Methods of Data Collection.pdf"
+                ],
+                "my_quiz": [
+                  "terms/term_1/biostatistics/quizzes/Biostatistics_L3_DataCollection_Quiz.html"
+                ],
                 "doctor_quiz": []
               }
             }
