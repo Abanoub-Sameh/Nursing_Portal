@@ -24,17 +24,13 @@ const curriculumData = {
             },
             {
               "num": 2,
-              "title_ar": "المحاضره الثانيه - Skeletal System",
+              "title_ar": "المحاضره الثانيه",
               "files": {
                 "original_ppt": [
                   "terms/term_1/anatomy/original/9 Skeletal system.pdf"
                 ],
-                "translated_ppt": [
-                  "terms/term_1/anatomy/guides/الجهاز الهيكلي – محاضرة 2 مترحم _ Skeletal System.pdf"
-                ],
-                "my_quiz": [
-                  "terms/term_1/anatomy/quizzes/Anatomy_Quiz_Skeletal.html"
-                ],
+                "translated_ppt": [],
+                "my_quiz": [],
                 "doctor_quiz": []
               }
             }
@@ -126,7 +122,35 @@ const curriculumData = {
         },
         "physiology": {
           "name": "Physiology",
-          "lectures": [,
+          "lectures": [
+            {
+              "num": 1,
+              "title_ar": "فسيولجى الدم",
+              "files": {
+                "original_ppt": [
+                  "terms/term_1/physiology/original/Physiology  1.pdf"
+                ],
+                "translated_ppt": [
+                  "terms/term_1/physiology/guides/Blood_Physiology_Slides_Per_Page.pdf"
+                ],
+                "my_quiz": [
+                  "terms/term_1/physiology/quizzes/Physiology_Quiz_L1,2.html"
+                ],
+                "doctor_quiz": [
+                  "terms/term_1/physiology/quizzes/Questions_L1_Blood_Spring_2026.pdf"
+                ]
+              }
+            },
+            {
+              "num": 2,
+              "title_ar": "المحاضره الثانية",
+              "files": {
+                "original_ppt": "terms/term_1/physiology/original/Nursing_Pulmonary Physiology_L1_2025.pdf",
+                "translated_ppt": "terms/term_1/physiology/guides/المحاضره الثانيه مترجمه - فسيولوجي الجهاز التنفسي.pdf",
+                "my_quiz": "terms/term_1/physiology/quizzes/Physiology_Quiz_L1,2.html",
+                "doctor_quiz": "terms/term_1/physiology/quizzes/MCQs_L1_Pulmonary_Nursing Accelerated_Spring_2026.pdf"
+              }
+            },
             {
               "num": 3,
               "title_ar": "المحاضرة الثالثة فسيولوجي",
@@ -140,7 +164,8 @@ const curriculumData = {
               }
             },
           ]
-        },: {
+        },
+        "microbiology": {
           "name": "Microbiology",
           "lectures": [
             {
@@ -160,12 +185,8 @@ const curriculumData = {
                 "original_ppt": [
                   "terms/term_1/microbiology/original/Sterilization.pdf"
                 ],
-                "translated_ppt": [
-                  "terms/term_1/microbiology/guides/مترجم محاضرة 2 _ Sterilization & Disinfection.pdf"
-                ],
-                "my_quiz": [
-                  "terms/term_1/microbiology/quizzes/Micro_L2_Sterilization_Quiz.html"
-                ],
+                "translated_ppt": [],
+                "my_quiz": [],
                 "doctor_quiz": [
                   "terms/term_1/microbiology/quizzes/DOC-20251023-WA0002.(1).pdf"
                 ]
@@ -186,49 +207,37 @@ const curriculumData = {
           "lectures": [
             {
               "num": 1,
-              "title_ar": "المحاضره الاولى - Overview to Biostatistics",
+              "title_ar": "المحاضره الاولى",
               "files": {
                 "original_ppt": [
                   "terms/term_1/biostatistics/original/Biostatisic - 1st lecture.pdf"
                 ],
-                "translated_ppt": [
-                  "terms/term_1/biostatistics/guides/نظرة عامة على الإحصاء الحيوي – محاضرة 1 مترحم _ Overview to Biostatistics.pdf"
-                ],
-                "my_quiz": [
-                  "terms/term_1/biostatistics/quizzes/Biostatistics_L1_Overview_Quiz.html"
-                ],
+                "translated_ppt": [],
+                "my_quiz": [],
                 "doctor_quiz": []
               }
             },
             {
               "num": 2,
-              "title_ar": "المحاضره الثانية - Data collection1",
+              "title_ar": "المحاضره الثانية",
               "files": {
                 "original_ppt": [
                   "terms/term_1/biostatistics/original/Data collection1.pdf"
                 ],
-                "translated_ppt": [
-                  "terms/term_1/biostatistics/guides/جمع البيانات وأنواعها –محاضرة 2 مترحم _ Data Collection.pdf"
-                ],
-                "my_quiz": [
-                  "terms/term_1/biostatistics/quizzes/Biostatistics_L2_DataTypes_Quiz.html"
-                ],
+                "translated_ppt": [],
+                "my_quiz": [],
                 "doctor_quiz": []
               }
             },
             {
               "num": 3,
-              "title_ar": "المحاضره الثالثه - Methods of Data Collection",
+              "title_ar": "المحاضره الثالثه",
               "files": {
                 "original_ppt": [
                   "terms/term_1/biostatistics/original/data collection - 3rd lecture.pdf"
                 ],
-                "translated_ppt": [
-                  "terms/term_1/biostatistics/guides/طرق جمع البيانات – محاضرة 3 مترحم _ Methods of Data Collection.pdf"
-                ],
-                "my_quiz": [
-                  "terms/term_1/biostatistics/quizzes/Biostatistics_L3_DataCollection_Quiz.html"
-                ],
+                "translated_ppt": [],
+                "my_quiz": [],
                 "doctor_quiz": []
               }
             }
