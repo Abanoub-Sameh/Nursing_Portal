@@ -193,8 +193,12 @@ const curriculumData = {
                 "original_ppt": [
                   "terms/term_1/microbiology/original/Sterilization.pdf"
                 ],
-                "translated_ppt": [],
-                "my_quiz": [],
+                "translated_ppt": [
+                  "terms/term_1/microbiology/guides/مترجم محاضرة 2 _ Sterilization & Disinfection.pdf"
+                ],
+                "my_quiz": [
+                  "terms/term_1/microbiology/quizzes/Micro_L2_Sterilization_Quiz.html"
+                ],
                 "doctor_quiz": [
                   "terms/term_1/microbiology/quizzes/DOC-20251023-WA0002.(1).pdf"
                 ]
