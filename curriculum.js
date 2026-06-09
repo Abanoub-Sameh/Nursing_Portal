@@ -157,13 +157,17 @@ const curriculumData = {
             },
             {
               "num": 3,
-              "title_ar": "المحاضره الثالثه",
+              "title_ar": "المحاضره الثالثه - CVS Physiology",
               "files": {
                 "original_ppt": [
                   "https://github.com/Abanoub-Sameh/Nursing_Portal/releases/download/lecture-assets/Physiology_L3_Test_File.pdf"
                 ],
-                "translated_ppt": [],
-                "my_quiz": [],
+                "translated_ppt": [
+                  "terms/term_1/physiology/guides/مترجم محاضرة 3 _ CVS Physiology.pdf"
+                ],
+                "my_quiz": [
+                  "terms/term_1/physiology/quizzes/Physio_L3_CVS_Quiz.html"
+                ],
                 "doctor_quiz": []
               }
             }
