@@ -235,13 +235,17 @@ const curriculumData = {
             },
             {
               "num": 2,
-              "title_ar": "المحاضره الثانية",
+              "title_ar": "المحاضره الثانية - Data collection1",
               "files": {
                 "original_ppt": [
                   "terms/term_1/biostatistics/original/Data collection1.pdf"
                 ],
-                "translated_ppt": [],
-                "my_quiz": [],
+                "translated_ppt": [
+                  "terms/term_1/biostatistics/guides/جمع البيانات وأنواعها –محاضرة 2 مترحم _ Data Collection.pdf"
+                ],
+                "my_quiz": [
+                  "terms/term_1/biostatistics/quizzes/Biostatistics_L2_DataTypes_Quiz.html"
+                ],
                 "doctor_quiz": []
               }
             },
