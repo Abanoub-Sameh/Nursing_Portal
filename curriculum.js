@@ -37,18 +37,6 @@ const curriculumData = {
                 ],
                 "doctor_quiz": []
               }
-            },
-            {
-              "num": 3,
-              "title_ar": "3",
-              "files": {
-                "original_ppt": [
-                  "https://drive.google.com/file/d/1YxejKxyt9ujdeN757orrtTTQhZNokcsl/view?usp=drive_link"
-                ],
-                "translated_ppt": [],
-                "my_quiz": [],
-                "doctor_quiz": []
-              }
             }
           ]
         },
