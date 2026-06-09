@@ -677,6 +677,11 @@
         <button class="success" id="saveBtn" type="button">رفع وحفظ المحاضرة</button>
         <button class="secondary" id="resetBtn" type="button">تفريغ النموذج</button>
       </div>
+
+      <div class="hint" style="margin-top: 8px; font-size: 0.75rem; color: #f59e0b;">
+        ⚠️ ملاحظة مهمة: الرفع من الموبايل بيستخدم GitHub API مباشرة (base64 + طلب واحد). لو النت بطيء (80 كيلو/ثانية) أو الملف كبير، الرفع هيطول جداً وقد يفشل أو يرجع خطأ توكن. 
+        <strong>للملفات الكبيرة أو النت البطيء: استخدم الطريقة المحلية (شغّل run_admin.bat ثم upload_update.bat بعدين) — الرفع المحلي سريع والـ push أفضل.</strong>
+      </div>
     </section>
 
     <!-- Lectures List Card -->
@@ -812,8 +817,9 @@
     function headers() {
       return {
         "Accept": "application/vnd.github+json",
-        "Authorization": `Bearer ${token}`,
-        "X-GitHub-Api-Version": "2022-11-28"
+        "Authorization": `token ${token}`,
+        "X-GitHub-Api-Version": "2022-11-28",
+        "User-Agent": "NursingPortal-MobileAdmin/1.0 (https://abanoub-sameh.github.io/Nursing_Portal/)"
       };
     }
 
@@ -1499,6 +1505,9 @@
         Object.entries(headers()).forEach(([key, value]) => xhr.setRequestHeader(key, value));
         xhr.setRequestHeader("Content-Type", "application/json");
 
+        // Very long timeout for slow uploads (30 minutes)
+        xhr.timeout = 30 * 60 * 1000;
+
         xhr.upload.onprogress = (event) => {
           if (!event.lengthComputable) return;
           onProgress((event.loaded / event.total) * 100);
@@ -1511,11 +1520,13 @@
             onProgress(100);
             resolve(data);
           } else {
-            reject(new Error(data?.message || "GitHub رفض الطلب."));
+            const msg = data?.message || (xhr.status === 0 ? "فشل الاتصال أو timeout أثناء الرفع (النت بطيء)." : "GitHub رفض الطلب.");
+            reject(new Error(msg));
           }
         };
 
-        xhr.onerror = () => reject(new Error("فشل الاتصال أثناء رفع الملف."));
+        xhr.onerror = () => reject(new Error("فشل الاتصال أثناء رفع الملف (تحقق من النت)."));
+        xhr.ontimeout = () => reject(new Error("انتهى وقت الطلب (الرفع استغرق أكثر من 30 دقيقة). النت بطيء جداً أو الملف كبير. استخدم الطريقة المحلية (run_admin.bat + upload_update.bat) للملفات الكبيرة."));
         xhr.send(JSON.stringify(body));
       });
     }
@@ -1533,8 +1544,10 @@
       if (/Bad credentials/i.test(message)) return "التوكن غير صحيح أو انتهت صلاحيته.";
       if (/Not Found/i.test(message)) return "التوكن لا يملك صلاحية على المستودع أو المسار غير موجود.";
       if (/sha/i.test(message) || /conflict/i.test(message)) return "شخص تاني حفظ تعديل في نفس الوقت. اضغط دخول لتحميل آخر نسخة، وبعدها كرر الحفظ.";
+      if (/timeout|took too long|انتهى وقت|الرفع استغرق/i.test(message)) return "الرفع استغرق وقت طويل جداً بسبب سرعة الإنترنت (80 كيلو/ثانية). التوكن ممكن يكون انتهى صلاحيته أثناء الرفع، أو الطلب timeout. جرب توكن جديد، أو ارفع ملفات أصغر، أو استخدم الطريقة المحلية (run_admin.bat + upload_update.bat) اللي أسرع بكتير.";
       return message;
     }
   </script>
-</body>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0917196cc0778d0',t:'MTc4MTAyMTgxNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

@@ -33,6 +33,8 @@ class AdminRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_save_curriculum()
         elif self.path == "/api/upload":
             self.handle_upload()
+        elif self.path == "/api/delete_file":
+            self.handle_delete_file()
         else:
             self.send_error(404, "Endpoint not found")
 
@@ -149,6 +151,38 @@ class AdminRequestHandler(http.server.SimpleHTTPRequestHandler):
             print(f"📁 Uploaded: {clean_filename} -> {rel_path}")
         except Exception as e:
             self.send_error_response(500, f"Upload error: {str(e)}")
+
+    def handle_delete_file(self):
+        try:
+            content_length = int(self.headers.get('Content-Length', 0))
+            post_data = self.rfile.read(content_length)
+            payload = json.loads(post_data.decode('utf-8'))
+            
+            rel_path = payload.get('path', '')
+            if not rel_path or not rel_path.startswith('terms/'):
+                self.send_error_response(400, "مسار الملف غير صالح")
+                return
+            
+            full_path = os.path.join(DIRECTORY, rel_path)
+            
+            if os.path.exists(full_path):
+                os.remove(full_path)
+                print(f"🗑️ Deleted file: {rel_path}")
+                success = True
+                message = f"تم حذف الملف: {os.path.basename(rel_path)}"
+            else:
+                success = False
+                message = "الملف غير موجود"
+            
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.end_headers()
+            self.wfile.write(json.dumps({
+                "success": success,
+                "message": message
+            }).encode('utf-8'))
+        except Exception as e:
+            self.send_error_response(500, f"Delete error: {str(e)}")
 
     def send_error_response(self, code, message):
         self.send_response(code)

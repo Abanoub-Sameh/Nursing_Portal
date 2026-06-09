@@ -523,7 +523,7 @@
             </div>
 
             <div class="upload-slots">
-                <label>ملفات المحاضرة (يمكنك رفع أو استبدال أي ملف)</label>
+                <label>ملفات المحاضرة (عند التعديل: يظهر الملف الحالي. اضغط "حذف ❌" لإزالته وحذفه من القرص، أو ارفع ملف جديد لاستبداله)</label>
                 
                 <!-- original_ppt -->
                 <div class="upload-slot" id="slot-original_ppt">
@@ -649,6 +649,15 @@
             my_quiz: "",
             doctor_quiz: ""
         };
+
+        // Files to physically delete from disk when saving the edit (safer than deleting on clear)
+        let pendingFileDeletes = [];
+
+        // Normalize file value (string or array from curriculum)
+        function normalizeFileValue(val) {
+            if (Array.isArray(val)) return val[0] || "";
+            return val || "";
+        }
 
         const LOCAL_ADMIN_MESSAGE = "لوحة الأدمن لا تحفظ من GitHub Pages. شغّل run_admin.bat وافتح http://localhost:8000/admin.html ثم ارفع التعديل على GitHub.";
 
@@ -887,12 +896,22 @@
 
         // Clear file slot local reference
         function clearFileSlot(fileType) {
+            const oldPath = uploadedPaths[fileType];
+            
             uploadedPaths[fileType] = "";
             document.getElementById(`file-${fileType}`).value = "";
             document.getElementById(`display-${fileType}`).textContent = "لا يوجد ملف";
             document.getElementById(`status-${fileType}`).textContent = "لم يرفع بعد";
             document.getElementById(`status-${fileType}`).style.color = "var(--text-muted)";
             document.querySelector(`#slot-${fileType} .btn-clear-slot`).style.display = "none";
+
+            // In edit mode: mark the old file for physical deletion (will be deleted only on successful save)
+            if (editMode && oldPath && oldPath.startsWith('terms/')) {
+                if (!pendingFileDeletes.includes(oldPath)) {
+                    pendingFileDeletes.push(oldPath);
+                }
+                showToast("سيتم حذف الملف من القرص عند حفظ التعديلات", "success");
+            }
         }
 
         // Save entire updated registry to server
@@ -995,7 +1014,23 @@
             curriculumData.terms[termKey].subjects[subKey].lectures = lectures;
             
             // Sync with backend
-            syncRegistryWithServer().then(() => {
+            syncRegistryWithServer().then(async () => {
+                // If we were editing and had files marked for deletion, delete them physically now
+                if (editMode && pendingFileDeletes.length > 0) {
+                    for (const pathToDelete of pendingFileDeletes) {
+                        try {
+                            await fetch("/api/delete_file", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ path: pathToDelete })
+                            });
+                        } catch (e) {
+                            console.warn("Failed to delete file on save:", pathToDelete);
+                        }
+                    }
+                    pendingFileDeletes = [];
+                }
+
                 cancelEditMode();
                 renderLecturesTable();
                 suggestNextLectureNum();
@@ -1067,6 +1102,7 @@
             
             editMode = true;
             editLecNum = lecNum;
+            pendingFileDeletes = []; // fresh for this edit session
             
             document.getElementById("formCardTitle").textContent = `✏️ تعديل المحاضرة رقم ${lecNum}`;
             document.getElementById("btnSave").querySelector("span").textContent = "💾 حفظ التعديلات";
@@ -1076,12 +1112,13 @@
             document.getElementById("lectureNum").value = lec.num;
             document.getElementById("titleAr").value = lec.title_ar;
             
-            // Load file states
+            // Load file states (handle string or array)
             const files = lec.files || {};
             Object.keys(uploadedPaths).forEach(type => {
-                uploadedPaths[type] = files[type] || "";
-                if (uploadedPaths[type]) {
-                    document.getElementById(`display-${type}`).textContent = uploadedPaths[type].split('/').pop();
+                const path = normalizeFileValue(files[type]);
+                uploadedPaths[type] = path;
+                if (path) {
+                    document.getElementById(`display-${type}`).textContent = path.split('/').pop();
                     document.getElementById(`status-${type}`).textContent = "✅ جاهز";
                     document.getElementById(`status-${type}`).style.color = "var(--accent)";
                     document.querySelector(`#slot-${type} .btn-clear-slot`).style.display = "inline";
@@ -1097,6 +1134,7 @@
         function cancelEditMode() {
             editMode = false;
             editLecNum = null;
+            pendingFileDeletes = []; // don't delete anything if user cancelled
             
             document.getElementById("formCardTitle").textContent = "✏️ إضافة محاضرة جديدة";
             document.getElementById("btnSave").querySelector("span").textContent = "💾 حفظ وإضافة المحاضرة";
@@ -1152,5 +1190,6 @@
             }, 3500);
         }
     </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a09171523c1478d0',t:'MTc4MTAyMTgwNg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
