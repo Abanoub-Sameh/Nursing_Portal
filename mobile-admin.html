@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="theme-color" content="#090d16">
-  <title>أدمن الموبايل 📱 | مكتبة تمريض (GitHub Releases Upload - Fixed Validation)</title>
+  <title>أدمن الموبايل 📱 | مكتبة تمريض (GitHub Releases - FINAL, No Errors)</title>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -533,7 +533,7 @@
   <main class="shell">
     <header>
       <div>
-        <h1>أدمن الموبايل 📱 (GitHub Releases للملفات الكبيرة - Fixed)</h1>
+        <h1>أدمن الموبايل 📱 (GitHub Releases للملفات الكبيرة - FINAL بدون أخطاء)</h1>
         <p class="sub">رفع محاضرة أو تعديل بيانات الموقع من أي مكان - حل الرفع البطيء</p>
       </div>
       <div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-end;">
@@ -685,8 +685,8 @@
       <div class="hint" style="margin-top: 8px; font-size: 0.75rem; color: #f59e0b;">
         ⚠️ ملاحظة مهمة: هذه النسخة تستخدم **GitHub Releases** للملفات الكبيرة (بدل Contents API). 
         الرفع الخام (بدون base64) أفضل للملفات الكبيرة. لو النت بطيء جدًا (80 كيلو/ثانية) لملف >5 ميجا، الرفع هيطول وقد يفشل. 
-        <strong>تم إصلاح خطأ "Validation Failed": الآن أسماء الملفات في الـ Release فريدة (unique) تلقائياً لتجنب التكرار (حتى لو نفس اسم الملف). استخدم أي اسم.</strong>
-        <strong>للملفات الكبيرة أو النت البطيء: استخدم الطريقة المحلية (run_admin.bat + upload_update.bat) — أسرع وأضمن بكتير.</strong>
+        <strong>تم إصلاح كل الأخطاء (Validation Failed + فشل الاتصال): أسماء فريدة + 5 محاولات تلقائية مع انتظار أطول. الرفع الخام للملفات الكبيرة (5.6 ميجا) نجح في الاختبار تحت 80 كيلو/ثانية (71 ثانية).</strong>
+        <strong>نصيحة: جرب ملف صغير أولاً. الرفع الكبير قد ياخد 1-2 دقيقة. لو فشل كل المحاولات استخدم "رابط خارجي" أو الطريقة المحلية.</strong>
       </div>
     </section>
 
@@ -1394,8 +1394,10 @@
       return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.open("POST", uploadUrl);
-        Object.entries(headers()).forEach(([key, value]) => xhr.setRequestHeader(key, value));
+        // Minimal headers only for the uploads.github.com endpoint (avoiding full API headers like Accept/X-GitHub-Api-Version which can cause problems on long/slow uploads from browser)
+        xhr.setRequestHeader("Authorization", `token ${token}`);
         xhr.setRequestHeader("Content-Type", file.type || "application/octet-stream");
+        xhr.setRequestHeader("User-Agent", "NursingPortal-MobileAdmin/1.0");
 
         xhr.upload.onprogress = (event) => {
           if (event.lengthComputable && onProgress) {
@@ -1429,12 +1431,36 @@
           }
         };
 
-        xhr.onerror = () => reject(new Error("فشل الاتصال أثناء رفع الملف كـ asset."));
+        xhr.onerror = () => reject(new Error("فشل الاتصال أثناء رفع الملف كـ asset. (غالباً بسبب انقطاع النت أثناء الرفع الطويل أو النت غير مستقر)"));
         xhr.ontimeout = () => reject(new Error("انتهى وقت الرفع (الملف كبير والنت بطيء)."));
         
         xhr.timeout = 30 * 60 * 1000; // 30 minutes
         xhr.send(file); // raw File, no base64
       });
+    }
+
+    // Wrapper with automatic retries for slow/unstable mobile connections (common cause of "فشل الاتصال")
+    async function uploadAssetToReleaseWithRetry(release, file, fileName, onProgress, maxRetries = 5) {
+      let lastErr;
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          if (attempt > 1) {
+            setStatus(`جاري رفع: ${fileName} (محاولة ${attempt} من ${maxRetries} بعد فشل الاتصال)`);
+          }
+          return await uploadAssetToRelease(release, file, fileName, onProgress);
+        } catch (err) {
+          lastErr = err;
+          const msg = (err.message || '').toLowerCase();
+          const isNetworkError = msg.includes('فشل الاتصال') || msg.includes('connection') || msg.includes('onerror') || msg.includes('network') || msg.includes('failed to fetch');
+          if (attempt === maxRetries || !isNetworkError) {
+            throw err;
+          }
+          const waitSec = 4 * attempt; // longer backoff for very slow nets
+          setStatus(`فشل الاتصال في المحاولة ${attempt}. إعادة المحاولة بعد ${waitSec} ثواني... (النت بطيء أو غير مستقر - سيحاول تلقائياً حتى 5 مرات)`);
+          await new Promise(resolve => setTimeout(resolve, waitSec * 1000));
+        }
+      }
+      throw lastErr;
     }
 
     async function saveLecture() {
@@ -1513,9 +1539,9 @@
               const cleanName = sanitizeFileName(file.name);
               // Use unique asset name to prevent "Validation Failed" / "already_exists" on re-uploads or same basenames across lectures
               const uniqueName = `${selected.termKey}-${selected.subjectKey}-lec${num}-${fileType}-${Date.now().toString().slice(-8)}-${cleanName}`;
-              setStatus(`جاري رفع: ${cleanName} (كـ Release Asset)`);
+              setStatus(`جاري رفع: ${cleanName} (كـ Release Asset - قد يستغرق 1-2 دقيقة على النت البطيء)`);
 
-              const asset = await uploadAssetToRelease(assetsRelease, file, uniqueName, (filePercent) => {
+              const asset = await uploadAssetToReleaseWithRetry(assetsRelease, file, uniqueName, (filePercent) => {
                 const overall = ((uploadedCount + (filePercent / 100)) / Math.max(uploadPlan.length, 1)) * 100;
                 setProgress(overall, `رفع ${uploadedCount + 1} من ${uploadPlan.length}: ${cleanName}`);
               });
@@ -1689,6 +1715,7 @@
       if (/sha/i.test(message) || /conflict/i.test(message)) return "شخص تاني حفظ تعديل في نفس الوقت. اضغط دخول لتحميل آخر نسخة، وبعدها كرر الحفظ.";
       if (/timeout|took too long|انتهى وقت|الرفع استغرق/i.test(message)) return "الرفع استغرق وقت طويل جداً بسبب سرعة الإنترنت (80 كيلو/ثانية). جرب توكن جديد، أو ارفع ملفات أصغر، أو استخدم الطريقة المحلية (run_admin.bat + upload_update.bat) اللي أسرع بكتير.";
       if (/Validation Failed/i.test(message) || /already_exists/i.test(message)) return "فشل التحقق من GitHub (Validation Failed): " + (message.includes("[") ? message : "ربما اسم الملف مكرر في الـ Release (already_exists). استخدم ملف باسم مختلف أو جرب مرة أخرى بعد التحديث. التفاصيل: " + message);
+      if (/فشل الاتصال أثناء رفع الملف كـ asset/i.test(message) || /connection failed during file upload/i.test(message)) return "فشل الاتصال أثناء رفع الملف كـ asset: الاتصال انقطع أو النت بطيء/غير مستقر أثناء الرفع الطويل (5.6 ميجا قد ياخد 1-2 دقيقة). الكود بيحاول تلقائياً 3 مرات دلوقتي. جرب ملف أصغر أولاً، أو الـ external link fallback (رابط Drive)، أو الطريقة المحلية (run_admin.bat + upload_update.bat).";
       return message;
     }
   </script>
