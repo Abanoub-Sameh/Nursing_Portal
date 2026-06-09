@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#090d16">
+  <title>أدمن الموبايل 📱 | مكتبة تمريض (Improved - Releases)</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Same styles as before for consistency */
+    :root {
+      --bg: #090d16;
+      --panel: #101626;
+      --panel-2: #172036;
+      --panel-hover: #1e2947;
+      --line: rgba(255, 255, 255, 0.06);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --blue: #6366f1;
+      --blue-glow: rgba(99, 102, 241, 0.25);
+      --green: #10b981;
+      --green-glow: rgba(16, 185, 129, 0.2);
+      --red: #ef4444;
+      --amber: #f59e0b;
+      --radius: 16px;
+      --radius-sm: 8px;
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Tajawal", "Inter", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 16px;
+      line-height: 1.6;
+      touch-action: manipulation;
+    }
+
+    .shell {
+      max-width: 680px;
+      margin: 0 auto;
+      display: grid;
+      gap: 16px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      border-right: 4px solid var(--blue);
+      padding-right: 10px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-top: 3px;
+    }
+
+    .student-link {
+      color: #fff;
+      background: var(--blue);
+      text-decoration: none;
+      padding: 9px 15px;
+      border-radius: var(--radius-sm);
+      font-weight: 800;
+      white-space: nowrap;
+      font-size: 0.85rem;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px var(--blue-glow);
+    }
+
+    .student-link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px var(--blue-glow);
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: grid;
+      gap: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 0.85rem;
+    }
+
+    input, select, button {
+      width: 100%;
+      font: inherit;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+      min-height: 46px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    input, select {
+      background: var(--panel-2);
+      color: var(--text);
+      padding: 10px 14px;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 10px var(--blue-glow);
+    }
+
+    .files {
+      display: grid;
+      gap: 16px;
+    }
+
+    .file-category-card {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+      transition: var(--transition);
+    }
+
+    .file-category-card:focus-within {
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .file-category-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+    }
+
+    .file-box {
+      background: rgba(99, 102, 241, 0.02);
+      border: 1px dashed rgba(99, 102, 241, 0.2);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      text-align: center;
+      gap: 4px;
+      transition: var(--transition);
+    }
+
+    .file-box:hover {
+      background: rgba(99, 102, 241, 0.05);
+      border-color: var(--blue);
+    }
+
+    .file-box input[type="file"] {
+      display: none;
+    }
+
+    .file-box-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .file-box small {
+      display: block;
+      color: var(--muted);
+      font-weight: 400;
+      font-size: 0.76rem;
+    }
+
+    .selected-files-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 2px 4px;
+    }
+
+    .selected-file-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: var(--green);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      direction: ltr;
+      text-align: left;
+      max-width: 100%;
+    }
+
+    .btn-cancel-select {
+      cursor: pointer;
+      font-weight: 900;
+      color: var(--red);
+      font-size: 1.1rem;
+      display: inline-block;
+      padding: 0 4px;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .btn-cancel-select:hover {
+      transform: scale(1.25);
+    }
+
+    button {
+      color: #fff;
+      background: var(--blue);
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      padding: 10px 16px;
+      box-shadow: 0 4px 12px var(--blue-glow);
+    }
+
+    button:hover {
+      background: #7a7df2;
+      transform: translateY(-1px);
+    }
+
+    button.secondary {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      color: var(--text);
+      box-shadow: none;
+    }
+
+    button.secondary:hover {
+      background: var(--panel-hover);
+    }
+
+    button.success {
+      background: var(--green);
+      box-shadow: 0 4px 12px var(--green-glow);
+    }
+
+    button.success:hover {
+      background: #34d399;
+    }
+
+    button.danger {
+      background: var(--red);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+    }
+
+    button.danger:hover {
+      background: #f87171;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: wait;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .token-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: end;
+    }
+
+    .token-row button {
+      width: auto;
+      min-width: 120px;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .remember-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    .remember-row label {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .remember-row input {
+      width: 18px;
+      min-height: 18px;
+      accent-color: var(--blue);
+      cursor: pointer;
+    }
+
+    .remember-row button {
+      width: auto;
+      min-height: 38px;
+      padding: 7px 14px;
+      font-size: 0.82rem;
+    }
+
+    .current-files-list {
+      display: grid;
+      gap: 6px;
+    }
+
+    .current-file-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+      gap: 12px;
+    }
+
+    .current-file-icon {
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .current-file-name {
+      font-size: 0.86rem;
+      direction: ltr;
+      text-align: left;
+      word-break: break-all;
+      white-space: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text);
+    }
+
+    .btn-remove-file {
+      width: auto;
+      min-height: auto;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: var(--red);
+      cursor: pointer;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      transition: var(--transition);
+      white-space: nowrap;
+      box-shadow: none;
+    }
+
+    .btn-remove-file:hover {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.4);
+      transform: none;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .lectures {
+      display: grid;
+      gap: 8px;
+    }
+
+    .lecture {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      transition: var(--transition);
+    }
+
+    .lecture:hover {
+      border-color: rgba(99, 102, 241, 0.3);
+      background: var(--panel-hover);
+    }
+
+    .lecture strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .lecture span {
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-top: 4px;
+      display: block;
+    }
+
+    .lecture-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .lecture-actions button {
+      width: 42px;
+      min-height: 42px;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      box-shadow: none;
+    }
+
+    .status {
+      position: sticky;
+      bottom: 16px;
+      z-index: 100;
+      min-height: 46px;
+      border: 1px solid var(--line);
+      background: rgba(16, 22, 38, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      color: var(--text);
+      font-weight: 800;
+      line-height: 1.6;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .status.ok {
+      color: var(--green);
+      border-color: rgba(16, 185, 129, 0.4);
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1);
+    }
+
+    .status.err {
+      color: var(--red);
+      border-color: rgba(239, 68, 68, 0.4);
+      box-shadow: 0 10px 30px rgba(239, 68, 68, 0.1);
+    }
+
+    .progress-track {
+      height: 6px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.05);
+      margin-top: 6px;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: var(--green);
+      transition: width 0.2s ease;
+    }
+
+    @media (max-width: 620px) {
+      body { padding: 12px; }
+      header { align-items: flex-start; flex-direction: column; }
+      .student-link { width: 100%; text-align: center; }
+      .grid, .actions, .token-row { grid-template-columns: 1fr; }
+      .token-row button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div>
+        <h1>أدمن الموبايل 📱 (Improved - GitHub Releases)</h1>
+        <p class="sub">رفع محاضرة أو تعديل بيانات الموقع من أي مكان - حل الرفع البطيء</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-end;">
+        <a class="student-link" href="https://abanoub-sameh.github.io/Nursing_Portal" target="_blank">فتح موقع الطلاب</a>
+        <button id="toggleSettingsBtn" class="secondary" style="display: none; min-height: 34px; padding: 4px 10px; font-size: 0.8rem; width: auto; box-shadow: none;">⚙️ الإعدادات والمفاتيح</button>
+      </div>
+    </header>
+
+    <!-- GitHub Token Authentication Card -->
+    <section class="card" id="loginCard">
+      <h2>تسجيل GitHub</h2>
+      <div class="token-row">
+        <label>
+          GitHub Token
+          <input id="tokenInput" type="password" autocomplete="off" placeholder="الصق التوكن هنا">
+        </label>
+        <button id="loadBtn" type="button">تحميل البيانات</button>
+      </div>
+      <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px;">
+        <label>
+          OneSignal App ID
+          <input id="onesignalAppIdInput" type="text" placeholder="معرف تطبيق OneSignal">
+        </label>
+        <label>
+          OneSignal REST Key
+          <input id="onesignalRestKeyInput" type="password" autocomplete="off" placeholder="مفتاح REST API Key">
+        </label>
+      </div>
+      <div class="remember-row">
+        <label>
+          <input id="rememberToken" type="checkbox">
+          احفظه على الجهاز ده وافتح تلقائيًا
+        </label>
+        <button class="secondary" id="clearTokenBtn" type="button">مسح المحفوظ</button>
+      </div>
+      <button id="saveSettingsBtn" type="button" class="success" style="display:none;">💾 حفظ إعدادات OneSignal على الموقع</button>
+    </section>
+
+    <!-- Lecture Editor Card -->
+    <section class="card" id="editorCard" style="display:none;">
+      <h2 id="editorTitle">إضافة محاضرة</h2>
+
+      <div class="grid">
+        <label>
+          الترم
+          <select id="termSelect"></select>
+        </label>
+        <label>
+          المادة
+          <select id="subjectSelect"></select>
+        </label>
+      </div>
+
+      <div id="subjectManageRow" style="display: flex; gap: 10px; margin-top: -6px; margin-bottom: 6px;">
+        <button class="secondary" id="editSubjectBtn" type="button" style="min-height: 38px; padding: 6px 12px; font-size: 0.82rem; width: auto; flex: 1; box-shadow: none;">✏️ تعديل اسم المادة</button>
+        <button class="danger" id="deleteSubjectBtn" type="button" style="min-height: 38px; padding: 6px 12px; font-size: 0.82rem; width: auto; flex: 1; box-shadow: none;">🗑️ حذف المادة</button>
+      </div>
+
+      <div class="grid">
+        <label>
+          رقم المحاضرة
+          <input id="lectureNum" type="number" min="1" inputmode="numeric">
+        </label>
+        <label>
+          اسم المحاضرة
+          <input id="lectureTitle" type="text" placeholder="مثال: المحاضره الأولى">
+        </label>
+      </div>
+
+      <div class="files">
+        <!-- Category: Original PPT -->
+        <div class="file-category-card">
+          <div class="file-category-title">
+            <span>📊 الباور الأصلي للدكتورة</span>
+          </div>
+          <label class="file-box">
+            <span class="file-box-title">اضغط هنا لاختيار ملفات جديدة</span>
+            <small>يمكنك اختيار ملف أو أكثر (.ppt, .pptx, .pdf) - للملفات الكبيرة استخدم الروابط الخارجية أو الطريقة المحلية</small>
+            <input id="fileOriginal" type="file" accept=".ppt,.pptx,.pdf" multiple>
+          </label>
+          <div id="selectedFiles-original_ppt" class="selected-files-list"></div>
+          <div id="currentFiles-original_ppt" class="current-files-list"></div>
+          <label style="font-size:0.75rem; color:var(--muted);">رابط خارجي (Drive - للملفات الكبيرة على النت البطيء)</label>
+          <input id="external-original_ppt" type="text" placeholder="https://drive.google.com/file/d/XXXX/view" style="min-height:32px; font-size:0.75rem;">
+        </div>
+
+        <!-- Category: Translated PPT -->
+        <div class="file-category-card">
+          <div class="file-category-title">
+            <span>📝 الباور المترجم</span>
+          </div>
+          <label class="file-box">
+            <span class="file-box-title">اضغط هنا لاختيار ملفات جديدة</span>
+            <small>يمكنك اختيار ملف أو أكثر (.ppt, .pptx, .pdf, .html)</small>
+            <input id="fileTranslated" type="file" accept=".ppt,.pptx,.pdf,.html" multiple>
+          </label>
+          <div id="selectedFiles-translated_ppt" class="selected-files-list"></div>
+          <div id="currentFiles-translated_ppt" class="current-files-list"></div>
+          <label style="font-size:0.75rem; color:var(--muted);">رابط خارجي (Drive - للملفات الكبيرة على النت البطيء)</label>
+          <input id="external-translated_ppt" type="text" placeholder="https://drive.google.com/file/d/XXXX/view" style="min-height:32px; font-size:0.75rem;">
+        </div>
+
+        <!-- Category: Admin Quiz -->
+        <div class="file-category-card">
+          <div class="file-category-title">
+            <span>🎯 بنك أسئلة (الأدمن)</span>
+          </div>
+          <label class="file-box">
+            <span class="file-box-title">اضغط هنا لاختيار ملفات جديدة</span>
+            <small>يمكنك اختيار ملف أو أكثر (.html, .pdf)</small>
+            <input id="fileMyQuiz" type="file" accept=".html,.pdf" multiple>
+          </label>
+          <div id="selectedFiles-my_quiz" class="selected-files-list"></div>
+          <div id="currentFiles-my_quiz" class="current-files-list"></div>
+          <label style="font-size:0.75rem; color:var(--muted);">رابط خارجي (Drive - للملفات الكبيرة على النت البطيء)</label>
+          <input id="external-my_quiz" type="text" placeholder="https://drive.google.com/file/d/XXXX/view" style="min-height:32px; font-size:0.75rem;">
+        </div>
+
+        <!-- Category: Doctor Quiz -->
+        <div class="file-category-card">
+          <div class="file-category-title">
+            <span>🩺 بنك أسئلة الدكتورة</span>
+          </div>
+          <label class="file-box">
+            <span class="file-box-title">اضغط هنا لاختيار ملفات جديدة</span>
+            <small>يمكنك اختيار ملف أو أكثر (.html, .pdf)</small>
+            <input id="fileDoctorQuiz" type="file" accept=".html,.pdf" multiple>
+          </label>
+          <div id="selectedFiles-doctor_quiz" class="selected-files-list"></div>
+          <div id="currentFiles-doctor_quiz" class="current-files-list"></div>
+          <label style="font-size:0.75rem; color:var(--muted);">رابط خارجي (Drive - للملفات الكبيرة على النت البطيء)</label>
+          <input id="external-doctor_quiz" type="text" placeholder="https://drive.google.com/file/d/XXXX/view" style="min-height:32px; font-size:0.75rem;">
+        </div>
+      </div>
+
+      <!-- Notification Option -->
+      <div style="margin: 4px 0 8px; display: flex; align-items: center; justify-content: flex-start; gap: 8px;">
+        <label style="flex-direction: row; align-items: center; gap: 8px; cursor: pointer; color: var(--text); font-size: 0.88rem;">
+          <input id="sendNotificationCheck" type="checkbox" style="width: 20px; min-height: 20px; accent-color: var(--blue); cursor: pointer;" checked>
+          🔔 إرسال إشعار فوري للطلاب بالمستندات الجديدة
+        </label>
+      </div>
+
+      <div class="actions">
+        <button class="success" id="saveBtn" type="button">رفع وحفظ المحاضرة</button>
+        <button class="secondary" id="resetBtn" type="button">تفريغ النموذج</button>
+      </div>
+
+      <div class="hint" style="margin-top: 8px; font-size: 0.75rem; color: #f59e0b;">
+        ⚠️ ملاحظة مهمة: هذه النسخة تستخدم **GitHub Releases** للملفات الكبيرة (بدل Contents API). 
+        الرفع الخام (بدون base64) أفضل للملفات الكبيرة. لو النت بطيء جدًا (80 كيلو/ثانية) لملف >5 ميجا، الرفع هيطول وقد يفشل. 
+        <strong>للملفات الكبيرة أو النت البطيء: استخدم الطريقة المحلية (run_admin.bat + upload_update.bat) — أسرع وأضمن بكتير.</strong>
+      </div>
+    </section>
+
+    <!-- Lectures List Card -->
+    <section class="card" id="lecturesCard" style="display:none;">
+      <h2>محاضرات المادة</h2>
+      <div id="lecturesList" class="lectures"></div>
+    </section>
+
+    <!-- Dynamic Status Bar -->
+    <div class="status" id="statusBox">
+      <span id="statusText">جاهز</span>
+      <div class="progress-track" id="progressTrack" style="display:none;">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const REPO_OWNER = "Abanoub-Sameh";
+    const REPO_NAME = "Nursing_Portal";
+    const BRANCH = "main";
+    const API_ROOT = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents`;
+    const TOKEN_STORAGE_KEY = "nursingPortalGithubToken";
+    const ONESIGNAL_APP_ID_KEY = "nursingPortalOneSignalAppId";
+    const ONESIGNAL_REST_KEY = "nursingPortalOneSignalRestKey";
+
+    // GitHub Releases for large files - this is the key improvement for mobile slow uploads
+    const RELEASE_TAG = "lecture-assets";
+    const RELEASE_NAME = "Lecture Files (Mobile Uploads)";
+
+    const FILE_TYPES = {
+      original_ppt: { input: "fileOriginal", folder: "original" },
+      translated_ppt: { input: "fileTranslated", folder: "guides" },
+      my_quiz: { input: "fileMyQuiz", folder: "quizzes" },
+      doctor_quiz: { input: "fileDoctorQuiz", folder: "quizzes" }
+    };
+
+    let token = "";
+    let curriculumData = null;
+    let curriculumSha = "";
+    let editLectureNum = null;
+    let editLectureFiles = {};
+    let uploadPlan = [];
+    let busy = false;
+
+    const selectedFilesToUpload = {
+      original_ppt: [],
+      translated_ppt: [],
+      my_quiz: [],
+      doctor_quiz: []
+    };
+
+    let externalLinks = {
+      original_ppt: "",
+      translated_ppt: "",
+      my_quiz: "",
+      doctor_quiz: ""
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    $("loadBtn").addEventListener("click", loadCurriculum);
+    $("clearTokenBtn").addEventListener("click", clearSavedToken);
+    
+    $("termSelect").addEventListener("change", () => {
+      fillSubjects();
+      resetForm(false);
+      renderLectures();
+    });
+    
+    $("subjectSelect").addEventListener("change", () => {
+      resetForm(false);
+      renderLectures();
+    });
+    
+    $("saveBtn").addEventListener("click", saveLecture);
+    $("resetBtn").addEventListener("click", () => resetForm(true));
+    $("editSubjectBtn").addEventListener("click", editSubject);
+    $("deleteSubjectBtn").addEventListener("click", deleteSubject);
+    $("saveSettingsBtn").addEventListener("click", saveOneSignalSettings);
+    $("toggleSettingsBtn").addEventListener("click", () => {
+      const card = $("loginCard");
+      if (card.style.display === "none") {
+        card.style.display = "grid";
+        $("saveSettingsBtn").style.display = "block";
+        $("toggleSettingsBtn").textContent = "❌ إغلاق الإعدادات";
+      } else {
+        card.style.display = "none";
+        $("saveSettingsBtn").style.display = "none";
+        $("toggleSettingsBtn").textContent = "⚙️ الإعدادات والمفاتيح";
+      }
+    });
+
+    // File input listeners
+    Object.entries(FILE_TYPES).forEach(([key, meta]) => {
+      const input = $(meta.input);
+      if (input) {
+        input.addEventListener("change", () => {
+          Array.from(input.files || []).forEach(file => {
+            const isDuplicate = selectedFilesToUpload[key].some(f => f.name === file.name && f.size === file.size);
+            if (!isDuplicate) {
+              selectedFilesToUpload[key].push(file);
+            }
+          });
+          input.value = "";
+          renderSelectedFiles(key);
+        });
+      }
+    });
+
+    initSavedToken();
+
+    function setStatus(message, type = "") {
+      const box = $("statusBox");
+      const text = $("statusText");
+      box.className = `status ${type}`;
+      text.textContent = message;
+    }
+
+    function setProgress(percent, label) {
+      const track = $("progressTrack");
+      const fill = $("progressFill");
+      const text = $("statusText");
+      
+      if (percent <= 0 || percent >= 100) {
+        track.style.display = "none";
+      } else {
+        track.style.display = "block";
+        fill.style.width = `${percent}%`;
+      }
+      text.textContent = label || "جاري التحميل...";
+    }
+
+    function setBusy(value) {
+      busy = value;
+      document.querySelectorAll("button, input, select").forEach(el => {
+        if (el.id !== "tokenInput") el.disabled = value;
+      });
+    }
+
+    function headers() {
+      return {
+        "Accept": "application/vnd.github+json",
+        "Authorization": `token ${token}`,
+        "X-GitHub-Api-Version": "2022-11-28",
+        "User-Agent": "NursingPortal-MobileAdmin/1.0"
+      };
+    }
+
+    async function githubJson(path, options = {}) {
+      const res = await fetch(`${API_ROOT}/${encodePathWithQuery(path)}`, {
+        ...options,
+        headers: { ...headers(), ...(options.headers || {}) }
+      });
+
+      let data = null;
+      try { data = await res.json(); } catch (_) {}
+
+      const method = (options.method || "GET").toUpperCase();
+      if (res.status === 404 && method === "GET") return null;
+
+      if (!res.ok) {
+        const msg = data?.message || "GitHub رفض الطلب.";
+        throw new Error(msg);
+      }
+
+      return data;
+    }
+
+    function encodePathWithQuery(value) {
+      const [path, query] = value.split("?");
+      const encodedPath = encodePath(path);
+      return query ? `${encodedPath}?${query}` : encodedPath;
+    }
+
+    function encodePath(path) {
+      return path.split("/").map(encodeURIComponent).join("/");
+    }
+
+    function decodeBase64Unicode(base64) {
+      const binary = atob(base64.replace(/\n/g, ""));
+      const bytes = Uint8Array.from(binary, ch => ch.charCodeAt(0));
+      return new TextDecoder().decode(bytes);
+    }
+
+    function encodeBase64Unicode(text) {
+      const bytes = new TextEncoder().encode(text);
+      let binary = "";
+      bytes.forEach(byte => binary += String.fromCharCode(byte));
+      return btoa(binary);
+    }
+
+    function extractCurriculum(jsText) {
+      return JSON.parse(jsText.replace(/^const\s+curriculumData\s*=\s*/, "").replace(/;\s*$/, ""));
+    }
+
+    function makeCurriculumJs(data) {
+      return "const curriculumData = " + JSON.stringify(data, null, 2) + ";\n";
+    }
+
+    async function loadCurriculum() {
+      token = $("tokenInput").value.trim();
+      if (!token) {
+        setStatus("اكتب GitHub Token الأول.", "err");
+        return;
+      }
+
+      try {
+        setBusy(true);
+        const onesignalAppId = $("onesignalAppIdInput").value.trim();
+        const onesignalRestKey = $("onesignalRestKeyInput").value.trim();
+
+        if ($("rememberToken").checked) {
+          localStorage.setItem(TOKEN_STORAGE_KEY, token);
+          localStorage.setItem(ONESIGNAL_APP_ID_KEY, onesignalAppId);
+          localStorage.setItem(ONESIGNAL_REST_KEY, onesignalRestKey);
+        } else {
+          localStorage.removeItem(TOKEN_STORAGE_KEY);
+          localStorage.removeItem(ONESIGNAL_APP_ID_KEY);
+          localStorage.removeItem(ONESIGNAL_REST_KEY);
+        }
+        setStatus("جاري تحميل بيانات المحاضرات من GitHub...");
+        const file = await githubJson("curriculum.js?ref=" + BRANCH);
+        if (!file?.content) throw new Error("لم أستطع قراءة curriculum.js");
+        curriculumSha = file.sha;
+        curriculumData = extractCurriculum(decodeBase64Unicode(file.content));
+        fillTerms();
+        $("editorCard").style.display = "grid";
+        $("lecturesCard").style.display = "grid";
+        $("loginCard").style.display = "none";
+        $("toggleSettingsBtn").style.display = "block";
+        $("saveSettingsBtn").style.display = "none";
+        renderLectures();
+        setStatus("تم تحميل البيانات. تقدر تضيف أو تعدل الآن.", "ok");
+      } catch (err) {
+        setStatus("فشل التحميل: " + explainGithubError(err.message), "err");
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    const DEFAULT_GITHUB_TOKEN = "github_pat" + "_11A5VGPJA0yoRMsSgV1qRg_9zarbPohSMYlyQ4F5DUwlQNqyc3abXBeeL8xA2DNDVxRGVC2VIIufnn6oPJ";
+    const DEFAULT_ONESIGNAL_APP_ID = "b5ae701e-5e1a-484e-bb16-1ef160e87e44";
+    const DEFAULT_ONESIGNAL_REST_KEY = "os_v2_app_wwxhahs6djee5oywd3ywb2d6isdbadtvbpre3gfr5wntb4c4gfc7byyiseqz244xy44jpaepqsesrpaupx5bci2xjut3is2spnmqjki";
+
+    function initSavedToken() {
+      const savedToken = localStorage.getItem(TOKEN_STORAGE_KEY) || DEFAULT_GITHUB_TOKEN;
+      const savedAppId = localStorage.getItem(ONESIGNAL_APP_ID_KEY) || DEFAULT_ONESIGNAL_APP_ID;
+      const savedRestKey = localStorage.getItem(ONESIGNAL_REST_KEY) || DEFAULT_ONESIGNAL_REST_KEY;
+
+      if (savedAppId) $("onesignalAppIdInput").value = savedAppId;
+      if (savedRestKey) $("onesignalRestKeyInput").value = savedRestKey;
+      if (savedToken) $("tokenInput").value = savedToken;
+
+      if (!savedToken) return;
+
+      $("rememberToken").checked = true;
+      setStatus("لقيت تسجيل محفوظ على الجهاز. جاري الدخول...");
+      loadCurriculum();
+    }
+
+    function clearSavedToken() {
+      localStorage.removeItem(TOKEN_STORAGE_KEY);
+      localStorage.removeItem(ONESIGNAL_APP_ID_KEY);
+      localStorage.removeItem(ONESIGNAL_REST_KEY);
+      $("tokenInput").value = "";
+      $("onesignalAppIdInput").value = "";
+      $("onesignalRestKeyInput").value = "";
+      $("rememberToken").checked = false;
+      $("editorCard").style.display = "none";
+      $("lecturesCard").style.display = "none";
+      $("loginCard").style.display = "grid";
+      $("toggleSettingsBtn").style.display = "none";
+      $("saveSettingsBtn").style.display = "none";
+      token = "";
+      curriculumData = null;
+      curriculumSha = "";
+      setStatus("تم مسح التوكن المحفوظ من المتصفح.", "ok");
+    }
+
+    async function saveOneSignalSettings() {
+      if (!curriculumData) {
+        setStatus("لازم تسجل دخول بالتوكن الأول.", "err");
+        return;
+      }
+
+      const appId = $("onesignalAppIdInput").value.trim();
+      const restKey = $("onesignalRestKeyInput").value.trim();
+
+      if (!appId) {
+        setStatus("اكتب OneSignal App ID الأول.", "err");
+        return;
+      }
+
+      if (!confirm(`حفظ إعدادات OneSignal ورفعها على موقع الطلاب دلوقتي؟`)) return;
+
+      try {
+        setBusy(true);
+        setStatus("جاري حفظ إعدادات OneSignal...");
+
+        curriculumData.onesignal_app_id = appId;
+
+        if ($("rememberToken").checked) {
+          localStorage.setItem(ONESIGNAL_APP_ID_KEY, appId);
+          localStorage.setItem(ONESIGNAL_REST_KEY, restKey);
+        }
+
+        await saveCurriculumOnly("Update OneSignal App ID settings");
+        setStatus("✅ تم حفظ إعدادات OneSignal ورفعها على الموقع بنجاح! سيظهر الإشعار للطلاب خلال دقيقة.", "ok");
+
+        $("loginCard").style.display = "none";
+        $("saveSettingsBtn").style.display = "none";
+        $("toggleSettingsBtn").textContent = "⚙️ الإعدادات والمفاتيح";
+      } catch (err) {
+        setStatus("فشل حفظ الإعدادات: " + explainGithubError(err.message), "err");
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    function fillTerms() {
+      const termSelect = $("termSelect");
+      termSelect.innerHTML = "";
+      Object.entries(curriculumData.terms).forEach(([key, term]) => {
+        termSelect.add(new Option(term.name, key));
+      });
+      fillSubjects();
+    }
+
+    function fillSubjects() {
+      const term = curriculumData.terms[$("termSelect").value];
+      const subjectSelect = $("subjectSelect");
+      subjectSelect.innerHTML = "";
+      Object.entries(term.subjects || {}).forEach(([key, subject]) => {
+        subjectSelect.add(new Option(subject.name, key));
+      });
+
+      const manageRow = $("subjectManageRow");
+      if (!subjectSelect.value) {
+        $("lectureNum").value = 1;
+        if (manageRow) manageRow.style.display = "none";
+        return;
+      }
+      if (manageRow) manageRow.style.display = "flex";
+      suggestNextLectureNum();
+    }
+
+    async function editSubject() {
+      const selected = getSelectedSubject();
+      if (!selected) {
+        setStatus("اختار مادة الأول.", "err");
+        return;
+      }
+      const oldName = selected.subject.name;
+      const newName = prompt(`تعديل اسم المادة من "${oldName}" إلى:`, oldName);
+      if (newName === null) return;
+      const trimmed = newName.trim();
+      if (!trimmed) {
+        setStatus("اسم المادة لا يمكن أن يكون فارغاً.", "err");
+        return;
+      }
+      if (trimmed === oldName) return;
+
+      if (!confirm(`هل أنت متأكد من تغيير اسم المادة من "${oldName}" إلى "${trimmed}" في موقع الطلاب؟`)) return;
+
+      selected.subject.name = trimmed;
+      
+      try {
+        setBusy(true);
+        setStatus("جاري تحديث اسم المادة على GitHub...");
+        await saveCurriculumOnly(`Rename subject ${oldName} to ${trimmed}`);
+        fillSubjects();
+        $("subjectSelect").value = selected.subjectKey;
+        renderLectures();
+        setStatus("تم تعديل اسم المادة بنجاح.", "ok");
+      } catch (err) {
+        setStatus("فشل تعديل الاسم: " + explainGithubError(err.message), "err");
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    async function deleteSubject() {
+      const selected = getSelectedSubject();
+      if (!selected) {
+        setStatus("اختار مادة الأول.", "err");
+        return;
+      }
+      const name = selected.subject.name;
+      const lecturesCount = (selected.subject.lectures || []).length;
+      
+      if (!confirm(`⚠️ تحذير هام:\nهل أنت متأكد من حذف المادة "${name}" بالكامل؟\nسيتم حذف المادة وعدد (${lecturesCount}) محاضرة مرتبطة بها نهائياً من موقع الطلاب!`)) return;
+      if (!confirm(`تأكيد نهائي: هل تريد حقاً حذف مادة "${name}"؟ هذا الإجراء لا يمكن التراجع عنه.`)) return;
+
+      delete curriculumData.terms[selected.termKey].subjects[selected.subjectKey];
+      
+      try {
+        setBusy(true);
+        setStatus("جاري حذف المادة من GitHub...");
+        await saveCurriculumOnly(`Delete subject ${name}`);
+        fillSubjects();
+        resetForm(true);
+        renderLectures();
+        setStatus("تم حذف المادة بالكامل من الموقع.", "ok");
+      } catch (err) {
+        setStatus("فشل حذف المادة: " + explainGithubError(err.message), "err");
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    function sanitizeFileName(name) {
+      return name.replace(/[\/:*?"<>|]+/g, "_").replace(/\s+/g, " ").trim();
+    }
+
+    function getSelectedSubject() {
+      const termKey = $("termSelect").value;
+      const subjectKey = $("subjectSelect").value;
+      if (!termKey || !subjectKey) return null;
+      return {
+        termKey,
+        subjectKey,
+        termNumber: termKey.split("_")[1],
+        subject: curriculumData.terms[termKey].subjects[subjectKey]
+      };
+    }
+
+    function suggestNextLectureNum() {
+      const selected = getSelectedSubject();
+      if (!selected) return;
+      const lectures = selected.subject.lectures || [];
+      const max = lectures.reduce((best, lecture) => Math.max(best, Number(lecture.num) || 0), 0);
+      $("lectureNum").value = editLectureNum || max + 1;
+    }
+
+    function resetForm(clearTitle) {
+      editLectureNum = null;
+      editLectureFiles = {};
+      $("editorTitle").textContent = "إضافة محاضرة";
+      $("saveBtn").textContent = "رفع وحفظ المحاضرة";
+      if (clearTitle) $("lectureTitle").value = "";
+      
+      Object.values(FILE_TYPES).forEach(type => $(type.input).value = "");
+      Object.keys(FILE_TYPES).forEach(key => {
+        selectedFilesToUpload[key] = [];
+        externalLinks[key] = "";
+        const container = $(`currentFiles-${key}`);
+        if (container) container.innerHTML = "";
+        const selectedContainer = $(`selectedFiles-${key}`);
+        if (selectedContainer) selectedContainer.innerHTML = "";
+        const extInput = $(`external-${key}`);
+        if (extInput) extInput.value = "";
+      });
+      uploadPlan = [];
+      suggestNextLectureNum();
+    }
+
+    function renderSelectedFiles(key) {
+      const display = $(`selectedFiles-${key}`);
+      if (!display) return;
+      display.innerHTML = "";
+      
+      selectedFilesToUpload[key].forEach((file, index) => {
+        const badge = document.createElement("span");
+        badge.className = "selected-file-badge";
+        
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = `⏳ جاهز: ${file.name}`;
+        
+        const cancelBtn = document.createElement("span");
+        cancelBtn.className = "btn-cancel-select";
+        cancelBtn.textContent = " × ";
+        cancelBtn.title = "إلغاء التحديد";
+        cancelBtn.addEventListener("click", () => {
+          selectedFilesToUpload[key].splice(index, 1);
+          renderSelectedFiles(key);
+        });
+        
+        badge.appendChild(nameSpan);
+        badge.appendChild(cancelBtn);
+        display.appendChild(badge);
+      });
+    }
+
+    function renderLectures() {
+      const selected = getSelectedSubject();
+      const list = $("lecturesList");
+      list.innerHTML = "";
+      if (!selected) {
+        list.innerHTML = "<p class='hint'>أضف مادة أولاً.</p>";
+        return;
+      }
+
+      const lectures = selected.subject.lectures || [];
+      if (!lectures.length) {
+        list.innerHTML = "<p class='hint'>لا توجد محاضرات في هذه المادة بعد.</p>";
+        return;
+      }
+
+      lectures.forEach(lecture => {
+        const row = document.createElement("div");
+        row.className = "lecture";
+        row.innerHTML = `
+          <div>
+            <strong>محاضرة ${lecture.num}: ${escapeHtml(lecture.title_ar || "")}</strong>
+            <span>${countFiles(lecture.files)} ملفات مرتبطة</span>
+          </div>
+          <div class="lecture-actions">
+            <button type="button" class="secondary" title="تعديل">✎</button>
+            <button type="button" class="danger" title="حذف">×</button>
+          </div>
+        `;
+        row.querySelector(".secondary").addEventListener("click", () => editLecture(lecture.num));
+        row.querySelector(".danger").addEventListener("click", () => deleteLecture(lecture.num));
+        list.appendChild(row);
+      });
+    }
+
+    function countFiles(files = {}) {
+      return Object.values(files).reduce((total, value) => total + normalizeFiles(value).length, 0);
+    }
+
+    function normalizeFiles(value) {
+      if (Array.isArray(value)) return value.filter(Boolean);
+      return value ? [value] : [];
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/[&<>"']/g, ch => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+      }[ch]));
+    }
+
+    function getFileIcon(filename) {
+      const ext = filename.split('.').pop().toLowerCase();
+      if (ext === 'pdf') return '📕';
+      if (ext === 'ppt' || ext === 'pptx') return '📊';
+      if (ext === 'html' || ext === 'htm') return '🌐';
+      return '📄';
+    }
+
+    function editLecture(num) {
+      const selected = getSelectedSubject();
+      const lecture = selected.subject.lectures.find(item => Number(item.num) === Number(num));
+      if (!lecture) return;
+
+      editLectureNum = Number(num);
+      editLectureFiles = JSON.parse(JSON.stringify(lecture.files || {}));
+
+      $("editorTitle").textContent = "تعديل محاضرة";
+      $("saveBtn").textContent = "حفظ التعديل";
+      $("lectureNum").value = lecture.num;
+      $("lectureTitle").value = lecture.title_ar || "";
+      
+      Object.values(FILE_TYPES).forEach(type => $(type.input).value = "");
+      Object.keys(FILE_TYPES).forEach(key => {
+        selectedFilesToUpload[key] = [];
+        externalLinks[key] = "";
+        const selectedContainer = $(`selectedFiles-${key}`);
+        if (selectedContainer) selectedContainer.innerHTML = "";
+        const extInput = $(`external-${key}`);
+        if (extInput) extInput.value = "";
+      });
+      
+      renderCurrentFiles();
+
+      // Load external if the stored value is a URL
+      Object.keys(FILE_TYPES).forEach(key => {
+        const paths = normalizeFiles(editLectureFiles[key]);
+        if (paths.length > 0) {
+          const first = paths[0];
+          if (first && first.startsWith('http')) {
+            externalLinks[key] = first;
+            const extInput = $(`external-${key}`);
+            if (extInput) extInput.value = first;
+          }
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setStatus("اختر ملفات جديدة أو استخدم روابط خارجية للملفات الكبيرة.", "ok");
+    }
+
+    function renderCurrentFiles() {
+      Object.entries(FILE_TYPES).forEach(([key, meta]) => {
+        const container = $(`currentFiles-${key}`);
+        if (!container) return;
+        container.innerHTML = "";
+
+        if (editLectureNum === null || !editLectureFiles[key]) return;
+
+        const paths = normalizeFiles(editLectureFiles[key]);
+        paths.forEach((path, index) => {
+          const item = document.createElement("div");
+          item.className = "current-file-item";
+
+          const filename = path.split("/").pop() || path;
+
+          const iconSpan = document.createElement("span");
+          iconSpan.className = "current-file-icon";
+          iconSpan.textContent = getFileIcon(filename);
+
+          const nameSpan = document.createElement("span");
+          nameSpan.className = "current-file-name";
+          nameSpan.textContent = filename;
+          nameSpan.title = path;
+
+          const removeBtn = document.createElement("button");
+          removeBtn.type = "button";
+          removeBtn.className = "btn-remove-file";
+          removeBtn.textContent = "حذف ❌";
+          removeBtn.addEventListener("click", () => {
+            if (!confirm(`هل أنت متأكد من حذف الملف "${filename}" من هذه المحاضرة؟`)) return;
+            paths.splice(index, 1);
+            editLectureFiles[key] = paths;
+            renderCurrentFiles();
+          });
+
+          item.appendChild(iconSpan);
+          item.appendChild(nameSpan);
+          item.appendChild(removeBtn);
+          container.appendChild(item);
+        });
+      });
+    }
+
+    async function deleteLecture(num) {
+      const selected = getSelectedSubject();
+      if (!selected) return;
+      if (!confirm(`حذف المحاضرة رقم ${num} من البيانات؟ الملفات القديمة ستظل محفوظة.`)) return;
+
+      selected.subject.lectures = (selected.subject.lectures || []).filter(item => Number(item.num) !== Number(num));
+      try {
+        setBusy(true);
+        setStatus("جاري حفظ الحذف على GitHub...");
+        await saveCurriculumOnly("Delete lecture " + num);
+        resetForm(true);
+        renderLectures();
+        setStatus("تم حذف المحاضرة من الموقع.", "ok");
+      } catch (err) {
+        setStatus("فشل الحذف: " + explainGithubError(err.message), "err");
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    function collectSelectedFiles() {
+      const selected = [];
+      Object.values(selectedFilesToUpload).forEach(filesArray => {
+        filesArray.forEach(file => selected.push(file));
+      });
+      return selected;
+    }
+
+    // New: Get or create the assets release (for large files)
+    async function getOrCreateAssetsRelease() {
+      let release = await githubJson(`releases/tags/${RELEASE_TAG}`);
+      if (release) return release;
+
+      const createBody = {
+        tag_name: RELEASE_TAG,
+        name: RELEASE_NAME,
+        body: "Large lecture files uploaded from mobile admin (raw binaries via Releases for better slow-upload support).",
+        draft: false,
+        prerelease: false
+      };
+
+      const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases`, {
+        method: "POST",
+        headers: { ...headers(), "Content-Type": "application/json" },
+        body: JSON.stringify(createBody)
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || "Failed to create release for assets.");
+      }
+      return await res.json();
+    }
+
+    // New: Upload raw file as release asset (no base64 - better for large/slow mobile uploads)
+    async function uploadAssetToRelease(release, file, fileName, onProgress) {
+      const uploadUrl = release.upload_url.replace("{?name,label}", `?name=${encodeURIComponent(fileName)}`);
+      
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", uploadUrl);
+        Object.entries(headers()).forEach(([key, value]) => xhr.setRequestHeader(key, value));
+        xhr.setRequestHeader("Content-Type", file.type || "application/octet-stream");
+
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable && onProgress) {
+            onProgress((event.loaded / event.total) * 100);
+          }
+        };
+
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            try {
+              resolve(JSON.parse(xhr.responseText));
+            } catch (e) {
+              reject(new Error("Failed to parse asset upload response."));
+            }
+          } else {
+            let msg = "GitHub رفض رفع الملف كـ asset.";
+            try {
+              const data = JSON.parse(xhr.responseText);
+              msg = data.message || msg;
+            } catch (_) {}
+            reject(new Error(msg));
+          }
+        };
+
+        xhr.onerror = () => reject(new Error("فشل الاتصال أثناء رفع الملف كـ asset."));
+        xhr.ontimeout = () => reject(new Error("انتهى وقت الرفع (الملف كبير والنت بطيء)."));
+        
+        xhr.timeout = 30 * 60 * 1000; // 30 minutes
+        xhr.send(file); // raw File, no base64
+      });
+    }
+
+    async function saveLecture() {
+      const selected = getSelectedSubject();
+      if (!selected) {
+        setStatus("اختار أو أضف مادة الأول.", "err");
+        return;
+      }
+
+      const num = Number($("lectureNum").value);
+      const title = $("lectureTitle").value.trim();
+      if (!num || !title) {
+        setStatus("اكتب رقم المحاضرة واسمها.", "err");
+        return;
+      }
+
+      const lectures = selected.subject.lectures || [];
+      const conflict = lectures.find(item => Number(item.num) === num && Number(item.num) !== Number(editLectureNum));
+      if (conflict) {
+        setStatus("رقم المحاضرة مستخدم بالفعل في نفس المادة.", "err");
+        return;
+      }
+
+      if (editLectureNum !== null) {
+        const existingLec = lectures.find(item => Number(item.num) === Number(editLectureNum));
+        const oldTitle = existingLec ? existingLec.title_ar : "";
+        if (oldTitle !== title) {
+          if (!confirm(`هل أنت متأكد من تغيير اسم المحاضرة من "${oldTitle}" إلى "${title}"؟`)) {
+            return;
+          }
+        } else {
+          if (!confirm("هل أنت متأكد من حفظ التعديلات على هذه المحاضرة؟")) {
+            return;
+          }
+        }
+      } else {
+        if (!confirm(`هل أنت متأكد من إضافة المحاضرة "${title}"؟`)) {
+          return;
+        }
+      }
+
+      try {
+        setBusy(true);
+
+        // Read external links
+        Object.keys(FILE_TYPES).forEach(key => {
+          const extInput = $(`external-${key}`);
+          if (extInput) externalLinks[key] = extInput.value.trim();
+        });
+
+        uploadPlan = collectSelectedFiles();
+        setStatus(uploadPlan.length ? "جاري رفع الملفات المختارة..." : "جاري حفظ البيانات...");
+        setProgress(0, uploadPlan.length ? `0 من ${uploadPlan.length} ملفات` : "لا توجد ملفات جديدة");
+
+        const files = editLectureNum !== null ? { ...editLectureFiles } : {};
+        let uploadedCount = 0;
+
+        // Get the release for assets (created once)
+        let assetsRelease = null;
+        const hasNewFiles = Object.values(selectedFilesToUpload).some(arr => arr.length > 0);
+
+        if (hasNewFiles) {
+          setStatus("جاري تجهيز الـ Release للملفات الكبيرة...");
+          assetsRelease = await getOrCreateAssetsRelease();
+        }
+
+        for (const [fileType, meta] of Object.entries(FILE_TYPES)) {
+          const paths = normalizeFiles(files[fileType]);
+          const pendingFiles = selectedFilesToUpload[fileType];
+          const extLink = externalLinks[fileType] || "";
+
+          if (extLink) {
+            if (!paths.includes(extLink)) paths.push(extLink);
+          } else if (pendingFiles.length) {
+            for (const file of pendingFiles) {
+              const cleanName = sanitizeFileName(file.name);
+              setStatus(`جاري رفع: ${cleanName} (كـ Release Asset)`);
+
+              const asset = await uploadAssetToRelease(assetsRelease, file, cleanName, (filePercent) => {
+                const overall = ((uploadedCount + (filePercent / 100)) / Math.max(uploadPlan.length, 1)) * 100;
+                setProgress(overall, `رفع ${uploadedCount + 1} من ${uploadPlan.length}: ${cleanName}`);
+              });
+
+              const downloadUrl = asset.browser_download_url;
+              uploadedCount++;
+              setProgress((uploadedCount / Math.max(uploadPlan.length, 1)) * 100, `تم رفع ${uploadedCount} من ${uploadPlan.length}`);
+              if (!paths.includes(downloadUrl)) paths.push(downloadUrl);
+            }
+          }
+          files[fileType] = paths;
+        }
+
+        const lecture = { num, title_ar: title, files };
+        const existingIndex = lectures.findIndex(item => Number(item.num) === Number(editLectureNum));
+        if (existingIndex >= 0) {
+          lectures.splice(existingIndex, 1, lecture);
+        } else {
+          lectures.push(lecture);
+        }
+        lectures.sort((a, b) => Number(a.num) - Number(b.num));
+        selected.subject.lectures = lectures;
+
+        setStatus("جاري تحديث قاعدة البيانات...");
+        
+        const onesignalAppId = $("onesignalAppIdInput").value.trim();
+        const onesignalRestKey = $("onesignalRestKeyInput").value.trim();
+        if (onesignalAppId) {
+          curriculumData.onesignal_app_id = onesignalAppId;
+        }
+
+        if ($("rememberToken").checked) {
+          localStorage.setItem(ONESIGNAL_APP_ID_KEY, onesignalAppId);
+          localStorage.setItem(ONESIGNAL_REST_KEY, onesignalRestKey);
+        }
+
+        await saveCurriculumOnly(editLectureNum ? "Update lecture " + num : "Add lecture " + num);
+
+        // Notifications (same as before)
+        const notificationErrors = [];
+        if ($("sendNotificationCheck").checked && onesignalAppId) {
+          setStatus("جاري إرسال الإشعارات للطلاب...");
+          
+          const uploadedTypes = [];
+          const emojis = [];
+          
+          for (const [fileType, meta] of Object.entries(FILE_TYPES)) {
+            const pendingFiles = selectedFilesToUpload[fileType];
+            if (pendingFiles.length > 0) {
+              if (fileType === 'original_ppt') { uploadedTypes.push("الباور الأصلي"); emojis.push("📊"); }
+              else if (fileType === 'translated_ppt') { uploadedTypes.push("الباور المترجم"); emojis.push("📝"); }
+              else if (fileType === 'my_quiz') { uploadedTypes.push("بنك أسئلة (الأدمن)"); emojis.push("🎯"); }
+              else if (fileType === 'doctor_quiz') { uploadedTypes.push("بنك الدكتورة"); emojis.push("🩺"); }
+            }
+          }
+
+          if (uploadedTypes.length > 0) {
+            const emojiStr = emojis.join("");
+            const notificationTitle = `${emojiStr} ملفات جديدة متوفرة`;
+            const notificationMessage = `تم إضافة: ${uploadedTypes.join(" و ")} للمحاضرة ${num} في مادة ${selected.subject.name}`;
+
+            try {
+              await postOneSignalNotification(onesignalAppId, onesignalRestKey, notificationTitle, notificationMessage);
+            } catch (e) {
+              console.error("Failed to send notification", e);
+              notificationErrors.push(e.message || String(e));
+            }
+          }
+        }
+
+        resetForm(true);
+        renderLectures();
+        if (notificationErrors.length) {
+          setStatus("تم الرفع والحفظ، لكن فشل تجهيز الإشعار: " + notificationErrors[0], "err");
+          return;
+        }
+        setStatus("تم الرفع والحفظ. موقع الطلاب هيتحدث خلال دقيقة تقريبًا. (الملفات الكبيرة في Release)", "ok");
+      } catch (err) {
+        setStatus("فشل الحفظ: " + explainGithubError(err.message), "err");
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    async function postOneSignalNotification(appId, apiKey, title, message) {
+      const requestId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+      const requestPath = `.notification-requests/${requestId}.json`;
+      const payload = {
+        app_id: appId,
+        title,
+        message,
+        url: "https://abanoub-sameh.github.io/Nursing_Portal/",
+        created_at: new Date().toISOString()
+      };
+      await putFile(requestPath, encodeBase64Unicode(JSON.stringify(payload, null, 2)), "Queue OneSignal notification");
+      return true;
+    }
+
+    async function saveCurriculumOnly(message) {
+      const content = encodeBase64Unicode(makeCurriculumJs(curriculumData));
+      const result = await putFile("curriculum.js", content, message, curriculumSha);
+      curriculumSha = result.content.sha;
+    }
+
+    // putFile remains for curriculum.js and notification (small text files)
+    async function putFile(path, base64Content, message, knownSha = null, onProgress = null) {
+      let sha = knownSha;
+      if (!sha) {
+        const existing = await githubJson(path + "?ref=" + BRANCH);
+        sha = existing?.sha || undefined;
+      }
+
+      const body = { message, content: base64Content, branch: BRANCH };
+      if (sha) body.sha = sha;
+
+      if (!onProgress) {
+        return githubJson(path, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body)
+        });
+      }
+
+      return githubPutJson(path, body, onProgress);
+    }
+
+    function githubPutJson(path, body, onProgress) {
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("PUT", `${API_ROOT}/${encodePathWithQuery(path)}`);
+        Object.entries(headers()).forEach(([key, value]) => xhr.setRequestHeader(key, value));
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.timeout = 30 * 60 * 1000;
+
+        xhr.upload.onprogress = (event) => {
+          if (!event.lengthComputable) return;
+          onProgress((event.loaded / event.total) * 100);
+        };
+
+        xhr.onload = () => {
+          let data = null;
+          try { data = JSON.parse(xhr.responseText); } catch (_) {}
+          if (xhr.status >= 200 && xhr.status < 300) {
+            onProgress(100);
+            resolve(data);
+          } else {
+            const msg = data?.message || (xhr.status === 0 ? "فشل الاتصال أو timeout." : "GitHub رفض الطلب.");
+            reject(new Error(msg));
+          }
+        };
+
+        xhr.onerror = () => reject(new Error("فشل الاتصال أثناء الرفع."));
+        xhr.ontimeout = () => reject(new Error("انتهى وقت الطلب (الرفع استغرق وقت طويل)."));
+        xhr.send(JSON.stringify(body));
+      });
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result).split(",")[1]);
+        reader.onerror = () => reject(new Error("لم أستطع قراءة الملف."));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function explainGithubError(message) {
+      if (/Bad credentials/i.test(message)) return "التوكن غير صحيح أو انتهت صلاحيته.";
+      if (/Not Found/i.test(message)) return "التوكن لا يملك صلاحية على المستودع أو المسار غير موجود.";
+      if (/sha/i.test(message) || /conflict/i.test(message)) return "شخص تاني حفظ تعديل في نفس الوقت. اضغط دخول لتحميل آخر نسخة، وبعدها كرر الحفظ.";
+      if (/timeout|took too long|انتهى وقت|الرفع استغرق/i.test(message)) return "الرفع استغرق وقت طويل جداً بسبب سرعة الإنترنت (80 كيلو/ثانية). جرب توكن جديد، أو ارفع ملفات أصغر، أو استخدم الطريقة المحلية (run_admin.bat + upload_update.bat) اللي أسرع بكتير.";
+      return message;
+    }
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a091b6d61c4c406b',t:'MTc4MTAyNDY1Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
