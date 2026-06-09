@@ -219,13 +219,17 @@ const curriculumData = {
           "lectures": [
             {
               "num": 1,
-              "title_ar": "المحاضره الاولى",
+              "title_ar": "المحاضره الاولى - Overview to Biostatistics",
               "files": {
                 "original_ppt": [
                   "terms/term_1/biostatistics/original/Biostatisic - 1st lecture.pdf"
                 ],
-                "translated_ppt": [],
-                "my_quiz": [],
+                "translated_ppt": [
+                  "terms/term_1/biostatistics/guides/نظرة عامة على الإحصاء الحيوي – محاضرة 1 مترحم _ Overview to Biostatistics.pdf"
+                ],
+                "my_quiz": [
+                  "terms/term_1/biostatistics/quizzes/Biostatistics_L1_Overview_Quiz.html"
+                ],
                 "doctor_quiz": []
               }
             },
