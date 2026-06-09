@@ -162,7 +162,7 @@ const curriculumData = {
                 "my_quiz": [],
                 "doctor_quiz": []
               }
-            },
+            }
           ]
         },
         "microbiology": {
