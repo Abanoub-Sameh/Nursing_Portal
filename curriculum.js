@@ -26,12 +26,10 @@ const curriculumData = {
               "num": 2,
               "title_ar": "المحاضره الثانيه",
               "files": {
-                "original_ppt": [
-                  "terms/term_1/anatomy/original/9 Skeletal system.pdf"
-                ],
-                "translated_ppt": [],
-                "my_quiz": [],
-                "doctor_quiz": []
+                "original_ppt": "terms/term_1/anatomy/original/9 Skeletal system.pdf",
+                "translated_ppt": "terms/term_1/anatomy/guides/الجهاز الهيكلي – محاضرة 2 مترحم  _ Skeletal System.pdf",
+                "my_quiz": "terms/term_1/anatomy/quizzes/Anatomy_Quiz_Skeletal.html",
+                "doctor_quiz": ""
               }
             }
           ]
@@ -125,20 +123,12 @@ const curriculumData = {
           "lectures": [
             {
               "num": 1,
-              "title_ar": "فسيولجى الدم",
+              "title_ar": "المحاضره الثانية -  Blood Physiology",
               "files": {
-                "original_ppt": [
-                  "terms/term_1/physiology/original/Physiology  1.pdf"
-                ],
-                "translated_ppt": [
-                  "terms/term_1/physiology/guides/Blood_Physiology_Slides_Per_Page.pdf"
-                ],
-                "my_quiz": [
-                  "terms/term_1/physiology/quizzes/Physiology_Quiz_L1,2.html"
-                ],
-                "doctor_quiz": [
-                  "terms/term_1/physiology/quizzes/Questions_L1_Blood_Spring_2026.pdf"
-                ]
+                "original_ppt": "terms/term_1/physiology/original/Physiology  1.pdf",
+                "translated_ppt": "terms/term_1/physiology/guides/Blood_Physiology_Slides_Per_Page.pdf",
+                "my_quiz": "terms/term_1/physiology/quizzes/Physiology_Quiz_L1,2.html",
+                "doctor_quiz": "terms/term_1/physiology/quizzes/Questions_L1_Blood_Spring_2026.pdf"
               }
             },
             {
@@ -153,14 +143,12 @@ const curriculumData = {
             },
             {
               "num": 3,
-              "title_ar": "المحاضرة الثالثة فسيولوجي",
+              "title_ar": "المحاضرة الثالثة - CVS Physiology",
               "files": {
-                "original_ppt": [
-                  "https://github.com/Abanoub-Sameh/Nursing_Portal/releases/download/lecture-assets/term_1-physiology-lec3-test-slow-20260609.pdf"
-                ],
-                "translated_ppt": [],
-                "my_quiz": [],
-                "doctor_quiz": []
+                "original_ppt": "https://github.com/Abanoub-Sameh/Nursing_Portal/releases/download/lecture-assets/term_1-physiology-lec3-test-slow-20260609.pdf",
+                "translated_ppt": "terms/term_1/physiology/guides/مترجم  محاضرة 3 _ CVS Physiology.pdf",
+                "my_quiz": "terms/term_1/physiology/quizzes/Physio_L3_CVS_Quiz.html",
+                "doctor_quiz": ""
               }
             }
           ]
@@ -213,26 +201,22 @@ const curriculumData = {
             },
             {
               "num": 2,
-              "title_ar": "المحاضره الثانية",
+              "title_ar": "المحاضره الثانية - Data collection1.",
               "files": {
-                "original_ppt": [
-                  "terms/term_1/biostatistics/original/Data collection1.pdf"
-                ],
-                "translated_ppt": [],
-                "my_quiz": [],
-                "doctor_quiz": []
+                "original_ppt": "terms/term_1/biostatistics/original/Data collection1.pdf",
+                "translated_ppt": "terms/term_1/biostatistics/guides/جمع البيانات وأنواعها –محاضرة 2 مترحم  _ Data Collection.pdf",
+                "my_quiz": "terms/term_1/biostatistics/quizzes/Biostatistics_L2_DataTypes_Quiz.html",
+                "doctor_quiz": ""
               }
             },
             {
               "num": 3,
-              "title_ar": "المحاضره الثالثه",
+              "title_ar": "المحاضره الثالثه - Methods of Data Collection",
               "files": {
-                "original_ppt": [
-                  "terms/term_1/biostatistics/original/data collection - 3rd lecture.pdf"
-                ],
-                "translated_ppt": [],
-                "my_quiz": [],
-                "doctor_quiz": []
+                "original_ppt": "terms/term_1/biostatistics/original/data collection - 3rd lecture.pdf",
+                "translated_ppt": "terms/term_1/biostatistics/guides/طرق جمع البيانات – محاضرة 3 مترحم  _ Methods of Data Collection.pdf",
+                "my_quiz": "terms/term_1/biostatistics/quizzes/Biostatistics_L3_DataCollection_Quiz.html",
+                "doctor_quiz": ""
               }
             }
           ]
