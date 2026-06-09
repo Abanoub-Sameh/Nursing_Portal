@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="theme-color" content="#090d16">
-  <title>أدمن الموبايل 📱 | مكتبة تمريض</title>
+  <title>أدمن الموبايل 📱 | مكتبة تمريض (Improved - Releases)</title>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   
   <style>
+    /* Same styles as before for consistency */
     :root {
       --bg: #090d16;
       --panel: #101626;
@@ -157,7 +158,6 @@
       gap: 16px;
     }
 
-    /* Category Cards to visually group each upload section */
     .file-category-card {
       background: var(--panel-2);
       border: 1px solid var(--line);
@@ -183,7 +183,6 @@
       padding-bottom: 10px;
     }
 
-    /* Target specific file inputs wrappers */
     .file-box {
       background: rgba(99, 102, 241, 0.02);
       border: 1px dashed rgba(99, 102, 241, 0.2);
@@ -362,7 +361,6 @@
       font-size: 0.82rem;
     }
 
-    /* Fixed files list styles using CSS Grid (no flex layout direction bugs) */
     .current-files-list {
       display: grid;
       gap: 6px;
@@ -535,8 +533,8 @@
   <main class="shell">
     <header>
       <div>
-        <h1>أدمن الموبايل 📱</h1>
-        <p class="sub">رفع محاضرة أو تعديل بيانات الموقع من أي مكان</p>
+        <h1>أدمن الموبايل 📱 (Improved - GitHub Releases)</h1>
+        <p class="sub">رفع محاضرة أو تعديل بيانات الموقع من أي مكان - حل الرفع البطيء</p>
       </div>
       <div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-end;">
         <a class="student-link" href="https://abanoub-sameh.github.io/Nursing_Portal" target="_blank">فتح موقع الطلاب</a>
@@ -571,7 +569,6 @@
         </label>
         <button class="secondary" id="clearTokenBtn" type="button">مسح المحفوظ</button>
       </div>
-      <!-- Save OneSignal Settings button — only visible after login -->
       <button id="saveSettingsBtn" type="button" class="success" style="display:none;">💾 حفظ إعدادات OneSignal على الموقع</button>
     </section>
 
@@ -590,7 +587,6 @@
         </label>
       </div>
 
-      <!-- Subject management row -->
       <div id="subjectManageRow" style="display: flex; gap: 10px; margin-top: -6px; margin-bottom: 6px;">
         <button class="secondary" id="editSubjectBtn" type="button" style="min-height: 38px; padding: 6px 12px; font-size: 0.82rem; width: auto; flex: 1; box-shadow: none;">✏️ تعديل اسم المادة</button>
         <button class="danger" id="deleteSubjectBtn" type="button" style="min-height: 38px; padding: 6px 12px; font-size: 0.82rem; width: auto; flex: 1; box-shadow: none;">🗑️ حذف المادة</button>
@@ -615,11 +611,13 @@
           </div>
           <label class="file-box">
             <span class="file-box-title">اضغط هنا لاختيار ملفات جديدة</span>
-            <small>يمكنك اختيار ملف أو أكثر (.ppt, .pptx, .pdf)</small>
+            <small>يمكنك اختيار ملف أو أكثر (.ppt, .pptx, .pdf) - للملفات الكبيرة استخدم الروابط الخارجية أو الطريقة المحلية</small>
             <input id="fileOriginal" type="file" accept=".ppt,.pptx,.pdf" multiple>
           </label>
           <div id="selectedFiles-original_ppt" class="selected-files-list"></div>
           <div id="currentFiles-original_ppt" class="current-files-list"></div>
+          <label style="font-size:0.75rem; color:var(--muted);">رابط خارجي (Drive - للملفات الكبيرة على النت البطيء)</label>
+          <input id="external-original_ppt" type="text" placeholder="https://drive.google.com/file/d/XXXX/view" style="min-height:32px; font-size:0.75rem;">
         </div>
 
         <!-- Category: Translated PPT -->
@@ -634,6 +632,8 @@
           </label>
           <div id="selectedFiles-translated_ppt" class="selected-files-list"></div>
           <div id="currentFiles-translated_ppt" class="current-files-list"></div>
+          <label style="font-size:0.75rem; color:var(--muted);">رابط خارجي (Drive - للملفات الكبيرة على النت البطيء)</label>
+          <input id="external-translated_ppt" type="text" placeholder="https://drive.google.com/file/d/XXXX/view" style="min-height:32px; font-size:0.75rem;">
         </div>
 
         <!-- Category: Admin Quiz -->
@@ -648,6 +648,8 @@
           </label>
           <div id="selectedFiles-my_quiz" class="selected-files-list"></div>
           <div id="currentFiles-my_quiz" class="current-files-list"></div>
+          <label style="font-size:0.75rem; color:var(--muted);">رابط خارجي (Drive - للملفات الكبيرة على النت البطيء)</label>
+          <input id="external-my_quiz" type="text" placeholder="https://drive.google.com/file/d/XXXX/view" style="min-height:32px; font-size:0.75rem;">
         </div>
 
         <!-- Category: Doctor Quiz -->
@@ -662,6 +664,8 @@
           </label>
           <div id="selectedFiles-doctor_quiz" class="selected-files-list"></div>
           <div id="currentFiles-doctor_quiz" class="current-files-list"></div>
+          <label style="font-size:0.75rem; color:var(--muted);">رابط خارجي (Drive - للملفات الكبيرة على النت البطيء)</label>
+          <input id="external-doctor_quiz" type="text" placeholder="https://drive.google.com/file/d/XXXX/view" style="min-height:32px; font-size:0.75rem;">
         </div>
       </div>
 
@@ -679,8 +683,9 @@
       </div>
 
       <div class="hint" style="margin-top: 8px; font-size: 0.75rem; color: #f59e0b;">
-        ⚠️ ملاحظة مهمة: الرفع من الموبايل بيستخدم GitHub API مباشرة (base64 + طلب واحد). لو النت بطيء (80 كيلو/ثانية) أو الملف كبير، الرفع هيطول جداً وقد يفشل أو يرجع خطأ توكن. 
-        <strong>للملفات الكبيرة أو النت البطيء: استخدم الطريقة المحلية (شغّل run_admin.bat ثم upload_update.bat بعدين) — الرفع المحلي سريع والـ push أفضل.</strong>
+        ⚠️ ملاحظة مهمة: هذه النسخة تستخدم **GitHub Releases** للملفات الكبيرة (بدل Contents API). 
+        الرفع الخام (بدون base64) أفضل للملفات الكبيرة. لو النت بطيء جدًا (80 كيلو/ثانية) لملف >5 ميجا، الرفع هيطول وقد يفشل. 
+        <strong>للملفات الكبيرة أو النت البطيء: استخدم الطريقة المحلية (run_admin.bat + upload_update.bat) — أسرع وأضمن بكتير.</strong>
       </div>
     </section>
 
@@ -707,7 +712,11 @@
     const TOKEN_STORAGE_KEY = "nursingPortalGithubToken";
     const ONESIGNAL_APP_ID_KEY = "nursingPortalOneSignalAppId";
     const ONESIGNAL_REST_KEY = "nursingPortalOneSignalRestKey";
-    
+
+    // GitHub Releases for large files - this is the key improvement for mobile slow uploads
+    const RELEASE_TAG = "lecture-assets";
+    const RELEASE_NAME = "Lecture Files (Mobile Uploads)";
+
     const FILE_TYPES = {
       original_ppt: { input: "fileOriginal", folder: "original" },
       translated_ppt: { input: "fileTranslated", folder: "guides" },
@@ -723,12 +732,18 @@
     let uploadPlan = [];
     let busy = false;
 
-    // Managed arrays for new selected files pending upload
     const selectedFilesToUpload = {
       original_ppt: [],
       translated_ppt: [],
       my_quiz: [],
       doctor_quiz: []
+    };
+
+    let externalLinks = {
+      original_ppt: "",
+      translated_ppt: "",
+      my_quiz: "",
+      doctor_quiz: ""
     };
 
     const $ = (id) => document.getElementById(id);
@@ -765,19 +780,17 @@
       }
     });
 
-    // Listen to changes on file inputs and add them to programmatically managed list
+    // File input listeners
     Object.entries(FILE_TYPES).forEach(([key, meta]) => {
       const input = $(meta.input);
       if (input) {
         input.addEventListener("change", () => {
           Array.from(input.files || []).forEach(file => {
-            // Avoid adding exact duplicate file objects
             const isDuplicate = selectedFilesToUpload[key].some(f => f.name === file.name && f.size === file.size);
             if (!isDuplicate) {
               selectedFilesToUpload[key].push(file);
             }
           });
-          // Clear input so user can choose same files again if needed
           input.value = "";
           renderSelectedFiles(key);
         });
@@ -819,7 +832,7 @@
         "Accept": "application/vnd.github+json",
         "Authorization": `token ${token}`,
         "X-GitHub-Api-Version": "2022-11-28",
-        "User-Agent": "NursingPortal-MobileAdmin/1.0 (https://abanoub-sameh.github.io/Nursing_Portal/)"
+        "User-Agent": "NursingPortal-MobileAdmin/1.0"
       };
     }
 
@@ -853,14 +866,12 @@
       return path.split("/").map(encodeURIComponent).join("/");
     }
 
-    // Unicode safe base64 decoder
     function decodeBase64Unicode(base64) {
       const binary = atob(base64.replace(/\n/g, ""));
       const bytes = Uint8Array.from(binary, ch => ch.charCodeAt(0));
       return new TextDecoder().decode(bytes);
     }
 
-    // Unicode safe base64 encoder
     function encodeBase64Unicode(text) {
       const bytes = new TextEncoder().encode(text);
       let binary = "";
@@ -907,7 +918,7 @@
         $("lecturesCard").style.display = "grid";
         $("loginCard").style.display = "none";
         $("toggleSettingsBtn").style.display = "block";
-        $("saveSettingsBtn").style.display = "none"; // hidden until settings panel opened
+        $("saveSettingsBtn").style.display = "none";
         renderLectures();
         setStatus("تم تحميل البيانات. تقدر تضيف أو تعدل الآن.", "ok");
       } catch (err) {
@@ -986,7 +997,6 @@
         await saveCurriculumOnly("Update OneSignal App ID settings");
         setStatus("✅ تم حفظ إعدادات OneSignal ورفعها على الموقع بنجاح! سيظهر الإشعار للطلاب خلال دقيقة.", "ok");
 
-        // Close settings panel
         $("loginCard").style.display = "none";
         $("saveSettingsBtn").style.display = "none";
         $("toggleSettingsBtn").textContent = "⚙️ الإعدادات والمفاتيح";
@@ -1032,7 +1042,7 @@
       }
       const oldName = selected.subject.name;
       const newName = prompt(`تعديل اسم المادة من "${oldName}" إلى:`, oldName);
-      if (newName === null) return; // cancelled
+      if (newName === null) return;
       const trimmed = newName.trim();
       if (!trimmed) {
         setStatus("اسم المادة لا يمكن أن يكون فارغاً.", "err");
@@ -1089,7 +1099,7 @@
     }
 
     function sanitizeFileName(name) {
-      return name.replace(/[\\/:*?"<>|]+/g, "_").replace(/\s+/g, " ").trim();
+      return name.replace(/[\/:*?"<>|]+/g, "_").replace(/\s+/g, " ").trim();
     }
 
     function getSelectedSubject() {
@@ -1121,13 +1131,14 @@
       
       Object.values(FILE_TYPES).forEach(type => $(type.input).value = "");
       Object.keys(FILE_TYPES).forEach(key => {
-        // Reset managed arrays
         selectedFilesToUpload[key] = [];
-        // Clear UI displays
+        externalLinks[key] = "";
         const container = $(`currentFiles-${key}`);
         if (container) container.innerHTML = "";
         const selectedContainer = $(`selectedFiles-${key}`);
         if (selectedContainer) selectedContainer.innerHTML = "";
+        const extInput = $(`external-${key}`);
+        if (extInput) extInput.value = "";
       });
       uploadPlan = [];
       suggestNextLectureNum();
@@ -1233,14 +1244,30 @@
       Object.values(FILE_TYPES).forEach(type => $(type.input).value = "");
       Object.keys(FILE_TYPES).forEach(key => {
         selectedFilesToUpload[key] = [];
+        externalLinks[key] = "";
         const selectedContainer = $(`selectedFiles-${key}`);
         if (selectedContainer) selectedContainer.innerHTML = "";
+        const extInput = $(`external-${key}`);
+        if (extInput) extInput.value = "";
       });
       
       renderCurrentFiles();
 
+      // Load external if the stored value is a URL
+      Object.keys(FILE_TYPES).forEach(key => {
+        const paths = normalizeFiles(editLectureFiles[key]);
+        if (paths.length > 0) {
+          const first = paths[0];
+          if (first && first.startsWith('http')) {
+            externalLinks[key] = first;
+            const extInput = $(`external-${key}`);
+            if (extInput) extInput.value = first;
+          }
+        }
+      });
+
       window.scrollTo({ top: 0, behavior: "smooth" });
-      setStatus("اختر ملفات جديدة لإضافتها، أو احذف ملفات قديمة من القائمة بالأسفل.", "ok");
+      setStatus("اختر ملفات جديدة أو استخدم روابط خارجية للملفات الكبيرة.", "ok");
     }
 
     function renderCurrentFiles() {
@@ -1256,7 +1283,7 @@
           const item = document.createElement("div");
           item.className = "current-file-item";
 
-          const filename = path.split("/").pop();
+          const filename = path.split("/").pop() || path;
 
           const iconSpan = document.createElement("span");
           iconSpan.className = "current-file-icon";
@@ -1289,7 +1316,7 @@
     async function deleteLecture(num) {
       const selected = getSelectedSubject();
       if (!selected) return;
-      if (!confirm(`حذف المحاضرة رقم ${num} من البيانات؟ الملفات القديمة ستظل محفوظة على GitHub.`)) return;
+      if (!confirm(`حذف المحاضرة رقم ${num} من البيانات؟ الملفات القديمة ستظل محفوظة.`)) return;
 
       selected.subject.lectures = (selected.subject.lectures || []).filter(item => Number(item.num) !== Number(num));
       try {
@@ -1314,6 +1341,73 @@
       return selected;
     }
 
+    // New: Get or create the assets release (for large files)
+    async function getOrCreateAssetsRelease() {
+      let release = await githubJson(`releases/tags/${RELEASE_TAG}`);
+      if (release) return release;
+
+      const createBody = {
+        tag_name: RELEASE_TAG,
+        name: RELEASE_NAME,
+        body: "Large lecture files uploaded from mobile admin (raw binaries via Releases for better slow-upload support).",
+        draft: false,
+        prerelease: false
+      };
+
+      const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases`, {
+        method: "POST",
+        headers: { ...headers(), "Content-Type": "application/json" },
+        body: JSON.stringify(createBody)
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || "Failed to create release for assets.");
+      }
+      return await res.json();
+    }
+
+    // New: Upload raw file as release asset (no base64 - better for large/slow mobile uploads)
+    async function uploadAssetToRelease(release, file, fileName, onProgress) {
+      const uploadUrl = release.upload_url.replace("{?name,label}", `?name=${encodeURIComponent(fileName)}`);
+      
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", uploadUrl);
+        Object.entries(headers()).forEach(([key, value]) => xhr.setRequestHeader(key, value));
+        xhr.setRequestHeader("Content-Type", file.type || "application/octet-stream");
+
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable && onProgress) {
+            onProgress((event.loaded / event.total) * 100);
+          }
+        };
+
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            try {
+              resolve(JSON.parse(xhr.responseText));
+            } catch (e) {
+              reject(new Error("Failed to parse asset upload response."));
+            }
+          } else {
+            let msg = "GitHub رفض رفع الملف كـ asset.";
+            try {
+              const data = JSON.parse(xhr.responseText);
+              msg = data.message || msg;
+            } catch (_) {}
+            reject(new Error(msg));
+          }
+        };
+
+        xhr.onerror = () => reject(new Error("فشل الاتصال أثناء رفع الملف كـ asset."));
+        xhr.ontimeout = () => reject(new Error("انتهى وقت الرفع (الملف كبير والنت بطيء)."));
+        
+        xhr.timeout = 30 * 60 * 1000; // 30 minutes
+        xhr.send(file); // raw File, no base64
+      });
+    }
+
     async function saveLecture() {
       const selected = getSelectedSubject();
       if (!selected) {
@@ -1335,7 +1429,6 @@
         return;
       }
 
-      // Confirmation prompt when adding or modifying a lecture
       if (editLectureNum !== null) {
         const existingLec = lectures.find(item => Number(item.num) === Number(editLectureNum));
         const oldTitle = existingLec ? existingLec.title_ar : "";
@@ -1356,6 +1449,13 @@
 
       try {
         setBusy(true);
+
+        // Read external links
+        Object.keys(FILE_TYPES).forEach(key => {
+          const extInput = $(`external-${key}`);
+          if (extInput) externalLinks[key] = extInput.value.trim();
+        });
+
         uploadPlan = collectSelectedFiles();
         setStatus(uploadPlan.length ? "جاري رفع الملفات المختارة..." : "جاري حفظ البيانات...");
         setProgress(0, uploadPlan.length ? `0 من ${uploadPlan.length} ملفات` : "لا توجد ملفات جديدة");
@@ -1363,23 +1463,36 @@
         const files = editLectureNum !== null ? { ...editLectureFiles } : {};
         let uploadedCount = 0;
 
+        // Get the release for assets (created once)
+        let assetsRelease = null;
+        const hasNewFiles = Object.values(selectedFilesToUpload).some(arr => arr.length > 0);
+
+        if (hasNewFiles) {
+          setStatus("جاري تجهيز الـ Release للملفات الكبيرة...");
+          assetsRelease = await getOrCreateAssetsRelease();
+        }
+
         for (const [fileType, meta] of Object.entries(FILE_TYPES)) {
           const paths = normalizeFiles(files[fileType]);
           const pendingFiles = selectedFilesToUpload[fileType];
+          const extLink = externalLinks[fileType] || "";
 
-          if (pendingFiles.length) {
+          if (extLink) {
+            if (!paths.includes(extLink)) paths.push(extLink);
+          } else if (pendingFiles.length) {
             for (const file of pendingFiles) {
               const cleanName = sanitizeFileName(file.name);
-              const path = `terms/term_${selected.termNumber}/${selected.subjectKey}/${meta.folder}/${cleanName}`;
-              setStatus(`جاري رفع: ${cleanName}`);
-              const base64 = await fileToBase64(file);
-              await putFile(path, base64, `Upload ${cleanName}`, null, (filePercent) => {
+              setStatus(`جاري رفع: ${cleanName} (كـ Release Asset)`);
+
+              const asset = await uploadAssetToRelease(assetsRelease, file, cleanName, (filePercent) => {
                 const overall = ((uploadedCount + (filePercent / 100)) / Math.max(uploadPlan.length, 1)) * 100;
                 setProgress(overall, `رفع ${uploadedCount + 1} من ${uploadPlan.length}: ${cleanName}`);
               });
+
+              const downloadUrl = asset.browser_download_url;
               uploadedCount++;
               setProgress((uploadedCount / Math.max(uploadPlan.length, 1)) * 100, `تم رفع ${uploadedCount} من ${uploadPlan.length}`);
-              if (!paths.includes(path)) paths.push(path);
+              if (!paths.includes(downloadUrl)) paths.push(downloadUrl);
             }
           }
           files[fileType] = paths;
@@ -1403,7 +1516,6 @@
           curriculumData.onesignal_app_id = onesignalAppId;
         }
 
-        // Save keys locally if remember token is active
         if ($("rememberToken").checked) {
           localStorage.setItem(ONESIGNAL_APP_ID_KEY, onesignalAppId);
           localStorage.setItem(ONESIGNAL_REST_KEY, onesignalRestKey);
@@ -1411,7 +1523,7 @@
 
         await saveCurriculumOnly(editLectureNum ? "Update lecture " + num : "Add lecture " + num);
 
-        // Send notifications if checked
+        // Notifications (same as before)
         const notificationErrors = [];
         if ($("sendNotificationCheck").checked && onesignalAppId) {
           setStatus("جاري إرسال الإشعارات للطلاب...");
@@ -1449,7 +1561,7 @@
           setStatus("تم الرفع والحفظ، لكن فشل تجهيز الإشعار: " + notificationErrors[0], "err");
           return;
         }
-        setStatus("تم الرفع والحفظ. موقع الطلاب هيتحدث خلال دقيقة تقريبًا.", "ok");
+        setStatus("تم الرفع والحفظ. موقع الطلاب هيتحدث خلال دقيقة تقريبًا. (الملفات الكبيرة في Release)", "ok");
       } catch (err) {
         setStatus("فشل الحفظ: " + explainGithubError(err.message), "err");
       } finally {
@@ -1477,6 +1589,7 @@
       curriculumSha = result.content.sha;
     }
 
+    // putFile remains for curriculum.js and notification (small text files)
     async function putFile(path, base64Content, message, knownSha = null, onProgress = null) {
       let sha = knownSha;
       if (!sha) {
@@ -1505,7 +1618,6 @@
         Object.entries(headers()).forEach(([key, value]) => xhr.setRequestHeader(key, value));
         xhr.setRequestHeader("Content-Type", "application/json");
 
-        // Very long timeout for slow uploads (30 minutes)
         xhr.timeout = 30 * 60 * 1000;
 
         xhr.upload.onprogress = (event) => {
@@ -1520,13 +1632,13 @@
             onProgress(100);
             resolve(data);
           } else {
-            const msg = data?.message || (xhr.status === 0 ? "فشل الاتصال أو timeout أثناء الرفع (النت بطيء)." : "GitHub رفض الطلب.");
+            const msg = data?.message || (xhr.status === 0 ? "فشل الاتصال أو timeout." : "GitHub رفض الطلب.");
             reject(new Error(msg));
           }
         };
 
-        xhr.onerror = () => reject(new Error("فشل الاتصال أثناء رفع الملف (تحقق من النت)."));
-        xhr.ontimeout = () => reject(new Error("انتهى وقت الطلب (الرفع استغرق أكثر من 30 دقيقة). النت بطيء جداً أو الملف كبير. استخدم الطريقة المحلية (run_admin.bat + upload_update.bat) للملفات الكبيرة."));
+        xhr.onerror = () => reject(new Error("فشل الاتصال أثناء الرفع."));
+        xhr.ontimeout = () => reject(new Error("انتهى وقت الطلب (الرفع استغرق وقت طويل)."));
         xhr.send(JSON.stringify(body));
       });
     }
@@ -1544,10 +1656,9 @@
       if (/Bad credentials/i.test(message)) return "التوكن غير صحيح أو انتهت صلاحيته.";
       if (/Not Found/i.test(message)) return "التوكن لا يملك صلاحية على المستودع أو المسار غير موجود.";
       if (/sha/i.test(message) || /conflict/i.test(message)) return "شخص تاني حفظ تعديل في نفس الوقت. اضغط دخول لتحميل آخر نسخة، وبعدها كرر الحفظ.";
-      if (/timeout|took too long|انتهى وقت|الرفع استغرق/i.test(message)) return "الرفع استغرق وقت طويل جداً بسبب سرعة الإنترنت (80 كيلو/ثانية). التوكن ممكن يكون انتهى صلاحيته أثناء الرفع، أو الطلب timeout. جرب توكن جديد، أو ارفع ملفات أصغر، أو استخدم الطريقة المحلية (run_admin.bat + upload_update.bat) اللي أسرع بكتير.";
+      if (/timeout|took too long|انتهى وقت|الرفع استغرق/i.test(message)) return "الرفع استغرق وقت طويل جداً بسبب سرعة الإنترنت (80 كيلو/ثانية). جرب توكن جديد، أو ارفع ملفات أصغر، أو استخدم الطريقة المحلية (run_admin.bat + upload_update.bat) اللي أسرع بكتير.";
       return message;
     }
   </script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0917196cc0778d0',t:'MTc4MTAyMTgxNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a091b6d61c4c406b',t:'MTc4MTAyNDY1Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
