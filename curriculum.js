@@ -150,6 +150,23 @@ const curriculumData = {
                 "my_quiz": "terms/term_1/physiology/quizzes/Physio_L3_CVS_Quiz.html",
                 "doctor_quiz": ""
               }
+            },
+            {
+              "num": 4,
+              "title_ar": "الحاضره الرابعه (باقي الcvs) + renal",
+              "files": {
+                "original_ppt": [
+                  "terms/term_1/physiology/original/Physiology_Renal_2026_Nursing Accelerated .pdf",
+                  "terms/term_1/physiology/original/Physiology of CVS_L2_Nursing Accelerated 2026.pdf"
+                ],
+                "translated_ppt": [
+                  "terms/term_1/physiology/guides/مترجم Physiology Lec 4 _ الناتج القلبي والصدمة.pdf"
+                ],
+                "my_quiz": [],
+                "doctor_quiz": [
+                  "terms/term_1/physiology/quizzes/MCQs_Renal_Nursing_Accelerated_2025-26 minus answers.pdf"
+                ]
+              }
             }
           ]
         },
