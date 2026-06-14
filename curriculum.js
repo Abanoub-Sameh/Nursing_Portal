@@ -74,8 +74,12 @@ const curriculumData = {
                 "original_ppt": [
                   "terms/term_1/terminology/original/محاضرات مصطلحات طبية.pdf"
                 ],
-                "translated_ppt": [],
-                "my_quiz": [],
+                "translated_ppt": [
+                  "terms/term_1/terminology/guides/المحاضرة الرابعة مترجمه - المصطلحات الطبية.pdf"
+                ],
+                "my_quiz": [
+                  "terms/term_1/terminology/quizzes/Medical_Terminology_L4_Quiz.html"
+                ],
                 "doctor_quiz": []
               }
             }
