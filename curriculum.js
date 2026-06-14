@@ -175,6 +175,20 @@ const curriculumData = {
                 "my_quiz": "terms/term_1/microbiology/quizzes/Micro_L2_Sterilization_Quiz.html",
                 "doctor_quiz": "terms/term_1/microbiology/quizzes/DOC-20251023-WA0002.(1).pdf"
               }
+            },
+            {
+              "num": 3,
+              "title_ar": "المحاضره الثالثه Immune System",
+              "files": {
+                "original_ppt": [
+                  "terms/term_1/microbiology/original/4-Nursing immunity 1.pdf"
+                ],
+                "translated_ppt": [
+                  "terms/term_1/microbiology/guides/Immune System 4 _ المحاضره الرابعه مترجمه.pdf"
+                ],
+                "my_quiz": [],
+                "doctor_quiz": []
+              }
             }
           ]
         },
