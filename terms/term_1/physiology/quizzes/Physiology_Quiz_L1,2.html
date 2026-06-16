@@ -1,0 +1,3556 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Physiology Question Bank – Blood & Pulmonary Physiology</title>
+    <meta name="description" content="Comprehensive physiology question bank for Nursing Faculty">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #070913;
+            --bg-secondary: #0e1122;
+            --bg-card: #181d37;
+            --bg-card-hover: #1f2648;
+            --accent-primary: #f43f5e; /* Crimson for Blood */
+            --accent-secondary: #0d9488; /* Teal for Pulmonary */
+            --accent-glow: rgba(244, 63, 94, 0.3);
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.12);
+            --success-border: rgba(16, 185, 129, 0.3);
+            --error: #ef4444;
+            --error-bg: rgba(239, 68, 68, 0.12);
+            --error-border: rgba(239, 68, 68, 0.3);
+            --warning: #f59e0b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border: rgba(255,255,255,0.06);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --shadow: 0 4px 24px rgba(0,0,0,0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 0%, rgba(244,63,94,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(13,148,136,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(99,102,241,0.05) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app-container {
+            position: relative;
+            z-index: 1;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 16px;
+            padding-bottom: 100px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            padding: 32px 16px 20px;
+            margin-bottom: 16px;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(244,63,94,0.12);
+            border: 1px solid rgba(244,63,94,0.25);
+            color: #fda4af;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 50px;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .header-badge .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f8fafc 0%, #fda4af 50%, #f43f5e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ===== CHAPTER SELECTOR ===== */
+        .chapter-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            background: var(--bg-secondary);
+            padding: 6px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        .chapter-btn {
+            flex: 1;
+            padding: 12px 8px;
+            border: none;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .chapter-btn.active {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .chapter-btn[data-chapter="blood"].active {
+            border-color: rgba(244, 63, 94, 0.4);
+            color: #fda4af;
+        }
+
+        .chapter-btn[data-chapter="pulmonary"].active {
+            border-color: rgba(13, 148, 136, 0.4);
+            color: #99f6e4;
+        }
+
+        /* ===== STATS BAR ===== */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(244,63,94,0.2);
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-primary);
+        }
+
+        .stat-value.correct { color: var(--success); }
+        .stat-value.wrong { color: var(--error); }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-section {
+            margin-bottom: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-header span {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 50px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        /* ===== MODE SELECTOR ===== */
+        .mode-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            flex: 1;
+            min-width: 100px;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-family: inherit;
+        }
+
+        .mode-btn:hover {
+            border-color: rgba(244,63,94,0.3);
+            color: var(--text-primary);
+        }
+
+        .mode-btn.active {
+            background: rgba(244,63,94,0.15);
+            border-color: var(--accent-primary);
+            color: #fda4af;
+            box-shadow: 0 0 20px rgba(244,63,94,0.15);
+        }
+
+        /* ===== TOPIC FILTER ===== */
+        .topic-filter {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            scrollbar-width: none;
+        }
+        .topic-filter::-webkit-scrollbar { display: none; }
+
+        .topic-chip {
+            white-space: nowrap;
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .topic-chip:hover {
+            border-color: rgba(244,63,94,0.3);
+        }
+
+        .topic-chip.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+        }
+
+        /* ===== QUESTION CARD ===== */
+        .question-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.4s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-card:nth-child(1) { animation-delay: 0.05s; }
+        .question-card:nth-child(2) { animation-delay: 0.1s; }
+        .question-card:nth-child(3) { animation-delay: 0.15s; }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .question-number .q-badge {
+            background: rgba(244,63,94,0.15);
+            color: #fda4af;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .question-topic-badge {
+            display: inline-block;
+            background: rgba(13,148,136,0.12);
+            color: #99f6e4;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .question-text {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }
+
+        /* ===== OPTIONS ===== */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: var(--radius-sm);
+            background: rgba(255,255,255,0.02);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: left;
+            font-family: inherit;
+            line-height: 1.5;
+            width: 100%;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: rgba(244,63,94,0.3);
+            background: rgba(244,63,94,0.06);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .option-btn .option-letter {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.06);
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: all 0.25s ease;
+        }
+
+        .option-btn:hover:not(.disabled) .option-letter {
+            background: rgba(244,63,94,0.2);
+            color: #fda4af;
+        }
+
+        .option-btn.correct {
+            border-color: var(--success-border);
+            background: var(--success-bg);
+            color: var(--success);
+        }
+        .option-btn.correct .option-letter {
+            background: rgba(16,185,129,0.2);
+            color: var(--success);
+        }
+
+        .option-btn.wrong {
+            border-color: var(--error-border);
+            background: var(--error-bg);
+            color: var(--error);
+        }
+        .option-btn.wrong .option-letter {
+            background: rgba(239,68,68,0.2);
+            color: var(--error);
+        }
+
+        .option-btn.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .option-btn.correct.disabled, .option-btn.wrong.disabled {
+            opacity: 1;
+        }
+
+        .option-btn.selected-exam {
+            border-color: rgba(244,63,94,0.5);
+            background: rgba(244,63,94,0.1);
+            color: #fda4af;
+        }
+        .option-btn.selected-exam .option-letter {
+            background: rgba(244,63,94,0.2);
+            color: #fda4af;
+        }
+
+        /* ===== EXPLANATION ===== */
+        .explanation {
+            margin-top: 14px;
+            padding: 14px 16px;
+            background: rgba(244,63,94,0.06);
+            border: 1px solid rgba(244,63,94,0.15);
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .explanation strong {
+            color: #fda4af;
+        }
+
+        /* ===== PAGINATION / CONTROLS ===== */
+        .controls-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(7,9,19,0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            padding: 12px 16px;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .ctrl-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .ctrl-btn:hover {
+            border-color: rgba(244,63,94,0.3);
+            color: var(--text-primary);
+        }
+
+        .ctrl-btn.primary {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+        }
+
+        .ctrl-btn.primary:hover {
+            background: #fb7185;
+            box-shadow: 0 0 24px var(--accent-glow);
+        }
+
+        .ctrl-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            display: flex;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ===== RESULT SCREEN ===== */
+        .result-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .result-screen .score-circle {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 6px solid var(--accent-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            position: relative;
+        }
+
+        .result-screen .score-circle::before {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            border: 2px solid rgba(244,63,94,0.15);
+        }
+
+        .score-percent {
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-family: 'JetBrains Mono', monospace;
+            color: #fda4af;
+        }
+
+        .score-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .result-message {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .result-sub {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 32px;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .result-stat {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+        }
+
+        .result-stat .val {
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .result-stat .lbl {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        /* ===== ACTION ROW ===== */
+        .action-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-btn:hover {
+            border-color: rgba(244,63,94,0.3);
+            color: var(--text-primary);
+            background: rgba(244,63,94,0.08);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .app-container { padding: 10px; padding-bottom: 90px; }
+            .header h1 { font-size: 1.4rem; }
+            .question-card { padding: 18px; }
+            .stat-value { font-size: 1.25rem; }
+            .stats-bar { gap: 6px; }
+            .stat-card { padding: 10px 6px; }
+            .chapter-selector { flex-direction: column; gap: 4px; }
+            .chapter-btn { padding: 10px 4px; }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+        /* Hidden */
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="app-container" id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-badge">
+                <span class="pulse"></span> abanoub sameh </div>
+            <h1>🩺 Physiology Question Bank</h1>
+          
+            <div class="arabic-notice" style="margin-top: 16px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.25); color: #f59e0b; padding: 12px 14px; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600; direction: rtl; display: inline-flex; align-items: center; gap: 8px; justify-content: center; width: 100%;">
+                ⚠️  الكويز ده علي  المحاضره الاولي والتانيه في مادة الفسيولوجي.
+            </div>
+        </header>
+
+        <!-- Chapter Selector -->
+        <div class="chapter-selector">
+            <button class="chapter-btn active" data-chapter="all" onclick="selectChapter('all')">🎯 All Content (المقرر كامل)</button>
+            <button class="chapter-btn" data-chapter="blood" onclick="selectChapter('blood')">🩸 Blood Physiology (الدم)</button>
+            <button class="chapter-btn" data-chapter="pulmonary" onclick="selectChapter('pulmonary')">🫁 Respiratory Physiology (التنفس)</button>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-bar" id="statsBar">
+            <div class="stat-card">
+                <div class="stat-value" id="totalQ">0</div>
+                <div class="stat-label">Questions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value correct" id="correctCount">0</div>
+                <div class="stat-label">Correct</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value wrong" id="wrongCount">0</div>
+                <div class="stat-label">Wrong</div>
+            </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-section">
+            <div class="progress-header">
+                <span>Progress</span>
+                <span id="progressText">0 / 0</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill" style="width:0%"></div>
+            </div>
+        </div>
+
+        <!-- Mode Selector -->
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="practice" id="modePractice">📝 Practice</button>
+            <button class="mode-btn" data-mode="exam" id="modeExam">🎯 Exam Mode</button>
+            <button class="mode-btn" data-mode="review" id="modeReview">📖 Review Wrong</button>
+        </div>
+
+        <!-- Topic Filter -->
+        <div class="topic-filter" id="topicFilter"></div>
+
+        <!-- Action Row -->
+        <div class="action-row">
+            <button class="action-btn" id="shuffleBtn" onclick="shuffleQuestions()">🔀 Shuffle</button>
+            <button class="action-btn" id="resetBtn" onclick="resetQuiz()">🔄 Reset All</button>
+            <button class="action-btn" id="showAllBtn" onclick="showAllQuestions()">📋 Show All</button>
+        </div>
+
+        <!-- Questions Container -->
+        <div id="questionsContainer"></div>
+
+        <!-- Result Screen -->
+        <div id="resultScreen" class="result-screen hidden"></div>
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="controls-bar" id="controlsBar">
+        <button class="ctrl-btn" id="prevBtn" onclick="changePage(-1)">◀ Prev</button>
+        <span class="page-info" id="pageInfo">1 / 1</span>
+        <button class="ctrl-btn" id="nextBtn" onclick="changePage(1)">Next ▶</button>
+        <button class="ctrl-btn primary hidden" id="finishBtn" onclick="showResults()">🏁 Finish</button>
+    </div>
+
+    <script>
+    // ========================
+    // QUESTION BANK DATABASE
+    // ========================
+    const allQuestions = [
+    {
+        "chapter": "blood",
+        "topic": "Intro & Properties",
+        "question": "What is the normal total blood volume in a healthy man weighing 70 kg?",
+        "options": [
+            "4200 ml",
+            "5000 ml",
+            "5600 ml",
+            "6500 ml"
+        ],
+        "correct": 2,
+        "explanation": "According to the lecture, the normal total blood volume in a 70 kg man is about 5600 ml.",
+        "id": 1
+    },
+    {
+        "chapter": "blood",
+        "topic": "Intro & Properties",
+        "question": "The total blood volume in a healthy adult represents approximately what percentage of their body weight?",
+        "options": [
+            "5%",
+            "8%",
+            "12%",
+            "15%"
+        ],
+        "correct": 1,
+        "explanation": "Total blood volume represents about 8% of the body weight.",
+        "id": 2
+    },
+    {
+        "chapter": "blood",
+        "topic": "Intro & Properties",
+        "question": "Which of the following is considered the correct description of blood as a tissue?",
+        "options": [
+            "An epithelial tissue with static cells",
+            "A body tissue whose cells circulate through the cardiovascular system",
+            "A muscular tissue that contracts autonomously",
+            "A purely liquid substance containing no actual cells"
+        ],
+        "correct": 1,
+        "explanation": "Blood is considered as one of the body tissues whose cells circulate through the cardiovascular system.",
+        "id": 3
+    },
+    {
+        "chapter": "blood",
+        "topic": "Intro & Properties",
+        "question": "Which of the following functions of blood involves white blood cells and antibodies?",
+        "options": [
+            "Transport medium",
+            "Defensive functions",
+            "Hemostatic function",
+            "Homeostatic function"
+        ],
+        "correct": 1,
+        "explanation": "Defensive functions of blood are carried out by white blood cells (leucocytes / leukocytes) which attack invading organisms and produce antibodies.",
+        "id": 4
+    },
+    {
+        "chapter": "blood",
+        "topic": "Intro & Properties",
+        "question": "When platelets and coagulation factors prevent blood loss after an injury, which function of blood is this?",
+        "options": [
+            "Transport medium",
+            "Defensive function",
+            "Hemostatic function",
+            "Homeostatic function"
+        ],
+        "correct": 2,
+        "explanation": "The hemostatic function of blood helps blood clotting and stops blood loss if a vessel is injured.",
+        "id": 5
+    },
+    {
+        "chapter": "blood",
+        "topic": "Intro & Properties",
+        "question": "How does blood help regulate body temperature as part of its transport function?",
+        "options": [
+            "By transporting heat liberated from all body tissues to the skin",
+            "By absorbing external cold air directly through the veins",
+            "By producing heat through chemical reactions in the plasma",
+            "By circulating cold water from the kidneys to the heart"
+        ],
+        "correct": 0,
+        "explanation": "Blood acts as a transport medium that carries heat liberated from all body tissues to the skin, helping to regulate body temperature.",
+        "id": 6
+    },
+    {
+        "chapter": "blood",
+        "topic": "Intro & Properties",
+        "question": "Maintaining a constant internal environment (temperature, pH, water balance) is known as which function of blood?",
+        "options": [
+            "Hemostatic function",
+            "Homeostatic function",
+            "Transport function",
+            "Defensive function"
+        ],
+        "correct": 1,
+        "explanation": "The homeostatic function helps to maintain the composition of the tissue fluid (internal environment of the body) constant.",
+        "id": 7
+    },
+    {
+        "chapter": "blood",
+        "topic": "Intro & Properties",
+        "question": "What is the normal proportion of Red Blood Cells (packed cell volume or haematocrit value) in whole blood?",
+        "options": [
+            "35%",
+            "45%",
+            "55%",
+            "65%"
+        ],
+        "correct": 1,
+        "explanation": "Composition of blood includes 45% RBCs (packed cell volume or haematocrit value) and 55% plasma.",
+        "id": 8
+    },
+    {
+        "chapter": "blood",
+        "topic": "Intro & Properties",
+        "question": "What is the water content of blood plasma?",
+        "options": [
+            "45%",
+            "55%",
+            "70%",
+            "90%"
+        ],
+        "correct": 3,
+        "explanation": "Plasma is composed of 90% water and 10% solids.",
+        "id": 9
+    },
+    {
+        "chapter": "blood",
+        "topic": "Intro & Properties",
+        "question": "Which of the following solids is the most abundant in plasma?",
+        "options": [
+            "Electrolytes (0.9%)",
+            "Urea and uric acid (2%)",
+            "Plasma proteins (7.1%)",
+            "Glucose and lipids (1%)"
+        ],
+        "correct": 2,
+        "explanation": "The 10% solids in plasma contain 7.1% plasma proteins, 0.9% inorganic salts, and 2% organic substances like urea and uric acid.",
+        "id": 10
+    },
+    {
+        "chapter": "blood",
+        "topic": "Intro & Properties",
+        "question": "What is the fundamental difference between blood plasma and blood serum?",
+        "options": [
+            "Serum is blood plasma that has clotting factors like fibrinogen removed",
+            "Plasma is liquid after blood has already coagulated",
+            "Serum contains anticoagulants while plasma does not",
+            "There is no difference; they are different names for the same fluid"
+        ],
+        "correct": 0,
+        "explanation": "Serum = plasma \u2013 clotting factors. Plasma is treated with anticoagulants, while serum is the liquid part after coagulation occurs (devoid of clotting factors).",
+        "id": 11
+    },
+    {
+        "chapter": "blood",
+        "topic": "Intro & Properties",
+        "question": "What is the normal range of blood volume in adult females?",
+        "options": [
+            "3 \u2013 4 L",
+            "4 \u2013 5 L",
+            "5 \u2013 6 L",
+            "6 \u2013 7 L"
+        ],
+        "correct": 1,
+        "explanation": "Normal blood volume is 5 \u2013 6 L in males and 4 \u2013 5 L in females.",
+        "id": 12
+    },
+    {
+        "chapter": "blood",
+        "topic": "Intro & Properties",
+        "question": "Compare the normal pH of arterial blood versus venous blood:",
+        "options": [
+            "Arterial pH is 7.35; venous pH is 7.4",
+            "Arterial pH is 7.4; venous pH is 7.35",
+            "Arterial pH is 7.0; venous pH is 7.4",
+            "Arterial pH is 7.4; venous pH is 7.45"
+        ],
+        "correct": 1,
+        "explanation": "The normal pH of arterial blood is 7.4 (slightly alkaline) and venous blood is 7.35.",
+        "id": 13
+    },
+    {
+        "chapter": "blood",
+        "topic": "Intro & Properties",
+        "question": "What is the viscosity of whole blood compared to water?",
+        "options": [
+            "Same as water",
+            "Twice as water",
+            "Five times as water",
+            "Ten times as water"
+        ],
+        "correct": 2,
+        "explanation": "Plasma viscosity is twice as water, while whole blood viscosity is 5 times as water.",
+        "id": 14
+    },
+    {
+        "chapter": "blood",
+        "topic": "Intro & Properties",
+        "question": "What are the specific gravities of plasma, cells, and whole blood respectively?",
+        "options": [
+            "Plasma: 1060, Cells: 1030, Whole blood: 1090",
+            "Plasma: 1030, Cells: 1090, Whole blood: 1060",
+            "Plasma: 1090, Cells: 1060, Whole blood: 1030",
+            "Plasma: 1030, Cells: 1060, Whole blood: 1090"
+        ],
+        "correct": 1,
+        "explanation": "Specific gravity: Plasma is 1030, Cells are 1090, and Whole blood is 1060.",
+        "id": 15
+    },
+    {
+        "chapter": "blood",
+        "topic": "Intro & Properties",
+        "question": "What causes the majority of the total osmotic pressure of blood (5500 mmHg)?",
+        "options": [
+            "Plasma proteins",
+            "Red blood cells",
+            "Crystalloids (electrolytes, glucose, urea)",
+            "White blood cells"
+        ],
+        "correct": 2,
+        "explanation": "Total osmotic pressure is 5500 mmHg, which is due to crystalloids (electrolytes, glucose, urea, etc.). Plasma proteins contribute only 25 mmHg (the effective osmotic pressure).",
+        "id": 16
+    },
+    {
+        "chapter": "blood",
+        "topic": "Intro & Properties",
+        "question": "The osmotic pressure exerted specifically by plasma proteins is called the effective osmotic pressure and is equal to:",
+        "options": [
+            "10 mmHg",
+            "25 mmHg",
+            "100 mmHg",
+            "5500 mmHg"
+        ],
+        "correct": 1,
+        "explanation": "The effective osmotic pressure is 25 mmHg, due to plasma proteins.",
+        "id": 17
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "What is the normal concentration of total plasma proteins in blood?",
+        "options": [
+            "3.5 gm%",
+            "5.5 gm%",
+            "7.1 gm%",
+            "9.0 gm%"
+        ],
+        "correct": 2,
+        "explanation": "The normal concentration of total plasma proteins is 7.1 gm%.",
+        "id": 18
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "Identify the plasma protein concentrations of Albumin and Globulin:",
+        "options": [
+            "Albumin: 2.5 gm%, Globulin: 4 gm%",
+            "Albumin: 4 gm%, Globulin: 2.5 gm%",
+            "Albumin: 0.4 gm%, Globulin: 0.01 gm%",
+            "Albumin: 4 gm%, Globulin: 0.4 gm%"
+        ],
+        "correct": 1,
+        "explanation": "Albumin concentration is 4 gm% and Globulin is 2.5 gm%.",
+        "id": 19
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "Identify the plasma protein concentrations of Fibrinogen and Prothrombin:",
+        "options": [
+            "Fibrinogen: 0.01 gm%, Prothrombin: 0.4 gm%",
+            "Fibrinogen: 4 gm%, Prothrombin: 2.5 gm%",
+            "Fibrinogen: 0.4 gm%, Prothrombin: 0.01 gm%",
+            "Fibrinogen: 2.5 gm%, Prothrombin: 4 gm%"
+        ],
+        "correct": 2,
+        "explanation": "Fibrinogen is 0.4 gm% and Prothrombin is 0.01 gm%.",
+        "id": 20
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "What is the normal range of the Albumin/Globulin (A/G) ratio?",
+        "options": [
+            "0.5 to 1.0",
+            "1.2 to 1.7",
+            "2.0 to 2.5",
+            "3.0 to 3.5"
+        ],
+        "correct": 1,
+        "explanation": "The normal A/G ratio is 1.2 to 1.7.",
+        "id": 21
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "Which organ is the sole site of synthesis for Albumin, Fibrinogen, and Prothrombin?",
+        "options": [
+            "Spleen",
+            "Kidney",
+            "Liver",
+            "Bone marrow"
+        ],
+        "correct": 2,
+        "explanation": "The liver synthesizes Albumin, Fibrinogen, and Prothrombin.",
+        "id": 22
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "Where are Globulins synthesized in the body?",
+        "options": [
+            "Exclusively in the liver",
+            "In the kidneys and spleen",
+            "In the liver and the tissue macrophage system (TMS)",
+            "In the cardiovascular endothelium"
+        ],
+        "correct": 2,
+        "explanation": "Globulins are synthesized in the liver and the tissue macrophage system (TMS) which includes the liver, spleen, bone marrow, and lymph nodes.",
+        "id": 23
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "A decrease in the A/G ratio can occur in which of the following conditions?",
+        "options": [
+            "Malnutrition and starvation",
+            "Liver disease (decreased albumin synthesis)",
+            "Kidney disease (loss of albumin in urine)",
+            "All of the above"
+        ],
+        "correct": 3,
+        "explanation": "The A/G ratio decreases in malnutrition (deficient protein intake), liver disease (decreased synthesis), and kidney disease (loss of albumin in urine, i.e. nephrosis/albuminuria).",
+        "id": 24
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "During starvation, how do plasma proteins support tissue metabolism?",
+        "options": [
+            "They directly transform into glucose",
+            "They enter a dynamic state, serving as a source of amino acids for tissues",
+            "They crystallize in the tissues to prevent water loss",
+            "They stop circulating to preserve energy"
+        ],
+        "correct": 1,
+        "explanation": "Plasma proteins have a dynamic state and play a role in tissue metabolism, acting as a source of amino acids for tissues, especially during starvation.",
+        "id": 25
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "Which fraction of globulins is primarily responsible for defensive functions (antibodies)?",
+        "options": [
+            "Alpha-1 globulin",
+            "Alpha-2 globulin",
+            "Beta globulin",
+            "Gamma globulin"
+        ],
+        "correct": 3,
+        "explanation": "Gamma globulins have defensive functions (acting as antibodies).",
+        "id": 26
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "The viscosity of plasma is mainly determined by which features of plasma proteins?",
+        "options": [
+            "Their acidic pH",
+            "Their spherical shape and low molecular weight",
+            "Their elongated shape and high molecular weight",
+            "Their ability to bind sodium ions"
+        ],
+        "correct": 2,
+        "explanation": "Viscosity of plasma is due to the elongated shape and high molecular weight of certain plasma proteins (like fibrinogen).",
+        "id": 27
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "Which of the following plasma proteins are carriers for substances like iron, hormones, and CO2?",
+        "options": [
+            "Albumin and Globulins",
+            "Prothrombin and Fibrinogen",
+            "Heme and Globin",
+            "Antithrombin and Heparin"
+        ],
+        "correct": 0,
+        "explanation": "Albumin and globulins act as carriers for iron, hormones, CO2, and other substances.",
+        "id": 28
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "What role do Fibrinogen and Prothrombin play in blood?",
+        "options": [
+            "Transporting oxygen",
+            "Blood clotting",
+            "Defending against bacteria",
+            "Buffering pH changes"
+        ],
+        "correct": 1,
+        "explanation": "Fibrinogen and prothrombin are essential for blood clotting.",
+        "id": 29
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "Why is Albumin the main protein responsible for the colloid osmotic (oncotic) pressure (COP) of blood?",
+        "options": [
+            "It is the only protein synthesized by the liver",
+            "It has a small molecular weight but is present in the largest quantity (4 gm%)",
+            "It is the largest protein in size",
+            "It is highly fibrous"
+        ],
+        "correct": 1,
+        "explanation": "Albumin is responsible for about 75-80% of COP because of its small molecular weight and high concentration compared to other plasma proteins.",
+        "id": 30
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "How does sodium affect the osmotic function of albumin in the blood?",
+        "options": [
+            "Sodium repels albumin, forcing water out of capillaries",
+            "Sodium is attracted to albumin (due to negative charge), increasing the osmotic pressure from 25 to 28 mmHg, pulling water in",
+            "Sodium destroys albumin, leading to edema",
+            "Sodium binds to globulin instead of albumin"
+        ],
+        "correct": 1,
+        "explanation": "Sodium is attracted to albumin, which increases the effective osmotic pressure (from 25 to 28 mmHg), withdrawing water into capillaries and helping to regulate blood volume.",
+        "id": 31
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "At the arteriolar end of a capillary, the net filtration force of 13 mmHg is calculated from:",
+        "options": [
+            "Hydrostatic pressure of 10 mmHg and osmotic pressure of 28 mmHg",
+            "Outward forces (Pc + Pi_if = 30 + 8 = 38 mmHg) minus inward forces (Pip + Pif = 28 - 3 = 25 mmHg)",
+            "Total osmotic pressure of 5500 mmHg",
+            "The A/G ratio multiplied by specific gravity"
+        ],
+        "correct": 1,
+        "explanation": "Outward forces at arteriolar end are capillary pressure (30 mmHg) and tissue fluid osmotic pressure (8 mmHg) = 38 mmHg. Inward forces are plasma colloid osmotic pressure (28 mmHg) and tissue fluid hydrostatic pressure (-3 mmHg) = 25 mmHg. Net force = 38 - 25 = 13 mmHg (favoring filtration), according to Starling forces.",
+        "id": 32
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "At the venous end of a capillary, the net absorption force of -7 mmHg occurs because:",
+        "options": [
+            "The capillary hydrostatic pressure falls to 10 mmHg, making inward forces exceed outward forces",
+            "Plasma proteins are filtered out of the capillary",
+            "Sodium ions leave the capillary completely",
+            "The tissue fluid pressure rises to 30 mmHg"
+        ],
+        "correct": 0,
+        "explanation": "At the venous end, capillary hydrostatic pressure (Pc) drops to 10 mmHg. Outward forces are Pc + Pi_if = 10 + 8 = 18 mmHg. Inward forces remain 28 - 3 = 25 mmHg. Net force = 18 - 25 = -7 mmHg (favoring absorption of water back into the capillary).",
+        "id": 33
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "How do plasma proteins help keep normal capillary permeability?",
+        "options": [
+            "They enter the structure of the cement substance of the capillary pores, preventing leakage",
+            "They actively dilate the capillary endothelial cells",
+            "They destroy the capillary endothelium during inflammation",
+            "They form a thick muscular sheath around capillaries"
+        ],
+        "correct": 0,
+        "explanation": "Plasma proteins enter the structure of the cement substance of the capillary pores, keeping capillary permeability normal.",
+        "id": 34
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "Why do plasma proteins act as blood buffers?",
+        "options": [
+            "They are highly alkaline substances",
+            "At normal pH, they are composed of a weak acid (proteinic acid) and its base (sodium proteinate)",
+            "They are strong acids that neutralize bases",
+            "They contain large amounts of calcium ions"
+        ],
+        "correct": 1,
+        "explanation": "At normal blood pH, plasma proteins act as buffers because they consist of weak proteinic acid and its salt, sodium proteinate, allowing them to react with both strong acids and strong bases to prevent pH shifts.",
+        "id": 35
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "When a strong acid like lactic acid is added to blood, what reaction prevents a drop in pH?",
+        "options": [
+            "Lactic acid + weak proteinic acid -> sodium proteinate",
+            "Lactic acid + sodium proteinate -> weak proteinic acid + sodium lactate",
+            "Lactic acid + albumin -> globulin + water",
+            "Lactic acid + fibrinogen -> clotting"
+        ],
+        "correct": 1,
+        "explanation": "Lactic acid reacts with the base sodium proteinate to form weak proteinic acid and sodium lactate, buffering the pH.",
+        "id": 36
+    },
+    {
+        "chapter": "blood",
+        "topic": "Plasma Proteins",
+        "question": "When a strong base like NaOH is added to blood, how is it buffered by plasma proteins?",
+        "options": [
+            "It reacts with sodium proteinate to form lactic acid",
+            "It reacts with weak proteinic acid to form sodium proteinate and water",
+            "It is filtered out by the glomerulus immediately",
+            "It binds to prothrombin"
+        ],
+        "correct": 1,
+        "explanation": "A strong base like NaOH reacts with weak proteinic acid to form sodium proteinate (a weak base) and water, buffering the pH.",
+        "id": 37
+    },
+    {
+        "chapter": "blood",
+        "topic": "Red Blood Cells",
+        "question": "What are the structural characteristics of normal human red blood cells?",
+        "options": [
+            "Nucleated, biconvex discs with rigid walls",
+            "Non-nucleated, circular, biconcave discs with flexible walls",
+            "Nucleated, irregular cells with pseudopodia",
+            "Non-nucleated, biconvex discs with rigid walls"
+        ],
+        "correct": 1,
+        "explanation": "RBCs are non-nucleated, circular, biconcave discs with flexible walls.",
+        "id": 38
+    },
+    {
+        "chapter": "blood",
+        "topic": "Red Blood Cells",
+        "question": "What is the normal concentration of red blood cells in healthy adult men?",
+        "options": [
+            "3.9 \u2013 5.5 million per microliter",
+            "4.1 \u2013 6.0 million per microliter",
+            "6.0 \u2013 7.0 million per microliter",
+            "1.5 \u2013 3.0 million per microliter"
+        ],
+        "correct": 1,
+        "explanation": "The normal count in men is 4.1 \u2013 6.0 million per microliter.",
+        "id": 39
+    },
+    {
+        "chapter": "blood",
+        "topic": "Red Blood Cells",
+        "question": "Why is the normal RBC count lower in women (3.9 \u2013 5.5 million/\u00b5l) compared to men?",
+        "options": [
+            "Due to menstruation and lack of androgens",
+            "Due to smaller heart sizes and lower blood pressure",
+            "Because women consume less dietary iron",
+            "Because women have higher specific gravity of blood"
+        ],
+        "correct": 0,
+        "explanation": "The lower RBC count in women is due to blood loss during menstruation and lack of androgens (which stimulate erythropoiesis).",
+        "id": 40
+    },
+    {
+        "chapter": "blood",
+        "topic": "Red Blood Cells",
+        "question": "A decreased number of erythrocytes in the blood is clinically defined as:",
+        "options": [
+            "Leukocytosis",
+            "Erythrocytosis",
+            "Anemia",
+            "Thrombocytopenia"
+        ],
+        "correct": 2,
+        "explanation": "A decrease in the number of erythrocytes in the blood is usually associated with anemia.",
+        "id": 41
+    },
+    {
+        "chapter": "blood",
+        "topic": "Red Blood Cells",
+        "question": "What is the term used to describe an increased number of erythrocytes in the blood?",
+        "options": [
+            "Anemia",
+            "Erythrocytosis (polycythemia)",
+            "Leukopenia",
+            "Purpura"
+        ],
+        "correct": 1,
+        "explanation": "An increased number of erythrocytes is called erythrocytosis (or polycythemia).",
+        "id": 42
+    },
+    {
+        "chapter": "blood",
+        "topic": "Red Blood Cells",
+        "question": "In which of the following is erythrocytosis considered a normal physiological adaptation?",
+        "options": [
+            "People living at high altitudes (low oxygen tension)",
+            "Infants due to intrauterine oxygen lack (can reach 7 million/\u00b5l)",
+            "Athletes due to increased tissue oxygen needs",
+            "All of the above"
+        ],
+        "correct": 3,
+        "explanation": "Physiologic adaptation erythrocytosis is found in people living at high altitudes, infants, and athletes.",
+        "id": 43
+    },
+    {
+        "chapter": "blood",
+        "topic": "Red Blood Cells",
+        "question": "Where is the primary site of red blood cell formation during fetal life?",
+        "options": [
+            "Bone marrow of membranous bones",
+            "Liver, spleen, and lymph nodes",
+            "Bone marrow of all bones",
+            "Thymus and thyroid glands"
+        ],
+        "correct": 1,
+        "explanation": "During fetal life, RBCs are formed in the liver, spleen, and lymph nodes.",
+        "id": 44
+    },
+    {
+        "chapter": "blood",
+        "topic": "Red Blood Cells",
+        "question": "From birth until the age of 5 years, RBCs are synthesized in:",
+        "options": [
+            "The liver and spleen only",
+            "The bone marrow of all bones",
+            "The bone marrow of membranous bones only",
+            "The lymph nodes"
+        ],
+        "correct": 1,
+        "explanation": "After birth until 5 years of age, RBCs are formed in the bone marrow of all bones.",
+        "id": 45
+    },
+    {
+        "chapter": "blood",
+        "topic": "Red Blood Cells",
+        "question": "During adult life (after the age of 25 years), RBC formation occurs in:",
+        "options": [
+            "The bone marrow of all bones",
+            "The liver and spleen",
+            "The bone marrow of membranous bones (vertebrae, sternum, ribs, skull)",
+            "The shaft of long bones like the femur"
+        ],
+        "correct": 2,
+        "explanation": "During adult life (after 25), RBC formation occurs only in the bone marrow of membranous bones (vertebrae, sternum, ribs, skull) and proximal ends of humerus/femur.",
+        "id": 46
+    },
+    {
+        "chapter": "blood",
+        "topic": "Red Blood Cells",
+        "question": "What is the average life span of a red blood cell in the circulation?",
+        "options": [
+            "10 days",
+            "30 days",
+            "90 days",
+            "120 days"
+        ],
+        "correct": 3,
+        "explanation": "The life span of RBCs is 120 days.",
+        "id": 47
+    },
+    {
+        "chapter": "blood",
+        "topic": "Red Blood Cells",
+        "question": "Where are old, worn-out red blood cells destroyed in the body?",
+        "options": [
+            "In the kidneys",
+            "In the tissue macrophage system (TMS), mainly the spleen",
+            "In the lungs during gas exchange",
+            "In the liver by bile secretion"
+        ],
+        "correct": 1,
+        "explanation": "Senescent RBCs are destroyed in the tissue macrophage system (TMS), mainly the spleen.",
+        "id": 48
+    },
+    {
+        "chapter": "blood",
+        "topic": "Red Blood Cells",
+        "question": "What are the two major components released during RBC destruction that are recycled or stored?",
+        "options": [
+            "Albumin and Globulin",
+            "Heme (iron) and Globin (protein)",
+            "Erythropoietin and Calcium",
+            "Histamine and Heparin"
+        ],
+        "correct": 1,
+        "explanation": "Destruction of RBCs releases heme and globin, which are reused or stored.",
+        "id": 49
+    },
+    {
+        "chapter": "blood",
+        "topic": "Red Blood Cells",
+        "question": "What is the normal hemoglobin content range in adult males?",
+        "options": [
+            "10 - 12 g/dL",
+            "12 - 16 g/dL",
+            "14 - 18 g/dL",
+            "18 - 22 g/dL"
+        ],
+        "correct": 2,
+        "explanation": "Normal hemoglobin content in males is 14 - 18 g/dL (and 12 - 16 g/dL in females).",
+        "id": 50
+    },
+    {
+        "chapter": "blood",
+        "topic": "Red Blood Cells",
+        "question": "Why is it essential that hemoglobin remains inside red blood cells rather than floating free in plasma?",
+        "options": [
+            "Free hemoglobin is rapidly consumed by white blood cells",
+            "Free hemoglobin produces serious toxic effects (such as kidney tubule blockage)",
+            "Free hemoglobin converts into platelets",
+            "Free hemoglobin causes hyperventilation"
+        ],
+        "correct": 1,
+        "explanation": "Hb must exist inside RBCs because if free in plasma, it produces serious toxic effects (e.g. renal failure and jaundice, as seen in incompatible transfusion).",
+        "id": 51
+    },
+    {
+        "chapter": "blood",
+        "topic": "Red Blood Cells",
+        "question": "Which enzyme inside RBCs catalyzes the reversible reaction between carbon dioxide and water?",
+        "options": [
+            "Carbonic anhydrase",
+            "Antithrombin",
+            "Thromboplastin",
+            "Amylase"
+        ],
+        "correct": 0,
+        "explanation": "RBCs contain carbonic anhydrase, which increases the rate of the reversible reaction between CO2 and H2O to form carbonic acid by several thousand-fold.",
+        "id": 52
+    },
+    {
+        "chapter": "blood",
+        "topic": "Erythropoiesis",
+        "question": "What is the scientific term for the synthesis of red blood cells?",
+        "options": [
+            "Hemostasis",
+            "Erythropoiesis",
+            "Leukopoiesis",
+            "Phagocytosis"
+        ],
+        "correct": 1,
+        "explanation": "Erythropoiesis is the process of synthesis of RBCs.",
+        "id": 53
+    },
+    {
+        "chapter": "blood",
+        "topic": "Erythropoiesis",
+        "question": "Which of the following dietary elements is specifically required for the synthesis of the globin portion of hemoglobin?",
+        "options": [
+            "Iron",
+            "Proteins",
+            "Vitamin B12",
+            "Folic acid"
+        ],
+        "correct": 1,
+        "explanation": "Proteins are required for the synthesis of the globin portion of Hb.",
+        "id": 54
+    },
+    {
+        "chapter": "blood",
+        "topic": "Erythropoiesis",
+        "question": "Which dietary element is essential for the formation of the heme portion of hemoglobin?",
+        "options": [
+            "Cobalt",
+            "Iron",
+            "Calcium",
+            "Vitamin C"
+        ],
+        "correct": 1,
+        "explanation": "Iron is required for the formation of heme.",
+        "id": 55
+    },
+    {
+        "chapter": "blood",
+        "topic": "Erythropoiesis",
+        "question": "Which vitamins act as essential RBC maturation factors?",
+        "options": [
+            "Vitamin A and Vitamin D",
+            "Vitamin B12 and Folic acid",
+            "Vitamin C and Vitamin E",
+            "Thiamine and Riboflavin"
+        ],
+        "correct": 1,
+        "explanation": "Vitamin B12 and Folic acid are the maturation factors for RBCs.",
+        "id": 56
+    },
+    {
+        "chapter": "blood",
+        "topic": "Erythropoiesis",
+        "question": "What is the primary stimulus that triggers the secretion of erythropoietin?",
+        "options": [
+            "Hypertension",
+            "Hypoxia (decreased tissue oxygenation)",
+            "Infection",
+            "High blood volume"
+        ],
+        "correct": 1,
+        "explanation": "Hypoxia (decreased tissue oxygenation) stimulates the secretion of erythropoietin.",
+        "id": 57
+    },
+    {
+        "chapter": "blood",
+        "topic": "Erythropoiesis",
+        "question": "Which organ is the main source of erythropoietin synthesis in adults?",
+        "options": [
+            "Liver (75%)",
+            "Kidneys (75-85%)",
+            "Spleen (100%)",
+            "Bone marrow (50%)"
+        ],
+        "correct": 1,
+        "explanation": "The kidneys secrete the vast majority of erythropoietin (about 75-85%), while the liver produces the rest (about 15-25%).",
+        "id": 58
+    },
+    {
+        "chapter": "blood",
+        "topic": "Erythropoiesis",
+        "question": "How does erythropoietin stimulate red blood cell production?",
+        "options": [
+            "It directly converts white blood cells into red blood cells",
+            "It stimulates hematopoietic stem cells to differentiate into proerythroblasts",
+            "It prevents the spleen from destroying old RBCs",
+            "It increases iron absorption in the intestine"
+        ],
+        "correct": 1,
+        "explanation": "Erythropoietin acts on hematopoietic stem cells to stimulate the formation of proerythroblasts, leading to increased RBC synthesis.",
+        "id": 59
+    },
+    {
+        "chapter": "blood",
+        "topic": "Erythropoiesis",
+        "question": "Which of the following hormones stimulate erythropoiesis?",
+        "options": [
+            "Thyroxine, Androgens, and Glucocorticoids",
+            "Insulin, Glucagon, and Somatostatin",
+            "Estrogen, Progesterone, and Prolactin",
+            "Melatonin and Oxytocin"
+        ],
+        "correct": 0,
+        "explanation": "Thyroxine, Androgens, and Glucocorticoids are hormones that stimulate erythropoiesis.",
+        "id": 60
+    },
+    {
+        "chapter": "blood",
+        "topic": "Erythropoiesis",
+        "question": "Why does hypoxia occur in anemia?",
+        "options": [
+            "Due to decreased number of RBCs or decreased Hb content",
+            "Due to increased blood pressure",
+            "Due to hyperventilation",
+            "Due to excess plasma proteins"
+        ],
+        "correct": 0,
+        "explanation": "Anemia reduces the oxygen-carrying capacity of blood (via low RBCs or low Hb), leading to tissue hypoxia.",
+        "id": 61
+    },
+    {
+        "chapter": "blood",
+        "topic": "Erythropoiesis",
+        "question": "Which of the following can lead to hypoxia and subsequent erythropoietin release?",
+        "options": [
+            "Low blood volume and anemia",
+            "Poor blood flow (cardiovascular insufficiency)",
+            "Pulmonary disease",
+            "All of the above"
+        ],
+        "correct": 3,
+        "explanation": "Hypoxia (and thus erythropoietin release) can be caused by low blood volume, anemia, poor blood flow, or pulmonary disease.",
+        "id": 62
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "Anemia is defined as a decrease in:",
+        "options": [
+            "The total blood volume below 3 liters",
+            "The number of RBCs or the amount of Hb below normal",
+            "The number of white blood cells and platelets",
+            "The A/G ratio below 1.0"
+        ],
+        "correct": 1,
+        "explanation": "Anemia is the decrease in the number of RBCs or the amount of Hb in blood below normal.",
+        "id": 63
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "Using the 'factory' analogy from the slides, what represents the factory itself in RBC production?",
+        "options": [
+            "The Liver",
+            "The Bone Marrow",
+            "The Spleen",
+            "The Kidney"
+        ],
+        "correct": 1,
+        "explanation": "The bone marrow acts as the factory, using raw materials (proteins, iron, vitamins) to produce RBCs.",
+        "id": 64
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "Which type of anemia is caused by a deficiency of dietary components needed for RBC formation, such as iron or proteins?",
+        "options": [
+            "Aplastic anemia",
+            "Nutritional anemia",
+            "Hemolytic anemia",
+            "Hemorrhagic anemia"
+        ],
+        "correct": 1,
+        "explanation": "Nutritional anemia is due to deficiency in diet of components needed for RBC formation (proteins, iron, B12, folic acid).",
+        "id": 65
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "What is the primary cause of Aplastic Anemia?",
+        "options": [
+            "Iron deficiency in diet",
+            "Damage of the bone marrow (factory damage) by radiation or drugs",
+            "Excessive blood loss in accidents",
+            "Hereditary abnormal shape of RBCs"
+        ],
+        "correct": 1,
+        "explanation": "Aplastic anemia is due to damage of the bone marrow (e.g. by radiation, toxins, or drugs).",
+        "id": 66
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "Which of the following is an example of hemolytic anemia caused by abnormal red blood cell shape?",
+        "options": [
+            "Pernicious anemia",
+            "Hereditary spherocytosis",
+            "Aplastic anemia",
+            "Iron deficiency anemia"
+        ],
+        "correct": 1,
+        "explanation": "Hereditary spherocytosis is a type of hemolytic anemia caused by abnormally shaped RBCs (spherical instead of biconcave) which are easily destroyed.",
+        "id": 67
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "Which hemolytic anemias are caused by abnormal hemoglobin structure?",
+        "options": [
+            "Aplastic anemia and Pernicious anemia",
+            "Sickle cell anemia and Thalassemia",
+            "Iron deficiency anemia and Hemorrhagic anemia",
+            "Megakaryocyte leukemia"
+        ],
+        "correct": 1,
+        "explanation": "Sickle cell anemia and Thalassemia are hereditary hemolytic anemias characterized by abnormal hemoglobin.",
+        "id": 68
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "Which of the following external agents can cause hemolytic anemia by destroying RBCs?",
+        "options": [
+            "Snake venom and malaria",
+            "Adrenaline and Heparin",
+            "Warfarin and Folic acid",
+            "EDTA and Citrate"
+        ],
+        "correct": 0,
+        "explanation": "Hemolysing agents like snake venom, malaria parasites, or certain drugs cause excessive destruction of RBCs (hemolytic anemia).",
+        "id": 69
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "Hemorrhagic anemia is secondary to:",
+        "options": [
+            "Deficiency of Vitamin B12",
+            "Blood loss from accidents or diseases",
+            "Autoimmune destruction of parietal cells",
+            "Bone marrow failure"
+        ],
+        "correct": 1,
+        "explanation": "Hemorrhagic anemia is caused by blood loss (hemorrhage) in accidents or chronic bleeding diseases.",
+        "id": 70
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "Which of the following is NOT a manifestation of severe anemia?",
+        "options": [
+            "Fatigue and dizziness",
+            "Skin paleness and coldness",
+            "Increased heart rate (tachycardia)",
+            "High blood pressure (hypertension)"
+        ],
+        "correct": 3,
+        "explanation": "Severe anemia causes low blood pressure (hypotension) due to reduced blood viscosity and volume, not hypertension. It also causes fatigue, dizziness, paleness, tachycardia, and dyspnea.",
+        "id": 71
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "A deficiency of both Vitamin B12 and folate can cause which clinical type of anemia?",
+        "options": [
+            "Aplastic anemia",
+            "Pernicious / Megaloblastic anemia",
+            "Iron deficiency anemia",
+            "Spherocytosis"
+        ],
+        "correct": 1,
+        "explanation": "Deficiency of B12 and folate leads to megaloblastic anemia, and B12 deficiency specifically leads to pernicious anemia.",
+        "id": 72
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "Why is B12-deficiency anemia called 'pernicious' (destructive/deadly)?",
+        "options": [
+            "It causes severe uncontrollable bleeding",
+            "It causes neurological manifestations in addition to megaloblastic anemia",
+            "It completely stops breathing",
+            "It causes liver failure immediately"
+        ],
+        "correct": 1,
+        "explanation": "It is called pernicious because it causes neurological damage (like paresthesia, gait instability, memory issues) alongside anemia.",
+        "id": 73
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "Which neurological symptoms are associated with pernicious anemia?",
+        "options": [
+            "Paresthesia (numbness in hands and feet)",
+            "Poor muscular coordination and unsteady gait",
+            "Impaired memory and hallucinations",
+            "All of the above"
+        ],
+        "correct": 3,
+        "explanation": "Neurological signs of pernicious anemia include paresthesia, clumsiness, unsteady gait, and impaired memory/hallucinations.",
+        "id": 74
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "What fingernail change can be observed in patients with pernicious anemia?",
+        "options": [
+            "Black spots",
+            "Appearance of lines or ridges",
+            "Nail loss",
+            "Softening and bending"
+        ],
+        "correct": 1,
+        "explanation": "Pernicious anemia can cause lines or ridges on the fingernails.",
+        "id": 75
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "Which oral manifestations are typical of B12 and folate deficiencies?",
+        "options": [
+            "Glossitis (red, smooth tongue with atrophic papillae)",
+            "Recurrent aphthous ulcers and oral pain",
+            "Candidal infection and angular stomatitis",
+            "All of the above"
+        ],
+        "correct": 3,
+        "explanation": "Glossitis, aphthous ulcers, oral pain, candida, and angular stomatitis (fissuring of mouth corners) are oral findings in folate and B12 deficiency.",
+        "id": 76
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "What is the normal daily requirement of Vitamin B12 for an adult?",
+        "options": [
+            "5 mg",
+            "50 mg",
+            "5 \u00b5g",
+            "500 \u00b5g"
+        ],
+        "correct": 2,
+        "explanation": "The daily requirement of Vitamin B12 is very small, about 5 micrograms (\u00b5g) per day.",
+        "id": 77
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "What is the major cause of pernicious anemia in most patients?",
+        "options": [
+            "Insufficient dietary intake of Vitamin B12",
+            "Malabsorption of Vitamin B12 due to lack of intrinsic factor",
+            "Excessive loss of B12 in sweat",
+            "Destruction of B12 by stomach acid"
+        ],
+        "correct": 1,
+        "explanation": "Dietary lack is rarely the cause; the major cause is malabsorption of Vitamin B12 due to a lack of intrinsic factor (secreted by gastric parietal cells).",
+        "id": 78
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "Which of the following can lead to a lack of intrinsic factor and B12 malabsorption?",
+        "options": [
+            "Autoimmune disease producing antibodies against gastric parietal cells or intrinsic factor",
+            "Atrophic gastritis",
+            "Leaky gut syndrome, infection, stress, or food intolerance",
+            "All of the above"
+        ],
+        "correct": 3,
+        "explanation": "Causes include autoimmune destruction of parietal cells, atrophic gastritis, leaky gut, stress, and food intolerance.",
+        "id": 79
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anemia",
+        "question": "How does Folic Acid deficiency anemia differ from Vitamin B12 deficiency anemia?",
+        "options": [
+            "Folic acid deficiency does not cause megaloblastic anemia",
+            "In folic acid deficiency, nervous system functions remain normal",
+            "Folic acid deficiency is always autoimmune",
+            "Folic acid deficiency is treated with iron injections"
+        ],
+        "correct": 1,
+        "explanation": "While both cause megaloblastic anemia, folic acid deficiency does NOT cause neurological deficits; nervous system functions remain normal.",
+        "id": 80
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "In blood transfusion, what is the 'Golden Rule' regarding antigens and antibodies?",
+        "options": [
+            "Donor antibodies are more important than recipient antigens",
+            "Donor antigens (agglutinogens) are more important than donor antibodies (agglutinins)",
+            "Recipient antibodies are completely ignored",
+            "Donor and recipient blood must always be Rh-negative"
+        ],
+        "correct": 1,
+        "explanation": "The golden rule states that donor antigens are more important because donor antibodies are diluted in the recipient's plasma, minimizing recipient cell agglutination.",
+        "id": 81
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "Which blood group is known as the universal donor, and which is the universal recipient?",
+        "options": [
+            "O is universal recipient, AB is universal donor",
+            "AB is universal recipient, O is universal donor",
+            "A is universal donor, B is universal recipient",
+            "O is universal donor, A is universal recipient"
+        ],
+        "correct": 1,
+        "explanation": "Group AB is the universal recipient, and Group O is the universal donor.",
+        "id": 82
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "The Rh factor is determined by the presence or absence of which agglutinogen?",
+        "options": [
+            "Agglutinogen A",
+            "Agglutinogen B",
+            "Agglutinogen D",
+            "Agglutinogen M"
+        ],
+        "correct": 2,
+        "explanation": "The Rh factor is determined by the presence or absence of agglutinogen D.",
+        "id": 83
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "What percentage of white people are Rh-positive (carry agglutinogen D)?",
+        "options": [
+            "15%",
+            "50%",
+            "85%",
+            "99%"
+        ],
+        "correct": 2,
+        "explanation": "Agglutinogen D is present in the red cells of 85% of white people (Rh-positive or D positive) and absent in 15% (Rh-negative or D negative).",
+        "id": 84
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "Under normal conditions, does the plasma of Rh-negative or Rh-positive individuals contain anti-D agglutinins?",
+        "options": [
+            "Yes, Rh-negative individuals always have anti-D",
+            "Yes, Rh-positive individuals always have anti-D",
+            "No, neither contains anti-D agglutinins under normal conditions",
+            "Only infants contain anti-D agglutinins"
+        ],
+        "correct": 2,
+        "explanation": "Under normal conditions, neither Rh-positive nor Rh-negative plasma contains anti-D agglutinins.",
+        "id": 85
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "In what scenarios will an Rh-negative person manufacture anti-D agglutinins in their plasma?",
+        "options": [
+            "If infused with Rh-positive blood",
+            "If an Rh-negative female carries an Rh-positive fetus",
+            "Both A and B",
+            "If they consume an iron-deficient diet"
+        ],
+        "correct": 2,
+        "explanation": "Anti-D agglutinins are formed only when an Rh-negative person is exposed to Rh-positive blood (via transfusion or pregnancy with an Rh-positive fetus).",
+        "id": 86
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "Erythroblastosis fetalis occurs when:",
+        "options": [
+            "An Rh-positive female bears an Rh-negative fetus",
+            "An Rh-negative female bears an Rh-positive fetus",
+            "An Rh-negative female bears an Rh-negative fetus",
+            "An Rh-positive female bears an Rh-positive fetus"
+        ],
+        "correct": 1,
+        "explanation": "Erythroblastosis fetalis occurs when an Rh-negative mother carries an Rh-positive fetus, leading to maternal sensitization against Rh antigens.",
+        "id": 87
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "Why does the first Rh-positive baby born to an Rh-negative mother usually escape erythroblastosis fetalis?",
+        "options": [
+            "The baby's liver destroys maternal antibodies",
+            "Sensitization occurs primarily at the time of labor when fetal RBCs enter maternal circulation, so anti-D antibodies are not yet present during the first pregnancy",
+            "The first baby does not have Rh antigens",
+            "Maternal antibodies cannot cross the placenta in the first pregnancy"
+        ],
+        "correct": 1,
+        "explanation": "Sensitization happens at delivery when fetal Rh-positive red cells enter the mother's circulation. Maternal anti-D antibodies are produced *after* delivery, targeting subsequent Rh-positive pregnancies.",
+        "id": 88
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "What is the clinical outcome for a fetus severely affected by erythroblastosis fetalis?",
+        "options": [
+            "Born dead or born alive with generalized edema, hepatosplenomegaly, and ascites",
+            "Exclusively born healthy without symptoms",
+            "Born with aplastic anemia and leukocytosis",
+            "Immunity to all infectious agents"
+        ],
+        "correct": 0,
+        "explanation": "The fetus may die in utero or be born alive with severe hemolytic anemia, generalized edema (hydrops fetalis), hepatosplenomegaly, and ascites.",
+        "id": 89
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "What is the immediate treatment for a newborn baby suffering from erythroblastosis fetalis?",
+        "options": [
+            "Exchange transfusion using Group O, Rh-negative blood",
+            "Immediate injection of anti-D antibodies to the baby",
+            "Inoculation with iron and vitamin B12",
+            "Oral administration of heparin"
+        ],
+        "correct": 0,
+        "explanation": "If the baby is born alive, an exchange transfusion is done, replacing the baby's blood with Group O, Rh-negative blood to remove maternal antibodies and bilirubin.",
+        "id": 90
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "How is erythroblastosis fetalis prevented in Rh-negative mothers?",
+        "options": [
+            "By injecting the baby with vitamin K at birth",
+            "By injecting the Rh-negative mother with anti-D antibodies (RhoGAM) immediately after delivery of an Rh-positive baby",
+            "By giving the mother oral warfarin during pregnancy",
+            "By transfusing the mother with Rh-positive blood before pregnancy"
+        ],
+        "correct": 1,
+        "explanation": "Prevention is achieved by injecting anti-D antibodies to the Rh-negative mother just after delivery to destroy any fetal Rh-positive cells before her immune system can become sensitized.",
+        "id": 91
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "Which of the following represents the medicolegal value of blood groups?",
+        "options": [
+            "A, B, and D antigens are dominant genetic characters useful in disputed paternity cases",
+            "They are used to determine the age of a skeleton",
+            "They identify the gender of a criminal",
+            "They measure the oxygen capacity in forensic autopsies"
+        ],
+        "correct": 0,
+        "explanation": "Since A, B, and D antigens are inherited as dominant genetic characters, they are useful in disputed paternity cases.",
+        "id": 92
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "Why should an Rh-negative female (even a child) never be transfused with Rh-positive blood?",
+        "options": [
+            "It will immediately destroy her kidneys",
+            "It sensitizes her, leading to the creation of anti-D antibodies that will threaten any future Rh-positive fetus she carries",
+            "It will change her blood group permanently to AB",
+            "It prevents her bone marrow from synthesizing white blood cells"
+        ],
+        "correct": 1,
+        "explanation": "Transfusing Rh-positive blood into an Rh-negative female will sensitize her for life, leading to erythroblastosis fetalis in future pregnancies if she marries an Rh-positive male.",
+        "id": 93
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "Which of the following are examples of minor antigens recently found on red blood cells?",
+        "options": [
+            "M, N, S, P, Kell, Kidd, Sid",
+            "Alpha-1, Alpha-2, Beta, Gamma",
+            "Fibrinogen and Prothrombin",
+            "EDTA and Citrate"
+        ],
+        "correct": 0,
+        "explanation": "Minor antigens include M, N, S, P, Kell, Kidd, and Sid. They can sometimes cause transfusion reactions.",
+        "id": 94
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "What test is performed to verify compatibility and ensure that minor antigen agglutination is negligible before a blood transfusion?",
+        "options": [
+            "A/G ratio test",
+            "Direct cross matching test",
+            "Carbonic anhydrase assay",
+            "Hematocrit determination"
+        ],
+        "correct": 1,
+        "explanation": "To check for safety against minor antigens, a direct cross matching test (mixing donor cells with recipient serum) is performed.",
+        "id": 95
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "Why does incompatible blood transfusion cause severe lumbar pain?",
+        "options": [
+            "Donor red cells clump and block small blood vessels, causing muscle ischemia",
+            "The heart stops pumping immediately",
+            "Lactic acid accumulates in the kidneys",
+            "The spleen expands rapidly, pressing on the lower back"
+        ],
+        "correct": 0,
+        "explanation": "Incompatible transfusion causes clumping of red cells, blocking small vessels and leading to tissue ischemia and severe muscle/back pain.",
+        "id": 96
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "How does incompatible blood transfusion lead to renal failure?",
+        "options": [
+            "The liver stops functioning, overloading the kidneys",
+            "Free hemoglobin filters through renal capillaries, precipitates as acid hematin in the acidic urine, and blocks renal tubules",
+            "Heparin causes excessive bleeding in the glomeruli",
+            "It causes severe dehydration"
+        ],
+        "correct": 1,
+        "explanation": "Free Hb filters into the kidneys and precipitates as acid hematin in the renal tubules, blocking them and causing acute renal failure.",
+        "id": 97
+    },
+    {
+        "chapter": "blood",
+        "topic": "Blood Groups & Rh",
+        "question": "Why does incompatible blood transfusion cause severe hypotension (low blood pressure)?",
+        "options": [
+            "Due to release of histamine, which causes generalized capillary dilatation",
+            "Due to clotting of all blood in the veins",
+            "Because the heart rate drops to zero",
+            "Because the blood loses all its viscosity"
+        ],
+        "correct": 0,
+        "explanation": "Histamine release causes generalized capillary dilatation, resulting in a severe drop in blood pressure (hypotension).",
+        "id": 98
+    },
+    {
+        "chapter": "blood",
+        "topic": "White Blood Cells",
+        "question": "What is the average life span of white blood cells in circulation?",
+        "options": [
+            "8 - 10 days",
+            "13 - 20 days",
+            "120 days",
+            "1 year"
+        ],
+        "correct": 1,
+        "explanation": "The life span of WBCs is 13 - 20 days.",
+        "id": 99
+    },
+    {
+        "chapter": "blood",
+        "topic": "White Blood Cells",
+        "question": "Which of the following are classified as Granular Leucocytes?",
+        "options": [
+            "Lymphocytes and Monocytes",
+            "Neutrophils, Eosinophils, and Basophils",
+            "Platelets and Megakaryocytes",
+            "Albumin and Fibrinogen"
+        ],
+        "correct": 1,
+        "explanation": "Granular leucocytes are neutrophils, eosinophils, and basophils.",
+        "id": 100
+    },
+    {
+        "chapter": "blood",
+        "topic": "White Blood Cells",
+        "question": "Where are granular leucocytes synthesized?",
+        "options": [
+            "In the spleen",
+            "In the bone marrow",
+            "In the lymph nodes",
+            "In the thymus gland"
+        ],
+        "correct": 1,
+        "explanation": "Granular leucocytes are formed in the bone marrow.",
+        "id": 101
+    },
+    {
+        "chapter": "blood",
+        "topic": "White Blood Cells",
+        "question": "Which of the following are classified as Non-granular Leucocytes?",
+        "options": [
+            "Neutrophils and Basophils",
+            "Lymphocytes and Monocytes",
+            "Eosinophils and Thrombocytes",
+            "Glucocorticoids and Thyroxine"
+        ],
+        "correct": 1,
+        "explanation": "Non-granular leucocytes are lymphocytes and monocytes.",
+        "id": 102
+    },
+    {
+        "chapter": "blood",
+        "topic": "White Blood Cells",
+        "question": "What is the normal range for the Total Leucocytic Count in a healthy adult?",
+        "options": [
+            "1,500 \u2013 4,000 per mm\u00b3",
+            "4,000 \u2013 11,000 per mm\u00b3",
+            "11,000 \u2013 20,000 per mm\u00b3",
+            "150,000 \u2013 500,000 per mm\u00b3"
+        ],
+        "correct": 1,
+        "explanation": "The normal total leucocytic count is 4,000 \u2013 11,000 per cubic millimeter of blood.",
+        "id": 103
+    },
+    {
+        "chapter": "blood",
+        "topic": "White Blood Cells",
+        "question": "Define Leucocytosis and Leucopenia:",
+        "options": [
+            "Leucocytosis is decreased count; Leucopenia is increased count",
+            "Leucocytosis is increased count; Leucopenia is decreased count",
+            "Leucocytosis is RBC increase; Leucopenia is platelet decrease",
+            "Leucocytosis is blood clotting; Leucopenia is bleeding"
+        ],
+        "correct": 1,
+        "explanation": "Leucocytosis is an increase in total leucocytic count (>11,000/mm\u00b3), and Leucopenia is a decrease (<4,000/mm\u00b3).",
+        "id": 104
+    },
+    {
+        "chapter": "blood",
+        "topic": "White Blood Cells",
+        "question": "What is the correct order of WBC types from most abundant to least abundant in a normal differential count?",
+        "options": [
+            "Lymphocytes > Neutrophils > Monocytes > Eosinophils > Basophils",
+            "Neutrophils > Lymphocytes > Monocytes > Eosinophils > Basophils",
+            "Neutrophils > Lymphocytes > Eosinophils > Monocytes > Basophils",
+            "Monocytes > Lymphocytes > Neutrophils > Basophils > Eosinophils"
+        ],
+        "correct": 1,
+        "explanation": "Normal differential count is: Neutrophils (60-70%), Lymphocytes (20-25%), Monocytes (3-8%), Eosinophils (2-4%), and Basophils (0.5-1%).",
+        "id": 105
+    },
+    {
+        "chapter": "blood",
+        "topic": "White Blood Cells",
+        "question": "Which leucocytes are actively phagocytic and represent the primary line of defense against bacterial infections?",
+        "options": [
+            "Basophils and Lymphocytes",
+            "Neutrophils (microphages) and Monocytes (macrophages)",
+            "Eosinophils and Platelets",
+            "B and T Lymphocytes"
+        ],
+        "correct": 1,
+        "explanation": "Neutrophils (microphages) and monocytes (macrophages) destroy invading bacteria and viruses by phagocytosis.",
+        "id": 106
+    },
+    {
+        "chapter": "blood",
+        "topic": "White Blood Cells",
+        "question": "In which clinical conditions do Eosinophils characteristically increase in number?",
+        "options": [
+            "Bacterial infections and bleeding",
+            "Parasitic infections (bilharzia, ascaris) and allergic diseases",
+            "Starvation and blood clotting",
+            "Liver failure and anemia"
+        ],
+        "correct": 1,
+        "explanation": "Eosinophils increase in parasitic infections (attaching to parasites and releasing toxic substances) and allergic diseases.",
+        "id": 107
+    },
+    {
+        "chapter": "blood",
+        "topic": "White Blood Cells",
+        "question": "How do eosinophils limit the spread of local inflammatory processes in allergic reactions?",
+        "options": [
+            "By releasing large amounts of histamine",
+            "By phagocytizing and destroying antigen-antibody complexes",
+            "By synthesising heparin",
+            "By destroying surrounding tissue cells"
+        ],
+        "correct": 1,
+        "explanation": "Eosinophils phagocytize and destroy antigen-antibody complexes, limiting the spread of local inflammation.",
+        "id": 108
+    },
+    {
+        "chapter": "blood",
+        "topic": "White Blood Cells",
+        "question": "What are the two major substances released by non-phagocytic Basophils, and what are their functions?",
+        "options": [
+            "Erythropoietin (RBC synthesis) and Serotonin (clotting)",
+            "Histamine (allergic reactions) and Heparin (preventing blood coagulation)",
+            "Antibodies (defense) and Carbonic anhydrase (CO2 transport)",
+            "Calcium ions (muscle contraction) and Albumin (osmotic pressure)"
+        ],
+        "correct": 1,
+        "explanation": "Basophils release histamine (mediating allergic reactions) and heparin (a powerful anticoagulant).",
+        "id": 109
+    },
+    {
+        "chapter": "blood",
+        "topic": "White Blood Cells",
+        "question": "Match the lymphocyte types (B, T, and Non-B Non-T) to their respective functions:",
+        "options": [
+            "B cells: kill cancer; T cells: make antibodies; Non-B Non-T: viral immunity",
+            "B cells: produce antibodies; T cells: immunity against viruses/bacteria; Non-B Non-T (NK): kill cancer cells",
+            "B cells: phagocytosis; T cells: release histamine; Non-B Non-T: carry iron",
+            "All lymphocytes have identical functions"
+        ],
+        "correct": 1,
+        "explanation": "B lymphocytes produce antibodies, T lymphocytes provide cellular immunity (against viruses/bacteria), and non-B non-T (NK cells) destroy cancer cells.",
+        "id": 110
+    },
+    {
+        "chapter": "blood",
+        "topic": "White Blood Cells",
+        "question": "What is the difference between transient and lasting neutrophilia?",
+        "options": [
+            "Transient involves bone marrow hyperplasia; lasting involves mobilization of stored cells",
+            "Transient is mobilization of stored neutrophils (exercise, adrenaline, stress); lasting is increased production (infections, burns, gout)",
+            "Transient is caused by parasites; lasting by bacteria",
+            "Transient is leukopenia; lasting is leukocytosis"
+        ],
+        "correct": 1,
+        "explanation": "Transient neutrophilia is caused by rapid mobilization of stored cells (during exercise, stress, or adrenaline). Lasting neutrophilia involves increased production by bone marrow in response to infection or tissue injury (burns, gout, postoperative state).",
+        "id": 111
+    },
+    {
+        "chapter": "blood",
+        "topic": "White Blood Cells",
+        "question": "Which of the following is a cause of lasting neutrophilia?",
+        "options": [
+            "Adrenaline injection",
+            "Exercise",
+            "Infections, burns, postoperative states, or gout",
+            "Starvation"
+        ],
+        "correct": 2,
+        "explanation": "Infections, burns, postoperative states, acute asthma, and gout trigger lasting neutrophilia (increased production).",
+        "id": 112
+    },
+    {
+        "chapter": "blood",
+        "topic": "Spleen & Platelets",
+        "question": "What volume of blood is added to the circulation when the splenic capsule contracts under sympathetic stimulation (e.g., during hemorrhage or hypoxia)?",
+        "options": [
+            "10 - 50 ml",
+            "50 - 100 ml",
+            "150 - 200 ml",
+            "500 - 1000 ml"
+        ],
+        "correct": 2,
+        "explanation": "The spleen acts as a blood reservoir; sympathetic stimulation contracts its capsule, adding 150 - 200 ml of blood to the circulation.",
+        "id": 113
+    },
+    {
+        "chapter": "blood",
+        "topic": "Spleen & Platelets",
+        "question": "What percentage of the body's T and B lymphocytes are stored in the spleen?",
+        "options": [
+            "5% T and 5% B lymphocytes",
+            "25% T and 15% B lymphocytes",
+            "50% T and 50% B lymphocytes",
+            "75% T and 25% B lymphocytes"
+        ],
+        "correct": 1,
+        "explanation": "The lymphoid tissue of the spleen contains 25% of the body's T lymphocytes and 15% of its B lymphocytes.",
+        "id": 114
+    },
+    {
+        "chapter": "blood",
+        "topic": "Spleen & Platelets",
+        "question": "Blood platelets (thrombocytes) are formed from which precursor cells in the bone marrow?",
+        "options": [
+            "Proerythroblasts",
+            "Megakaryocytes",
+            "Lymphoblasts",
+            "Monoblasts"
+        ],
+        "correct": 1,
+        "explanation": "Platelets are formed from megakaryocytes in the bone marrow, which fragment into platelets.",
+        "id": 115
+    },
+    {
+        "chapter": "blood",
+        "topic": "Spleen & Platelets",
+        "question": "What is the normal range of platelet concentration in blood?",
+        "options": [
+            "4,000 \u2013 11,000 /\u00b5l",
+            "150,000 \u2013 500,000 /\u00b5l",
+            "3.9 \u2013 5.5 million /\u00b5l",
+            "1.5 \u2013 3.0 million /\u00b5l"
+        ],
+        "correct": 1,
+        "explanation": "The normal concentration of platelets in blood is between 150,000 and 500,000 /microliter.",
+        "id": 116
+    },
+    {
+        "chapter": "blood",
+        "topic": "Spleen & Platelets",
+        "question": "What is the average half-life of platelets in blood?",
+        "options": [
+            "120 days",
+            "30 days",
+            "8 to 10 days",
+            "few hours"
+        ],
+        "correct": 2,
+        "explanation": "Platelets have a half-life of 8 to 10 days.",
+        "id": 117
+    },
+    {
+        "chapter": "blood",
+        "topic": "Spleen & Platelets",
+        "question": "A decreased number of platelets is called:",
+        "options": [
+            "Leukopenia",
+            "Thrombocytopenia (purpura)",
+            "Erythrocytosis",
+            "Aplastic anemia"
+        ],
+        "correct": 1,
+        "explanation": "Decreased platelet count is called thrombocytopenia, which can lead to a bleeding disorder known as purpura.",
+        "id": 118
+    },
+    {
+        "chapter": "blood",
+        "topic": "Spleen & Platelets",
+        "question": "Which of the following describes the functions of blood platelets?",
+        "options": [
+            "Hemostasis by formation of platelet plug",
+            "Storage of serotonin and calcium ions",
+            "Blood clotting (intrinsic mechanism)",
+            "All of the above"
+        ],
+        "correct": 3,
+        "explanation": "Platelets are crucial for hemostasis (forming plugs), storing serotonin/calcium, and initiating intrinsic blood clotting.",
+        "id": 119
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anticoagulants",
+        "question": "Why does blood coagulation NOT occur in normal, healthy blood vessels?",
+        "options": [
+            "Due to smoothness of the endothelium and heparin formed by basophils",
+            "Because there is no calcium in the blood inside vessels",
+            "Because blood flows too fast for clots to form",
+            "Because blood vessels lack oxygen"
+        ],
+        "correct": 0,
+        "explanation": "Coagulation is prevented in vivo by the smoothness of the vessel endothelium (preventing platelet activation) and heparin produced by basophils/mast cells.",
+        "id": 120
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anticoagulants",
+        "question": "Which of the following are used to prevent blood clotting in vitro (outside the body)?",
+        "options": [
+            "EDTA, sodium citrate, sodium oxalate, and siliconized glass",
+            "Warfarin and Dicumarol",
+            "Adrenaline and Thyroxine",
+            "Sodium proteinate and Lactic acid"
+        ],
+        "correct": 0,
+        "explanation": "In vitro anticoagulants include EDTA, sodium citrate, sodium oxalate, and siliconized glass vessels.",
+        "id": 121
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anticoagulants",
+        "question": "Which anticoagulants are used exclusively in vivo (inside the body)?",
+        "options": [
+            "EDTA and Sodium Oxalate",
+            "Dicumarol and Warfarin",
+            "Sodium Citrate and Siliconized glass",
+            "Heparin only"
+        ],
+        "correct": 1,
+        "explanation": "Dicumarol and Warfarin act only in vivo because they require the liver to mediate their anticoagulant effects. Heparin works both in vivo and in vitro.",
+        "id": 122
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anticoagulants",
+        "question": "How do chelating agents like EDTA and sodium oxalate prevent blood clotting in vitro?",
+        "options": [
+            "They destroy the fibrinogen molecules",
+            "They bind and transform ionic active calcium into nonionic inactive calcium or form a calcium precipitate",
+            "They dissolve the platelets",
+            "They increase blood temperature"
+        ],
+        "correct": 1,
+        "explanation": "Chelating agents remove active calcium ions (which are essential clotting factors) by transforming them into inactive nonionic forms or precipitating them.",
+        "id": 123
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anticoagulants",
+        "question": "Which anticoagulant is commonly added to blood used in blood transfusions?",
+        "options": [
+            "EDTA",
+            "Sodium oxalate",
+            "Sodium citrate",
+            "Warfarin"
+        ],
+        "correct": 2,
+        "explanation": "Sodium citrate is commonly used for blood transfusion bags because it is less toxic than oxalate or EDTA when transfused in controlled amounts.",
+        "id": 124
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anticoagulants",
+        "question": "How do siliconized glass vessels prevent blood clotting in laboratory settings?",
+        "options": [
+            "They absorb all the sodium from the blood",
+            "They prevent platelet aggregation and activation by providing a smooth surface",
+            "They release heparin into the blood",
+            "They precipitate fibrinogen"
+        ],
+        "correct": 1,
+        "explanation": "Siliconized glass provides a very smooth surface that prevents platelets from adhering, aggregating, and initiating clotting.",
+        "id": 125
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anticoagulants",
+        "question": "Which clinical situations warrant giving patients anticoagulants?",
+        "options": [
+            "Prevention of clot formation in bedridden or postoperative patients",
+            "Treatment of patients where intravascular clotting (thrombosis) has already occurred",
+            "Both A and B",
+            "Severe hemorrhagic anemia"
+        ],
+        "correct": 2,
+        "explanation": "Anticoagulants are indicated to prevent clots (e.g. in bedridden/postoperative patients) and treat active thrombosis.",
+        "id": 126
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anticoagulants",
+        "question": "Compare the onset of action of Heparin versus Dicumarol:",
+        "options": [
+            "Heparin: slow (1-2 days); Dicumarol: rapid (few mins)",
+            "Heparin: rapid (within a few minutes); Dicumarol: slow (after 1-2 days)",
+            "Both have immediate onset",
+            "Both take several weeks to work"
+        ],
+        "correct": 1,
+        "explanation": "Heparin has a rapid onset of action (within a few minutes), whereas Dicumarol has a slow onset (1-2 days) because it must block new factor synthesis in the liver.",
+        "id": 127
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anticoagulants",
+        "question": "What is the site of action and mechanism of Heparin?",
+        "options": [
+            "In vivo only, by blocking the absorption of vitamin K in the intestine",
+            "In vivo and in vitro, acting directly in the blood to activate antithrombin III",
+            "In vitro only, by chelating calcium ions",
+            "In the bone marrow, to stop megakaryocyte division"
+        ],
+        "correct": 1,
+        "explanation": "Heparin acts in vivo & in vitro directly in the blood by activating antithrombin III, which inactivates thrombin and other factors.",
+        "id": 128
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anticoagulants",
+        "question": "What is the site of action and mechanism of Dicumarol/Warfarin?",
+        "options": [
+            "In vitro only, by precipitating calcium",
+            "In vivo and in vitro, by activating antithrombin III",
+            "In vivo only, acting indirectly in the liver by competitive inhibition with Vitamin K",
+            "In the spleen, to speed up RBC clearance"
+        ],
+        "correct": 2,
+        "explanation": "Dicumarol/Warfarin works in vivo only, by acting in the liver. It competitively inhibits Vitamin K, preventing the synthesis of Vit K-dependent clotting factors.",
+        "id": 129
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anticoagulants",
+        "question": "Which clotting factors are Vitamin K-dependent and thus depressed by Dicumarol/Warfarin?",
+        "options": [
+            "Factors I, V, VIII, and XI",
+            "Factors II, VII, IX, and X",
+            "Factors III, IV, V, and VI",
+            "Factors I and Fibrinogen"
+        ],
+        "correct": 1,
+        "explanation": "Vitamin K-dependent factors are II (Prothrombin), VII, IX, and X.",
+        "id": 130
+    },
+    {
+        "chapter": "blood",
+        "topic": "Anticoagulants",
+        "question": "What are the specific antidotes for Heparin and Dicumarol/Warfarin overdoses?",
+        "options": [
+            "Heparin antidote: Vitamin K; Dicumarol antidote: Protamine",
+            "Heparin antidote: Protamine; Dicumarol antidote: Vitamin K",
+            "Heparin antidote: EDTA; Dicumarol antidote: Citrate",
+            "There are no antidotes for either drug"
+        ],
+        "correct": 1,
+        "explanation": "The antidote for Heparin is Protamine. The antidote for Dicumarol/Warfarin is Vitamin K.",
+        "id": 131
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Anatomy & Passages",
+        "question": "Which of the following is the correct anatomical pathway of air entering the respiratory system?",
+        "options": [
+            "Nasal cavity \u2192 Larynx \u2192 Pharynx \u2192 Trachea \u2192 Bronchi \u2192 Alveoli",
+            "Nasal cavity \u2192 Pharynx \u2192 Larynx \u2192 Trachea \u2192 Bronchi \u2192 Alveoli",
+            "Pharynx \u2192 Larynx \u2192 Nasal cavity \u2192 Trachea \u2192 Bronchi \u2192 Alveoli",
+            "Nasal cavity \u2192 Trachea \u2192 Pharynx \u2192 Larynx \u2192 Bronchi \u2192 Alveoli"
+        ],
+        "correct": 1,
+        "explanation": "Air flows from the nasal cavity through the pharynx, larynx, trachea, bronchi, and finally to the alveoli.",
+        "id": 132
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Anatomy & Passages",
+        "question": "Why are all conducting respiratory passages kept open by incomplete cartilaginous rings?",
+        "options": [
+            "To warm and filter the incoming air",
+            "To prevent the airways from collapsing during inhalation",
+            "To allow the passages to contract completely during speech",
+            "To produce mucus"
+        ],
+        "correct": 1,
+        "explanation": "Incomplete cartilaginous rings prevent the airways (trachea, bronchi) from collapsing under negative pressure during inhalation.",
+        "id": 133
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Anatomy & Passages",
+        "question": "Which part of the respiratory passages lacks cartilaginous rings?",
+        "options": [
+            "Trachea",
+            "Primary bronchi",
+            "Terminal bronchioles",
+            "Larynx"
+        ],
+        "correct": 2,
+        "explanation": "All respiratory passages are kept open by cartilage rings except the terminal bronchioles, which lack these rings.",
+        "id": 134
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Anatomy & Passages",
+        "question": "What is the primary site of gas exchange in the human lungs?",
+        "options": [
+            "Trachea",
+            "Bronchi",
+            "Terminal bronchioles",
+            "Alveoli"
+        ],
+        "correct": 3,
+        "explanation": "The alveoli are the primary sites of gas exchange.",
+        "id": 135
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Anatomy & Passages",
+        "question": "Which structure prevents food and liquids from entering the larynx and trachea during swallowing?",
+        "options": [
+            "Pharynx",
+            "Epiglottis",
+            "Cilia",
+            "Thyroid cartilage"
+        ],
+        "correct": 1,
+        "explanation": "The epiglottis acts as a valve to seal the larynx during swallowing, routing food and liquid to the esophagus.",
+        "id": 136
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Anatomy & Passages",
+        "question": "Which region serves as a common passageway for both air and food?",
+        "options": [
+            "Trachea",
+            "Larynx",
+            "Pharynx",
+            "Bronchi"
+        ],
+        "correct": 2,
+        "explanation": "The pharynx is a shared pathway for the digestive and respiratory tracts.",
+        "id": 137
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Anatomy & Passages",
+        "question": "What occurs when the diaphragm contracts and moves downward?",
+        "options": [
+            "Exhalation, as chest volume decreases",
+            "Inhalation, as chest volume increases",
+            "The epiglottis closes the airway",
+            "Alveoli collapse completely"
+        ],
+        "correct": 1,
+        "explanation": "Contraction and downward movement of the diaphragm expands the thoracic cavity, causing inhalation.",
+        "id": 138
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Anatomy & Passages",
+        "question": "Which of the following is NOT a respiratory function of the nose?",
+        "options": [
+            "Warming and moistening inspired air",
+            "Filtering and cleaning inspired air",
+            "Absorbing oxygen directly into the systemic arteries",
+            "Acting as a resonating chamber for speech and detecting odors"
+        ],
+        "correct": 2,
+        "explanation": "The nose conditions (warms, moistens, filters) air, acts as a speech resonator, and detects odors, but it does NOT absorb oxygen directly into systemic blood.",
+        "id": 139
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Turbulence & Cilia",
+        "question": "What is the 'nasal turbulence' mechanism?",
+        "options": [
+            "A process where air is rapidly cooled by blood vessels",
+            "Air hitting obstructions (conchae) in the nose, causing it to swirl so particles impact the mucous membrane",
+            "The active movement of cilia sweeping air into the trachea",
+            "The contraction of smooth muscles in the nasal wall"
+        ],
+        "correct": 1,
+        "explanation": "Nasal turbulence occurs when inhaled air hits conchae, causing it to swirl. Heavy dust particles impact the sticky mucous membrane and are trapped.",
+        "id": 140
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Turbulence & Cilia",
+        "question": "Due to the nasal turbulence mechanism, no particle larger than which size is allowed to enter the lungs through the nose?",
+        "options": [
+            "0.3 \u00b5m",
+            "1 \u00b5m",
+            "6 \u00b5m",
+            "20 \u00b5m"
+        ],
+        "correct": 2,
+        "explanation": "Nasal turbulence is so effective that no particle larger than 6 micrometers (\u00b5m) in diameter is allowed to enter the lungs through the nose.",
+        "id": 141
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Turbulence & Cilia",
+        "question": "Where do inhaled dust particles with sizes between 1 and 5 \u00b5m typically settle?",
+        "options": [
+            "In the nasal cavity by turbulence",
+            "In the smaller bronchioles due to gravitational precipitation",
+            "Directly on the alveolar wall",
+            "They remain suspended and are expelled"
+        ],
+        "correct": 1,
+        "explanation": "Particles between 1 and 5 \u00b5m settle in the smaller bronchioles due to gravitational precipitation.",
+        "id": 142
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Turbulence & Cilia",
+        "question": "Why is terminal bronchiolar disease common among coal miners?",
+        "options": [
+            "Coal dust contains large particles > 20 \u00b5m",
+            "Coal dust particles are mostly 1-5 \u00b5m, which settle in the smaller bronchioles by gravitational precipitation",
+            "Coal dust paralyzes the epiglottis",
+            "Coal miners lack goblet cells"
+        ],
+        "correct": 1,
+        "explanation": "Coal dust contains many 1-5 \u00b5m particles that precipitate gravitationally in the smaller/terminal bronchioles, leading to chronic bronchiolar disease.",
+        "id": 143
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Turbulence & Cilia",
+        "question": "What happens to inhaled particles that are exactly 1 \u00b5m in size?",
+        "options": [
+            "They are filtered in the nose",
+            "They settle in the trachea",
+            "They adhere to the alveolar fluid covering the wall of the alveolus",
+            "They remain suspended and are expired"
+        ],
+        "correct": 2,
+        "explanation": "Particles of 1 \u00b5m size reach the alveoli and adhere to the alveolar fluid covering the alveolar walls.",
+        "id": 144
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Turbulence & Cilia",
+        "question": "How does the respiratory system handle inhaled particles that are less than 0.5 \u00b5m in diameter?",
+        "options": [
+            "They are engulfed by nasal hairs",
+            "They remain suspended in alveolar air and are expelled with expiration",
+            "They dissolve the alveolar septum",
+            "They are absorbed into blood capillaries"
+        ],
+        "correct": 1,
+        "explanation": "Particles smaller than 0.5 \u00b5m remain suspended in the air and are exhaled during expiration.",
+        "id": 145
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Turbulence & Cilia",
+        "question": "What is the function of the cilia escalator in the respiratory tract?",
+        "options": [
+            "To warm the air as it passes through the trachea",
+            "To secrete mucus into the conducting passages",
+            "To sweep mucus and trapped foreign particles upward toward the pharynx to be swallowed or coughed out",
+            "To contract the trachea during exhalation"
+        ],
+        "correct": 2,
+        "explanation": "Cilia sweep the mucus layer (containing trapped foreign particles) upward like an escalator toward the pharynx.",
+        "id": 146
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Turbulence & Cilia",
+        "question": "Which cells in the respiratory epithelium secrete the sticky mucus that traps inhaled foreign particles?",
+        "options": [
+            "Ciliated cells",
+            "Goblet cells",
+            "Alveolar macrophages",
+            "Mast cells"
+        ],
+        "correct": 1,
+        "explanation": "Goblet cells secrete the mucus lining that traps foreign particles.",
+        "id": 147
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Smoking & Emphysema",
+        "question": "What is the average size of nicotine molecules in cigarette smoke, and why is this size significant?",
+        "options": [
+            "6 \u00b5m; they are trapped in the nose by turbulence",
+            "1-5 \u00b5m; they precipitate in the large bronchi",
+            "0.3 \u00b5m; they are tiny enough to bypass protective airway filters and reach the alveoli directly",
+            "Less than 0.01 \u00b5m; they remain suspended and are completely exhaled"
+        ],
+        "correct": 2,
+        "explanation": "Nicotine molecules are very tiny (0.3 \u00b5m). They escape nasal/bronchial filtration and reach the alveoli directly.",
+        "id": 148
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Smoking & Emphysema",
+        "question": "How are the 1/3rd of nicotine/smoke particles that adhere to the alveolar wall cleared under normal conditions?",
+        "options": [
+            "By the cilia escalator",
+            "By alveolar macrophages",
+            "They dissolve into blood capillaries",
+            "They are neutralized by goblet cells"
+        ],
+        "correct": 1,
+        "explanation": "Particles that reach the alveoli are engulfed by alveolar macrophages.",
+        "id": 149
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Smoking & Emphysema",
+        "question": "What effect does chronic exposure to cigarette smoke have on alveolar macrophages?",
+        "options": [
+            "It increases their division and makes them stronger",
+            "Macrophages engulf the particles, become overloaded, die, and are rendered unable to perform their defensive function",
+            "It converts them into ciliated cells",
+            "It has no effect on macrophages"
+        ],
+        "correct": 1,
+        "explanation": "Cigarette smoke causes macrophages to engulf toxic particles; they die and become dysfunctional, weakening lung defenses.",
+        "id": 150
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Smoking & Emphysema",
+        "question": "How does cigarette smoke trigger the persistent 'morning cough' in chronic smokers?",
+        "options": [
+            "It paralyzes the vocal cords",
+            "It irritates the airway mucosa, causing excess mucus secretion while simultaneously paralyzing the cilia (preventing normal clearance)",
+            "It causes rapid contraction of the diaphragm",
+            "It destroys the pharynx"
+        ],
+        "correct": 1,
+        "explanation": "Smoke irritates the airway lining, causing excessive mucus production. Since the cilia are paralyzed by smoke, the body must cough to clear the accumulated mucus.",
+        "id": 151
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Smoking & Emphysema",
+        "question": "What pathogenic process leads to the development of Emphysema in smokers?",
+        "options": [
+            "Excessive production of surfactant",
+            "Inflammatory response triggered by trapped particles, leading to release of chemicals that dissolve the alveolar septa, causing air trapping and alveolar rupture",
+            "The direct calcification of tracheal cartilages",
+            "The complete loss of smooth muscle around the bronchioles"
+        ],
+        "correct": 1,
+        "explanation": "Trapped particles trigger inflammation. Inflammatory chemicals dissolve the alveolar septa. This destroys the elastic structure, trapping air and leading to ruptured, enlarged alveoli (Emphysema).",
+        "id": 152
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Smoking & Emphysema",
+        "question": "Why does air trapping occur in emphysema during expiration?",
+        "options": [
+            "Because the epiglottis remains closed",
+            "Because inflammatory reactions partially block the terminal bronchioles, trapping air behind them during expiration",
+            "Because the diaphragm cannot contract",
+            "Because the cilia sweep air backward"
+        ],
+        "correct": 1,
+        "explanation": "Inflammatory swelling and mucus partially block the airway. During expiration, the airways naturally narrow, causing complete air trapping in the damaged alveoli.",
+        "id": 153
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Smoking & Emphysema",
+        "question": "Which of the following is a direct consequence of the rupture of alveolar septa in emphysema?",
+        "options": [
+            "Creation of large air cavities lined with carbon deposits and drastically reduced surface area for gas exchange",
+            "Increased oxygen absorption rate",
+            "Reversal of cilia escalator direction",
+            "Conversion of tissue to bone marrow"
+        ],
+        "correct": 0,
+        "explanation": "Destruction of alveolar walls creates large, inefficient air spaces lined with carbon deposits, dramatically reducing the surface area available for gas exchange.",
+        "id": 154
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Anatomy & Passages",
+        "question": "What keeps the trachea and major bronchi open, preventing their collapse during respiration?",
+        "options": [
+            "Continuous bony columns",
+            "Incomplete, C-shaped cartilaginous rings",
+            "Smooth muscle bundles only",
+            "Elastic fibers under high tension"
+        ],
+        "correct": 1,
+        "explanation": "Airways are kept open by incomplete, C-shaped cartilaginous rings, providing support while allowing flexibility.",
+        "id": 155
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Anatomy & Passages",
+        "question": "Which of the following is true regarding terminal bronchioles?",
+        "options": [
+            "They are kept open by thick, complete cartilage rings",
+            "They completely lack cartilaginous support and contain smooth muscle in their walls",
+            "They are lined with coarse hairs to filter air",
+            "They do not contain any smooth muscle"
+        ],
+        "correct": 1,
+        "explanation": "Terminal bronchioles lack cartilaginous rings. They have smooth muscle in their walls, which is regulated by hormones and nerves.",
+        "id": 156
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Anatomy & Passages",
+        "question": "How does the autonomic nervous system or hormones affect the smooth muscle of the bronchioles?",
+        "options": [
+            "They have no effect on bronchial smooth muscle",
+            "Hormones like epinephrine relax the smooth muscle, causing bronchodilation to improve airflow",
+            "Hormones cause the cartilage to dissolve",
+            "They only affect goblet cell mucus secretion"
+        ],
+        "correct": 1,
+        "explanation": "The smooth muscle in the bronchioles is affected by hormones and neurotransmitters. For example, epinephrine stimulates bronchodilation (muscle relaxation) to increase airflow.",
+        "id": 157
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Anatomy & Passages",
+        "question": "Which function of the nose helps in speech production?",
+        "options": [
+            "Detecting odors",
+            "Warming inspired air",
+            "Acting as a resonating chamber for speech",
+            "Nasal turbulence"
+        ],
+        "correct": 2,
+        "explanation": "One of the functions of the nose is acting as a resonating chamber for speech.",
+        "id": 158
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Turbulence & Cilia",
+        "question": "How does the nose detect chemical particles in the airstream?",
+        "options": [
+            "Through goblet cell secretions",
+            "Via olfactory receptors that detect odors",
+            "By the cilia escalator moving them to the tongue",
+            "Through friction against cartilage rings"
+        ],
+        "correct": 1,
+        "explanation": "The nose contains olfactory receptors that detect odors in the inspired airstream.",
+        "id": 159
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Turbulence & Cilia",
+        "question": "If a coal miner is chronically exposed to coal dust containing particles between 1 and 5 micrometers, why does this lead to terminal bronchiolar disease?",
+        "options": [
+            "The particles bypass nasal filtration and settle in the terminal bronchioles by gravitational precipitation",
+            "The particles dissolve the trachea's cartilage rings",
+            "The particles stimulate ciliary overgrowth",
+            "The particles turn into mucus immediately"
+        ],
+        "correct": 0,
+        "explanation": "Particles of 1-5 \u00b5m bypass the nose and deposit in smaller bronchioles due to gravitational precipitation, leading to localized tissue irritation and bronchiolar disease.",
+        "id": 160
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Turbulence & Cilia",
+        "question": "What is the primary role of ciliated epithelial cells in the respiratory tract?",
+        "options": [
+            "To synthesize alveolar surfactant",
+            "To act as an escalator, sweeping mucus and trapped foreign particles upward toward the pharynx",
+            "To secrete sticky mucus",
+            "To engulf bacteria by phagocytosis"
+        ],
+        "correct": 1,
+        "explanation": "Cilia act as an escalator to sweep mucus and trapped foreign particles upward toward the pharynx, where they can be swallowed or expectorated.",
+        "id": 161
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Turbulence & Cilia",
+        "question": "Once mucus containing trapped dust particles reaches the pharynx via the ciliary escalator, what is its typical fate?",
+        "options": [
+            "It is absorbed into the lymphatic system",
+            "It is swallowed into the digestive tract or coughed out",
+            "It flows back down into the alveoli",
+            "It is destroyed by thyroxine"
+        ],
+        "correct": 1,
+        "explanation": "Once mucus reaches the pharynx, it is either swallowed (and neutralized by stomach acid) or expelled from the body via coughing.",
+        "id": 162
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Smoking & Emphysema",
+        "question": "Why does cigarette smoke impair the defensive function of alveolar macrophages?",
+        "options": [
+            "It stops macrophages from dividing",
+            "Macrophages engulf the toxic smoke particles, become overloaded, and die, reducing the clearance of other pathogens",
+            "It causes macrophages to secrete heparin",
+            "It turns macrophages into goblet cells"
+        ],
+        "correct": 1,
+        "explanation": "Alveolar macrophages engulf the foreign carbon/nicotine particles in smoke. Over time, they become overloaded and die, leaving the alveoli vulnerable to infections.",
+        "id": 163
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Smoking & Emphysema",
+        "question": "Which of the following describes the double-damaging effect of smoking on the conducting airways?",
+        "options": [
+            "It decreases mucus production and activates cilia",
+            "It irritates the mucosa, causing excess mucus secretion, while simultaneously paralyzing and destroying ciliated cells",
+            "It dissolves the epiglottis and cartilage rings",
+            "It increases alveolar surface area while blocking the larynx"
+        ],
+        "correct": 1,
+        "explanation": "Smoking causes mucosal irritation (triggering hypersecretion of mucus) and paralyzes/destroys the cilia, leading to mucus accumulation.",
+        "id": 164
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Smoking & Emphysema",
+        "question": "Why is 'smoker's cough' typically most severe in the morning?",
+        "options": [
+            "Nicotine levels are highest in the morning",
+            "Mucus accumulates in the airways overnight because ciliary clearance is paralyzed, requiring coughing to clear it upon waking",
+            "The diaphragm contracts more strongly in the morning",
+            "Air is colder in the morning, triggering spasms"
+        ],
+        "correct": 1,
+        "explanation": "Due to cilia paralysis, mucus cannot be swept out and accumulates in the lungs overnight. Upon waking, the smoker must cough vigorously to clear these secretions.",
+        "id": 165
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Smoking & Emphysema",
+        "question": "How do inflammatory chemicals released during smoke exposure lead to emphysema?",
+        "options": [
+            "They stimulate the growth of cartilage rings in the alveoli",
+            "They dissolve the alveolar septa (walls), destroying the lung's elastic tissue and reducing surface area",
+            "They freeze the diaphragm",
+            "They increase surfactant concentration"
+        ],
+        "correct": 1,
+        "explanation": "Inflammation triggers the release of proteolytic enzymes (like elastase) that dissolve the delicate alveolar walls, reducing the surface area for gas exchange and making the lungs inelastic.",
+        "id": 166
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Smoking & Emphysema",
+        "question": "What is the consequence of the loss of alveolar elastic tissue in emphysema?",
+        "options": [
+            "Alveoli become highly resistant to stretching",
+            "Air trapping in the alveoli, causing their progressive distension and eventual rupture",
+            "Increased oxygen diffusion into the blood",
+            "Rapid regeneration of ciliated cells"
+        ],
+        "correct": 1,
+        "explanation": "The loss of elasticity prevents normal recoil during expiration. Air becomes trapped in the alveoli, leading to overdistension and rupture.",
+        "id": 167
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Smoking & Emphysema",
+        "question": "Why does airway obstruction in emphysema become worse specifically during expiration?",
+        "options": [
+            "The epiglottis blocks the airway",
+            "Airways naturally narrow during expiration, and inflammatory swelling/mucus partially block the terminal bronchioles, trapping air",
+            "The diaphragm relaxes too slowly",
+            "Alveolar macrophages block the bronchi"
+        ],
+        "correct": 1,
+        "explanation": "During expiration, airways naturally narrow. In emphysema, the combination of inflammatory swelling and mucus plugs causes terminal bronchioles to collapse or block, trapping air.",
+        "id": 168
+    },
+    {
+        "chapter": "pulmonary",
+        "topic": "Smoking & Emphysema",
+        "question": "What do the lungs of a chronic smoker with emphysema characteristically show pathologically?",
+        "options": [
+            "Thickened, muscular alveolar walls with high elasticity",
+            "Large, hyper-inflated air cavities lined with dark carbon deposits",
+            "An increased number of healthy alveoli",
+            "Complete calcification of all lung tissues"
+        ],
+        "correct": 1,
+        "explanation": "Pathology shows large, ruptured, inelastic air spaces with trapped air, heavily lined with dark carbon deposits from cigarette tar.",
+        "id": 169
+    }
+];
+
+    // ========================
+    // APP STATE
+    // ========================
+    let state = {
+        mode: 'practice', // practice, exam, review
+        currentPage: 0,
+        questionsPerPage: 5,
+        activeChapter: 'all', // all, blood, pulmonary
+        activeTopic: 'All',
+        answered: {},    // { questionId: selectedIndex }
+        shuffled: false,
+        showAll: false,
+    };
+
+    let filteredQuestions = [...allQuestions];
+
+    // ========================
+    // INIT
+    // ========================
+    function init() {
+        // Load saved state
+        const saved = localStorage.getItem('physiology_quiz_state');
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved);
+                state.answered = parsed.answered || {};
+            } catch(e) {}
+        }
+
+        buildTopicFilter();
+        updateStats();
+        filterAndRender();
+
+        // Mode buttons
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                state.mode = btn.dataset.mode;
+                state.currentPage = 0;
+                state.showAll = false;
+                filterAndRender();
+            });
+        });
+    }
+
+    // ========================
+    // CHAPTER SELECTOR
+    // ========================
+    function selectChapter(chapter) {
+        state.activeChapter = chapter;
+        state.activeTopic = 'All';
+        state.currentPage = 0;
+        state.showAll = false;
+
+        document.querySelectorAll('.chapter-btn').forEach(btn => {
+            if (btn.dataset.chapter === chapter) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        buildTopicFilter();
+        filterAndRender();
+    }
+
+    // ========================
+    // TOPICS
+    // ========================
+    function getTopics() {
+        const topics = new Set();
+        allQuestions.forEach(q => {
+            if (state.activeChapter === 'all' || q.chapter === state.activeChapter) {
+                topics.add(q.topic);
+            }
+        });
+        return ['All', ...Array.from(topics)];
+    }
+
+    function buildTopicFilter() {
+        const container = document.getElementById('topicFilter');
+        const topics = getTopics();
+        container.innerHTML = topics.map(t => 
+            `<button class="topic-chip ${t === state.activeTopic ? 'active' : ''}" onclick="selectTopic('${t}')">${t}</button>`
+        ).join('');
+    }
+
+    function selectTopic(topic) {
+        state.activeTopic = topic;
+        state.currentPage = 0;
+        state.showAll = false;
+        buildTopicFilter();
+        filterAndRender();
+    }
+
+    // ========================
+    // FILTER & RENDER
+    // ========================
+    function filterAndRender() {
+        let qs = [...allQuestions];
+
+        // Chapter filter
+        if (state.activeChapter !== 'all') {
+            qs = qs.filter(q => q.chapter === state.activeChapter);
+        }
+
+        // Topic filter
+        if (state.activeTopic !== 'All') {
+            qs = qs.filter(q => q.topic === state.activeTopic);
+        }
+
+        // Review mode: only wrong answers
+        if (state.mode === 'review') {
+            qs = qs.filter(q => {
+                const ans = state.answered[q.id];
+                return ans !== undefined && ans !== q.correct;
+            });
+        }
+
+        filteredQuestions = qs;
+        renderQuestions();
+        updateStats();
+        updatePagination();
+
+        // Hide result screen
+        document.getElementById('resultScreen').classList.add('hidden');
+        document.getElementById('questionsContainer').classList.remove('hidden');
+    }
+
+    function renderQuestions() {
+        const container = document.getElementById('questionsContainer');
+        const start = state.showAll ? 0 : state.currentPage * state.questionsPerPage;
+        const end = state.showAll ? filteredQuestions.length : start + state.questionsPerPage;
+        const pageQuestions = filteredQuestions.slice(start, end);
+
+        if (pageQuestions.length === 0) {
+            container.innerHTML = `
+                <div style="text-align:center;padding:60px 20px;color:var(--text-muted)">
+                    <div style="font-size:3rem;margin-bottom:16px">📭</div>
+                    <div style="font-size:1.1rem;font-weight:600;color:var(--text-secondary);margin-bottom:8px">
+                        ${state.mode === 'review' ? 'No wrong answers to review!' : 'No questions found'}
+                    </div>
+                    <div style="font-size:0.85rem">
+                        ${state.mode === 'review' ? 'Great job! Try answering more questions first.' : 'Try a different topic.'}
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = pageQuestions.map((q, idx) => {
+            const answered = state.answered[q.id] !== undefined;
+            const selectedIdx = state.answered[q.id];
+            const isExamMode = state.mode === 'exam';
+
+            const letters = ['A', 'B', 'C', 'D'];
+
+            return `
+                <div class="question-card" id="q${q.id}">
+                    <div class="question-number">
+                        <span class="q-badge">Q${q.id}</span>
+                        <span class="question-topic-badge">${q.topic}</span>
+                    </div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options-list">
+                        ${q.options.map((opt, oi) => {
+                            let cls = 'option-btn';
+                            if (answered && !isExamMode) {
+                                cls += ' disabled';
+                                if (oi === q.correct) cls += ' correct';
+                                else if (oi === selectedIdx) cls += ' wrong';
+                            } else if (answered && isExamMode) {
+                                cls += ' disabled';
+                                if (oi === selectedIdx) cls += ' selected-exam';
+                            }
+                            return `
+                                <button class="${cls}" onclick="selectAnswer(${q.id}, ${oi})" ${answered ? 'disabled' : ''}>
+                                    <span class="option-letter">${letters[oi]}</span>
+                                    <span>${opt}</span>
+                                </button>
+                            `;
+                        }).join('')}
+                    </div>
+                    ${answered && !isExamMode ? `
+                        <div class="explanation">
+                            <strong>${selectedIdx === q.correct ? '✅ Correct!' : '❌ Incorrect.'}</strong> ${q.explanation}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ========================
+    // ANSWER HANDLER
+    // ========================
+    function selectAnswer(qId, optIdx) {
+        if (state.answered[qId] !== undefined) return;
+
+        state.answered[qId] = optIdx;
+        saveState();
+        
+        // Re-render to show feedback
+        if (state.mode !== 'exam') {
+            renderQuestions();
+        } else {
+            // In exam mode, mark selected
+            const card = document.getElementById(`q${qId}`);
+            const buttons = card.querySelectorAll('.option-btn');
+            buttons.forEach((btn, idx) => {
+                btn.classList.add('disabled');
+                btn.disabled = true;
+                if (idx === optIdx) {
+                    btn.classList.add('selected-exam');
+                }
+            });
+        }
+
+        updateStats();
+        updatePagination();
+    }
+
+    // ========================
+    // STATS
+    // ========================
+    function updateStats() {
+        // Count total answered in the current set of filtered questions
+        let answeredCount = 0;
+        let correct = 0;
+        let wrong = 0;
+
+        filteredQuestions.forEach(q => {
+            const ans = state.answered[q.id];
+            if (ans !== undefined) {
+                answeredCount++;
+                if (ans === q.correct) correct++;
+                else wrong++;
+            }
+        });
+
+        document.getElementById('totalQ').textContent = filteredQuestions.length;
+        document.getElementById('correctCount').textContent = correct;
+        document.getElementById('wrongCount').textContent = wrong;
+
+        const pct = filteredQuestions.length > 0 ? Math.round((answeredCount / filteredQuestions.length) * 100) : 0;
+        document.getElementById('progressText').textContent = `${answeredCount} / ${filteredQuestions.length}`;
+        document.getElementById('progressFill').style.width = pct + '%';
+
+        // Show finish button when enough answered
+        const finishBtn = document.getElementById('finishBtn');
+        if (answeredCount >= filteredQuestions.length * 0.5 && filteredQuestions.length > 0) {
+            finishBtn.classList.remove('hidden');
+        } else {
+            finishBtn.classList.add('hidden');
+        }
+    }
+
+    // ========================
+    // PAGINATION
+    // ========================
+    function updatePagination() {
+        const totalPages = state.showAll ? 1 : Math.max(1, Math.ceil(filteredQuestions.length / state.questionsPerPage));
+        const current = state.showAll ? 1 : state.currentPage + 1;
+
+        document.getElementById('pageInfo').textContent = `${current} / ${totalPages}`;
+        document.getElementById('prevBtn').disabled = state.showAll || state.currentPage === 0;
+        document.getElementById('nextBtn').disabled = state.showAll || state.currentPage >= totalPages - 1;
+    }
+
+    function changePage(dir) {
+        const totalPages = Math.ceil(filteredQuestions.length / state.questionsPerPage);
+        state.currentPage = Math.max(0, Math.min(totalPages - 1, state.currentPage + dir));
+        renderQuestions();
+        updatePagination();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ========================
+    // ACTIONS
+    // ========================
+    function shuffleQuestions() {
+        // Shuffle the current sub-selection of questions array in place
+        for (let i = filteredQuestions.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [filteredQuestions[i], filteredQuestions[j]] = [filteredQuestions[j], filteredQuestions[i]];
+        }
+        // Shuffle options as well
+        filteredQuestions.forEach(q => {
+            const correctOption = q.options[q.correct];
+            const shuffledOptions = [...q.options];
+            for (let i = shuffledOptions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+            }
+            q.options = shuffledOptions;
+            q.correct = shuffledOptions.indexOf(correctOption);
+        });
+        state.currentPage = 0;
+        state.showAll = false;
+        renderQuestions();
+        updatePagination();
+    }
+
+    function resetQuiz() {
+        if (!confirm('Are you sure you want to reset all answers?')) return;
+        state.answered = {};
+        state.currentPage = 0;
+        state.showAll = false;
+        localStorage.removeItem('physiology_quiz_state');
+        filterAndRender();
+    }
+
+    function showAllQuestions() {
+        state.showAll = !state.showAll;
+        const btn = document.getElementById('showAllBtn');
+        btn.textContent = state.showAll ? '📄 Paginate' : '📋 Show All';
+        filterAndRender();
+    }
+
+    // ========================
+    // RESULTS
+    // ========================
+    function showResults() {
+        let answeredCount = 0;
+        let correct = 0;
+        let wrong = 0;
+
+        filteredQuestions.forEach(q => {
+            const ans = state.answered[q.id];
+            if (ans !== undefined) {
+                answeredCount++;
+                if (ans === q.correct) correct++;
+                else wrong++;
+            }
+        });
+
+        const pct = answeredCount > 0 ? Math.round((correct / answeredCount) * 100) : 0;
+        let message = '', sub = '';
+        if (pct >= 90) { message = '🌟 Outstanding!'; sub = 'You truly mastered this material!'; }
+        else if (pct >= 75) { message = '👏 Great Job!'; sub = 'You have a strong understanding!'; }
+        else if (pct >= 60) { message = '👍 Good Work!'; sub = 'A bit more review and you\'ll be excellent!'; }
+        else if (pct >= 40) { message = '📚 Keep Studying!'; sub = 'Review the wrong answers and try again.'; }
+        else { message = '💪 Don\'t Give Up!'; sub = 'Use the Review Wrong mode to focus on weak areas.'; }
+
+        const circleColor = pct >= 75 ? 'var(--success)' : pct >= 50 ? 'var(--warning)' : 'var(--error)';
+
+        document.getElementById('questionsContainer').classList.add('hidden');
+        const resultScreen = document.getElementById('resultScreen');
+        resultScreen.classList.remove('hidden');
+        resultScreen.innerHTML = `
+            <div class="score-circle" style="border-color: ${circleColor}">
+                <div class="score-percent" style="color: ${circleColor}">${pct}%</div>
+                <div class="score-label">Score</div>
+            </div>
+            <div class="result-message">${message}</div>
+            <div class="result-sub">${sub}</div>
+            <div class="result-stats">
+                <div class="result-stat">
+                    <div class="val" style="color:var(--text-primary)">${answeredCount}</div>
+                    <div class="lbl">Answered</div>
+                </div>
+                <div class="result-stat">
+                    <div class="val" style="color:var(--success)">${correct}</div>
+                    <div class="lbl">Correct</div>
+                </div>
+                <div class="result-stat">
+                    <div class="val" style="color:var(--error)">${wrong}</div>
+                    <div class="lbl">Wrong</div>
+                </div>
+            </div>
+            <button class="ctrl-btn primary" onclick="reviewWrong()" style="margin:8px;padding:12px 28px">📖 Review Wrong Answers</button>
+            <button class="ctrl-btn" onclick="backToQuiz()" style="margin:8px;padding:12px 28px">◀ Back to Quiz</button>
+            <button class="ctrl-btn" onclick="resetQuiz()" style="margin:8px;padding:12px 28px">🔄 Reset & Retry</button>
+        `;
+    }
+
+    function reviewWrong() {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('modeReview').classList.add('active');
+        state.mode = 'review';
+        state.currentPage = 0;
+        state.showAll = false;
+        filterAndRender();
+    }
+
+    function backToQuiz() {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('modePractice').classList.add('active');
+        state.mode = 'practice';
+        state.currentPage = 0;
+        state.showAll = false;
+        filterAndRender();
+    }
+
+    // ========================
+    // PERSISTENCE
+    // ========================
+    function saveState() {
+        localStorage.setItem('physiology_quiz_state', JSON.stringify({
+            answered: state.answered
+        }));
+    }
+
+    // ========================
+    // START
+    // ========================
+    document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
