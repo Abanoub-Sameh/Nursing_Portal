@@ -39,7 +39,7 @@ const curriculumData = {
           "lectures": [
             {
               "num": 1,
-              "title_ar": "المحاضره الاولي",
+              "title_ar": "المحاضره الاولي - FUNDAMENTALS",
               "files": {
                 "original_ppt": "terms/term_1/terminology/original/introduction.pdf",
                 "translated_ppt": "terms/term_1/terminology/guides/المحاضرة الأولى مترجمه _ المصطلحات الطبية.pdf",
@@ -49,7 +49,7 @@ const curriculumData = {
             },
             {
               "num": 2,
-              "title_ar": "المحاضره الثانية",
+              "title_ar": "المحاضره الثانية - FUNDAMENTALS 2",
               "files": {
                 "original_ppt": "terms/term_1/terminology/original/introduction 2.pdf",
                 "translated_ppt": "terms/term_1/terminology/guides/المحاضرة الثانية مترجمه _ المصطلحات الطبية.pdf",
@@ -59,7 +59,7 @@ const curriculumData = {
             },
             {
               "num": 3,
-              "title_ar": "المحاضره الثالثه",
+              "title_ar": "المحاضره الثالثه - reproductive system",
               "files": {
                 "original_ppt": "terms/term_1/terminology/original/reproductive system.pdf",
                 "translated_ppt": "terms/term_1/terminology/guides/المحاضرة الثالثه مترجمه _ المصطلحات الطبية.pdf",
@@ -69,18 +69,12 @@ const curriculumData = {
             },
             {
               "num": 4,
-              "title_ar": "المحاضره الرابعه",
+              "title_ar": "المحاضره الرابعه - Musculoskeletal System",
               "files": {
-                "original_ppt": [
-                  "terms/term_1/terminology/original/محاضرات مصطلحات طبية.pdf"
-                ],
-                "translated_ppt": [
-                  "terms/term_1/terminology/guides/المحاضرة الرابعة مترجمه - المصطلحات الطبية.pdf"
-                ],
-                "my_quiz": [
-                  "terms/term_1/terminology/quizzes/Medical_Terminology_L4_Quiz.html"
-                ],
-                "doctor_quiz": []
+                "original_ppt": "terms/term_1/terminology/original/محاضرات مصطلحات طبية.pdf",
+                "translated_ppt": "terms/term_1/terminology/guides/المحاضرة الرابعة مترجمه - المصطلحات الطبية.pdf",
+                "my_quiz": "terms/term_1/terminology/quizzes/Medical_Terminology_L4_Quiz.html",
+                "doctor_quiz": ""
               }
             }
           ]
