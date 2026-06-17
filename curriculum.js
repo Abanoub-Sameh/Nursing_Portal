@@ -258,6 +258,20 @@ const curriculumData = {
                 "my_quiz": "terms/term_1/biostatistics/quizzes/Biostatistics_L3_DataCollection_Quiz.html",
                 "doctor_quiz": ""
               }
+            },
+            {
+              "num": 4,
+              "title_ar": "المحاضره الرابعه -  measuring the quality of tool",
+              "files": {
+                "original_ppt": [
+                  "terms/term_1/biostatistics/original/measuring the quality of tool.pdf"
+                ],
+                "translated_ppt": [],
+                "my_quiz": [
+                  "terms/term_1/biostatistics/quizzes/Biostatistics_L4_Tool_Quality_Quiz.html"
+                ],
+                "doctor_quiz": []
+              }
             }
           ]
         }
