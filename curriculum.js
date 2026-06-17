@@ -214,10 +214,14 @@ const curriculumData = {
               "num": 1,
               "title_ar": "المحاضره الاولي - vitamins to page 17",
               "files": {
-                "original_ppt": "terms/term_1/biochemistry_and_nutrition/original/biochemistry_from_vitamins_to_page17.pdf",
-                "translated_ppt": "",
-                "my_quiz": "",
-                "doctor_quiz": ""
+                "original_ppt": [
+                  "terms/term_1/biochemistry_and_nutrition/original/biochemistry_from_vitamins_to_page17.pdf"
+                ],
+                "translated_ppt": [
+                  "terms/term_1/biochemistry_and_nutrition/guides/Biochemistry_Vitamins_L1 مترجم .pdf"
+                ],
+                "my_quiz": [],
+                "doctor_quiz": []
               }
             }
           ]
