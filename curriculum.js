@@ -195,14 +195,10 @@ const curriculumData = {
               "num": 3,
               "title_ar": "المحاضره الثالثه Immune System",
               "files": {
-                "original_ppt": [
-                  "terms/term_1/microbiology/original/4-Nursing immunity 1.pdf"
-                ],
-                "translated_ppt": [
-                  "terms/term_1/microbiology/guides/Immune System 4 _ المحاضره الرابعه مترجمه.pdf"
-                ],
-                "my_quiz": [],
-                "doctor_quiz": []
+                "original_ppt": "terms/term_1/microbiology/original/4-Nursing immunity 1.pdf",
+                "translated_ppt": "terms/term_1/microbiology/guides/Immune System 4 _ المحاضره الرابعه مترجمه.pdf",
+                "my_quiz": "terms/term_1/microbiology/quizzes/Microbiology_L3_Immune_System_Quiz (1).html",
+                "doctor_quiz": ""
               }
             }
           ]
