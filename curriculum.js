@@ -195,17 +195,32 @@ const curriculumData = {
               "num": 3,
               "title_ar": "المحاضره الثالثه Immune System",
               "files": {
-                "original_ppt": "terms/term_1/microbiology/original/4-Nursing immunity 1.pdf",
-                "translated_ppt": "terms/term_1/microbiology/guides/Immune System 4 _ المحاضره الرابعه مترجمه.pdf",
-                "my_quiz": "terms/term_1/microbiology/quizzes/Microbiology_L3_Immune_System_Quiz (1).html",
-                "doctor_quiz": ""
+                "original_ppt": [
+                  "terms/term_1/microbiology/original/4-Nursing immunity 1.pdf"
+                ],
+                "translated_ppt": [
+                  "terms/term_1/microbiology/guides/Immune System 4 _ المحاضره الرابعه مترجمه.pdf"
+                ],
+                "my_quiz": [],
+                "doctor_quiz": []
               }
             }
           ]
         },
         "biochemistry_and_nutrition": {
           "name": "biochemistry and nutrition",
-          "lectures": []
+          "lectures": [
+            {
+              "num": 1,
+              "title_ar": "المحاضره الاولي - vitamins to page 17",
+              "files": {
+                "original_ppt": "terms/term_1/biochemistry_and_nutrition/original/biochemistry_from_vitamins_to_page17.pdf",
+                "translated_ppt": "",
+                "my_quiz": "",
+                "doctor_quiz": ""
+              }
+            }
+          ]
         },
         "english": {
           "name": "English",
