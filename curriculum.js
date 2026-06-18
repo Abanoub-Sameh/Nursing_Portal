@@ -232,7 +232,20 @@ const curriculumData = {
         },
         "english": {
           "name": "English",
-          "lectures": []
+          "lectures": [
+            {
+              "num": 1,
+              "title_ar": "بنك اسئله الميد ترم",
+              "files": {
+                "original_ppt": [
+                  "terms/term_1/english/original/Question Bank (1).pdf"
+                ],
+                "translated_ppt": [],
+                "my_quiz": [],
+                "doctor_quiz": []
+              }
+            }
+          ]
         },
         "biostatistics": {
           "name": "Biostatistics",
