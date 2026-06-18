@@ -222,7 +222,9 @@ const curriculumData = {
                 "translated_ppt": [
                   "terms/term_1/biochemistry_and_nutrition/guides/Biochemistry_Vitamins_L1 مترجم .pdf"
                 ],
-                "my_quiz": [],
+                "my_quiz": [
+                  "terms/term_1/biochemistry_and_nutrition/quizzes/Biochemistry_Vitamins_Quiz.html"
+                ],
                 "doctor_quiz": []
               }
             }
