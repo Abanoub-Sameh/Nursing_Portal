@@ -8,27 +8,31 @@ const curriculumData = {
           "lectures": [
             {
               "num": 1,
-              "title_ar": "المحاضره الاولي -Introduction to Human Anatomy",
+              "title_ar": "Introduction to Human Anatomy",
               "files": {
-                "original_ppt": [
-                  "terms/term_1/anatomy/original/1 Introduction to Human Anatomy.ppt"
-                ],
-                "translated_ppt": [
-                  "terms/term_1/anatomy/guides/ماده الاناتومي المحاضره الاولي.pdf"
-                ],
-                "my_quiz": [
-                  "terms/term_1/anatomy/quizzes/Anatomy_Quiz_L1.html"
-                ],
-                "doctor_quiz": []
+                "original_ppt": "terms/term_1/anatomy/original/1 Introduction to Human Anatomy.ppt",
+                "translated_ppt": "terms/term_1/anatomy/guides/ماده الاناتومي المحاضره الاولي.pdf",
+                "my_quiz": "terms/term_1/anatomy/quizzes/Anatomy_Quiz_L1.html",
+                "doctor_quiz": ""
               }
             },
             {
               "num": 2,
-              "title_ar": "المحاضره الثانيه",
+              "title_ar": "Skeletal system",
               "files": {
                 "original_ppt": "terms/term_1/anatomy/original/9 Skeletal system.pdf",
                 "translated_ppt": "terms/term_1/anatomy/guides/الجهاز الهيكلي – محاضرة 2 مترحم  _ Skeletal System.pdf",
                 "my_quiz": "terms/term_1/anatomy/quizzes/Anatomy_Quiz_Skeletal.html",
+                "doctor_quiz": ""
+              }
+            },
+            {
+              "num": 3,
+              "title_ar": "joints & bones",
+              "files": {
+                "original_ppt": "terms/term_1/anatomy/original/2 joints bones.pdf",
+                "translated_ppt": "terms/term_1/anatomy/guides/Joints and Bones مترجم .pdf",
+                "my_quiz": "",
                 "doctor_quiz": ""
               }
             }
@@ -74,6 +78,36 @@ const curriculumData = {
                 "original_ppt": "terms/term_1/terminology/original/محاضرات مصطلحات طبية.pdf",
                 "translated_ppt": "terms/term_1/terminology/guides/المحاضرة الرابعة مترجمه - المصطلحات الطبية.pdf",
                 "my_quiz": "terms/term_1/terminology/quizzes/Medical_Terminology_L4_Quiz.html",
+                "doctor_quiz": ""
+              }
+            },
+            {
+              "num": 5,
+              "title_ar": "المحاضره الخامسه - Medical Terminology",
+              "files": {
+                "original_ppt": "terms/term_1/terminology/original/medical terminology.pdf",
+                "translated_ppt": "terms/term_1/terminology/guides/مترجم Medical Terminology - المحاضرة الخامسة.pdf",
+                "my_quiz": "",
+                "doctor_quiz": ""
+              }
+            },
+            {
+              "num": 6,
+              "title_ar": "المحاضره السادسه  - Skin Terminology",
+              "files": {
+                "original_ppt": "terms/term_1/terminology/original/مصطلحات ٥.pdf",
+                "translated_ppt": "terms/term_1/terminology/guides/مترجم مصطلحات الجلد _ Skin Terminology.pdf",
+                "my_quiz": "",
+                "doctor_quiz": ""
+              }
+            },
+            {
+              "num": 7,
+              "title_ar": "المحاضره السادسه - Urinary System Terminology",
+              "files": {
+                "original_ppt": "terms/term_1/terminology/original/مصطلحات ٦.pdf",
+                "translated_ppt": "terms/term_1/terminology/guides/مترجم مصطلحات الجهاز البولي _ Urinary System Terminology.pdf",
+                "my_quiz": "",
                 "doctor_quiz": ""
               }
             }
