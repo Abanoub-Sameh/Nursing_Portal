@@ -155,6 +155,26 @@ const curriculumData = {
                 "my_quiz": "",
                 "doctor_quiz": ""
               }
+            },
+            {
+              "num": 5,
+              "title_ar": "المحاضره الرابعه 2 -  Connective Tissue",
+              "files": {
+                "original_ppt": "terms/term_1/biology/original/Lect. 4 الجزء التاني.pdf",
+                "translated_ppt": "terms/term_1/biology/guides/مترجم النسيج الضام والعضلي  Connective Tissue and Muscles .pdf",
+                "my_quiz": "",
+                "doctor_quiz": ""
+              }
+            },
+            {
+              "num": 6,
+              "title_ar": "المحاضره الخامسه والسادسه - Taxonomy",
+              "files": {
+                "original_ppt": "terms/term_1/biology/original/Lect 5  Taxonomy.pdf",
+                "translated_ppt": "terms/term_1/biology/guides/مترجم   _ Taxonomy.pdf",
+                "my_quiz": "",
+                "doctor_quiz": ""
+              }
             }
           ]
         },
