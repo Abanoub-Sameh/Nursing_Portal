@@ -118,34 +118,42 @@ const curriculumData = {
           "lectures": [
             {
               "num": 1,
-              "title_ar": "المحاضره الاولي",
+              "title_ar": "المحاضره الاولي - Cytology",
               "files": {
-                "original_ppt": [
-                  "terms/term_1/biology/original/Lect. 1.pdf"
-                ],
-                "translated_ppt": [
-                  "terms/term_1/biology/guides/احياء  - المحاضرة الأولى مترجم.pdf"
-                ],
-                "my_quiz": [
-                  "terms/term_1/biology/quizzes/Biology_Quiz_L1 .html"
-                ],
-                "doctor_quiz": []
+                "original_ppt": "terms/term_1/biology/original/Lect. 1.pdf",
+                "translated_ppt": "terms/term_1/biology/guides/احياء  - المحاضرة الأولى مترجم.pdf",
+                "my_quiz": "terms/term_1/biology/quizzes/Biology_Quiz_L1 .html",
+                "doctor_quiz": ""
               }
             },
             {
               "num": 2,
-              "title_ar": "المحاضره الثانية",
+              "title_ar": "المحاضره الثانية - Histology",
               "files": {
-                "original_ppt": [
-                  "terms/term_1/biology/original/Lect 2.pdf"
-                ],
-                "translated_ppt": [
-                  "terms/term_1/biology/guides/احياء  - المحاضرة الثانيه مترجم.pdf"
-                ],
-                "my_quiz": [
-                  "terms/term_1/biology/quizzes/Biology_Quiz_L2_p18.html"
-                ],
-                "doctor_quiz": []
+                "original_ppt": "terms/term_1/biology/original/Lect 2.pdf",
+                "translated_ppt": "terms/term_1/biology/guides/احياء  - المحاضرة الثانيه مترجم.pdf",
+                "my_quiz": "terms/term_1/biology/quizzes/Biology_Quiz_L2_p18.html",
+                "doctor_quiz": ""
+              }
+            },
+            {
+              "num": 3,
+              "title_ar": "المحاضره الثالثه - باقي Histology + كويز علي اول محاضرتين",
+              "files": {
+                "original_ppt": "terms/term_1/biology/original/Lect 3 .pdf",
+                "translated_ppt": "terms/term_1/biology/guides/الجزء الثاني_ علم الأنسجة - الظهارة الغدية _ Part II_ Histology - Glandular Epithelium.pdf",
+                "my_quiz": "",
+                "doctor_quiz": "terms/term_1/biology/quizzes/Quiz.pdf"
+              }
+            },
+            {
+              "num": 4,
+              "title_ar": "المحاضره الرابعه - embryology",
+              "files": {
+                "original_ppt": "terms/term_1/biology/original/4. Animal embryology.pdf",
+                "translated_ppt": "terms/term_1/biology/guides/مترجم علم الأجنة الحيواني _ Animal Embryology.pdf",
+                "my_quiz": "",
+                "doctor_quiz": ""
               }
             }
           ]
